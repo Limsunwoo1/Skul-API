@@ -37,42 +37,39 @@ namespace sw
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(500.f, 0.0f));
 			mDirtion = eObjectState::RIGHT;
 		}
-
-		if (KEY_UP(eKeyCode::RIGHT))
-		{
-			NextState = eObjectState::IDLE;
-		}
-
-		if (KEY_PRESSE(eKeyCode::LEFT))
+		else if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-500.f, 0.0f));
 			mDirtion = eObjectState::LEFT;
 		}
 
-		if (KEY_UP(eKeyCode::LEFT))
-		{
-			NextState = eObjectState::IDLE;
-		}
-
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
 		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
 
-		if (jump->GetJumpCount() < 2)
+		if (KEY_PRESSE(eKeyCode::C))
 		{
-			if (KEY_PRESSE(eKeyCode::C))
+			if (jump->GetJumpCount() < 2)
 			{
 				NextState = eObjectState::JUMP;
 			}
 		}
-
-		if (KEY_DOWN(eKeyCode::X))
+		else if (KEY_DOWN(eKeyCode::X))
 		{
 			NextState = eObjectState::ATTACK_1;
 		}
-
-		if (KEY_DOWN(eKeyCode::Z))
+		else if (KEY_DOWN(eKeyCode::Z) || 
+			KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z) || 
+			KEY_PRESSE(eKeyCode::RIGHT) && KEY_DOWN(eKeyCode::Z))
 		{
 			NextState = eObjectState::SLIDING;
+		}
+		else if (KEY_UP(eKeyCode::RIGHT))
+		{
+			NextState = eObjectState::IDLE;
+		}
+		else if (KEY_UP(eKeyCode::LEFT))
+		{
+			NextState = eObjectState::IDLE;
 		}
 
 		if (NextState != eObjectState::END)

@@ -1,4 +1,5 @@
 #include "Panel.h"
+#include "Image.h"
 
 
 namespace sw

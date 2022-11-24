@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "StateHandle.h"
 #include "Jump.h"
+#include "Sliding.h"
 
 namespace sw
 {
@@ -26,27 +27,26 @@ namespace sw
 		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
 		jump->SetJumpCount(0);
 
+		Sliding* sliding = stateHandle->GetState<Sliding>(eObjectState::SLIDING);
+		sliding->SetSlidingCount(0);
+
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			NextState = eObjectState::RIGHT;
 		}
-
-		if (KEY_PRESSE(eKeyCode::LEFT))
+		else if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			NextState = eObjectState::LEFT;
 		}
-
-		if (KEY_DOWN(eKeyCode::C))
+		else if (KEY_DOWN(eKeyCode::C))
 		{
 			NextState = eObjectState::JUMP;
 		}
-
-		if (KEY_DOWN(eKeyCode::X))
+		else if (KEY_DOWN(eKeyCode::X))
 		{
 			NextState = eObjectState::ATTACK_1;
 		}
-
-		if (KEY_DOWN(eKeyCode::Z))
+		else if (KEY_DOWN(eKeyCode::Z))
 		{
 			NextState = eObjectState::SLIDING;
 		}

@@ -12,6 +12,13 @@ namespace sw
 		virtual void Start(Player* target)  override;
 		virtual void Run() override;
 		virtual void End() override;
+
+		bool SlidingRun();
+		bool DoubleSlide();
+		void InputNextState();
+
+		UINT GetSlidingCount() { return mSlidingCount; }
+		void SetSlidingCount(UINT count) { mSlidingCount = count; }
 	private:
 		eObjectState mDirtion;
 
@@ -22,6 +29,8 @@ namespace sw
 
 		bool bSliding;
 		bool bInput;
+
+		UINT mSlidingCount;
 
 		eObjectState mInputState;
 	};

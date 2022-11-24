@@ -65,7 +65,7 @@ namespace sw
 			stathandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-300.f, 0.0f));
 		}
-		if (KEY_PRESSE(eKeyCode::RIGHT))
+		else if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			stathandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(300.f, 0.0f));
@@ -75,12 +75,11 @@ namespace sw
 		{
 			NextState = eObjectState::JUMP;
 		}
-
-		if (KEY_DOWN(eKeyCode::X))
+		else if (KEY_DOWN(eKeyCode::X))
 		{
 			NextState = eObjectState::JUMPATTACK_1;
 		}
-		if (KEY_DOWN(eKeyCode::Z))
+		else if (KEY_DOWN(eKeyCode::Z))
 		{
 			NextState = eObjectState::SLIDING;
 		}

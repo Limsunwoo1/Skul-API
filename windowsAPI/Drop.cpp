@@ -44,14 +44,15 @@ namespace sw
 
 		Jump* jump = statehandle->GetState<Jump>(eObjectState::JUMP);
 
-		if (jump->GetJumpCount() < 2)
+		
+		if (KEY_PRESSE(eKeyCode::C))
 		{
-			if (KEY_PRESSE(eKeyCode::C))
+			if (jump->GetJumpCount() < 2)
 			{
 				player->SetState(eObjectState::JUMP);
 			}
 		}
-
+		
 		End();
 	}
 	void Drop::End()

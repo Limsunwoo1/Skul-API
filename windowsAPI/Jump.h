@@ -12,6 +12,11 @@ namespace sw
 		virtual void Start(Player* target)  override;
 		virtual void Run() override;
 		virtual void End() override;
+
+		UINT GetJumpCount() { return mJumpCount; }
+		void SetJumpCount(UINT count) { mJumpCount = count; }
+	private:
+		UINT mJumpCount;
 	};
 }
 

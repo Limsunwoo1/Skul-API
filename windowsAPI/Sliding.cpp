@@ -4,6 +4,7 @@
 #include "StateHandle.h"
 #include"Move.h"
 #include "Time.h"
+#include "Jump.h"
 
 namespace sw
 {
@@ -11,9 +12,11 @@ namespace sw
 		: mDelta(0.0f)
 		, mRuntime(0.2f)
 		, mForce(3000.f)
-		, mDelay(0.2f)
+		, mDelay(0.15f)
 		, bSliding(false)
+		, bInput(false)
 		, mDirtion(eObjectState::END)
+		, mInputState(eObjectState::END)
 	{
 
 	}
@@ -26,6 +29,8 @@ namespace sw
 	void Sliding::Start(Player* target)
 	{
 		SetTarget(target);
+		mInputState = eObjectState::END;
+		mDelta = 0.0f;
 
 		mDirtion =
 			target->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
@@ -71,12 +76,20 @@ namespace sw
 
 		if (mDelta < mDelay)
 			return;
-		else
-			mDelta = 0.0f;
 
 		//player->GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 500.f));
 		eObjectState NextState = eObjectState::END;
 		Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
+		StateHandle* stateHandle = GetTarget()->GetStateHandle();
+		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
+
+		if (jump->GetJumpCount() < 2)
+		{
+			if (KEY_PRESSE(eKeyCode::C))
+			{
+				player->SetState(eObjectState::JUMP);
+			}
+		}
 
 		if (rigidbody->GetGround())
 		{
@@ -96,6 +109,6 @@ namespace sw
 
 	void Sliding::End()
 	{
-
+		
 	}
 }

@@ -114,9 +114,6 @@
     <Filter Include="Engine\StateHandle\State\Jump">
       <UniqueIdentifier>{0c1338ce-077c-4529-9865-bcffd4fead5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\StateHandle\State\Jump\DoubleJump">
-      <UniqueIdentifier>{ab8cc5d7-1e0d-4ae6-ae77-d23c9e8b7d95}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\StateHandle\State\Idle">
       <UniqueIdentifier>{bf56e8a3-11b4-42a7-87f6-a444742dd345}</UniqueIdentifier>
     </Filter>
@@ -287,9 +284,6 @@
     <ClInclude Include="targetver.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="DoubleJump.h">
-      <Filter>Engine\StateHandle\State\Jump\DoubleJump</Filter>
-    </ClInclude>
     <ClInclude Include="Idle.h">
       <Filter>Engine\StateHandle\State\Idle</Filter>
     </ClInclude>
@@ -435,9 +429,6 @@
     </ClCompile>
     <ClCompile Include="StateHandle.cpp">
       <Filter>Engine\StateHandle</Filter>
-    </ClCompile>
-    <ClCompile Include="DoubleJump.cpp">
-      <Filter>Engine\StateHandle\State\Jump\DoubleJump</Filter>
     </ClCompile>
     <ClCompile Include="Idle.cpp">
       <Filter>Engine\StateHandle\State\Idle</Filter>

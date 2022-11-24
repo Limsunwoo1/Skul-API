@@ -3,7 +3,6 @@
 #include "Idle.h"
 #include "Move.h"
 #include "Jump.h"
-#include "DoubleJump.h"
 #include "Sliding.h"
 #include "Drop.h"
 
@@ -19,7 +18,6 @@ namespace sw
 		mStates.insert(std::make_pair(eObjectState::LEFT, move));
 		mStates.insert(std::make_pair(eObjectState::RIGHT, move));
 		mStates.insert(std::make_pair(eObjectState::JUMP, new Jump));
-		mStates.insert(std::make_pair(eObjectState::DOUBLEJUMP, new DoubleJump));
 		mStates.insert(std::make_pair(eObjectState::SLIDING, new Sliding));
 		mStates.insert(std::make_pair(eObjectState::DROP, new Drop));
 	}

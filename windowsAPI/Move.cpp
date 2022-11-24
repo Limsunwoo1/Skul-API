@@ -4,6 +4,8 @@
 #include "Animator.h"
 
 #include "Input.h"
+#include "Jump.h"
+#include "StateHandle.h"
 
 namespace sw
 {
@@ -52,9 +54,15 @@ namespace sw
 			NextState = eObjectState::IDLE;
 		}
 
-		if (KEY_DOWN(eKeyCode::C))
+		StateHandle* stateHandle = GetTarget()->GetStateHandle();
+		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
+
+		if (jump->GetJumpCount() < 2)
 		{
-			NextState = eObjectState::JUMP;
+			if (KEY_PRESSE(eKeyCode::C))
+			{
+				NextState = eObjectState::JUMP;
+			}
 		}
 
 		if (KEY_DOWN(eKeyCode::X))

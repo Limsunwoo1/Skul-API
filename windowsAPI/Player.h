@@ -22,6 +22,7 @@ namespace sw
 		void SetState(eObjectState type);
 		StateHandle* GetStateHandle() { return mState; }
 		eObjectState GetState();
+		eObjectState GetPrevState();
 	private:
 		void CompleteEvent();
 

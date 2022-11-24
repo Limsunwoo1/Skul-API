@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "StateHandle.h"
 #include "Move.h"
+#include "Jump.h"
 
 
 namespace sw
@@ -21,7 +22,7 @@ namespace sw
 	{
 		Player* player = GetTarget();
 		Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
-		StateHandle* stathandle = player->GetStateHandle();
+		StateHandle* statehandle = player->GetStateHandle();
 
 		if (rigidbody->GetGround())
 		{
@@ -32,14 +33,26 @@ namespace sw
 
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			stathandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
+			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-300.f, 0.0f));
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			stathandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
+			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(300.f, 0.0f));
 		}
+
+		Jump* jump = statehandle->GetState<Jump>(eObjectState::JUMP);
+
+		if (jump->GetJumpCount() < 2)
+		{
+			if (KEY_PRESSE(eKeyCode::C))
+			{
+				player->SetState(eObjectState::JUMP);
+			}
+		}
+
+		End();
 	}
 	void Drop::End()
 	{

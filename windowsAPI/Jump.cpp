@@ -8,6 +8,7 @@
 namespace sw
 {
 	Jump::Jump()
+		: mJumpCount(0)
 	{
 		
 	}
@@ -19,7 +20,12 @@ namespace sw
 
 	void Jump::Start(Player* target)
 	{
+		++mJumpCount;
 		SetTarget(target);
+
+		if (mJumpCount > 2)
+			return;
+
 		Rigidbody* rigidbody = target->GetComponent<Rigidbody>();
 		Vector2 velocity = rigidbody->GetVelocity();
 		velocity.y = -700.f;
@@ -34,10 +40,20 @@ namespace sw
 			return;
 
 		Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
+		Vector2 volocity = rigidbody->GetVelocity();
+
+		if (volocity.y > 0)
+		{
+			End();
+			player->SetState(eObjectState::DROP);
+			return;
+		}
+
 		if (rigidbody->GetGround())
 		{
 			End();
 			player->SetState(eObjectState::IDLE);
+			mJumpCount = 0;
 			return;
 		}
 
@@ -55,10 +71,12 @@ namespace sw
 			stathandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(300.f, 0.0f));
 		}
+
 		if (KEY_DOWN(eKeyCode::C))
 		{
-			NextState = eObjectState::DOUBLEJUMP;
+			NextState = eObjectState::JUMP;
 		}
+
 		if (KEY_DOWN(eKeyCode::X))
 		{
 			NextState = eObjectState::JUMPATTACK_1;
@@ -77,7 +95,7 @@ namespace sw
 
 	void Jump::End()
 	{
-		// ·£´õ
+
 	}
 
 }

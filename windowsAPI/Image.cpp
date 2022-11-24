@@ -45,15 +45,11 @@ namespace sw
 		return S_OK;
 	}
 
-	Pixel Image::GetPixel(int x, int y)
+	Pixel Image::GetPixelImage(int x, int y)
 	{
-		y = mHeight - (y + 1);
+		COLORREF rgba = GetPixel(mHdc, x, y);
 
-		Pixel* pixel = (Pixel*)mBitmap;
-		pixel += (mWidth * y + x);
-
-
-		return (* pixel);
+		return Pixel(rgba);
 	}
 
 	void Image::SetPixel(int x, int y, Pixel pixel)

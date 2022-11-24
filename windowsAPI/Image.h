@@ -17,7 +17,7 @@ namespace sw
 		UINT GetWidth() { return mWidth; }
 		UINT GetHeight() { return mHeight; }
 
-		Pixel GetPixel(int x, int y);
+		Pixel GetPixelImage(int x, int y);
 		void SetPixel(int x, int y, Pixel pixel);
 
 	private:

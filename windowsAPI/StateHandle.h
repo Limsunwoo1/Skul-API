@@ -15,6 +15,7 @@ namespace sw
 
 		void SetState(eObjectState type);
 		eObjectState GetStateType() { return mCurState.first; }
+		eObjectState GetPrevStateType() { return mPrevState.first; }
 		void SetTarget(Player* target) { mTarget = target; }
 		Player* GetTarget() { return mTarget; }
 

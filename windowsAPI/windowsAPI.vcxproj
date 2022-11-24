@@ -160,7 +160,6 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="def.h" />
-    <ClInclude Include="DoubleJump.h" />
     <ClInclude Include="Drop.h" />
     <ClInclude Include="EndScene.h" />
     <ClInclude Include="Entity.h" />
@@ -216,7 +215,6 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="DoubleJump.cpp" />
     <ClCompile Include="Drop.cpp" />
     <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="Entity.cpp" />

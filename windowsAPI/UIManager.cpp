@@ -75,16 +75,27 @@ namespace sw
 	void UIManager::Render(HDC hdc)
 	{
 		std::stack<UiBase*> uiBases = mUiBases;
+		std::stack<UiBase*> tempStack;
+
+		// 뒤집어서랜더링을 해준다.
 		while (!uiBases.empty())
 		{
 			UiBase* uiBase = uiBases.top();
+			tempStack.push(uiBase);
+			uiBases.pop();
+		}
+
+		while (!tempStack.empty())
+		{
+			UiBase* uiBase = tempStack.top();
 			if (uiBase != nullptr)
 			{
 				uiBase->Render(hdc);
 			}
-			uiBases.pop();
+			tempStack.pop();
 		}
 	}
+
 	void UIManager::OnComplete(UiBase* addUI)
 	{
 		if (addUI == nullptr)
@@ -154,8 +165,22 @@ namespace sw
 						}
 					}
 				}
+				uiBase->InActive();
+				uiBase->UIClear();
+			}
+			else
+			{
+				tempStack.push(uiBase);
 			}
 
+		}
+
+		// UI 재정렬
+		while (tempStack.size())
+		{
+			uiBase = tempStack.top();
+			tempStack.pop();
+			mUiBases.push(uiBase);
 		}
 	}
 }

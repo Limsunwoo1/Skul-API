@@ -137,4 +137,8 @@ namespace sw
 	{
 		return mState->GetStateType();
 	}
+	eObjectState Player::GetPrevState()
+	{
+		return mState->GetPrevStateType();
+	}
 }

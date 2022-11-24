@@ -19,7 +19,11 @@ namespace sw
 		float mRuntime;
 		float mForce;
 		float mDelay;
+
 		bool bSliding;
+		bool bInput;
+
+		eObjectState mInputState;
 	};
 }
 

@@ -59,7 +59,6 @@ namespace sw
 
 		//player->GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 500.f));
 		StateHandle* stathandle = player->GetStateHandle();
-
 		eObjectState NextState = eObjectState::END;
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{

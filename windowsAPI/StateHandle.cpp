@@ -21,6 +21,7 @@ namespace sw
 		mStates.insert(std::make_pair(eObjectState::SLIDING, new Sliding));
 		mStates.insert(std::make_pair(eObjectState::DROP, new Drop));
 
+
 	}
 
 	StateHandle::~StateHandle()

@@ -59,7 +59,6 @@ namespace sw
 			mImage->GetWidth(), mImage->GetHeight()
 			, bf);
 		
-
 		GameObject::Render(hdc);
 	}
 	void BackGround::SetImage(const std::wstring& key, const std::wstring& filename)

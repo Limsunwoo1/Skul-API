@@ -63,10 +63,10 @@ namespace sw
 			, RGB(255, 0, 255));*/
 
 		AlphaBlend(hdc
-			, (int)pos.x - mSpriteSheet[mSpriteIndex].size.x / 2.0f
-			, (int)pos.y - mSpriteSheet[mSpriteIndex].size.y / 2.0f
-			, (int)mSpriteSheet[mSpriteIndex].size.x
-			, (int)mSpriteSheet[mSpriteIndex].size.y
+			, (int)pos.x - 50.f
+			, (int)pos.y - 50.f
+			, (int)100.f
+			, (int)100.f
 			, mImage->GetDC()
 			, (int)mSpriteSheet[mSpriteIndex].LeftTop.x
 			, (int)mSpriteSheet[mSpriteIndex].LeftTop.y

@@ -40,7 +40,6 @@ namespace sw
 			if (!mbLoop && mPlayAnimation->isComplete())
 			{
 				mPlayAnimation->CompleteEvent();
-				Play(L"IDEL", true);
 			}
 		}
 	}
@@ -146,9 +145,11 @@ namespace sw
 	}
 	void Animator::Play(const std::wstring name, bool bLoop)
 	{ 
-		if (mPlayAnimation == nullptr)
+		Animation* prevAnimation = mPlayAnimation;
+		mPlayAnimation = FindAnimation(name);
+
+		if (mPlayAnimation != nullptr)
 		{
-			mPlayAnimation = FindAnimation(name);
 			mPlayAnimation->Reset();
 			mbLoop = bLoop;
 
@@ -157,7 +158,6 @@ namespace sw
 
 			StartEvent();
 		}
-		Animation* prevAnimation = mPlayAnimation;
 
 		// 이전 애니매이션에 End 이벤트 호출
 		if (prevAnimation != mPlayAnimation && prevAnimation != nullptr)

@@ -126,6 +126,12 @@
     <Filter Include="Engine\StateHandle\State\Drop">
       <UniqueIdentifier>{fd1e9dec-c151-454e-8e42-b15f6af391a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Effect">
+      <UniqueIdentifier>{6ed5d737-077c-423d-98f5-75521fedc5fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Effect\Shadow">
+      <UniqueIdentifier>{13cd6d5b-ee08-44a7-9e5a-2f821644c1c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -293,6 +299,12 @@
     <ClInclude Include="Drop.h">
       <Filter>Engine\StateHandle\State\Drop</Filter>
     </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>Engine\Effect\Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Engine\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -438,6 +450,12 @@
     </ClCompile>
     <ClCompile Include="Drop.cpp">
       <Filter>Engine\StateHandle\State\Drop</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Engine\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>Engine\Effect\Shadow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,8 @@
 #include "StateHandle.h"
 #include "Jump.h"
 #include "Sliding.h"
+#include "Animator.h"
+#include "Move.h"
 
 namespace sw
 {
@@ -17,6 +19,18 @@ namespace sw
 	void Idle::Start(Player* target)
 	{
 		SetTarget(target);
+		Animator* animator = target->GetComponent<Animator>();
+		StateHandle* statehandle = GetTarget()->GetStateHandle();
+		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
+
+		if (move->GetDirtion() == eObjectState::LEFT)
+		{
+			animator->Play(L"L_IDLE", true);
+		}
+		else if (move->GetDirtion() == eObjectState::RIGHT)
+		{
+			animator->Play(L"R_IDLE", true);
+		}
 	}
 
 	void Idle::Run()

@@ -22,6 +22,7 @@ namespace sw
 	void Move::Start(Player* target)
 	{
 		SetTarget(target);
+		mCurAnimation = L"";
 	}
 
 	void Move::Run()
@@ -31,16 +32,29 @@ namespace sw
 			return;
 
 		//player->GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 500.f));
+		Animator* animator = GetTarget()->GetComponent<Animator>();
 		eObjectState NextState = eObjectState::END;
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(500.f, 0.0f));
 			mDirtion = eObjectState::RIGHT;
+
+			if (mCurAnimation != L"R_RUN")
+			{
+				animator->Play(L"R_RUN", true);
+				mCurAnimation = L"R_RUN";
+			}
 		}
 		else if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-500.f, 0.0f));
 			mDirtion = eObjectState::LEFT;
+
+			if (mCurAnimation != L"L_RUN")
+			{
+				animator->Play(L"L_RUN", true);
+				mCurAnimation = L"L_RUN";
+			}
 		}
 
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();

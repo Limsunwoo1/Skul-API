@@ -17,5 +17,6 @@ namespace sw
 		void SetDirtion(eObjectState type);
 	private:
 		eObjectState mDirtion;
+		std::wstring mCurAnimation;
 	};
 }

@@ -31,6 +31,15 @@ namespace sw
 		velocity.y = -700.f;
 		rigidbody->SetVelocity(velocity);
 		rigidbody->SetGround(false);
+
+
+		eObjectState state =target->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		Animator* animator = target->GetComponent<Animator>();
+
+		if (state == eObjectState::LEFT)
+			animator->Play(L"L_JUMP", false);
+		else if (state == eObjectState::RIGHT)
+			animator->Play(L"R_JUMP", false);
 	}
 
 	void Jump::Run()

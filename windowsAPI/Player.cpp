@@ -14,46 +14,46 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "StateHandle.h"
+#include "Shadow.h"
 
 
 namespace sw
 {
 	Player::Player()
 		: mSpeed(1.0f)
+		, mbShadow(false)
+		, R_mShaow(nullptr)
 	{
 		SetPos({ 100.0f, 100.0f });
 		SetScale({ 200.f, 200.0f });
 
-		mState = new StateHandle();
-		mState->SetTarget(this);
-		this->SetState(eObjectState::IDLE);
-
-		if (!mImage)
-		{
-			mImage = ResourceManager::GetInstance()->Load<Image>(L"PLAYER", L"..\\Resource\\Image\\payer1.bmp");
-		}
-
+		// Animation 세팅
 		mAnimator = new Animator();
+		mAnimator->CreatAnimations(L"R_IDLE", L"..\\Resource\\Animation\\BasicSkul\\R_IDLE", Vector2::Zero, 0.4f);
+		mAnimator->CreatAnimations(L"L_IDLE", L"..\\Resource\\Animation\\BasicSkul\\L_IDLE", Vector2::Zero, 0.4f);
+
+		mAnimator->CreatAnimations(L"R_RUN", L"..\\Resource\\Animation\\BasicSkul\\R_RUN", Vector2::Zero, 0.05f);
+		mAnimator->CreatAnimations(L"L_RUN", L"..\\Resource\\Animation\\BasicSkul\\L_RUN", Vector2::Zero, 0.05f);
+
+		mAnimator->CreatAnimations(L"R_JUMP", L"..\\Resource\\Animation\\BasicSkul\\R_JUMP", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"L_JUMP", L"..\\Resource\\Animation\\BasicSkul\\L_JUMP", Vector2::Zero, 0.2f);
+
+		mAnimator->CreatAnimations(L"R_Drop", L"..\\Resource\\Animation\\BasicSkul\\R_Drop", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"L_Drop", L"..\\Resource\\Animation\\BasicSkul\\L_Drop", Vector2::Zero, 0.2f);
+
+		mAnimator->CreatAnimations(L"R_Dash", L"..\\Resource\\Animation\\BasicSkul\\R_Dash", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"L_Dash", L"..\\Resource\\Animation\\BasicSkul\\L_Dash", Vector2::Zero, 0.2f);
 
 		AddComponent(mAnimator);
 		AddComponent<Rigidbody>();
 		Collider* collider = AddComponent<Collider>();
 		collider->SetScale(this->GetScale());
 
-		Animation::Sprite sprite;
-		sprite.LeftTop = Vector2(0.0f, 0.0f);
-		sprite.size = Vector2((mImage->GetWidth() / 8), (mImage->GetHeight() / 8));
-		sprite.offest = Vector2(0.0f, 0.0f);
-		sprite.duration = 0.1f;
-
-		mAnimator->CreateAnimation(L"IDEL", mImage,
-			sprite.LeftTop, sprite.size, sprite.offest,
-			7, sprite.duration, true);
-
-		mAnimator->CreatAnimations(L"MonsterAttackW", L"..\\Resource\\Animation\\Monster\\AttackW", Vector2::Zero, 0.4f);
-
-		mAnimator->Play(L"MonsterAttackW",true);
-
+		mAnimator->Play(L"R_IDLE", true);
+		
+		mState = new StateHandle();
+		mState->SetTarget(this);
+		this->SetState(eObjectState::IDLE);
 
 		// Animator 에 현재 진행중인 애니메이션 셋팅후 바인딩
 		//animator->StartEvent() = std::bind(&Player::StartEvent, this);
@@ -63,10 +63,11 @@ namespace sw
 			mAnimator->CompleteEvent() = 
 				std::bind(&Player::CompleteEvent, this);
 		}*/
-
-		SetState(eObjectState::IDLE);
 		Camera::GetInstance()->SetTarget(this);
-
+		R_mShaow = new Shadow();
+		R_mShaow->Initialize(L"R_DashEffect", L"..\\Resource\\Animation\\BasicSkul\\R_DashEffect\\R_DashEffect.bmp");
+		R_mShaow->SetTarget(this);
+		SetIsShadow(true);
 	}
 
 	Player::~Player()
@@ -100,24 +101,11 @@ namespace sw
 
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
-		/*transparentblt(hdc,
-			(float)pos.x - (scale.x * 0.5f), (float)pos.y - (scale.y * 0.5f),
-			scale.x, scale.y,
-			mimage->getdc(),
-			0, 0, mimage->getwidth(), mimage->getheight(),
-			rgb(255, 0, 255));*/
-
-		// 총알 충돌박스 만들기
-		// 플레이어 scale 다시생각해보기 
-		
-		/*TransparentBlt(hdc, 
-			finalPos.x, finalPos.y,
-			rect.x, rect.y,
-			mImage->GetDC(), 
-			0, 0, mImage->GetWidth(), mImage->GetHeight(), 
-			RGB(255,0,255));*/
-
 		GameObject::Render(hdc);
+
+		if (R_mShaow)
+			R_mShaow->Render(hdc);
+
 	}
 
 	void Player::OnCollisionEnter(Collider* other)
@@ -127,6 +115,12 @@ namespace sw
 	{
 	}
 	void Player::OnCollisionExit(Collider* other)
+	{
+	}
+	void Player::L_ShadowEffect()
+	{
+	}
+	void Player::R_ShadowEffect()
 	{
 	}
 	void Player::SetState(eObjectState type)

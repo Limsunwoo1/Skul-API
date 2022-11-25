@@ -5,14 +5,15 @@
 #include"Move.h"
 #include "Time.h"
 #include "Jump.h"
+#include "Animator.h"
 
 namespace sw
 {
 	Sliding::Sliding()
 		: mDelta(0.0f)
-		, mRuntime(0.3f)
+		, mRuntime(0.2f)
 		, mForce(2000.f)
-		, mDelay(0.2f)
+		, mDelay(0.1f)
 		, bSliding(false)
 		, bInput(false)
 		, mDirtion(eObjectState::END)
@@ -38,6 +39,12 @@ namespace sw
 			target->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
 
 		bSliding = true;
+
+		Animator* animator = target->GetComponent<Animator>();
+		if(mDirtion == eObjectState::LEFT)
+			animator->Play(L"L_Dash", true);
+		else if (mDirtion == eObjectState::RIGHT)
+			animator->Play(L"R_Dash", true);
 	}
 
 	void Sliding::Run()
@@ -88,7 +95,7 @@ namespace sw
 			Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
 			StateHandle* statehandle = GetTarget()->GetStateHandle();
 			Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
-
+			
 			if (mDirtion == eObjectState::RIGHT)
 			{
 				rigidbody->AddForce(Vector2(Inforce, 0.0f));
@@ -117,6 +124,7 @@ namespace sw
 		if (mDelta < mDelay)
 		{
 			StateHandle* statehandle = GetTarget()->GetStateHandle();
+
 			// objectState Left or Right 아무거나 입력
 			Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
 
@@ -153,6 +161,7 @@ namespace sw
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
 		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
 
+		// 재시전 입력되었는지
 		if (bInput)
 		{
 			End();

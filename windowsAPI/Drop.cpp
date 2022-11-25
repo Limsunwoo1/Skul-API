@@ -4,6 +4,7 @@
 #include "StateHandle.h"
 #include "Move.h"
 #include "Jump.h"
+#include "Animator.h"
 
 
 namespace sw
@@ -17,6 +18,7 @@ namespace sw
 	void Drop::Start(Player* target)
 	{
 		SetTarget(target);
+
 	}
 	void Drop::Run()
 	{
@@ -31,15 +33,21 @@ namespace sw
 			return;
 		}
 
+		Animator* animator = GetTarget()->GetComponent<Animator>();
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-300.f, 0.0f));
+
+			animator->Play(L"L_Drop", false);
+
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(300.f, 0.0f));
+
+			animator->Play(L"R_Drop", false);
 		}
 
 		Jump* jump = statehandle->GetState<Jump>(eObjectState::JUMP);

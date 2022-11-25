@@ -161,6 +161,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="Drop.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="EndScene.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EventManager.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Shadow.h" />
     <ClInclude Include="Sliding.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundManager.h" />
@@ -216,6 +218,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Drop.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EventManager.cpp" />
@@ -239,6 +242,7 @@
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="Sliding.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="BaseResource.cpp" />

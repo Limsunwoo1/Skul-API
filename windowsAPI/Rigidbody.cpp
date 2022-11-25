@@ -92,7 +92,7 @@ namespace sw
 
 		// 속도에 맞게 물체를 이동시킨다
 		Vector2 pos = GetOwner()->GetPos();
-		/*Player* player = dynamic_cast<Player*>(GetOwner());
+		Player* player = dynamic_cast<Player*>(GetOwner());
 		if (player != nullptr)
 		{
 			if(player->GetState() != eObjectState::SLIDING)
@@ -111,7 +111,7 @@ namespace sw
 				mVelocity = mVelocity + mGravity * Time::GetInstance()->DeltaTime();
 				pos = pos + mVelocity * Time::GetInstance()->DeltaTime();
 			}
-		}*/
+		}
 
 
 		pos = pos + mForce * Time::GetInstance()->DeltaTime();

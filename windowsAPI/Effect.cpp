@@ -35,7 +35,7 @@ namespace sw
 		if (mImage == nullptr)
 			return;
 
-		//mPos = Camera::GetInstance()->CalculatePos(mPos);
+		Vector2 pos = Camera::GetInstance()->CalculatePos(mPos);
 
 		BLENDFUNCTION func = {};
 		func.BlendOp = AC_SRC_OVER;
@@ -44,8 +44,8 @@ namespace sw
 		func.SourceConstantAlpha = 150; // 0 - 225
 
 		AlphaBlend(hdc
-			, (int)mPos.x - 50.f
-			, (int)mPos.y - 50.f
+			, (int)pos.x - 50.f
+			, (int)pos.y - 50.f
 			, (int)100.f
 			, (int)100.f
 			, mImage->GetDC()

@@ -101,6 +101,9 @@ namespace sw
 
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
+		Rectangle(hdc, pos.x, pos.y, pos.x + 30, pos.y + 30);
+
+
 		GameObject::Render(hdc);
 
 		if (R_mShaow)

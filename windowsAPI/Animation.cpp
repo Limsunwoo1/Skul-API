@@ -48,7 +48,7 @@ namespace sw
 		func.AlphaFormat = AC_SRC_ALPHA;
 		func.SourceConstantAlpha = 255; // 0 - 225
 
-		pos += mSpriteSheet[mSpriteIndex].offest;
+		//pos += mSpriteSheet[mSpriteIndex].offest;
 
 		/*TransparentBlt(hdc
 			, (int)pos.x - scale.x / 2.0f

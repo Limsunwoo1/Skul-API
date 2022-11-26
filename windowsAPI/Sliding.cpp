@@ -71,51 +71,51 @@ namespace sw
 
 	bool Sliding::SlidingRun()
 	{
-		if (bSliding)
+		if (!bSliding)
+			return false;
+
+		if (mSlidingCount > 2)
 		{
-			if (mSlidingCount > 2)
-			{
-				mDelta = mDelay;
-				bSliding = false;
+			mDelta = mDelay;
+			bSliding = false;
 
-				return false;
-			}
-
-			if (mDelta >= mRuntime)
-			{
-				bSliding = false;
-				mDelta = 0.0f;
-
-				return false;
-			}
-
-			float run = (mRuntime / mDelta);
-			float Inforce = mForce / run;
-
-			Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
-			StateHandle* statehandle = GetTarget()->GetStateHandle();
-			Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
-			
-			if (mDirtion == eObjectState::RIGHT)
-			{
-				rigidbody->AddForce(Vector2(Inforce, 0.0f));
-			}
-			else if (mDirtion == eObjectState::LEFT)
-			{
-				rigidbody->AddForce(Vector2(-Inforce, 0.0f));
-			}
-
-			if (KEY_PRESSE(eKeyCode::RIGHT))
-			{
-				move->SetDirtion(eObjectState::RIGHT);
-			}
-			else if (KEY_PRESSE(eKeyCode::LEFT))
-			{
-				move->SetDirtion(eObjectState::LEFT);
-			}
-
-			return true;
+			return false;
 		}
+
+		if (mDelta >= mRuntime)
+		{
+			bSliding = false;
+			mDelta = 0.0f;
+
+			return false;
+		}
+
+		float run = (mRuntime / mDelta);
+		float Inforce = mForce / run;
+
+		Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
+		StateHandle* statehandle = GetTarget()->GetStateHandle();
+		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
+
+		if (mDirtion == eObjectState::RIGHT)
+		{
+			rigidbody->AddForce(Vector2(Inforce, 0.0f));
+		}
+		else if (mDirtion == eObjectState::LEFT)
+		{
+			rigidbody->AddForce(Vector2(-Inforce, 0.0f));
+		}
+
+		if (KEY_PRESSE(eKeyCode::RIGHT))
+		{
+			move->SetDirtion(eObjectState::RIGHT);
+		}
+		else if (KEY_PRESSE(eKeyCode::LEFT))
+		{
+			move->SetDirtion(eObjectState::LEFT);
+		}
+
+		return true;
 	}
 
 	bool Sliding::DoubleSlide()

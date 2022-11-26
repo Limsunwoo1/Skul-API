@@ -18,6 +18,7 @@ namespace sw
 	void Drop::Start(Player* target)
 	{
 		SetTarget(target);
+		// 애니메이션 세팅해주는 세팅
 
 	}
 	void Drop::Run()

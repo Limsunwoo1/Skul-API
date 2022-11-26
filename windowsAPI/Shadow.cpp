@@ -4,6 +4,7 @@
 #include "ResourceManager.h"
 #include "Time.h"
 #include "Effect.h"
+#include "Camera.h"
 
 namespace sw
 {
@@ -16,7 +17,7 @@ namespace sw
 	}
 	Shadow::~Shadow()
 	{
-
+		
 	}
 
 	void Shadow::Initialize(std::wstring key, std::wstring path)
@@ -41,6 +42,9 @@ namespace sw
 		mDuraction += Time::GetInstance()->DeltaTime();
 		if (mDuraction >= 0.2f)
 		{
+		/*	Vector2 pos = mTarget->GetPos();
+			pos = Camera::GetInstance()->CalculatePos(pos);*/
+
 			mShadows[mCurEffect]->SetPos(mTarget->GetPos());
 			mCurEffect++;
 			mDuraction -= 0.2f;

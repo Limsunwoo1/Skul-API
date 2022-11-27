@@ -11,6 +11,9 @@ namespace sw
 		Effect();
 		~Effect();
 
+		void Tick();
+		void Render(HDC hdc);
+
 		void SetImage(std::wstring key, std::wstring path);
 		Image* GetImage() { return mImage; }
 
@@ -18,7 +21,6 @@ namespace sw
 		Player* GetTarget() { return mTarget; }
 
 		void SetPos(Vector2 pos) { mPos = pos; }
-		void Render(HDC hdc);
 
 	private:
 		Image* mImage;

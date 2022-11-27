@@ -19,30 +19,36 @@ namespace sw
 	void Idle::Start(Player* target)
 	{
 		SetTarget(target);
-		Animator* animator = target->GetComponent<Animator>();
-		StateHandle* statehandle = GetTarget()->GetStateHandle();
-		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
 
-		if (move->GetDirtion() == eObjectState::LEFT)
-		{
-			animator->Play(L"L_IDLE", true);
-		}
-		else if (move->GetDirtion() == eObjectState::RIGHT)
-		{
-			animator->Play(L"R_IDLE", true);
-		}
+		SetStartAnimation();
+		ResetCount();
 	}
 
 	void Idle::Run()
 	{
-		eObjectState NextState = eObjectState::END;
+		if (GetTarget() == nullptr)
+			return;
 
+		InputNextState();
+	}
+	void Idle::End()
+	{
+
+	}
+
+	void Idle::ResetCount()
+	{
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
 		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
 		jump->SetJumpCount(0);
 
 		Sliding* sliding = stateHandle->GetState<Sliding>(eObjectState::SLIDING);
 		sliding->SetSlidingCount(0);
+	}
+
+	void Idle::InputNextState()
+	{
+		eObjectState NextState = eObjectState::END;
 
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
@@ -71,8 +77,23 @@ namespace sw
 			GetTarget()->SetState(NextState);
 		}
 	}
-	void Idle::End()
-	{
 
+	void Idle::SetStartAnimation()
+	{
+		Animator* animator = GetTarget()->GetComponent<Animator>();
+		StateHandle* statehandle = GetTarget()->GetStateHandle();
+		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
+
+		// 방향 설정
+		if (move->GetDirtion() == eObjectState::LEFT)
+		{
+			animator->Play(L"L_IDLE", true);
+		}
+		else if (move->GetDirtion() == eObjectState::RIGHT)
+		{
+			animator->Play(L"R_IDLE", true);
+		}
+		else // 처음 실행시 오른쪽 방향
+			animator->Play(L"R_IDLE", true);
 	}
 }

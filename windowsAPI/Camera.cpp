@@ -23,7 +23,6 @@ namespace sw
 
 	Camera::~Camera()
 	{
-
 	}
 
 	void Camera::Initialize()

@@ -27,13 +27,29 @@ namespace sw
 
 	void Move::Run()
 	{
-		Player* player = GetTarget();
-		if (player == nullptr)
+		if (GetTarget() == nullptr)
 			return;
+	
+		SetAnimation();
+		NextState();
+	}
 
-		//player->GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 500.f));
+	void Move::End()
+	{
+		
+	}
+
+	void Move::SetDirtion(eObjectState type)
+	{
+		if (type == eObjectState::LEFT ||
+			type == eObjectState::RIGHT)
+			mDirtion = type;
+	}
+
+	void Move::SetAnimation()
+	{
+		Player* player = GetTarget();
 		Animator* animator = GetTarget()->GetComponent<Animator>();
-		eObjectState NextState = eObjectState::END;
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(500.f, 0.0f));
@@ -56,7 +72,11 @@ namespace sw
 				mCurAnimation = L"L_RUN";
 			}
 		}
+	}
 
+	void Move::NextState()
+	{
+		eObjectState nextState = eObjectState::END;
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
 		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
 
@@ -64,45 +84,33 @@ namespace sw
 		{
 			if (jump->GetJumpCount() < 2)
 			{
-				NextState = eObjectState::JUMP;
+				nextState = eObjectState::JUMP;
 			}
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{
-			NextState = eObjectState::ATTACK_1;
+			nextState = eObjectState::ATTACK_1;
 		}
-		else if (KEY_DOWN(eKeyCode::Z) || 
-			KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z) || 
+		else if (KEY_DOWN(eKeyCode::Z) ||
+			KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z) ||
 			KEY_PRESSE(eKeyCode::RIGHT) && KEY_DOWN(eKeyCode::Z))
 		{
-			NextState = eObjectState::SLIDING;
+			nextState = eObjectState::SLIDING;
 		}
 		else if (KEY_UP(eKeyCode::RIGHT))
 		{
-			NextState = eObjectState::IDLE;
+			nextState = eObjectState::IDLE;
 		}
 		else if (KEY_UP(eKeyCode::LEFT))
 		{
-			NextState = eObjectState::IDLE;
+			nextState = eObjectState::IDLE;
 		}
 
-		if (NextState != eObjectState::END)
+		if (nextState != eObjectState::END)
 		{
 			End();
-			player->SetState(NextState);
+			GetTarget()->SetState(nextState);
 		}
-	}
-
-	void Move::End()
-	{
-		
-	}
-
-	void Move::SetDirtion(eObjectState type)
-	{
-		if (type == eObjectState::LEFT ||
-			type == eObjectState::RIGHT)
-			mDirtion = type;
 	}
 
 }

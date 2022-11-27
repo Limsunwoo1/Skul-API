@@ -28,6 +28,10 @@ namespace sw
 		mTarget = target;
 	}
 
+	void Effect::Tick()
+	{
+	}
+
 	void Effect::Render(HDC hdc)
 	{
 		if (mTarget == nullptr)

@@ -10,7 +10,15 @@ namespace sw
 
 	UIManager::~UIManager()
 	{
+		for (auto ui : mUIs)
+		{
+			if (ui.second == nullptr)
+				continue;
 
+			delete ui.second;
+			ui.second = nullptr;
+		}
+		mUIs.clear();
 	}
 
 	void UIManager::Initialize()

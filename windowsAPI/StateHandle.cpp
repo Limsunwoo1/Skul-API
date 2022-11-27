@@ -26,7 +26,19 @@ namespace sw
 
 	StateHandle::~StateHandle()
 	{
+		auto iter = mStates.begin();
 
+		for (; iter != mStates.end();++iter)
+		{
+			if (iter->second == nullptr)
+				continue;
+			if(iter->first == eObjectState::RIGHT)
+				continue;
+
+			delete iter->second;
+			iter->second = nullptr;
+		}
+		mStates.clear();
 	}
 
 	void StateHandle::Tick()

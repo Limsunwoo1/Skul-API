@@ -9,7 +9,7 @@
 namespace sw
 {
 	Shadow::Shadow()
-		: mDuraction(0.0f)
+		: mDelta(0.0f)
 		, mTarget(nullptr)
 		, mShdowMax(10)
 		, mCurEffect(0)
@@ -17,7 +17,15 @@ namespace sw
 	}
 	Shadow::~Shadow()
 	{
-		
+		for (Effect* effect : mShadows)
+		{
+			if (!effect)
+				continue;
+
+			delete effect;
+			effect = nullptr;
+		}
+		mShadows.clear();
 	}
 
 	void Shadow::Initialize(std::wstring key, std::wstring path)
@@ -30,6 +38,34 @@ namespace sw
 		}
 	}
 
+	void Shadow::Tick()
+	{
+		if (mTarget == nullptr)
+			return;
+		if (!mTarget->GetIsShadow())
+			return;
+
+		if (mCurEffect >= 10)
+		{
+			mTarget->SetIsShadow(false);
+			mCurEffect = 0;
+			return;
+		}
+
+		mDelta += Time::GetInstance()->DeltaTime();
+		if (mDelta >= 0.03f)
+		{
+			mShadows[mCurEffect]->SetPos(mTarget->GetPos());
+			mCurEffect++;
+			mDelta -= 0.03f;
+		}
+
+		for (int i = 0; i < mCurEffect; ++i)
+		{
+			mShadows[i]->Tick();
+		}
+	}
+
 
 	void Shadow::Render(HDC hdc)
 	{
@@ -38,25 +74,12 @@ namespace sw
 		if (!mTarget->GetIsShadow())
 			return;
 
-		// target pos 를받아 일정간격으로 세팅
-		mDuraction += Time::GetInstance()->DeltaTime();
-		if (mDuraction >= 0.2f)
-		{
-		/*	Vector2 pos = mTarget->GetPos();
-			pos = Camera::GetInstance()->CalculatePos(pos);*/
-
-			mShadows[mCurEffect]->SetPos(mTarget->GetPos());
-			mCurEffect++;
-			mDuraction -= 0.2f;
-		}
 
 		for (int i = 0; i < mCurEffect; ++i)
 		{
 			mShadows[i]->Render(hdc);
 		}
 
-		if (mCurEffect >= 10)
-			mCurEffect = 0;
 	}
 
 	void Shadow::SetTarget(Player* target)

@@ -19,6 +19,8 @@ namespace sw
 
 		UINT GetSlidingCount() { return mSlidingCount; }
 		void SetSlidingCount(UINT count) { mSlidingCount = count; }
+
+		void SetStartAnimation();
 	private:
 		eObjectState mDirtion;
 

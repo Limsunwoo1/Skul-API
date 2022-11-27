@@ -17,7 +17,14 @@ namespace sw
 
 	Animator::~Animator()
 	{
+		for (auto Animtion : mAnimations)
+		{
+			if (Animtion.second == nullptr)
+				continue;
 
+			delete Animtion.second;
+			Animtion.second = nullptr;
+		}
 	}
 
 	void Animator::Tick()

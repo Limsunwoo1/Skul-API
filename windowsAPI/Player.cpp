@@ -22,7 +22,8 @@ namespace sw
 	Player::Player()
 		: mSpeed(1.0f)
 		, mbShadow(false)
-		, R_mShaow(nullptr)
+		, mShaow(nullptr)
+		, mMaxAttackCount(2)
 	{
 		SetPos({ 100.0f, 100.0f });
 		SetScale({ 200.f, 200.0f });
@@ -64,15 +65,16 @@ namespace sw
 				std::bind(&Player::CompleteEvent, this);
 		}*/
 		Camera::GetInstance()->SetTarget(this);
-		R_mShaow = new Shadow();
-		R_mShaow->Initialize(L"R_DashEffect", L"..\\Resource\\Animation\\BasicSkul\\R_DashEffect\\R_DashEffect.bmp");
-		R_mShaow->SetTarget(this);
-		SetIsShadow(true);
+		mShaow = new Shadow();
+		mShaow->Initialize(L"R_DashEffect", L"..\\Resource\\Animation\\BasicSkul\\R_DashEffect\\R_DashEffect.bmp");
+		mShaow->SetTarget(this);
 	}
 
 	Player::~Player()
 	{
 		GameObject::~GameObject();
+		delete mState;
+		delete mShaow;
 	}
 
 	void Player::CompleteEvent()
@@ -92,6 +94,10 @@ namespace sw
 	{
 		GameObject::Tick();
 		mState->Tick();
+
+		if (mShaow)
+			mShaow->Tick();
+
 	}
 
 	void Player::Render(HDC hdc)
@@ -101,13 +107,10 @@ namespace sw
 
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
-		Rectangle(hdc, pos.x, pos.y, pos.x + 30, pos.y + 30);
-
+		if (mShaow)
+			mShaow->Render(hdc);
 
 		GameObject::Render(hdc);
-
-		if (R_mShaow)
-			R_mShaow->Render(hdc);
 
 	}
 
@@ -120,10 +123,7 @@ namespace sw
 	void Player::OnCollisionExit(Collider* other)
 	{
 	}
-	void Player::L_ShadowEffect()
-	{
-	}
-	void Player::R_ShadowEffect()
+	void Player::ShadowEffect()
 	{
 	}
 	void Player::SetState(eObjectState type)

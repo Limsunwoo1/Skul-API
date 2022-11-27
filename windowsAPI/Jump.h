@@ -15,6 +15,11 @@ namespace sw
 
 		UINT GetJumpCount() { return mJumpCount; }
 		void SetJumpCount(UINT count) { mJumpCount = count; }
+
+		void SetStartAnimation();
+		void PresseInput();
+		void DownInput();
+		void ChangeDrop();
 	private:
 		UINT mJumpCount;
 	};

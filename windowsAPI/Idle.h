@@ -12,6 +12,10 @@ namespace sw
 		virtual void Start(Player* target)  override;
 		virtual void Run() override;
 		virtual void End() override;
+
+		void ResetCount();
+		void SetStartAnimation();
+		void InputNextState();
 	};
 }
 

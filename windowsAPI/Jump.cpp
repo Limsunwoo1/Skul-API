@@ -26,15 +26,39 @@ namespace sw
 		if (mJumpCount > 2)
 			return;
 
-		Rigidbody* rigidbody = target->GetComponent<Rigidbody>();
+		SetStartAnimation();
+	}
+
+	void Jump::Run()
+	{
+		if (GetTarget() == nullptr)
+			return;
+
+		ChangeDrop();
+		PresseInput();
+		DownInput();
+	}
+
+	void Jump::End()
+	{
+
+	}
+
+	void Jump::SetStartAnimation()
+	{
+		Player* player = GetTarget();
+
+		// 점프력 설정
+		Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
 		Vector2 velocity = rigidbody->GetVelocity();
 		velocity.y = -700.f;
 		rigidbody->SetVelocity(velocity);
 		rigidbody->SetGround(false);
 
 
-		eObjectState state =target->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
-		Animator* animator = target->GetComponent<Animator>();
+		// 방향설정
+		eObjectState state = player->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		Animator* animator = player->GetComponent<Animator>();
 
 		if (state == eObjectState::LEFT)
 			animator->Play(L"L_JUMP", false);
@@ -42,44 +66,25 @@ namespace sw
 			animator->Play(L"R_JUMP", false);
 	}
 
-	void Jump::Run()
+	void Jump::PresseInput()
 	{
 		Player* player = GetTarget();
-		if (player == nullptr)
-			return;
-
-		Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
-		Vector2 volocity = rigidbody->GetVelocity();
-
-		if (volocity.y > 0)
-		{
-			End();
-			player->SetState(eObjectState::DROP);
-			return;
-		}
-
-		if (rigidbody->GetGround())
-		{
-			End();
-			player->SetState(eObjectState::IDLE);
-			mJumpCount = 0;
-			return;
-		}
-
-		//player->GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 500.f));
-		StateHandle* stathandle = player->GetStateHandle();
-		eObjectState NextState = eObjectState::END;
+		StateHandle* statehandle = player->GetStateHandle();
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			stathandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(-300.f, 0.0f));
+			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(-500.f, 0.0f));
 		}
 		else if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			stathandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(300.f, 0.0f));
+			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(500.f, 0.0f));
 		}
+	}
 
+	void Jump::DownInput()
+	{
+		eObjectState NextState = eObjectState::END;
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			NextState = eObjectState::JUMP;
@@ -96,13 +101,29 @@ namespace sw
 		if (NextState != eObjectState::END)
 		{
 			End();
-			player->SetState(NextState);
+			GetTarget()->SetState(NextState);
 		}
 	}
 
-	void Jump::End()
+	void Jump::ChangeDrop()
 	{
+		Player* player = GetTarget();
+		Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
+		Vector2 velocity = rigidbody->GetVelocity();
 
+		if (velocity.y < 0)
+			return;
+		
+		End();
+		player->SetState(eObjectState::DROP);
+		
+		//if (rigidbody->GetGround())
+		//{
+		//	End();
+		//	player->SetState(eObjectState::IDLE);
+		//	mJumpCount = 0;
+		//	return;
+		//}
 	}
 
 }

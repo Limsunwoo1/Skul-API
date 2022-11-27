@@ -35,22 +35,15 @@ namespace sw
 		mInputState = eObjectState::END;
 		mDelta = 0.0f;
 
-		mDirtion =
-			target->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		if(mSlidingCount <= 2)
+			target->SetIsShadow(true);
 
-		bSliding = true;
-
-		Animator* animator = target->GetComponent<Animator>();
-		if(mDirtion == eObjectState::LEFT)
-			animator->Play(L"L_Dash", true);
-		else if (mDirtion == eObjectState::RIGHT)
-			animator->Play(L"R_Dash", true);
+		SetStartAnimation();
 	}
 
 	void Sliding::Run()
 	{
-		Player* player = GetTarget();
-		if (player == nullptr)
+		if (GetTarget() == nullptr)
 			return;
 
 		mDelta += Time::GetInstance()->DeltaTime();
@@ -67,6 +60,20 @@ namespace sw
 	void Sliding::End()
 	{
 		
+	}
+
+	void Sliding::SetStartAnimation()
+	{
+		mDirtion =
+			GetTarget()->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+
+		bSliding = true;
+
+		Animator* animator = GetTarget()->GetComponent<Animator>();
+		if (mDirtion == eObjectState::LEFT)
+			animator->Play(L"L_Dash", true);
+		else if (mDirtion == eObjectState::RIGHT)
+			animator->Play(L"R_Dash", true);
 	}
 
 	bool Sliding::SlidingRun()
@@ -121,35 +128,31 @@ namespace sw
 	bool Sliding::DoubleSlide()
 	{
 		// 딜레이 시간동안 재입력시 재시전
-		if (mDelta < mDelay)
+		if (mDelta > mDelay)
+			return false;
+		
+		StateHandle* statehandle = GetTarget()->GetStateHandle();
+
+		// objectState Left or Right 아무거나 입력
+		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
+
+		if (mSlidingCount <= 2)
 		{
-			StateHandle* statehandle = GetTarget()->GetStateHandle();
-
-			// objectState Left or Right 아무거나 입력
-			Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
-
-			if (mSlidingCount <= 2)
+			if (KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z))
 			{
-				if (KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z))
-				{
-					move->SetDirtion(eObjectState::LEFT);
-					bInput = true;
-				}
-				else if (KEY_PRESSE(eKeyCode::RIGHT) && KEY_DOWN(eKeyCode::Z))
-				{
-					move->SetDirtion(eObjectState::RIGHT);
-					bInput = true;
-				}
-				else if (KEY_DOWN(eKeyCode::Z))
-				{
-					bInput = true;
-				}
+				move->SetDirtion(eObjectState::LEFT);
+				bInput = true;
 			}
-
-			return true;
+			else if (KEY_PRESSE(eKeyCode::RIGHT) && KEY_DOWN(eKeyCode::Z))
+			{
+				move->SetDirtion(eObjectState::RIGHT);
+				bInput = true;
+			}
+			else if (KEY_DOWN(eKeyCode::Z))
+			{
+				bInput = true;
+			}
 		}
-
-		return false;
 	}
 
 	void Sliding::InputNextState()

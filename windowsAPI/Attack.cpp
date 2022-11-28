@@ -64,7 +64,7 @@ namespace sw
 		{
 			End();
 			mDelta = 0.0f;
-			GetTarget()->SetState(eObjectState::IDLE);
+			player->SetState(eObjectState::IDLE);
 			return;
 		}
 
@@ -73,7 +73,7 @@ namespace sw
 			++mAttackCount;
 			mDelta = 0.0f;
 
-			if (mAttackCount > GetTarget()->GetMaxAttackCount())
+			if (mAttackCount > player->GetMaxAttackCount())
 				return;
 
 			End();

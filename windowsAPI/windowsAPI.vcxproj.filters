@@ -132,6 +132,9 @@
     <Filter Include="Engine\Effect\Shadow">
       <UniqueIdentifier>{13cd6d5b-ee08-44a7-9e5a-2f821644c1c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\StateHandle\State\Attack">
+      <UniqueIdentifier>{d003dca6-97a9-4a56-8c65-bbb19b4dcb35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -305,6 +308,9 @@
     <ClInclude Include="Effect.h">
       <Filter>Engine\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Engine\StateHandle\State\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -456,6 +462,9 @@
     </ClCompile>
     <ClCompile Include="Shadow.cpp">
       <Filter>Engine\Effect\Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>Engine\StateHandle\State\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

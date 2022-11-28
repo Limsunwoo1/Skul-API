@@ -37,6 +37,5 @@ namespace sw
 		std::pair<eObjectState, State*> mCurState;
 		std::pair<eObjectState, State*> mPrevState;
 	};
-
 }
 

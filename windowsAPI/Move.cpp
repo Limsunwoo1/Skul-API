@@ -89,7 +89,7 @@ namespace sw
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{
-			nextState = eObjectState::ATTACK_1;
+			nextState = eObjectState::ATTACK;
 		}
 		else if (KEY_DOWN(eKeyCode::Z) ||
 			KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z) ||

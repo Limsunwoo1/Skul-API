@@ -62,6 +62,8 @@ namespace sw
 			, (int)mSpriteSheet[mSpriteIndex].size.y
 			, RGB(255, 0, 255));*/
 
+		pos = pos - mSpriteSheet[mSpriteIndex].offest;
+
 		AlphaBlend(hdc
 			, (int)pos.x - 50.f
 			, (int)pos.y - 50.f

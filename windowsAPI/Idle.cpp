@@ -5,6 +5,7 @@
 #include "Sliding.h"
 #include "Animator.h"
 #include "Move.h"
+#include "Attack.h"
 
 namespace sw
 {
@@ -44,6 +45,9 @@ namespace sw
 
 		Sliding* sliding = stateHandle->GetState<Sliding>(eObjectState::SLIDING);
 		sliding->SetSlidingCount(0);
+
+		Attack* attack = stateHandle->GetState<Attack>(eObjectState::ATTACK);
+		attack->SetAttackCount(0);
 	}
 
 	void Idle::InputNextState()
@@ -64,10 +68,15 @@ namespace sw
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{
-			NextState = eObjectState::ATTACK_1;
+			NextState = eObjectState::ATTACK;
 		}
 		else if (KEY_DOWN(eKeyCode::Z))
 		{
+			NextState = eObjectState::SLIDING;
+		}
+		else if (KEY_DOWN(eKeyCode::X))
+		{
+			
 			NextState = eObjectState::SLIDING;
 		}
 

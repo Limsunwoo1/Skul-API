@@ -65,10 +65,10 @@ namespace sw
 		pos = pos - mSpriteSheet[mSpriteIndex].offest;
 
 		AlphaBlend(hdc
-			, (int)pos.x - 50.f
-			, (int)pos.y - 50.f
-			, (int)100.f
-			, (int)100.f
+			, (int)pos.x - ((mSpriteSheet[mSpriteIndex].size.x * 0.5f) * (scale.x * 0.5f))
+			, (int)pos.y - ((mSpriteSheet[mSpriteIndex].size.y * 0.5f) * (scale.y * 0.5f))
+			, (int)mSpriteSheet[mSpriteIndex].size.x * (scale.x * 0.5f)
+			, (int)mSpriteSheet[mSpriteIndex].size.y * (scale.y * 0.5f)
 			, mImage->GetDC()
 			, (int)mSpriteSheet[mSpriteIndex].LeftTop.x
 			, (int)mSpriteSheet[mSpriteIndex].LeftTop.y

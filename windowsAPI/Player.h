@@ -20,6 +20,9 @@ namespace sw
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
+		virtual void InitAnimtion() = 0;
+		virtual void InitState() = 0;
+
 		void ShadowEffect();
 
 		void SetState(eObjectState type);
@@ -35,15 +38,13 @@ namespace sw
 	private:
 		void CompleteEvent();
 
-	private:
+	protected:
+		StateHandle* mState;
 		Image* mImage;
 		Animator* mAnimator;
-		StateHandle* mState;
-		
+
 		Shadow* mShaow;
 		bool mbShadow;
-
-		float mSpeed;
 		UINT mMaxAttackCount;
 	};
 }

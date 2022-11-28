@@ -50,7 +50,7 @@ namespace sw
 			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-300.f, 0.0f));
 
-			animator->Play(L"L_Drop", false);
+			animator->Play(GetL_Animation(), false);
 
 		}
 		else if (KEY_PRESSE(eKeyCode::RIGHT))
@@ -58,7 +58,7 @@ namespace sw
 			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(300.f, 0.0f));
 
-			animator->Play(L"R_Drop", false);
+			animator->Play(GetR_Animation(), false);
 		}
 	}
 	void Drop::SetStartAnimation()
@@ -68,9 +68,9 @@ namespace sw
 		Animator* animator = player->GetComponent<Animator>();
 
 		if (state == eObjectState::LEFT)
-			animator->Play(L"L_Drop", false);
+			animator->Play(GetL_Animation(), false);
 		else if (state == eObjectState::RIGHT)
-			animator->Play(L"R_Drop", false);
+			animator->Play(GetR_Animation(), false);
 	}
 	void Drop::NextStateInput()
 	{

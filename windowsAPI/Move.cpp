@@ -54,22 +54,22 @@ namespace sw
 		{
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(500.f, 0.0f));
 			mDirtion = eObjectState::RIGHT;
-
-			if (mCurAnimation != L"R_RUN")
+			std::wstring setAnimation = GetR_Animation();
+			if (mCurAnimation != setAnimation)
 			{
-				animator->Play(L"R_RUN", true);
-				mCurAnimation = L"R_RUN";
+				animator->Play(setAnimation, true);
+				mCurAnimation = setAnimation;
 			}
 		}
 		else if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-500.f, 0.0f));
 			mDirtion = eObjectState::LEFT;
-
-			if (mCurAnimation != L"L_RUN")
+			std::wstring setAnimation = GetL_Animation();
+			if (mCurAnimation != setAnimation)
 			{
-				animator->Play(L"L_RUN", true);
-				mCurAnimation = L"L_RUN";
+				animator->Play(setAnimation, true);
+				mCurAnimation = setAnimation;
 			}
 		}
 	}

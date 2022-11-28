@@ -1,7 +1,6 @@
 #include "TitleScene.h"
 #include "Player.h"
 #include "BackGround.h"
-#include "MeteorControler.h"
 #include "Input.h"
 #include "SceneManager.h"
 

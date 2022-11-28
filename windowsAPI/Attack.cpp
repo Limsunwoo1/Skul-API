@@ -14,11 +14,11 @@ namespace sw
 		, mAttackCount(0)
 		, bInput(false)
 	{
-		mR_AttackSequence.push_back(L"R_AttackA");
+		/*mR_AttackSequence.push_back(L"R_AttackA");
 		mR_AttackSequence.push_back(L"R_AttackB");
 
 		mL_AttackSequence.push_back(L"L_AttackA");
-		mL_AttackSequence.push_back(L"L_AttackB");
+		mL_AttackSequence.push_back(L"L_AttackB");*/
 	}
 
 	Attack::~Attack()
@@ -33,7 +33,7 @@ namespace sw
 	}
 	void Attack::Run()
 	{
-		//mDelta += Time::GetInstance()->DeltaTime();
+		mDelta += Time::GetInstance()->DeltaTime();
 
 		SetAnimation();
 	}
@@ -54,12 +54,23 @@ namespace sw
 			animator->Play(mL_AttackSequence[mAttackCount], false);
 		else if (state == eObjectState::RIGHT)
 			animator->Play(mR_AttackSequence[mAttackCount], false);
+
+		mDelta = 0.0f;
 	}
 
 	void Attack::SetAnimation()
 	{
 		Player* player = GetTarget();
 		Animator* animator = player->GetComponent<Animator>();
+		if (mDelta < 0.4f)
+		{
+			// 이동하면서 공격 추가
+
+			if (KEY_DOWN(eKeyCode::X))
+				bInput = true;
+			return;
+		}
+
 		if (animator->isComplete())
 		{
 			End();
@@ -68,14 +79,15 @@ namespace sw
 			return;
 		}
 
-		if (KEY_DOWN(eKeyCode::X))
+		if (bInput)
 		{
 			++mAttackCount;
-			mDelta = 0.0f;
+			bInput = false;
 
 			if (mAttackCount > player->GetMaxAttackCount())
 				return;
 
+			mDelta = 0.0f;
 			End();
 			Start(GetTarget());
 		}

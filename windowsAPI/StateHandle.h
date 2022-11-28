@@ -19,6 +19,8 @@ namespace sw
 		void SetTarget(Player* target) { mTarget = target; }
 		Player* GetTarget() { return mTarget; }
 
+		void PushState(eObjectState type, State* state);
+
 		template<typename T>
 		T* GetState(eObjectState type)
 		{

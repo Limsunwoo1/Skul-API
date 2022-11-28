@@ -40,13 +40,13 @@ namespace sw
 	void Idle::ResetCount()
 	{
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
-		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
+		Jump* jump = dynamic_cast<Jump*>(stateHandle->GetState<Jump>(eObjectState::JUMP));
 		jump->SetJumpCount(0);
 
-		Sliding* sliding = stateHandle->GetState<Sliding>(eObjectState::SLIDING);
+		Sliding* sliding = dynamic_cast<Sliding*>(stateHandle->GetState<Sliding>(eObjectState::SLIDING));
 		sliding->SetSlidingCount(0);
 
-		Attack* attack = stateHandle->GetState<Attack>(eObjectState::ATTACK);
+		Attack* attack = dynamic_cast<Attack*>(stateHandle->GetState<Attack>(eObjectState::ATTACK));
 		attack->SetAttackCount(0);
 	}
 
@@ -96,13 +96,13 @@ namespace sw
 		// 방향 설정
 		if (move->GetDirtion() == eObjectState::LEFT)
 		{
-			animator->Play(L"L_IDLE", true);
+			animator->Play(GetL_Animation(), true);
 		}
 		else if (move->GetDirtion() == eObjectState::RIGHT)
 		{
-			animator->Play(L"R_IDLE", true);
+			animator->Play(GetR_Animation(), true);
 		}
 		else // 처음 실행시 오른쪽 방향
-			animator->Play(L"R_IDLE", true);
+			animator->Play(GetR_Animation(), true);
 	}
 }

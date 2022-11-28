@@ -1,13 +1,16 @@
 #pragma once
-#include "GameObject.h"
+#include "Player.h"
 
 namespace sw
 {
-	class Meteor : public GameObject
+	class StateHandle;
+	class Animator;
+	class Image;
+	class BasicSkul : public Player
 	{
 	public:
-		Meteor();
-		virtual ~Meteor();
+		BasicSkul();
+		virtual ~BasicSkul();
 
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
@@ -16,8 +19,9 @@ namespace sw
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
-	private:
-		Vector2D speed;
+		virtual void InitAnimtion() override;
+		virtual void InitState() override;
+
 	};
 }
 

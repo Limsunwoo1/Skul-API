@@ -1,7 +1,6 @@
 #include "EndScene.h"
 #include "Player.h"
 #include "BackGround.h"
-#include "MeteorControler.h"
 
 namespace sw
 {

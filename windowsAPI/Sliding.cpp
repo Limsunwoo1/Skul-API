@@ -71,9 +71,9 @@ namespace sw
 
 		Animator* animator = GetTarget()->GetComponent<Animator>();
 		if (mDirtion == eObjectState::LEFT)
-			animator->Play(L"L_Dash", true);
+			animator->Play(GetL_Animation(), true);
 		else if (mDirtion == eObjectState::RIGHT)
-			animator->Play(L"R_Dash", true);
+			animator->Play(GetR_Animation(), true);
 	}
 
 	bool Sliding::SlidingRun()

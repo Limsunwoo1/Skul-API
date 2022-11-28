@@ -154,6 +154,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BasicSkul.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
@@ -175,9 +176,6 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="Maths.h" />
-    <ClInclude Include="Meteor.h" />
-    <ClInclude Include="MeteorControler.h" />
-    <ClInclude Include="Missile.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Jump.h" />
     <ClInclude Include="Panel.h" />
@@ -214,6 +212,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="BasicSkul.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -232,9 +231,6 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="Maths.cpp" />
-    <ClCompile Include="Meteor.cpp" />
-    <ClCompile Include="MeteorControler.cpp" />
-    <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Player.cpp" />

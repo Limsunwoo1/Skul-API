@@ -3,8 +3,8 @@
 #include "BackGround.h"
 #include "Wood_Monster_1.h"
 #include "Ground.h"
+#include "BasicSkul.h"
 
-#include "MeteorControler.h"
 #include "Input.h"
 #include "SceneManager.h"
 #include "CollisionManager.h"
@@ -31,7 +31,7 @@ namespace sw
 		ground->SetPos(Vector2(100.f, 500.f));
 
 		AddGameObject(bg,eColliderLayer::BackGround);
-		AddGameObject(new Player(),eColliderLayer::Player);
+		AddGameObject(new BasicSkul(),eColliderLayer::Player);
 		AddGameObject(ground, eColliderLayer::Ground);
 
 		/*AddGameObject(ms1, eColliderLayer::Monster);
@@ -43,7 +43,6 @@ namespace sw
 	{
 		// 오브젝트 tick 호출한다
 		Scene::Tick();
-		sw::MeteorControler::GetMeteorControler()->Tick();
 
 		if (KEY_DOWN(eKeyCode::N))
 		{

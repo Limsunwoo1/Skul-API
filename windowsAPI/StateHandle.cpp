@@ -12,15 +12,7 @@ namespace sw
 	StateHandle::StateHandle()
 		: mTarget (nullptr)
 	{
-		Move* move = new Move();
-
-		mStates.insert(std::make_pair(eObjectState::IDLE, new Idle));
-		mStates.insert(std::make_pair(eObjectState::LEFT, move));
-		mStates.insert(std::make_pair(eObjectState::RIGHT, move));
-		mStates.insert(std::make_pair(eObjectState::JUMP, new Jump));
-		mStates.insert(std::make_pair(eObjectState::SLIDING, new Sliding));
-		mStates.insert(std::make_pair(eObjectState::DROP, new Drop));
-		mStates.insert(std::make_pair(eObjectState::ATTACK, new Attack));
+		
 	}
 
 	StateHandle::~StateHandle()
@@ -59,6 +51,12 @@ namespace sw
 		mCurState.second = iter->second;
 
 		mCurState.second->Start(mTarget);
+	}
+
+	void StateHandle::PushState(eObjectState type, State* Instate)
+	{
+		Instate->SetTarget(mTarget);
+		mStates.insert(std::make_pair(type, Instate));
 	}
 
 

@@ -135,6 +135,9 @@
     <Filter Include="Engine\StateHandle\State\Attack">
       <UniqueIdentifier>{d003dca6-97a9-4a56-8c65-bbb19b4dcb35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameObject\BasicSkul">
+      <UniqueIdentifier>{d81f9c2d-7f0c-477a-b58e-d06c0312b339}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -172,15 +175,6 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Engine\Commne</Filter>
-    </ClInclude>
-    <ClInclude Include="Missile.h">
-      <Filter>Engine\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Meteor.h">
-      <Filter>Engine\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="MeteorControler.h">
-      <Filter>Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="BaseResource.h">
       <Filter>Engine\Resorce\Base</Filter>
@@ -311,6 +305,9 @@
     <ClInclude Include="Attack.h">
       <Filter>Engine\StateHandle\State\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="BasicSkul.h">
+      <Filter>Engine\GameObject\BasicSkul</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -333,15 +330,6 @@
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Engine\Commne</Filter>
-    </ClCompile>
-    <ClCompile Include="Missile.cpp">
-      <Filter>Engine\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Meteor.cpp">
-      <Filter>Engine\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="MeteorControler.cpp">
-      <Filter>Engine\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="BaseResource.cpp">
       <Filter>Engine\Resorce\Base</Filter>
@@ -465,6 +453,9 @@
     </ClCompile>
     <ClCompile Include="Attack.cpp">
       <Filter>Engine\StateHandle\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicSkul.cpp">
+      <Filter>Engine\GameObject\BasicSkul</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

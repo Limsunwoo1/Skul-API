@@ -16,8 +16,17 @@ namespace sw
 
 		void SetTarget(Player* target) { mTarget = target; }
 		Player* GetTarget() { return mTarget; }
+
+		void SetR_Animation(std::wstring animation) { R_Animation = animation; }
+		void SetL_Animation(std::wstring animation) { L_Animation = animation; }
+
+		std::wstring GetR_Animation() { return R_Animation; }
+		std::wstring GetL_Animation() { return L_Animation; }
 	private:
 		Player* mTarget;
+		
+		std::wstring R_Animation;
+		std::wstring L_Animation;
 	};
 }
 

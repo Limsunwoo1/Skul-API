@@ -61,9 +61,9 @@ namespace sw
 		Animator* animator = player->GetComponent<Animator>();
 
 		if (state == eObjectState::LEFT)
-			animator->Play(L"L_JUMP", false);
+			animator->Play(GetL_Animation(), false);
 		else if (state == eObjectState::RIGHT)
-			animator->Play(L"R_JUMP", false);
+			animator->Play(GetR_Animation(), false);
 	}
 
 	void Jump::PresseInput()

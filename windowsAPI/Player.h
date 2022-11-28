@@ -30,6 +30,8 @@ namespace sw
 
 		bool GetIsShadow() { return mbShadow; }
 		void SetIsShadow(bool anable) { mbShadow = anable; }
+
+		UINT GetMaxAttackCount() { return mMaxAttackCount; }
 	private:
 		void CompleteEvent();
 

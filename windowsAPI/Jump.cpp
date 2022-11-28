@@ -91,7 +91,7 @@ namespace sw
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{
-			NextState = eObjectState::JUMPATTACK_1;
+			NextState = eObjectState::JUMPATTACK;
 		}
 		else if (KEY_DOWN(eKeyCode::Z))
 		{

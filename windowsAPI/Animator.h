@@ -32,7 +32,7 @@ namespace sw
 		Animation::Event& EndEvent() { return mPlayAnimation->EndEvent(); }
 
 		bool bPlayAnimation();
-
+		bool isComplete() { return mPlayAnimation->isComplete(); }
 	private:
 		Animation* FindAnimation(const std::wstring name);
 

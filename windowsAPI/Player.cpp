@@ -23,7 +23,7 @@ namespace sw
 		: mSpeed(1.0f)
 		, mbShadow(false)
 		, mShaow(nullptr)
-		, mMaxAttackCount(2)
+		, mMaxAttackCount(1)
 	{
 		SetPos({ 100.0f, 100.0f });
 		SetScale({ 200.f, 200.0f });
@@ -44,6 +44,12 @@ namespace sw
 
 		mAnimator->CreatAnimations(L"R_Dash", L"..\\Resource\\Animation\\BasicSkul\\R_Dash", Vector2::Zero, 0.2f);
 		mAnimator->CreatAnimations(L"L_Dash", L"..\\Resource\\Animation\\BasicSkul\\L_Dash", Vector2::Zero, 0.2f);
+
+		mAnimator->CreatAnimations(L"R_AttackA", L"..\\Resource\\Animation\\BasicSkul\\R_AttackA", Vector2::Zero, 0.15f);
+		mAnimator->CreatAnimations(L"R_AttackB", L"..\\Resource\\Animation\\BasicSkul\\R_AttackB", Vector2::Zero, 0.15f);
+
+		mAnimator->CreatAnimations(L"L_AttackA", L"..\\Resource\\Animation\\BasicSkul\\L_AttackA", Vector2::Zero, 0.15f);
+		mAnimator->CreatAnimations(L"L_AttackB", L"..\\Resource\\Animation\\BasicSkul\\L_AttackB", Vector2::Zero, 0.15f);
 
 		AddComponent(mAnimator);
 		AddComponent<Rigidbody>();

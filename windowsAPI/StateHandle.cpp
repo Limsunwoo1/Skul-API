@@ -3,12 +3,12 @@
 #include "Idle.h"
 #include "Move.h"
 #include "Jump.h"
+#include "Attack.h"
 #include "Sliding.h"
 #include "Drop.h"
 
 namespace sw
 {
-
 	StateHandle::StateHandle()
 		: mTarget (nullptr)
 	{
@@ -20,8 +20,7 @@ namespace sw
 		mStates.insert(std::make_pair(eObjectState::JUMP, new Jump));
 		mStates.insert(std::make_pair(eObjectState::SLIDING, new Sliding));
 		mStates.insert(std::make_pair(eObjectState::DROP, new Drop));
-
-
+		mStates.insert(std::make_pair(eObjectState::ATTACK, new Attack));
 	}
 
 	StateHandle::~StateHandle()

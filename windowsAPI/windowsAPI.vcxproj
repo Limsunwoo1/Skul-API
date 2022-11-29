@@ -194,6 +194,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateHandle.h" />
+    <ClInclude Include="SwordSkul.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BaseResource.h" />
     <ClInclude Include="Tile.h" />
@@ -249,6 +250,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateHandle.cpp" />
+    <ClCompile Include="SwordSkul.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TilePalette.cpp" />
     <ClCompile Include="Time.cpp" />

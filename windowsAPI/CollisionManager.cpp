@@ -102,7 +102,6 @@ namespace sw
         if (Intersect(left, right))
         {
             // 층돌 중
-
             if (iter->second == false)
             {
                 // 최초 한번 충돌

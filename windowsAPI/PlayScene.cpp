@@ -4,6 +4,7 @@
 #include "Wood_Monster_1.h"
 #include "Ground.h"
 #include "BasicSkul.h"
+#include "SwordSkul.h"
 #include "AttackCollider.h"
 
 #include "Input.h"
@@ -33,7 +34,14 @@ namespace sw
 
 		Wood_Monster_1* monster = new Wood_Monster_1();
 
+		SwordSkul* swordSkul = new SwordSkul();
 		BasicSkul* basicskul = new BasicSkul();
+
+
+		AddGameObject(bg,eColliderLayer::BackGround);
+		AddGameObject(basicskul,eColliderLayer::Player);
+		AddGameObject(ground, eColliderLayer::Ground);
+		AddGameObject(monster, eColliderLayer::Monster);
 
 		AttackCollider* R_attack1 = new AttackCollider(basicskul);
 		R_attack1->SetScale(Vector2(80.f, 80.f));
@@ -54,11 +62,6 @@ namespace sw
 		L_attack2->SetScale(Vector2(80.f, 80.f));
 		L_attack2->SetOffset(Vector2(-70.f, -25.f));
 		L_attack2->SetName(L"L_Basic_AttackB");
-
-		AddGameObject(bg,eColliderLayer::BackGround);
-		AddGameObject(basicskul,eColliderLayer::Player);
-		AddGameObject(ground, eColliderLayer::Ground);
-		AddGameObject(monster, eColliderLayer::Monster);
 
 		AddGameObject(R_attack1, eColliderLayer::Player_ProjectTile);
 		AddGameObject(R_attack2, eColliderLayer::Player_ProjectTile);

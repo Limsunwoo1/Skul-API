@@ -43,7 +43,9 @@ namespace sw
 
 	void Attack::End()
 	{
-		mCurCollider->SetIsAble(false);
+		if(mCurCollider)
+			mCurCollider->SetAble(true);
+
 		mCurCollider = nullptr;
 	}
 
@@ -59,7 +61,8 @@ namespace sw
 		else if (state == eObjectState::RIGHT)
 			mCurCollider = player->FindAttackCollider(mR_AttackSequence[mAttackCount]);
 
-		mCurCollider->SetIsAble(true);
+		if(mCurCollider)
+			mCurCollider->SetAble(false);
 	}
 
 	void Attack::SetStartAnimation()
@@ -89,16 +92,16 @@ namespace sw
 			eObjectState state = player->GetStateHandle()->
 				GetState<Move>(eObjectState::LEFT)->GetDirtion();
 
-			/*if (KEY_PRESSE(eKeyCode::LEFT) && state == eObjectState::LEFT)
+			if (KEY_PRESSE(eKeyCode::LEFT) && state == eObjectState::LEFT)
 			{
 				statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
-				player->GetComponent<Rigidbody>()->AddForce(Vector2(-100.f, 0.0f));
+				player->GetComponent<Rigidbody>()->AddForce(Vector2(-50.f, 0.0f));
 			}
 			else if (KEY_PRESSE(eKeyCode::RIGHT) && state == eObjectState::RIGHT)
 			{
 				statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
-				player->GetComponent<Rigidbody>()->AddForce(Vector2(100.f, 0.0f));
-			}*/
+				player->GetComponent<Rigidbody>()->AddForce(Vector2(50.f, 0.0f));
+			}
 			
 			if (KEY_DOWN(eKeyCode::X))
 				bInput = true;

@@ -144,6 +144,9 @@
     <Filter Include="Engine\GameObject\AttackCollider">
       <UniqueIdentifier>{c1c2f9dd-7597-45ac-af79-caaa2d066647}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameObject\Player\SwordSkul">
+      <UniqueIdentifier>{03c66677-e33d-41ad-aa55-8c1189204d3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -317,6 +320,9 @@
     <ClInclude Include="AttackCollider.h">
       <Filter>Engine\GameObject\AttackCollider</Filter>
     </ClInclude>
+    <ClInclude Include="SwordSkul.h">
+      <Filter>Engine\GameObject\Player\SwordSkul</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -468,6 +474,9 @@
     </ClCompile>
     <ClCompile Include="AttackCollider.cpp">
       <Filter>Engine\GameObject\AttackCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordSkul.cpp">
+      <Filter>Engine\GameObject\Player\SwordSkul</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

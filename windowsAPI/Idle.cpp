@@ -41,13 +41,16 @@ namespace sw
 	{
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
 		Jump* jump = dynamic_cast<Jump*>(stateHandle->GetState<Jump>(eObjectState::JUMP));
-		jump->SetJumpCount(0);
+		if(jump != nullptr)
+			jump->SetJumpCount(0);
 
 		Sliding* sliding = dynamic_cast<Sliding*>(stateHandle->GetState<Sliding>(eObjectState::SLIDING));
-		sliding->SetSlidingCount(0);
+		if (sliding != nullptr)
+			sliding->SetSlidingCount(0);
 
 		Attack* attack = dynamic_cast<Attack*>(stateHandle->GetState<Attack>(eObjectState::ATTACK));
-		attack->SetAttackCount(0);
+		if (attack != nullptr)
+			attack->SetAttackCount(0);
 	}
 
 	void Idle::InputNextState()
@@ -93,6 +96,11 @@ namespace sw
 		StateHandle* statehandle = GetTarget()->GetStateHandle();
 		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
 
+		if (move == nullptr)
+		{
+			animator->Play(GetR_Animation(), true);
+			return;
+		}
 		// 방향 설정
 		if (move->GetDirtion() == eObjectState::LEFT)
 		{

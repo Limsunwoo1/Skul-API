@@ -40,7 +40,7 @@ namespace sw
 		collider->SetScale(Vector2(100.f, 100.f));
 
 		mShaow = new Shadow();
-		mShaow->Initialize(L"R_DashEffect", L"..\\Resource\\Animation\\BasicSkul\\R_DashEffect\\R_DashEffect.bmp");
+		mShaow->Initialize(L"R_DashEffect", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\DashEffect\\R_DashEffect.bmp");
 		mShaow->SetTarget(this);
 
 		this->SetState(eObjectState::IDLE);
@@ -50,8 +50,10 @@ namespace sw
 	BasicSkul::~BasicSkul()
 	{
 		GameObject::~GameObject();
-		delete mState;
-		delete mShaow;
+		if(mState)
+			delete mState;
+		if(mShaow)
+			delete mShaow;
 	}
 
 	void BasicSkul::Tick()
@@ -61,7 +63,6 @@ namespace sw
 
 		if (mShaow)
 			mShaow->Tick();
-
 	}
 
 	void BasicSkul::Render(HDC hdc)
@@ -91,26 +92,26 @@ namespace sw
 	{
 		// Animation ¼¼ÆÃ
 		mAnimator = new Animator();
-		mAnimator->CreatAnimations(L"R_Basic_IDLE", L"..\\Resource\\Animation\\BasicSkul\\R_Idle", Vector2(-20.f, 0.f), 0.25f);
-		mAnimator->CreatAnimations(L"L_Basic_IDLE", L"..\\Resource\\Animation\\BasicSkul\\L_Idle", Vector2(20.f, 0.f), 0.3f);
+		mAnimator->CreatAnimations(L"R_Basic_IDLE", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\Idle", Vector2(-20.f, 0.f), 0.25f);
+		mAnimator->CreatAnimations(L"L_Basic_IDLE", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\Idle", Vector2(20.f, 0.f), 0.3f);
 
-		mAnimator->CreatAnimations(L"R_Basic_RUN", L"..\\Resource\\Animation\\BasicSkul\\R_RUN", Vector2::Zero, 0.05f);
-		mAnimator->CreatAnimations(L"L_Basic_RUN", L"..\\Resource\\Animation\\BasicSkul\\L_RUN", Vector2::Zero, 0.05f);
+		mAnimator->CreatAnimations(L"R_Basic_RUN", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\RUN", Vector2::Zero, 0.05f);
+		mAnimator->CreatAnimations(L"L_Basic_RUN", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\RUN", Vector2::Zero, 0.05f);
 
-		mAnimator->CreatAnimations(L"R_Basic_JUMP", L"..\\Resource\\Animation\\BasicSkul\\R_JUMP", Vector2::Zero, 0.2f);
-		mAnimator->CreatAnimations(L"L_Basic_JUMP", L"..\\Resource\\Animation\\BasicSkul\\L_JUMP", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"R_Basic_JUMP", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\JUMP", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"L_Basic_JUMP", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\JUMP", Vector2::Zero, 0.2f);
 
-		mAnimator->CreatAnimations(L"R_Basic_Drop", L"..\\Resource\\Animation\\BasicSkul\\R_Drop", Vector2::Zero, 0.2f);
-		mAnimator->CreatAnimations(L"L_Basic_Drop", L"..\\Resource\\Animation\\BasicSkul\\L_Drop", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"R_Basic_Drop", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\Drop", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"L_Basic_Drop", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\Drop", Vector2::Zero, 0.2f);
 
-		mAnimator->CreatAnimations(L"R_Basic_Dash", L"..\\Resource\\Animation\\BasicSkul\\R_Dash", Vector2::Zero, 0.2f);
-		mAnimator->CreatAnimations(L"L_Basic_Dash", L"..\\Resource\\Animation\\BasicSkul\\L_Dash", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"R_Basic_Dash", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\Dash", Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(L"L_Basic_Dash", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\Dash", Vector2::Zero, 0.2f);
 
-		mAnimator->CreatAnimations(L"R_Basic_AttackA", L"..\\Resource\\Animation\\BasicSkul\\R_AttackA", Vector2(-20.f, 9.f), 0.15f);
-		mAnimator->CreatAnimations(L"R_Basic_AttackB", L"..\\Resource\\Animation\\BasicSkul\\R_AttackB", Vector2(-20.f, 0.f), 0.15f);
+		mAnimator->CreatAnimations(L"R_Basic_AttackA", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\AttackA", Vector2(-20.f, 9.f), 0.15f);
+		mAnimator->CreatAnimations(L"R_Basic_AttackB", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\AttackB", Vector2(-20.f, 0.f), 0.15f);
 
-		mAnimator->CreatAnimations(L"L_Basic_AttackA", L"..\\Resource\\Animation\\BasicSkul\\L_AttackA", Vector2(20.f, 0.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Basic_AttackB", L"..\\Resource\\Animation\\BasicSkul\\L_AttackB", Vector2(20.f, 0.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Basic_AttackA", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\AttackA", Vector2(20.f, 0.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Basic_AttackB", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\AttackB", Vector2(20.f, 0.f), 0.15f);
 
 		AddComponent(mAnimator);
 

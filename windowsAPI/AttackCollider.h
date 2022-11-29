@@ -23,15 +23,15 @@ namespace sw
 		void SetName(std::wstring name) { mName = name;}
 		std::wstring GetName() { return mName; }
 
-		bool GetIsAble() { return isAble; }
-		void SetIsAble(bool anable) { isAble = anable; }
+		bool GetAble() { return IsDeath(); }
+		void SetAble(bool anable);
+
 	private:
 		std::wstring mName;
 		GameObject* mOwner;
 		Collider* mCollider;
 
 		Vector2 mOffset;
-		bool isAble;
 	};
 }
 

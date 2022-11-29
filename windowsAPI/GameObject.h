@@ -53,7 +53,7 @@ namespace sw
 		virtual void OnCollisionExit(Collider* other);
 
 		bool IsDeath() { return mDeath; }
-		void Deth() { mDeath = false; }
+		void SetDeath(bool isdeath) { mDeath = isdeath; }
 
 		eObjectState GetState() {return mCurstate;}
 		void SetState(eObjectState state) { mCurstate = state;}

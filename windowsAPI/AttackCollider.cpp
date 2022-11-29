@@ -15,6 +15,10 @@ namespace sw
 
 		Collider* collider = AddComponent<Collider>();
 		mCollider = collider;
+		collider->SetOwner(this);
+
+		bool death = true;
+		SetAble(death);
 	}
 
 	AttackCollider::~AttackCollider()
@@ -26,6 +30,8 @@ namespace sw
 		if (mOwner == nullptr)
 			return;
 		if (mCollider == nullptr)
+			return;
+		if (IsDeath())
 			return;
 
 		GameObject::Tick();
@@ -42,10 +48,18 @@ namespace sw
 	{
 		if (mCollider == nullptr)
 			return;
-		if (!isAble)
+		if (IsDeath())
 			return;
 
 		mCollider->Render(hdc);
+	}
+
+	void AttackCollider::SetAble(bool anable)
+	{
+		if (mCollider == nullptr)
+			return;
+
+		SetDeath(anable);
 	}
 
 	void AttackCollider::OnCollisionEnter(Collider* other)

@@ -3,7 +3,6 @@
 
 namespace sw
 {
-	class AttackCollider;
 	class BasicSkul : public Player
 	{
 	public:

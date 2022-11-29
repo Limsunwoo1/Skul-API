@@ -27,10 +27,11 @@ namespace sw
 {
 	BasicSkul::BasicSkul()
 	{
+		//DetaSetting
+		mMaxAttackCount = 1;
 		SetPos({ 100.0f, 100.0f });
 		SetScale({ 5.f, 5.f });
 
-		mMaxAttackCount = 1;
 		InitAnimtion();
 		InitState();
 
@@ -38,13 +39,12 @@ namespace sw
 		Collider* collider = AddComponent<Collider>();
 		collider->SetScale(Vector2(100.f, 100.f));
 
-		this->SetState(eObjectState::IDLE);
-
-		Camera::GetInstance()->SetTarget(this);
-
 		mShaow = new Shadow();
 		mShaow->Initialize(L"R_DashEffect", L"..\\Resource\\Animation\\BasicSkul\\R_DashEffect\\R_DashEffect.bmp");
 		mShaow->SetTarget(this);
+
+		this->SetState(eObjectState::IDLE);
+		Camera::GetInstance()->SetTarget(this);
 	}
 
 	BasicSkul::~BasicSkul()
@@ -70,8 +70,6 @@ namespace sw
 		Vector2 scale = GetScale();
 
 		pos = Camera::GetInstance()->CalculatePos(pos);
-
-		Rectangle(hdc, pos.x - 5, pos.y - 5, pos.x + 5, pos.y + 5);
 
 		if (mShaow)
 			mShaow->Render(hdc);

@@ -5,6 +5,7 @@
 #include "ResourceManager.h"
 #include "Camera.h"
 #include "EventManager.h"
+#include "AttackCollider.h"
 
 #include "Scene.h"
 #include "Image.h"
@@ -77,6 +78,17 @@ namespace sw
 		/*GameObject::~GameObject();
 		delete mState;
 		delete mShaow;*/
+	}
+
+	AttackCollider* Player::FindAttackCollider(std::wstring name)
+	{
+		for (AttackCollider* collider : mColliders)
+		{
+			if (collider->GetName() == name)
+				return collider;
+		}
+
+		return nullptr;
 	}
 
 	void Player::CompleteEvent()

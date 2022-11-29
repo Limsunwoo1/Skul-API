@@ -4,6 +4,7 @@
 #include "Wood_Monster_1.h"
 #include "Ground.h"
 #include "BasicSkul.h"
+#include "AttackCollider.h"
 
 #include "Input.h"
 #include "SceneManager.h"
@@ -30,9 +31,39 @@ namespace sw
 		Ground* ground = new Ground();
 		ground->SetPos(Vector2(100.f, 500.f));
 
+		Wood_Monster_1* monster = new Wood_Monster_1();
+
+		BasicSkul* basicskul = new BasicSkul();
+
+		AttackCollider* R_attack1 = new AttackCollider(basicskul);
+		R_attack1->SetScale(Vector2(80.f, 80.f));
+		R_attack1->SetOffset(Vector2(50.f, -25.f));
+		R_attack1->SetName(L"R_Basic_AttackA");
+
+		AttackCollider* R_attack2 = new AttackCollider(basicskul);
+		R_attack2->SetScale(Vector2(80.f, 80.f));
+		R_attack2->SetOffset(Vector2(70.f, -25.f));
+		R_attack2->SetName(L"R_Basic_AttackB");
+
+		AttackCollider* L_attack1 = new AttackCollider(basicskul);
+		L_attack1->SetScale(Vector2(80.f, 80.f));
+		L_attack1->SetOffset(Vector2(-50.f, -25.f));
+		L_attack1->SetName(L"L_Basic_AttackA");
+
+		AttackCollider* L_attack2 = new AttackCollider(basicskul);
+		L_attack2->SetScale(Vector2(80.f, 80.f));
+		L_attack2->SetOffset(Vector2(-70.f, -25.f));
+		L_attack2->SetName(L"L_Basic_AttackB");
+
 		AddGameObject(bg,eColliderLayer::BackGround);
-		AddGameObject(new BasicSkul(),eColliderLayer::Player);
+		AddGameObject(basicskul,eColliderLayer::Player);
 		AddGameObject(ground, eColliderLayer::Ground);
+		AddGameObject(monster, eColliderLayer::Monster);
+
+		AddGameObject(R_attack1, eColliderLayer::Player_ProjectTile);
+		AddGameObject(R_attack2, eColliderLayer::Player_ProjectTile);
+		AddGameObject(L_attack1, eColliderLayer::Player_ProjectTile);
+		AddGameObject(L_attack2, eColliderLayer::Player_ProjectTile);
 
 		/*AddGameObject(ms1, eColliderLayer::Monster);
 		AddGameObject(ms2, eColliderLayer::Monster);*/
@@ -67,6 +98,7 @@ namespace sw
 		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjectTile, eColliderLayer::Monster);
 	}
 
 	void PlayScene::Exit()

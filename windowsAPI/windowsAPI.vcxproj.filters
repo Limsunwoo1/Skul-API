@@ -135,8 +135,14 @@
     <Filter Include="Engine\StateHandle\State\Attack">
       <UniqueIdentifier>{d003dca6-97a9-4a56-8c65-bbb19b4dcb35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObject\BasicSkul">
+    <Filter Include="Engine\GameObject\Player">
+      <UniqueIdentifier>{1c66e08a-253b-4753-bfd6-f3b8dd09ac07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Player\BasicSkul">
       <UniqueIdentifier>{d81f9c2d-7f0c-477a-b58e-d06c0312b339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\AttackCollider">
+      <UniqueIdentifier>{c1c2f9dd-7597-45ac-af79-caaa2d066647}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -163,9 +169,6 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Engine\GameObject\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Engine\Scene\Base</Filter>
@@ -306,7 +309,13 @@
       <Filter>Engine\StateHandle\State\Attack</Filter>
     </ClInclude>
     <ClInclude Include="BasicSkul.h">
-      <Filter>Engine\GameObject\BasicSkul</Filter>
+      <Filter>Engine\GameObject\Player\BasicSkul</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Engine\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCollider.h">
+      <Filter>Engine\GameObject\AttackCollider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -318,9 +327,6 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine\GameObject\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Engine\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Engine\Scene\Base</Filter>
@@ -455,7 +461,13 @@
       <Filter>Engine\StateHandle\State\Attack</Filter>
     </ClCompile>
     <ClCompile Include="BasicSkul.cpp">
-      <Filter>Engine\GameObject\BasicSkul</Filter>
+      <Filter>Engine\GameObject\Player\BasicSkul</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Engine\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackCollider.cpp">
+      <Filter>Engine\GameObject\AttackCollider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

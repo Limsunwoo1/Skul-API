@@ -7,6 +7,7 @@ namespace sw
 	class StateHandle;
 	class Animator;
 	class Image;
+	class AttackCollider;
 	class Player : public GameObject
 	{
 	public:
@@ -35,6 +36,10 @@ namespace sw
 		void SetIsShadow(bool anable) { mbShadow = anable; }
 
 		UINT GetMaxAttackCount() { return mMaxAttackCount; }
+
+		void PushAttackCollider(AttackCollider* attackcollider) { mColliders.push_back(attackcollider); }
+		AttackCollider* FindAttackCollider(std::wstring name);
+
 	private:
 		void CompleteEvent();
 
@@ -46,6 +51,8 @@ namespace sw
 		Shadow* mShaow;
 		bool mbShadow;
 		UINT mMaxAttackCount;
+
+		std::vector<AttackCollider*> mColliders;
 	};
 }
 

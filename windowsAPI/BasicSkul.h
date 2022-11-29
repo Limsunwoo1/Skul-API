@@ -3,9 +3,7 @@
 
 namespace sw
 {
-	class StateHandle;
-	class Animator;
-	class Image;
+	class AttackCollider;
 	class BasicSkul : public Player
 	{
 	public:

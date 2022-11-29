@@ -3,6 +3,7 @@
 
 namespace sw
 {
+	class AttackCollider;
 	class Attack : public State
 	{
 	public:
@@ -15,6 +16,7 @@ namespace sw
 
 		void SetStartAnimation();
 		void SetAnimation();
+		void StartCollider();
 
 		void SetAttackCount(UINT count) { mAttackCount = count; }
 
@@ -23,6 +25,7 @@ namespace sw
 	private:
 		std::vector<std::wstring> mR_AttackSequence;
 		std::vector<std::wstring> mL_AttackSequence;
+		AttackCollider* mCurCollider;
 
 		UINT mAttackCount;
 		float mDelta;

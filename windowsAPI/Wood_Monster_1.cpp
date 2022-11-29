@@ -12,7 +12,7 @@ namespace sw
 	Wood_Monster_1::Wood_Monster_1()
 		: mImage(nullptr)
 	{
-		SetPos(Vector2(500, 500));
+		SetPos(Vector2(500, 400));
 		SetScale(Vector2(100, 100));
 
 		if (!mImage)
@@ -20,7 +20,9 @@ namespace sw
 			mImage = ResourceManager::GetInstance()->Load<Image>(L"WOODMONSTER1", L"..\\Resource\\Image\\MonsterWood.bmp");
 		}
 
-		AddComponent(new Collider());
+		Collider* collider = AddComponent<Collider>();
+		collider->SetScale(Vector2(100.f, 100.f));
+
 		AddComponent(new Animator());
 
 		alpha = 255;

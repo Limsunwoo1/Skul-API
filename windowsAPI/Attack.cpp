@@ -5,6 +5,8 @@
 #include "Animation.h"
 #include "Time.h"
 #include "Input.h"
+#include "AttackCollider.h"
+#include "Rigidbody.h"
 
 namespace sw
 {
@@ -29,6 +31,7 @@ namespace sw
 	void Attack::Start(Player* target)
 	{
 		SetTarget(target);
+		StartCollider();
 		SetStartAnimation();
 	}
 	void Attack::Run()
@@ -40,7 +43,23 @@ namespace sw
 
 	void Attack::End()
 	{
+		mCurCollider->SetIsAble(false);
+		mCurCollider = nullptr;
+	}
 
+	void Attack::StartCollider()
+	{
+		Player* player = GetTarget();
+		eObjectState state = player->GetStateHandle()->
+			GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		mCurCollider = nullptr;
+
+		if (state == eObjectState::LEFT)
+			mCurCollider = player->FindAttackCollider(mL_AttackSequence[mAttackCount]);
+		else if (state == eObjectState::RIGHT)
+			mCurCollider = player->FindAttackCollider(mR_AttackSequence[mAttackCount]);
+
+		mCurCollider->SetIsAble(true);
 	}
 
 	void Attack::SetStartAnimation()
@@ -65,7 +84,22 @@ namespace sw
 		if (mDelta < 0.4f)
 		{
 			// 이동하면서 공격 추가
+			Player* player = GetTarget();
+			StateHandle* statehandle = player->GetStateHandle();
+			eObjectState state = player->GetStateHandle()->
+				GetState<Move>(eObjectState::LEFT)->GetDirtion();
 
+			/*if (KEY_PRESSE(eKeyCode::LEFT) && state == eObjectState::LEFT)
+			{
+				statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
+				player->GetComponent<Rigidbody>()->AddForce(Vector2(-100.f, 0.0f));
+			}
+			else if (KEY_PRESSE(eKeyCode::RIGHT) && state == eObjectState::RIGHT)
+			{
+				statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
+				player->GetComponent<Rigidbody>()->AddForce(Vector2(100.f, 0.0f));
+			}*/
+			
 			if (KEY_DOWN(eKeyCode::X))
 				bInput = true;
 			return;

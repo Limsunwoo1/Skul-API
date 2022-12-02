@@ -135,17 +135,26 @@
     <Filter Include="Engine\StateHandle\State\Attack">
       <UniqueIdentifier>{d003dca6-97a9-4a56-8c65-bbb19b4dcb35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObject\Player">
-      <UniqueIdentifier>{1c66e08a-253b-4753-bfd6-f3b8dd09ac07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\GameObject\Player\BasicSkul">
-      <UniqueIdentifier>{d81f9c2d-7f0c-477a-b58e-d06c0312b339}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\GameObject\AttackCollider">
       <UniqueIdentifier>{c1c2f9dd-7597-45ac-af79-caaa2d066647}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObject\Player\SwordSkul">
+    <Filter Include="Engine\GameObject\MainPlayer">
+      <UniqueIdentifier>{a91d7f84-0f76-425d-aa75-2e8e008befbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\MainPlayer\Player">
+      <UniqueIdentifier>{1c66e08a-253b-4753-bfd6-f3b8dd09ac07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\MainPlayer\Player\BasicSkul">
+      <UniqueIdentifier>{d81f9c2d-7f0c-477a-b58e-d06c0312b339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\MainPlayer\Player\SwordSkul">
       <UniqueIdentifier>{03c66677-e33d-41ad-aa55-8c1189204d3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\StateHandle\State\Switch">
+      <UniqueIdentifier>{8dad73ab-4f88-4ed4-a10b-fc955b204381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\MainPlayer\Player\Base">
+      <UniqueIdentifier>{7e6b849d-3e83-4016-aca0-1a27c26ef66e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -312,16 +321,22 @@
       <Filter>Engine\StateHandle\State\Attack</Filter>
     </ClInclude>
     <ClInclude Include="BasicSkul.h">
-      <Filter>Engine\GameObject\Player\BasicSkul</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Engine\GameObject\Player</Filter>
+      <Filter>Engine\GameObject\MainPlayer\Player\BasicSkul</Filter>
     </ClInclude>
     <ClInclude Include="AttackCollider.h">
       <Filter>Engine\GameObject\AttackCollider</Filter>
     </ClInclude>
     <ClInclude Include="SwordSkul.h">
-      <Filter>Engine\GameObject\Player\SwordSkul</Filter>
+      <Filter>Engine\GameObject\MainPlayer\Player\SwordSkul</Filter>
+    </ClInclude>
+    <ClInclude Include="MainPlayer.h">
+      <Filter>Engine\GameObject\MainPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Switch.h">
+      <Filter>Engine\StateHandle\State\Switch</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBase.h">
+      <Filter>Engine\GameObject\MainPlayer\Player\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -467,16 +482,22 @@
       <Filter>Engine\StateHandle\State\Attack</Filter>
     </ClCompile>
     <ClCompile Include="BasicSkul.cpp">
-      <Filter>Engine\GameObject\Player\BasicSkul</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Engine\GameObject\Player</Filter>
+      <Filter>Engine\GameObject\MainPlayer\Player\BasicSkul</Filter>
     </ClCompile>
     <ClCompile Include="AttackCollider.cpp">
       <Filter>Engine\GameObject\AttackCollider</Filter>
     </ClCompile>
     <ClCompile Include="SwordSkul.cpp">
-      <Filter>Engine\GameObject\Player\SwordSkul</Filter>
+      <Filter>Engine\GameObject\MainPlayer\Player\SwordSkul</Filter>
+    </ClCompile>
+    <ClCompile Include="MainPlayer.cpp">
+      <Filter>Engine\GameObject\MainPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Switch.cpp">
+      <Filter>Engine\StateHandle\State\Switch</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBase.cpp">
+      <Filter>Engine\GameObject\MainPlayer\Player\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 #include "Effect.h"
-#include "Player.h"
+#include "PlayerBase.h"
 #include "Image.h"
 #include "ResourceManager.h"
 #include "Camera.h"
@@ -23,7 +23,7 @@ namespace sw
 		mImage = ResourceManager::GetInstance()->Load<Image>(key, path);
 	}
 
-	void Effect::SetTarget(Player* target)
+	void Effect::SetTarget(PlayerBase* target)
 	{
 		mTarget = target;
 	}

@@ -9,7 +9,7 @@ namespace sw
 		Sliding();
 		~Sliding();
 
-		virtual void Start(Player* target)  override;
+		virtual void Start(PlayerBase* target)  override;
 		virtual void Run() override;
 		virtual void End() override;
 

@@ -28,7 +28,7 @@ namespace sw
 
 	}
 
-	void Sliding::Start(Player* target)
+	void Sliding::Start(PlayerBase* target)
 	{
 		SetTarget(target);
 		++mSlidingCount;
@@ -158,7 +158,7 @@ namespace sw
 	void Sliding::InputNextState()
 	{
 		//player->GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 500.f));
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		eObjectState NextState = eObjectState::END;
 		Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();

@@ -14,6 +14,7 @@
 #include "Rigidbody.h"
 #include "StateHandle.h"
 #include "Shadow.h"
+#include "AttackCollider.h"
 
 #include "Idle.h"
 #include "Move.h"
@@ -21,6 +22,7 @@
 #include "Jump.h"
 #include "Attack.h"
 #include "Drop.h"
+#include "Switch.h"
 
 
 namespace sw
@@ -34,10 +36,13 @@ namespace sw
 
 		InitAnimtion();
 		InitState();
-
-		AddComponent<Rigidbody>();
 		Collider* collider = AddComponent<Collider>();
 		collider->SetScale(Vector2(100.f, 100.f));
+		collider->SetOwner(this);
+
+		Rigidbody* rigidbody = AddComponent<Rigidbody>();
+		rigidbody->SetGround(false);
+		rigidbody->SetOwner(this);
 
 		mShaow = new Shadow();
 		mShaow->Initialize(L"R_DashEffect", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\DashEffect\\R_DashEffect.bmp");
@@ -58,15 +63,24 @@ namespace sw
 
 	void BasicSkul::Tick()
 	{
+		if (mParentObject == nullptr)
+			return;
+
 		GameObject::Tick();
 		mState->Tick();
 
 		if (mShaow)
 			mShaow->Tick();
+
+		Vector2 pos = GetPos();
+		mParentObject->SetPos(pos);
 	}
 
 	void BasicSkul::Render(HDC hdc)
 	{
+		if (mParentObject == nullptr)
+			return;
+
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
 
@@ -117,6 +131,12 @@ namespace sw
 
 		mAnimator->Play(L"R_Basic_IDLE", true);
 
+		mAnimator->GetStartEvent(L"R_Basic_AttackA") = std::bind(&BasicSkul::R_AttackA, this);
+		mAnimator->GetStartEvent(L"R_Basic_AttackB") = std::bind(&BasicSkul::R_AttackB, this);
+
+		mAnimator->GetStartEvent(L"L_Basic_AttackA") = std::bind(&BasicSkul::L_AttackA, this);
+		mAnimator->GetStartEvent(L"L_Basic_AttackB") = std::bind(&BasicSkul::L_AttackB, this);
+		//mAnimator->StartEvent()
 		// Animator 에 현재 진행중인 애니메이션 셋팅후 바인딩
 		//animator->StartEvent() = std::bind(&Player::StartEvent, this);
 		//animator->EndEvent() = std::bind(&Player::EndEvent, this);
@@ -158,6 +178,9 @@ namespace sw
 		attack->SetL_AttackSequence(L"L_Basic_AttackA");
 		attack->SetL_AttackSequence(L"L_Basic_AttackB");
 
+		Switch* inswitch = new Switch();
+		inswitch->SetR_Animation(L"R_Basic_IDLE");
+		inswitch->SetL_Animation(L"L_Basic_IDLE");
 
 		mState->PushState(eObjectState::IDLE, idle);
 		mState->PushState(eObjectState::LEFT, move);
@@ -166,5 +189,85 @@ namespace sw
 		mState->PushState(eObjectState::SLIDING, sliding);
 		mState->PushState(eObjectState::DROP, drop);
 		mState->PushState(eObjectState::ATTACK, attack);
+		mState->PushState(eObjectState::SWITCH, inswitch);
+	}
+
+	void BasicSkul::R_AttackA()
+	{
+		AttackCollider* R_attack1 = new AttackCollider(this);
+		R_attack1->SetScale(Vector2(80.f, 80.f));
+		R_attack1->SetOffset(Vector2(50.f, -25.f));
+		R_attack1->SetName(L"R_Basic_AttackA");
+
+		EventInfo info;
+		info.Type = EventType::AddObejct;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::Player_ProjectTile);
+		info.Parameter2 = R_attack1;
+
+		EventManager::GetInstance()->EventPush(info);
+		
+	}
+	void BasicSkul::R_AttackB()
+	{
+		AttackCollider* R_attack2 = new AttackCollider(this);
+		R_attack2->SetScale(Vector2(80.f, 80.f));
+		R_attack2->SetOffset(Vector2(70.f, -25.f));
+		R_attack2->SetName(L"R_Basic_AttackB");
+
+		EventInfo info;
+		info.Type = EventType::AddObejct;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::Player_ProjectTile);
+		info.Parameter2 = R_attack2;
+
+		EventManager::GetInstance()->EventPush(info);
+		
+	}
+
+	void BasicSkul::R_AttackADelete()
+	{
+
+	}
+
+	void BasicSkul::R_AttackBDelete()
+	{
+
+	}
+
+	void BasicSkul::L_AttackA()
+	{
+		AttackCollider* L_attack1 = new AttackCollider(this);
+		L_attack1->SetScale(Vector2(80.f, 80.f));
+		L_attack1->SetOffset(Vector2(-50.f, -25.f));
+		L_attack1->SetName(L"L_Basic_AttackA");
+
+
+		EventInfo info;
+		info.Type = EventType::AddObejct;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::Player_ProjectTile);
+		info.Parameter2 = L_attack1;
+
+		EventManager::GetInstance()->EventPush(info);
+	}
+	void BasicSkul::L_AttackB()
+	{
+		AttackCollider* L_attack2 = new AttackCollider(this);
+		L_attack2->SetScale(Vector2(80.f, 80.f));
+		L_attack2->SetOffset(Vector2(-70.f, -25.f));
+		L_attack2->SetName(L"L_Basic_AttackB");
+
+		EventInfo info;
+		info.Type = EventType::AddObejct;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::Player_ProjectTile);
+		info.Parameter2 = L_attack2;
+
+		EventManager::GetInstance()->EventPush(info);
+	}
+	void BasicSkul::L_AttackADelete()
+	{
+
+	}
+	void BasicSkul::L_AttackBDelete()
+	{
+
 	}
 }

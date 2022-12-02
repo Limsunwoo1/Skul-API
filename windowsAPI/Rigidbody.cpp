@@ -1,7 +1,8 @@
 #include "Rigidbody.h"
 #include "Time.h"
 #include "UtilMath.h"
-#include "Player.h"
+#include "PlayerBase.h"
+#include "MainPlayer.h"
 
 namespace sw
 {
@@ -92,7 +93,7 @@ namespace sw
 
 		// 속도에 맞게 물체를 이동시킨다
 		Vector2 pos = GetOwner()->GetPos();
-		Player* player = dynamic_cast<Player*>(GetOwner());
+		PlayerBase* player = dynamic_cast<PlayerBase*>(GetOwner());
 		if (player != nullptr)
 		{
 			if(player->GetState() != eObjectState::SLIDING)
@@ -103,6 +104,15 @@ namespace sw
 					pos = pos + mVelocity * Time::GetInstance()->DeltaTime();
 				}
 			}
+			else
+			{
+
+			}
+
+			pos = pos + mForce * Time::GetInstance()->DeltaTime();
+			player->SetPos(pos);
+			mForce.clear();
+			return;
 		}
 		else
 		{

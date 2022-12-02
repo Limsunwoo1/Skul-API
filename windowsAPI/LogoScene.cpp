@@ -1,8 +1,10 @@
 #include "LogoScene.h"
-#include "Player.h"
+#include "PlayerBase.h"
 #include "BackGround.h"
 #include "Input.h"
 #include "SceneManager.h"
+#include "BackGround.h"
+#include "EventManager.h"
 
 namespace sw
 {
@@ -18,7 +20,33 @@ namespace sw
 
 	void LogoScene::Initialize()
 	{
+		BackGround* bg = new BackGround();
+		bg->SetImage(L"LogoBack", L"Title_Art2.bmp");
+		bg->Initialize();
+		bg->SetPos(Vector2(800.f, 450.f));
+		bg->SetScale(Vector2(1600.f, 900.f));
+		bg->SetCamera(false);
+		bg->SetAlpha(false);
 
+		BackGround* Logo = new BackGround();
+		Logo->SetImage(L"Logo", L"SkulLogo.bmp");
+		Logo->Initialize();
+		Logo->SetPos(Vector2(800.f, 470.f));
+		Logo->SetScale(Vector2(600.f, 250));
+		Logo->SetCamera(false);
+		Logo->SetAlpha(false);
+
+		BackGround* presseKey = new BackGround();
+		presseKey->SetImage(L"presseKey", L"Inpress.bmp");
+		presseKey->Initialize();
+		presseKey->SetPos(Vector2(800.f, 650.f));
+		presseKey->SetScale(Vector2(300, 50));
+		presseKey->SetCamera(false);
+		presseKey->SetAlpha(false);
+
+		AddGameObject(bg, eColliderLayer::BackGround);
+		AddGameObject(Logo, eColliderLayer::BackGround);
+		AddGameObject(presseKey, eColliderLayer::BackGround);
 	}
 
 	void LogoScene::Tick()
@@ -28,7 +56,11 @@ namespace sw
 
 		if (KEY_DOWN(eKeyCode::N))
 		{
-			SceneManager::GetInstance()->ChangeScene(eSceneType::Title);
+			EventInfo info;
+			info.Type = EventType::ChangeScene;
+			info.Parameter1 = new eSceneType(eSceneType::Play);
+			
+			EventManager::GetInstance()->EventPush(info);
 		}
 	}
 

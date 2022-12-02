@@ -1,9 +1,9 @@
 #pragma once
-#include "Player.h"
+#include "PlayerBase.h"
 
 namespace sw
 {
-	class SwordSkul : public Player
+	class SwordSkul : public PlayerBase
 	{
 	public:
 		SwordSkul();

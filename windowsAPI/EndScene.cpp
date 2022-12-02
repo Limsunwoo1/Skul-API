@@ -1,5 +1,5 @@
 #include "EndScene.h"
-#include "Player.h"
+#include "PlayerBase.h"
 #include "BackGround.h"
 
 namespace sw

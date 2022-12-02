@@ -1,6 +1,6 @@
 #pragma once
 #include "Common.h"
-#include "Player.h"
+#include "PlayerBase.h"
 
 namespace sw
 {
@@ -10,12 +10,12 @@ namespace sw
 		State();
 		virtual ~State();
 
-		virtual void Start(Player* target) = 0;
+		virtual void Start(PlayerBase* target) = 0;
 		virtual void Run() = 0;
 		virtual void End() = 0;
 
-		void SetTarget(Player* target) { mTarget = target; }
-		Player* GetTarget() { return mTarget; }
+		void SetTarget(PlayerBase* target) { mTarget = target; }
+		PlayerBase* GetTarget() { return mTarget; }
 
 		void SetR_Animation(std::wstring animation) { R_Animation = animation; }
 		void SetL_Animation(std::wstring animation) { L_Animation = animation; }
@@ -23,7 +23,7 @@ namespace sw
 		std::wstring GetR_Animation() { return R_Animation; }
 		std::wstring GetL_Animation() { return L_Animation; }
 	private:
-		Player* mTarget;
+		PlayerBase* mTarget;
 		
 		std::wstring R_Animation;
 		std::wstring L_Animation;

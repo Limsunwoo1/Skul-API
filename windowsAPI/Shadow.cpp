@@ -1,6 +1,6 @@
 #include "Shadow.h"
 #include "Image.h"
-#include "Player.h"
+#include "PlayerBase.h"
 #include "ResourceManager.h"
 #include "Time.h"
 #include "Effect.h"
@@ -82,7 +82,7 @@ namespace sw
 
 	}
 
-	void Shadow::SetTarget(Player* target)
+	void Shadow::SetTarget(PlayerBase* target)
 	{
 		mTarget = target;
 		for (Effect* effect : mShadows)

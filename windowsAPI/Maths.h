@@ -50,6 +50,15 @@ namespace sw
 			return temp;
 		}
 
+		Vector2 operator+(const float& value) const
+		{
+			Vector2 temp;
+			temp.x = this->x + value;
+			temp.y = this->y + value;
+
+			return temp;
+		}
+
 		Vector2 operator-(const Vector2& other) const
 		{
 			Vector2 temp;
@@ -59,6 +68,14 @@ namespace sw
 			return temp;
 		}
 
+		Vector2 operator-(const float& value) const
+		{
+			Vector2 temp;
+			temp.x = this->x - value;
+			temp.y = this->y - value;
+
+			return temp;
+		}
 
 		Vector2 operator* (const float& value) const
 		{
@@ -126,6 +143,13 @@ namespace sw
 		Vector2() = default;
 		~Vector2() = default;
 	};
+
+	struct Box
+	{
+		Vector2 BoxPos;
+		Vector2 BoxScale;
+	};
+
 	typedef Vector2 Vector2D;
 	typedef Vector2 Pos;
 }

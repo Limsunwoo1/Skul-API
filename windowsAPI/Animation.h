@@ -25,25 +25,7 @@ namespace sw
 
 			}
 		};
-
-	public:
-		struct Event
-		{
-			void operator =(std::function<void()> func)
-			{
-				mEvent = std::move(func);
-			}
-
-			void operator()()
-			{
-				if (mEvent)
-					mEvent();
-			}
-
-			std::function<void()> mEvent;
-		};
 		
-
 	public:
 		Animation();
 		~Animation();
@@ -58,17 +40,6 @@ namespace sw
 		void Reset();
 		bool isComplete() { return mbComplete; }
 		void SetAnimator(Animator* animator) { mAnimator = animator; }
-
-	public:
-		Event& StartEvent() { return mStartEvent; }
-		Event& CompleteEvent() { return mCompleteEvent; }
-		Event& EndEvent() { return mEndEvent; }
-
-
-	private:
-		Event mStartEvent;
-		Event mCompleteEvent;
-		Event mEndEvent;
 
 	private:
 		Animator* mAnimator;

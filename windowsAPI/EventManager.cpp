@@ -16,10 +16,11 @@ namespace sw
 
 	void EventManager::Tick()
 	{
+		eSceneType type = eSceneType::Max;
+
 		while (!mEventList.empty())
 		{
 			EventInfo& NewEvent = mEventList.front();
-
 			switch (NewEvent.Type)
 			{
 				case EventType::AddObejct:
@@ -42,10 +43,21 @@ namespace sw
 							*((eColliderLayer*)NewEvent.Parameter1));
 					}
 					break;
+
+				case EventType::ChangeScene:
+				{
+					type = *((eSceneType*)NewEvent.Parameter1);
+				}
+				break;
 			}
 
 			delete NewEvent.Parameter1;
 			mEventList.pop();
+		}
+
+		if (type != eSceneType::Max)
+		{
+			SceneManager::GetInstance()->ChangeScene(type);
 		}
 	}
 }

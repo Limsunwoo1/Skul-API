@@ -1,14 +1,14 @@
 #include "AttackCollider.h"
 #include "Collider.h"
 #include "Camera.h"
-#include "Player.h"
+#include "PlayerBase.h"
 
 namespace sw
 {
 	AttackCollider::AttackCollider(GameObject* owner)
 	{
 		mOwner = owner;
-		Player* player = dynamic_cast<Player*>(owner);
+		PlayerBase* player = dynamic_cast<PlayerBase*>(owner);
 
 		if(player != nullptr)
 			player->PushAttackCollider(this);

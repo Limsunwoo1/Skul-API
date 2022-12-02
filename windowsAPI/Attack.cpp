@@ -6,7 +6,9 @@
 #include "Time.h"
 #include "Input.h"
 #include "AttackCollider.h"
+#include "CollisionManager.h"
 #include "Rigidbody.h"
+#include "Collider.h"
 
 namespace sw
 {
@@ -28,7 +30,7 @@ namespace sw
 
 	}
 
-	void Attack::Start(Player* target)
+	void Attack::Start(PlayerBase* target)
 	{
 		SetTarget(target);
 		StartCollider();
@@ -51,7 +53,7 @@ namespace sw
 
 	void Attack::StartCollider()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		eObjectState state = player->GetStateHandle()->
 			GetState<Move>(eObjectState::LEFT)->GetDirtion();
 		mCurCollider = nullptr;
@@ -68,7 +70,7 @@ namespace sw
 	void Attack::SetStartAnimation()
 	{
 		// 방향설정
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		eObjectState state = player->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
@@ -82,12 +84,12 @@ namespace sw
 
 	void Attack::SetAnimation()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		Animator* animator = player->GetComponent<Animator>();
 		if (mDelta < 0.4f)
 		{
 			// 이동하면서 공격 추가
-			Player* player = GetTarget();
+			PlayerBase* player = GetTarget();
 			StateHandle* statehandle = player->GetStateHandle();
 			eObjectState state = player->GetStateHandle()->
 				GetState<Move>(eObjectState::LEFT)->GetDirtion();
@@ -95,12 +97,12 @@ namespace sw
 			if (KEY_PRESSE(eKeyCode::LEFT) && state == eObjectState::LEFT)
 			{
 				statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
-				player->GetComponent<Rigidbody>()->AddForce(Vector2(-50.f, 0.0f));
+				player->GetComponent<Rigidbody>()->AddForce(Vector2(-30.f, 0.0f));
 			}
 			else if (KEY_PRESSE(eKeyCode::RIGHT) && state == eObjectState::RIGHT)
 			{
 				statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
-				player->GetComponent<Rigidbody>()->AddForce(Vector2(50.f, 0.0f));
+				player->GetComponent<Rigidbody>()->AddForce(Vector2(30.f, 0.0f));
 			}
 			
 			if (KEY_DOWN(eKeyCode::X))

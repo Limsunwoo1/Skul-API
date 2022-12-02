@@ -3,7 +3,7 @@
 
 namespace sw
 {
-	class Player;
+	class PlayerBase;
 	class Effect;
 	class Shadow
 	{
@@ -15,15 +15,15 @@ namespace sw
 		void Tick();
 		void Render(HDC hdc);
 
-		Player* GetTarget() { return mTarget; }
-		void SetTarget(Player* target);
+		PlayerBase* GetTarget() { return mTarget; }
+		void SetTarget(PlayerBase* target);
 
 	private:
 		float mDelta;
 		UINT mShdowMax;
 		UINT mCurEffect;
 
-		Player* mTarget;
+		PlayerBase* mTarget;
 		std::vector<Effect*> mShadows;
 	};
 }

@@ -16,7 +16,7 @@ namespace sw
 	Drop::~Drop()
 	{
 	}
-	void Drop::Start(Player* target)
+	void Drop::Start(PlayerBase* target)
 	{
 		SetTarget(target);
 		// 애니메이션 세팅해주는 세팅
@@ -33,7 +33,7 @@ namespace sw
 	}
 	void Drop::SetAnimation()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
 		StateHandle* statehandle = player->GetStateHandle();
 
@@ -48,7 +48,7 @@ namespace sw
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(-300.f, 0.0f));
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400.f, 0.0f));
 
 			animator->Play(GetL_Animation(), false);
 
@@ -56,14 +56,14 @@ namespace sw
 		else if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(300.f, 0.0f));
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(400.f, 0.0f));
 
 			animator->Play(GetR_Animation(), false);
 		}
 	}
 	void Drop::SetStartAnimation()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		eObjectState state = player->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
@@ -74,7 +74,7 @@ namespace sw
 	}
 	void Drop::NextStateInput()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		StateHandle* statehandle = player->GetStateHandle();
 		Jump* jump = statehandle->GetState<Jump>(eObjectState::JUMP);
 		Sliding* sliding = statehandle->GetState<Sliding>(eObjectState::SLIDING);

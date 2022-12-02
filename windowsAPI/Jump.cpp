@@ -18,7 +18,7 @@ namespace sw
 		
 	}
 
-	void Jump::Start(Player* target)
+	void Jump::Start(PlayerBase* target)
 	{
 		++mJumpCount;
 		SetTarget(target);
@@ -46,7 +46,7 @@ namespace sw
 
 	void Jump::SetStartAnimation()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 
 		// 점프력 설정
 		Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
@@ -68,17 +68,17 @@ namespace sw
 
 	void Jump::PresseInput()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		StateHandle* statehandle = player->GetStateHandle();
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(-500.f, 0.0f));
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400.f, 0.0f));
 		}
 		else if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(500.f, 0.0f));
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(400.f, 0.0f));
 		}
 	}
 
@@ -107,7 +107,7 @@ namespace sw
 
 	void Jump::ChangeDrop()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
 		Vector2 velocity = rigidbody->GetVelocity();
 

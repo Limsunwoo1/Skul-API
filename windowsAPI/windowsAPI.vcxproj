@@ -176,11 +176,12 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LogoScene.h" />
+    <ClInclude Include="MainPlayer.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Jump.h" />
     <ClInclude Include="Panel.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resource.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateHandle.h" />
+    <ClInclude Include="Switch.h" />
     <ClInclude Include="SwordSkul.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BaseResource.h" />
@@ -233,10 +235,11 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LogoScene.cpp" />
+    <ClCompile Include="MainPlayer.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="Panel.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Move.cpp" />
@@ -250,6 +253,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateHandle.cpp" />
+    <ClCompile Include="Switch.cpp" />
     <ClCompile Include="SwordSkul.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TilePalette.cpp" />

@@ -1,5 +1,5 @@
 #include "TitleScene.h"
-#include "Player.h"
+#include "PlayerBase.h"
 #include "BackGround.h"
 #include "Input.h"
 #include "SceneManager.h"

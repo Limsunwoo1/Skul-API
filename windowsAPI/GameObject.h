@@ -48,6 +48,30 @@ namespace sw
 			return nullptr;
 		}
 
+		template <typename T>
+		__forceinline void DeleteComponent()
+		{
+			T* component;
+
+			std::vector<Component*>::iterator iter;
+			iter = mComponents.begin();
+
+			for (; iter != mComponents.end();)
+			{
+				component = dynamic_cast<T*>(*iter);
+				if (component != nullptr)
+				{
+					mComponents.erase(iter);
+
+					int a = 0;
+					return;
+				}
+				++iter;
+			}
+
+			return;
+		}
+
 		virtual void OnCollisionEnter(Collider* other);
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);

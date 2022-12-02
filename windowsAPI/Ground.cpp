@@ -1,5 +1,5 @@
 #include "Ground.h"
-#include "Player.h"
+#include "PlayerBase.h"
 #include "Collider.h"
 #include "Rigidbody.h"
 
@@ -10,6 +10,7 @@ namespace sw
 	{
 		Collider* collider = AddComponent<Collider>();
 		collider->SetScale(Vector2(3000.f, 50.f));
+		collider->SetOwner(this);
 	}
 	Ground::~Ground()
 	{

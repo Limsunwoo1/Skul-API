@@ -72,10 +72,10 @@ enum class eColliderLayer : short
 	BackGround,
 	Ground,
 	Tile,
-	Player,
-	Player_ProjectTile,
 	Monster,
 	Monster_ProjectTile,
+	Player,
+	Player_ProjectTile,
 
 
 	UI = COLLIDER_LAYER - 1,
@@ -110,7 +110,8 @@ enum class eObjectState
 	SKILL_1,
 	SKILL_2,
 
-	BESHOT,
+	SWITCH,
+	HIT,
 	DROP,
 
 	END,

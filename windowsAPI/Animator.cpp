@@ -17,13 +17,16 @@ namespace sw
 
 	Animator::~Animator()
 	{
-		for (auto Animtion : mAnimations)
+		//std::map<std::wstring, Animation*> mAnimations;
+		for (auto iter : mAnimations)
 		{
-			if (Animtion.second == nullptr)
-				continue;
+			delete iter.second;
+		}
 
-			delete Animtion.second;
-			Animtion.second = nullptr;
+		//std::map<std::wstring, Events*> mEvents;
+		for (auto iter : mEvents)
+		{
+			delete iter.second;
 		}
 	}
 
@@ -33,20 +36,14 @@ namespace sw
 		{
 			mPlayAnimation->Tick();
 
-			// 애니매이션이 끝나도 루프가 재생이면
-			// 리셋후 재시작
 			if (mbLoop && mPlayAnimation->isComplete())
 			{
-				Animation::Event& Event = 
-					mPlayAnimation->CompleteEvent();
+				Animator::Events* events
+					= FindEvents(mPlayAnimation->GetName());
+				if (events != nullptr)
+					events->mCompleteEvent();
 
-				Event();
 				mPlayAnimation->Reset();
-			}
-
-			if (!mbLoop && mPlayAnimation->isComplete())
-			{
-				mPlayAnimation->CompleteEvent();
 			}
 		}
 	}
@@ -105,6 +102,9 @@ namespace sw
 		animation->SetAnimator(this);
 
 		mAnimations.insert(std::make_pair(name, animation));
+
+		Events* events = new Events();
+		mEvents.insert(std::make_pair(name, events));
 	}
 
 	//Sprte 이미지를 Animation 으로 만들어주는 함수
@@ -152,27 +152,19 @@ namespace sw
 	}
 	void Animator::Play(const std::wstring name, bool bLoop)
 	{ 
+		Animator::Events* events = FindEvents(name);
+		if (events != nullptr)
+			events->mStartEvent();
+
 		Animation* prevAnimation = mPlayAnimation;
 		mPlayAnimation = FindAnimation(name);
+		mPlayAnimation->Reset();
+		mbLoop = bLoop;
 
-		if (mPlayAnimation != nullptr)
+		if (prevAnimation != mPlayAnimation)
 		{
-			mPlayAnimation->Reset();
-			mbLoop = bLoop;
-
-			Animation::Event StartEvent =
-				mPlayAnimation->StartEvent();
-
-			StartEvent();
-		}
-
-		// 이전 애니매이션에 End 이벤트 호출
-		if (prevAnimation != mPlayAnimation && prevAnimation != nullptr)
-		{
-			Animation::Event EndEvent =
-				prevAnimation->EndEvent();
-
-			EndEvent();
+			if (events != nullptr)
+				events->mEndEvent();
 		}
 	}
 
@@ -182,5 +174,34 @@ namespace sw
 			return true;
 		
 		return false;
+	}
+
+	Animator::Events* Animator::FindEvents(const std::wstring key)
+	{
+		std::map<std::wstring, Events*>::iterator iter = mEvents.find(key);
+		if (iter == mEvents.end())
+		{
+			return nullptr;
+		}
+
+		return iter->second;
+	}
+	std::function<void()>& Animator::GetStartEvent(const std::wstring key)
+	{
+		Events* events = FindEvents(key);
+
+		return events->mStartEvent.mEvent;
+	}
+	std::function<void()>& Animator::GetCompleteEvent(const std::wstring key)
+	{
+		Events* events = FindEvents(key);
+
+		return events->mCompleteEvent.mEvent;
+	}
+	std::function<void()>& Animator::GetEndEvent(const std::wstring key)
+	{
+		Events* events = FindEvents(key);
+
+		return events->mEndEvent.mEvent;
 	}
 }

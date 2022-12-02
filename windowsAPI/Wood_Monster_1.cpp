@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "Camera.h"
 #include "Input.h"
+#include "EventManager.h"
 
 #include "Image.h"
 #include "Collider.h"
@@ -9,6 +10,8 @@
 
 namespace sw
 {
+	static int hp = 20;
+
 	Wood_Monster_1::Wood_Monster_1()
 		: mImage(nullptr)
 	{
@@ -34,6 +37,15 @@ namespace sw
 
 	void Wood_Monster_1::Tick()
 	{
+		if (hp <= 0)
+		{
+			EventInfo info;
+			info.Type = EventType::DeleteObject;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::Monster);
+			info.Parameter2 = this;
+
+			EventManager::GetInstance()->EventPush(info);
+		}
 		if (KEY_DOWN(eKeyCode::I))
 		{
 			if(alpha > 0)
@@ -75,5 +87,18 @@ namespace sw
 			, bf);
 
 		GameObject::Render(hdc);
+	}
+
+	void Wood_Monster_1::OnCollisionEnter(Collider* other)
+	{
+		hp -= 2;
+	}
+	void Wood_Monster_1::OnCollisionStay(Collider* other)
+	{
+
+	}
+	void Wood_Monster_1::OnCollisionExit(Collider* other)
+	{
+
 	}
 }

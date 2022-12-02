@@ -8,6 +8,8 @@ namespace sw
 		NONE,
 		AddObejct,
 		DeleteObject,
+		ChangeScene,
+		PlayerSwitch,
 		End,
 	};
 

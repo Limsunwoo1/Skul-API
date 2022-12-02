@@ -10,6 +10,7 @@
 #include "Sliding.h"
 #include "Drop.h"
 #include "Attack.h"
+#include "Switch.h"
 
 namespace sw
 {
@@ -23,7 +24,10 @@ namespace sw
 		InitAnimtion();
 		InitState();
 
-		AddComponent<Rigidbody>();
+		Rigidbody* rigidbody = AddComponent<Rigidbody>();
+		rigidbody->SetGround(false);
+		rigidbody->SetOwner(this);
+
 		Collider* collider = AddComponent<Collider>();
 		collider->SetScale(Vector2(100.f, 100.f));
 		collider->SetOwner(this);
@@ -33,17 +37,31 @@ namespace sw
 	}
 	SwordSkul::~SwordSkul()
 	{
+		GameObject::~GameObject();
+		if (mState)
+			delete mState;
+		if (mShaow)
+			delete mShaow;
 	}
 	void SwordSkul::Tick()
 	{
+		if (mParentObject == nullptr)
+			return;
+
 		GameObject::Tick();
 		mState->Tick();
 
 		if (mShaow)
 			mShaow->Tick();
+
+		Vector2 pos = GetPos();
+		mParentObject->SetPos(pos);
 	}
 	void SwordSkul::Render(HDC hdc)
 	{
+		if (mParentObject == nullptr)
+			return;
+
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
 
@@ -124,6 +142,10 @@ namespace sw
 		attack->SetL_AttackSequence(L"L_Sword_AttackA");
 		attack->SetL_AttackSequence(L"L_Sword_AttackB");
 
+		Switch* inswitch = new Switch();
+		inswitch->SetR_Animation(L"R_Sword_IDLE");
+		inswitch->SetL_Animation(L"L_Sword_IDLE");
+
 		mState->PushState(eObjectState::IDLE, idle);
 		mState->PushState(eObjectState::LEFT, move);
 		mState->PushState(eObjectState::RIGHT, move);
@@ -131,5 +153,6 @@ namespace sw
 		mState->PushState(eObjectState::SLIDING, sliding);
 		mState->PushState(eObjectState::DROP, drop);
 		mState->PushState(eObjectState::ATTACK, attack);
+		mState->PushState(eObjectState::SWITCH, inswitch);
 	}
 }

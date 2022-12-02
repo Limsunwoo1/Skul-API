@@ -9,6 +9,29 @@ namespace sw
 	class Animator : public Component
 	{
 	public:
+		struct Event
+		{
+			void operator =(std::function<void()> func)
+			{
+				mEvent = std::move(func);
+			}
+
+			void operator()()
+			{
+				if (mEvent)
+					mEvent();
+			}
+
+			std::function<void()> mEvent;
+		};
+		struct Events
+		{
+			Event mStartEvent;
+			Event mCompleteEvent;
+			Event mEndEvent;
+		};
+	public:
+
 		Animator();
 		~Animator();
 
@@ -27,17 +50,19 @@ namespace sw
 
 		std::wstring CreateAniamtionKey(std::wstring path);
 
-		Animation::Event& StartEvent() {return mPlayAnimation->StartEvent();}
-		Animation::Event& CompleteEvent() { return mPlayAnimation->CompleteEvent(); }
-		Animation::Event& EndEvent() { return mPlayAnimation->EndEvent(); }
-
+		Animation* FindAnimation(const std::wstring name);
 		bool bPlayAnimation();
 		bool isComplete() { return mPlayAnimation->isComplete(); }
-	private:
-		Animation* FindAnimation(const std::wstring name);
+
+		Events* FindEvents(const std::wstring key);
+		std::function<void()>& GetStartEvent(const std::wstring key);
+		std::function<void()>& GetCompleteEvent(const std::wstring key);
+		std::function<void()>& GetEndEvent(const std::wstring key);
 
 	private:
 		std::map<const std::wstring, Animation*> mAnimations;
+		std::map<const std::wstring, Events*> mEvents;
+
 		Animation* mPlayAnimation;
 		Image* mSpriteSheet;
 

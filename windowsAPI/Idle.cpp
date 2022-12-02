@@ -17,7 +17,7 @@ namespace sw
 	{
 
 	}
-	void Idle::Start(Player* target)
+	void Idle::Start(PlayerBase* target)
 	{
 		SetTarget(target);
 
@@ -76,6 +76,11 @@ namespace sw
 		else if (KEY_DOWN(eKeyCode::Z))
 		{
 			NextState = eObjectState::SLIDING;
+		}
+		else if (KEY_DOWN(eKeyCode::SPACE))
+		{
+
+			NextState = eObjectState::SWITCH;
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{

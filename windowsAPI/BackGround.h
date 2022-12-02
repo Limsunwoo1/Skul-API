@@ -15,8 +15,12 @@ namespace sw
 		virtual void Render(HDC hdc) override;
 
 		void SetImage(const std::wstring& key, const std::wstring& filename);
+		void SetCamera(bool anable) { mCamera = anable; }
+		void SetAlpha(bool alpha) { Alph = alpha; }
 
 	private:
+		bool Alph;
+		bool mCamera;
 		Image* mImage;
 	};
 }

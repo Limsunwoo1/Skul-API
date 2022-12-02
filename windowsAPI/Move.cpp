@@ -19,7 +19,7 @@ namespace sw
 		
 	}
 
-	void Move::Start(Player* target)
+	void Move::Start(PlayerBase* target)
 	{
 		SetTarget(target);
 		mCurAnimation = L"";
@@ -48,11 +48,11 @@ namespace sw
 
 	void Move::SetAnimation()
 	{
-		Player* player = GetTarget();
+		PlayerBase* player = GetTarget();
 		Animator* animator = GetTarget()->GetComponent<Animator>();
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(500.f, 0.0f));
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(400.f, 0.0f));
 			mDirction = eObjectState::RIGHT;
 			std::wstring setAnimation = GetR_Animation();
 			if (mCurAnimation != setAnimation)
@@ -63,7 +63,7 @@ namespace sw
 		}
 		else if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(-500.f, 0.0f));
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400.f, 0.0f));
 			mDirction = eObjectState::LEFT;
 			std::wstring setAnimation = GetL_Animation();
 			if (mCurAnimation != setAnimation)

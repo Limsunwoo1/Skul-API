@@ -4,7 +4,7 @@
 namespace sw
 {
 	class State;
-	class Player;
+	class PlayerBase;
 	class StateHandle
 	{
 	public:
@@ -16,8 +16,8 @@ namespace sw
 		void SetState(eObjectState type);
 		eObjectState GetStateType() { return mCurState.first; }
 		eObjectState GetPrevStateType() { return mPrevState.first; }
-		void SetTarget(Player* target) { mTarget = target; }
-		Player* GetTarget() { return mTarget; }
+		void SetTarget(PlayerBase* target) { mTarget = target; }
+		PlayerBase* GetTarget() { return mTarget; }
 
 		void PushState(eObjectState type, State* state);
 
@@ -32,7 +32,7 @@ namespace sw
 		}
 
 	private:
-		Player* mTarget;
+		PlayerBase* mTarget;
 		
 		std::map<eObjectState, State*> mStates;
 

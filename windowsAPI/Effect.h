@@ -4,7 +4,7 @@
 namespace sw
 {
 	class Image;
-	class Player;
+	class PlayerBase;
 	class Effect
 	{
 	public:
@@ -17,15 +17,15 @@ namespace sw
 		void SetImage(std::wstring key, std::wstring path);
 		Image* GetImage() { return mImage; }
 
-		void SetTarget(Player* target);
-		Player* GetTarget() { return mTarget; }
+		void SetTarget(PlayerBase* target);
+		PlayerBase* GetTarget() { return mTarget; }
 
 		void SetPos(Vector2 pos) { mPos = pos; }
 
 	private:
 		Image* mImage;
 		Vector2 mPos;
-		Player* mTarget;
+		PlayerBase* mTarget;
 	};
 }
 

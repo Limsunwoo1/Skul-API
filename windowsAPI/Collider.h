@@ -24,6 +24,10 @@ namespace sw
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
+		void OnCollisionEnter();
+		void OnCollisionStay();
+		void OnCollisionExit();
+
 	private:
 		Vector2D mOffset;
 		Vector2D mPos;

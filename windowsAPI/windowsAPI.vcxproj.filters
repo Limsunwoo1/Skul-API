@@ -290,9 +290,6 @@
     <ClInclude Include="State.h">
       <Filter>Engine\StateHandle\State\StateBase</Filter>
     </ClInclude>
-    <ClInclude Include="Move.h">
-      <Filter>Engine\StateHandle\State\Move</Filter>
-    </ClInclude>
     <ClInclude Include="Jump.h">
       <Filter>Engine\StateHandle\State\Jump</Filter>
     </ClInclude>
@@ -337,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="PlayerBase.h">
       <Filter>Engine\GameObject\MainPlayer\Player\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Move.h">
+      <Filter>Engine\StateHandle\State\Sliding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

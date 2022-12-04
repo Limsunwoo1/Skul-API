@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Shadow.h"
 
+using namespace std;
+
 namespace sw
 {
 	class StateHandle;
@@ -23,6 +25,9 @@ namespace sw
 
 		virtual void InitAnimtion() = 0;
 		virtual void InitState() = 0;
+		virtual void InitAttackCollider() = 0;
+
+		virtual void SwitchSkill();
 
 		void ShadowEffect();
 
@@ -37,11 +42,13 @@ namespace sw
 
 		UINT GetMaxAttackCount() { return mMaxAttackCount; }
 
-		void PushAttackCollider(AttackCollider* attackcollider) { mColliders.push_back(attackcollider); }
-		AttackCollider* FindAttackCollider(std::wstring name);
-
 		void SetParentObject(GameObject* parent) { mParentObject = parent; }
 		GameObject* GetParent() { return mParentObject; }
+
+		void SetColliders(wstring key, Box box);
+		const Box& GetColliders(wstring key) const;
+
+		void SetColliderBox(Box box) { mColliderBox = box; }
 	private:
 		void CompleteEvent();
 
@@ -50,12 +57,14 @@ namespace sw
 		Image* mImage;
 		Animator* mAnimator;
 
-		Shadow* mShaow;
-		bool mbShadow;
+		vector<pair<wstring, Box>> mColliders;
+		GameObject* mParentObject;
+
+		Box mColliderBox;
 		UINT mMaxAttackCount;
 
-		std::vector<AttackCollider*> mColliders;
-		GameObject* mParentObject;
+		Shadow* mShaow;
+		bool mbShadow;
 	};
 }
 

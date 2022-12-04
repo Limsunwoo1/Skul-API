@@ -18,6 +18,9 @@ namespace sw
 
 		virtual void InitAnimtion() override;
 		virtual void InitState() override;
+		virtual void InitAttackCollider() override;
+
+		virtual void SwitchSkill() override;
 	};
 }
 

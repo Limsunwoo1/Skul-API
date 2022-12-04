@@ -9,6 +9,9 @@
 #include "CollisionManager.h"
 #include "Rigidbody.h"
 #include "Collider.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "CollisionManager.h"
 
 namespace sw
 {
@@ -45,26 +48,47 @@ namespace sw
 
 	void Attack::End()
 	{
-		if(mCurCollider)
-			mCurCollider->SetAble(true);
+		for (GameObject* object : mTemp)
+		{
+			object->OnCollisionExit();
+		}
+		mTemp.clear();
 
-		mCurCollider = nullptr;
+		mColliderBox.BoxOffset = Vector2::Zero;
+		mColliderBox.BoxScale = Vector2::Zero;
+
+		GetTarget()->SetColliderBox(mColliderBox);
 	}
 
 	void Attack::StartCollider()
 	{
+		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
+		const std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Monster);
 		PlayerBase* player = GetTarget();
-		eObjectState state = player->GetStateHandle()->
-			GetState<Move>(eObjectState::LEFT)->GetDirtion();
-		mCurCollider = nullptr;
+		eObjectState state = player->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		Animator* animator = player->GetComponent<Animator>();
 
 		if (state == eObjectState::LEFT)
-			mCurCollider = player->FindAttackCollider(mL_AttackSequence[mAttackCount]);
+			mColliderBox = player->GetColliders(mL_AttackSequence[mAttackCount]);
 		else if (state == eObjectState::RIGHT)
-			mCurCollider = player->FindAttackCollider(mR_AttackSequence[mAttackCount]);
+			mColliderBox = player->GetColliders(mR_AttackSequence[mAttackCount]);
 
-		if(mCurCollider)
-			mCurCollider->SetAble(false);
+		Vector2 pos = player->GetPos();
+		Vector2 scale = mColliderBox.BoxScale;
+		Vector2 offset = mColliderBox.BoxOffset;
+
+		// 렌더용 현제 충돌체 정보
+		player->SetColliderBox(mColliderBox);
+
+		for (GameObject* object : objects)
+		{
+			bool bCollision = CollisionManager::GetInstance()->CheckCollision(Box{ scale, pos + offset},object);
+			if (!bCollision)
+				continue;
+
+			mTemp.push_back(object);
+			object->OnCollisionEnter();
+		}
 	}
 
 	void Attack::SetStartAnimation()

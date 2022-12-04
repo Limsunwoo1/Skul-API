@@ -76,6 +76,10 @@ namespace sw
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
+		virtual void OnCollisionEnter();
+		virtual void OnCollisionStay();
+		virtual void OnCollisionExit();
+
 		bool IsDeath() { return mDeath; }
 		void SetDeath(bool isdeath) { mDeath = isdeath; }
 

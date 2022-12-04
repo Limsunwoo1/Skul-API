@@ -18,16 +18,9 @@ namespace sw
 
 		virtual void InitAnimtion() override;
 		virtual void InitState() override;
+		virtual void InitAttackCollider() override;
 
-		void R_AttackA();
-		void R_AttackB();
-		void R_AttackADelete();
-		void R_AttackBDelete();
-
-		void L_AttackA();
-		void L_AttackB();
-		void L_AttackADelete();
-		void L_AttackBDelete();
+		virtual void SwitchSkill() override;
 	};
 }
 

@@ -70,4 +70,14 @@ namespace sw
 		mCollisionCount--;
 		GetOwner()->OnCollisionExit(other);
 	}
+
+	void Collider::OnCollisionEnter()
+	{
+		
+		mCollisionCount++;
+	}
+	void Collider::OnCollisionExit()
+	{
+		mCollisionCount--;
+	}
 }

@@ -35,11 +35,12 @@ namespace sw
 	void Switch::Run()
 	{
 		Animator* animator = GetTarget()->GetComponent<Animator>();
-		//mSwitchSkill();
+		GetTarget()->SwitchSkill();
 
 		if (animator->isComplete())
 			GetTarget()->SetState(eObjectState::IDLE);
 	}
+
 	void Switch::End()
 	{
 		mSwitch = false;

@@ -45,24 +45,32 @@ namespace sw
 	{
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
+			StateHandle* handle = mCurPlayer->GetStateHandle();
+			eObjectState type = handle->GetStateType();
+
 			if (mNextPlayer != nullptr)
 			{
-				eObjectState type = mCurPlayer->GetStateHandle()->
-					GetState<Move>(eObjectState::LEFT)->GetDirtion();
+				if (type != eObjectState::SKILL_1
+					&& type != eObjectState::SKILL_2
+					&& type != eObjectState::SLIDING)
+				{
+					eObjectState movetype = mCurPlayer->GetStateHandle()->
+						GetState<Move>(eObjectState::LEFT)->GetDirtion();
 
-				mNextPlayer->GetStateHandle()->
-					GetState<Move>(eObjectState::LEFT)->SetDirtion(type);
+					mNextPlayer->GetStateHandle()->
+						GetState<Move>(eObjectState::LEFT)->SetDirtion(movetype);
 
-				PlayerBase* temp = mCurPlayer;
-				mCurPlayer = mNextPlayer;
-				mNextPlayer = temp;
-				
-				mCurPlayer->SetState(eObjectState::SWITCH);
-				DeleteComponent<Collider>();
-				DeleteComponent<Rigidbody>();
-				Reset();
+					PlayerBase* temp = mCurPlayer;
+					mCurPlayer = mNextPlayer;
+					mNextPlayer = temp;
 
-				Camera::GetInstance()->SetTarget(mCurPlayer);
+					mCurPlayer->SetState(eObjectState::SWITCH);
+					DeleteComponent<Collider>();
+					DeleteComponent<Rigidbody>();
+					Reset();
+
+					Camera::GetInstance()->SetTarget(mCurPlayer);
+				}
 			}
 		}
 		

@@ -80,15 +80,24 @@ namespace sw
 		delete mShaow;*/
 	}
 
-	AttackCollider* PlayerBase::FindAttackCollider(std::wstring name)
+	void PlayerBase::SetColliders(wstring key, Box box)
 	{
-		for (AttackCollider* collider : mColliders)
+		std::pair<std::wstring, Box> Inpiar;
+		Inpiar.first = key;
+		Inpiar.second = box;
+
+		mColliders.push_back(Inpiar);
+	}
+
+	const Box& PlayerBase::GetColliders(wstring key) const
+	{
+		for (std::pair<std::wstring, Box> collider : mColliders)
 		{
-			if (collider->GetName() == name)
-				return collider;
+			if (collider.first == key)
+				return collider.second;
 		}
 
-		return nullptr;
+		return Box{Vector2::Zero, Vector2::Zero};
 	}
 
 	void PlayerBase::CompleteEvent()
@@ -131,8 +140,14 @@ namespace sw
 	void PlayerBase::OnCollisionExit(Collider* other)
 	{
 	}
+
+	void PlayerBase::SwitchSkill()
+	{
+
+	}
 	void PlayerBase::ShadowEffect()
 	{
+
 	}
 	void PlayerBase::SetState(eObjectState type)
 	{

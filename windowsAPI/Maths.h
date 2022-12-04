@@ -123,6 +123,11 @@ namespace sw
 			return (x == other.x && y == other.y);
 		}
 
+		bool operator !=(const Vector2& other)
+		{
+			return (x != other.x || y != other.y);
+		}
+
 		float Length()
 		{
 			return sqrtf(x * x + y * y);
@@ -146,8 +151,8 @@ namespace sw
 
 	struct Box
 	{
-		Vector2 BoxPos;
 		Vector2 BoxScale;
+		Vector2 BoxOffset;
 	};
 
 	typedef Vector2 Vector2D;

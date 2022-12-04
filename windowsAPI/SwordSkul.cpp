@@ -106,6 +106,9 @@ namespace sw
 		mAnimator->CreatAnimations(L"R_Sword_Dash", L"..\\Resource\\Animation\\SwordSkul\\R_Sword\\Dash", Vector2(0.f, 10.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Sword_Dash", L"..\\Resource\\Animation\\SwordSkul\\L_Sword\\Dash", Vector2(0.f, 10.f), 0.15f);
 
+		mAnimator->CreatAnimations(L"R_Sword_Switch", L"..\\Resource\\Animation\\SwordSkul\\R_Sword\\Switch", Vector2(0.f, 33.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Sword_Switch", L"..\\Resource\\Animation\\SwordSkul\\L_Sword\\Switch", Vector2(0.f, 33.f), 0.15f);
+
 		AddComponent(mAnimator);
 
 		mAnimator->Play(L"R_Sword_IDLE", true);
@@ -143,8 +146,8 @@ namespace sw
 		attack->SetL_AttackSequence(L"L_Sword_AttackB");
 
 		Switch* inswitch = new Switch();
-		inswitch->SetR_Animation(L"R_Sword_IDLE");
-		inswitch->SetL_Animation(L"L_Sword_IDLE");
+		inswitch->SetR_Animation(L"R_Sword_Switch");
+		inswitch->SetL_Animation(L"L_Sword_Switch");
 
 		mState->PushState(eObjectState::IDLE, idle);
 		mState->PushState(eObjectState::LEFT, move);
@@ -154,5 +157,15 @@ namespace sw
 		mState->PushState(eObjectState::DROP, drop);
 		mState->PushState(eObjectState::ATTACK, attack);
 		mState->PushState(eObjectState::SWITCH, inswitch);
+	}
+
+	void SwordSkul::InitAttackCollider()
+	{
+
+	}
+
+	void SwordSkul::SwitchSkill()
+	{
+
 	}
 }

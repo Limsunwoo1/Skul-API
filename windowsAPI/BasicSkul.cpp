@@ -5,6 +5,7 @@
 #include "ResourceManager.h"
 #include "Camera.h"
 #include "EventManager.h"
+#include "Application.h"
 
 #include "Scene.h"
 #include "Image.h"
@@ -36,6 +37,9 @@ namespace sw
 
 		InitAnimtion();
 		InitState();
+		InitAttackCollider();
+
+		// main player에 콜리젼을 받는다
 		Collider* collider = AddComponent<Collider>();
 		collider->SetScale(Vector2(100.f, 100.f));
 		collider->SetOwner(this);
@@ -91,6 +95,21 @@ namespace sw
 
 		GameObject::Render(hdc);
 
+		if (mColliderBox.BoxScale != Vector2::Zero)
+		{
+			
+			Vector2 pos = GetPos() + mColliderBox.BoxOffset;
+			Vector2 scale= mColliderBox.BoxScale;
+			
+			pos = Camera::GetInstance()->CalculatePos(pos);
+			HPEN oldpen = (HPEN)SelectObject(hdc, Application::GetInstance().GetPen(ePenColor::Green));
+			HBRUSH oldbrush = (HBRUSH)SelectObject(hdc, Application::GetInstance().GetBrush(eBrushColor::Transparent));
+			Rectangle(hdc, pos.x - (scale.x * 0.5f), pos.y - (scale.y * 0.5f)
+				, pos.x + (scale.x * 0.5f), pos.y + (scale.y * 0.5f));
+			
+			SelectObject(hdc, oldpen);
+			SelectObject(hdc, oldbrush);
+		}
 	}
 
 	void BasicSkul::OnCollisionEnter(Collider* other)
@@ -127,15 +146,18 @@ namespace sw
 		mAnimator->CreatAnimations(L"L_Basic_AttackA", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\AttackA", Vector2(20.f, 0.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Basic_AttackB", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\AttackB", Vector2(20.f, 0.f), 0.15f);
 
+		mAnimator->CreatAnimations(L"R_Basic_Switch", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\Switch", Vector2(0.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Basic_Switch", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\Switch", Vector2(0.f, 0.f), 0.1f);
+
 		AddComponent(mAnimator);
 
 		mAnimator->Play(L"R_Basic_IDLE", true);
 
-		mAnimator->GetStartEvent(L"R_Basic_AttackA") = std::bind(&BasicSkul::R_AttackA, this);
+		/*mAnimator->GetStartEvent(L"R_Basic_AttackA") = std::bind(&BasicSkul::R_AttackA, this);
 		mAnimator->GetStartEvent(L"R_Basic_AttackB") = std::bind(&BasicSkul::R_AttackB, this);
 
 		mAnimator->GetStartEvent(L"L_Basic_AttackA") = std::bind(&BasicSkul::L_AttackA, this);
-		mAnimator->GetStartEvent(L"L_Basic_AttackB") = std::bind(&BasicSkul::L_AttackB, this);
+		mAnimator->GetStartEvent(L"L_Basic_AttackB") = std::bind(&BasicSkul::L_AttackB, this);*/
 		//mAnimator->StartEvent()
 		// Animator 에 현재 진행중인 애니메이션 셋팅후 바인딩
 		//animator->StartEvent() = std::bind(&Player::StartEvent, this);
@@ -179,8 +201,8 @@ namespace sw
 		attack->SetL_AttackSequence(L"L_Basic_AttackB");
 
 		Switch* inswitch = new Switch();
-		inswitch->SetR_Animation(L"R_Basic_IDLE");
-		inswitch->SetL_Animation(L"L_Basic_IDLE");
+		inswitch->SetR_Animation(L"R_Basic_Switch");
+		inswitch->SetL_Animation(L"L_Basic_Switch");
 
 		mState->PushState(eObjectState::IDLE, idle);
 		mState->PushState(eObjectState::LEFT, move);
@@ -192,82 +214,32 @@ namespace sw
 		mState->PushState(eObjectState::SWITCH, inswitch);
 	}
 
-	void BasicSkul::R_AttackA()
+	void BasicSkul::InitAttackCollider()
 	{
-		AttackCollider* R_attack1 = new AttackCollider(this);
-		R_attack1->SetScale(Vector2(80.f, 80.f));
-		R_attack1->SetOffset(Vector2(50.f, -25.f));
-		R_attack1->SetName(L"R_Basic_AttackA");
+		std::pair<std::wstring, Box> pair;
+		Vector2 scale = Vector2::Zero;
+		Vector2 offset = Vector2::Zero;
 
-		EventInfo info;
-		info.Type = EventType::AddObejct;
-		info.Parameter1 = new eColliderLayer(eColliderLayer::Player_ProjectTile);
-		info.Parameter2 = R_attack1;
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(65.f, -25.f);
+		SetColliders(L"R_Basic_AttackA",Box{ scale ,offset });
 
-		EventManager::GetInstance()->EventPush(info);
-		
-	}
-	void BasicSkul::R_AttackB()
-	{
-		AttackCollider* R_attack2 = new AttackCollider(this);
-		R_attack2->SetScale(Vector2(80.f, 80.f));
-		R_attack2->SetOffset(Vector2(70.f, -25.f));
-		R_attack2->SetName(L"R_Basic_AttackB");
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(75.f, -25.f);
+		SetColliders(L"R_Basic_AttackB", Box{ scale ,offset });
 
-		EventInfo info;
-		info.Type = EventType::AddObejct;
-		info.Parameter1 = new eColliderLayer(eColliderLayer::Player_ProjectTile);
-		info.Parameter2 = R_attack2;
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(-65.f, -25.f);
+		SetColliders(L"L_Basic_AttackA", Box{ scale ,offset });
 
-		EventManager::GetInstance()->EventPush(info);
-		
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(-75.f, -25.f);
+		SetColliders(L"L_Basic_AttackB", Box{ scale ,offset });
 	}
 
-	void BasicSkul::R_AttackADelete()
+	void BasicSkul::SwitchSkill()
 	{
-
-	}
-
-	void BasicSkul::R_AttackBDelete()
-	{
-
-	}
-
-	void BasicSkul::L_AttackA()
-	{
-		AttackCollider* L_attack1 = new AttackCollider(this);
-		L_attack1->SetScale(Vector2(80.f, 80.f));
-		L_attack1->SetOffset(Vector2(-50.f, -25.f));
-		L_attack1->SetName(L"L_Basic_AttackA");
-
-
-		EventInfo info;
-		info.Type = EventType::AddObejct;
-		info.Parameter1 = new eColliderLayer(eColliderLayer::Player_ProjectTile);
-		info.Parameter2 = L_attack1;
-
-		EventManager::GetInstance()->EventPush(info);
-	}
-	void BasicSkul::L_AttackB()
-	{
-		AttackCollider* L_attack2 = new AttackCollider(this);
-		L_attack2->SetScale(Vector2(80.f, 80.f));
-		L_attack2->SetOffset(Vector2(-70.f, -25.f));
-		L_attack2->SetName(L"L_Basic_AttackB");
-
-		EventInfo info;
-		info.Type = EventType::AddObejct;
-		info.Parameter1 = new eColliderLayer(eColliderLayer::Player_ProjectTile);
-		info.Parameter2 = L_attack2;
-
-		EventManager::GetInstance()->EventPush(info);
-	}
-	void BasicSkul::L_AttackADelete()
-	{
-
-	}
-	void BasicSkul::L_AttackBDelete()
-	{
-
+		Rigidbody* rigidbody = GetComponent<Rigidbody>();
+		rigidbody->AddForce(Vector2(200.f, 0.f));
 	}
 }

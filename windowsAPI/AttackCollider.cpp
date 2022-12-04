@@ -10,8 +10,6 @@ namespace sw
 		mOwner = owner;
 		PlayerBase* player = dynamic_cast<PlayerBase*>(owner);
 
-		if(player != nullptr)
-			player->PushAttackCollider(this);
 
 		Collider* collider = AddComponent<Collider>();
 		mCollider = collider;

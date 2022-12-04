@@ -33,27 +33,6 @@ namespace sw
         }
     }
 
-    std::vector<Collider*> CollisionManager::GetColliders(eColliderLayer type, Box box)
-    {
-        std::vector<Collider*> temp;
-
-     
-        Scene* scene = SceneManager::GetInstance()->GetPlayScene();
-        std::vector<GameObject*>& objects = scene->GetGameObject(type);
-        Box Box = box;
-
-        for (GameObject* object : objects)
-        {
-            if (object == nullptr)
-                break;
-
-            Collider* collider = object->GetComponent<Collider>();
-            if (Intersect(box, collider))
-                temp.push_back(collider);
-        }
-        
-        return temp;
-    }
 
     void CollisionManager::SetLayer(eColliderLayer left, eColliderLayer right, bool value)
     {
@@ -179,20 +158,21 @@ namespace sw
         return false;
     }
 
-    bool CollisionManager::Intersect(Box box, Collider* right)
+    bool CollisionManager::CheckCollision(Box box, GameObject* object)
     {
-        if (right->GetOwner()->IsDeath())
+        if (object->IsDeath())
             return false;
 
-        Vector2 BoxPos = box.BoxPos;
-        Vector2 BoxScale = box.BoxScale;
+        // 입력받을시 Box.offset = pos + box.BoxOffset
+        Vector2 leftPos = box.BoxOffset;
+        Vector2 leftScale = box.BoxScale;
 
 
-        Vector2 rightPos = right->GetPos();
-        Vector2 rightScale = right->GetScale();
+        Vector2 rightPos = object->GetPos();
+        Vector2 rightScale = object->GetScale();
 
-        if (fabs(BoxPos.x - rightPos.x) < fabs(BoxScale.x / 2.0f + rightScale.x / 2.0f)
-            && fabs(BoxPos.y - rightPos.y) < fabs(BoxScale.y / 2.0f + rightScale.y / 2.0f))
+        if (fabs(leftPos.x - rightPos.x) < fabs(leftScale.x / 2.0f + rightScale.x / 2.0f)
+            && fabs(leftPos.y - rightPos.y) < fabs(leftScale.y / 2.0f + rightScale.y / 2.0f))
         {
             return true;
         }

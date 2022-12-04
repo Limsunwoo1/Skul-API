@@ -39,12 +39,7 @@ namespace sw
 	{
 		if (hp <= 0)
 		{
-			EventInfo info;
-			info.Type = EventType::DeleteObject;
-			info.Parameter1 = new eColliderLayer(eColliderLayer::Monster);
-			info.Parameter2 = this;
-
-			EventManager::GetInstance()->EventPush(info);
+			SetDeath(true);
 		}
 		if (KEY_DOWN(eKeyCode::I))
 		{
@@ -91,13 +86,26 @@ namespace sw
 
 	void Wood_Monster_1::OnCollisionEnter(Collider* other)
 	{
-		hp -= 2;
+		
 	}
 	void Wood_Monster_1::OnCollisionStay(Collider* other)
 	{
 
 	}
 	void Wood_Monster_1::OnCollisionExit(Collider* other)
+	{
+
+	}
+
+	void Wood_Monster_1::OnCollisionEnter()
+	{
+		hp -= 2;
+	}
+	void Wood_Monster_1::OnCollisionStay()
+	{
+
+	}
+	void Wood_Monster_1::OnCollisionExit()
 	{
 
 	}

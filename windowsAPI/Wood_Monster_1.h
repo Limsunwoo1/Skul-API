@@ -17,6 +17,10 @@ namespace sw
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
+		virtual void OnCollisionEnter() override;
+		virtual void OnCollisionStay() override;
+		virtual void OnCollisionExit() override;
+
 	private:
 		Image* mImage;
 		int alpha;

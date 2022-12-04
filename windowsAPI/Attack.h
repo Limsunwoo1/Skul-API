@@ -4,6 +4,7 @@
 namespace sw
 {
 	class AttackCollider;
+	class GameObject;
 	class Attack : public State
 	{
 	public:
@@ -22,10 +23,13 @@ namespace sw
 
 		void SetR_AttackSequence(std::wstring attack) { mR_AttackSequence.push_back(attack); }
 		void SetL_AttackSequence(std::wstring attack) { mL_AttackSequence.push_back(attack); }
+
+		Box GetCurBox() { return mColliderBox; }
 	private:
 		std::vector<std::wstring> mR_AttackSequence;
 		std::vector<std::wstring> mL_AttackSequence;
-		AttackCollider* mCurCollider;
+		std::vector<GameObject*> mTemp;
+		Box mColliderBox;
 
 		UINT mAttackCount;
 		float mDelta;

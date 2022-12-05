@@ -16,7 +16,7 @@ namespace sw
 		, mDelay(0.1f)
 		, bSliding(false)
 		, bInput(false)
-		, mDirtion(eObjectState::END)
+		, mDirtion(true)
 		, mInputState(eObjectState::END)
 		, mSlidingCount(0)
 	{
@@ -65,14 +65,14 @@ namespace sw
 	void Sliding::SetStartAnimation()
 	{
 		mDirtion =
-			GetTarget()->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+			GetTarget()->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
 
 		bSliding = true;
 
 		Animator* animator = GetTarget()->GetComponent<Animator>();
-		if (mDirtion == eObjectState::LEFT)
+		if (!mDirtion)
 			animator->Play(GetL_Animation(), true);
-		else if (mDirtion == eObjectState::RIGHT)
+		else if (mDirtion)
 			animator->Play(GetR_Animation(), true);
 	}
 
@@ -102,24 +102,24 @@ namespace sw
 
 		Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
 		StateHandle* statehandle = GetTarget()->GetStateHandle();
-		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
+		Move* move = statehandle->GetState<Move>(eObjectState::MOVE);
 
-		if (mDirtion == eObjectState::RIGHT)
+		if (mDirtion)
 		{
 			rigidbody->AddForce(Vector2(Inforce, 0.0f));
 		}
-		else if (mDirtion == eObjectState::LEFT)
+		else if (!mDirtion)
 		{
 			rigidbody->AddForce(Vector2(-Inforce, 0.0f));
 		}
 
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			move->SetDirtion(eObjectState::RIGHT);
+			move->SetDirtion(true);
 		}
 		else if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			move->SetDirtion(eObjectState::LEFT);
+			move->SetDirtion(false);
 		}
 
 		return true;
@@ -134,18 +134,18 @@ namespace sw
 		StateHandle* statehandle = GetTarget()->GetStateHandle();
 
 		// objectState Left or Right 아무거나 입력
-		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
+		Move* move = statehandle->GetState<Move>(eObjectState::MOVE);
 
 		if (mSlidingCount <= 2)
 		{
 			if (KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z))
 			{
-				move->SetDirtion(eObjectState::LEFT);
+				move->SetDirtion(false);
 				bInput = true;
 			}
 			else if (KEY_PRESSE(eKeyCode::RIGHT) && KEY_DOWN(eKeyCode::Z))
 			{
-				move->SetDirtion(eObjectState::RIGHT);
+				move->SetDirtion(true);
 				bInput = true;
 			}
 			else if (KEY_DOWN(eKeyCode::Z))

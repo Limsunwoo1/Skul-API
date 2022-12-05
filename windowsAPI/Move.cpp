@@ -11,7 +11,8 @@ namespace sw
 {
 	Move::Move()
 	{
-		mDirction = eObjectState::RIGHT;
+		// true = ¿À¸¥ÂÊ false = ¿ÞÂÊ
+		mDirction = true;
 	}
 
 	Move::~Move()
@@ -39,11 +40,9 @@ namespace sw
 		
 	}
 
-	void Move::SetDirtion(eObjectState type)
+	void Move::SetDirtion(bool dirction)
 	{
-		if (type == eObjectState::LEFT ||
-			type == eObjectState::RIGHT)
-			mDirction = type;
+		mDirction = dirction;
 	}
 
 	void Move::SetAnimation()
@@ -53,7 +52,7 @@ namespace sw
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(400.f, 0.0f));
-			mDirction = eObjectState::RIGHT;
+			mDirction = true;
 			std::wstring setAnimation = GetR_Animation();
 			if (mCurAnimation != setAnimation)
 			{
@@ -64,7 +63,7 @@ namespace sw
 		else if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400.f, 0.0f));
-			mDirction = eObjectState::LEFT;
+			mDirction = false;
 			std::wstring setAnimation = GetL_Animation();
 			if (mCurAnimation != setAnimation)
 			{

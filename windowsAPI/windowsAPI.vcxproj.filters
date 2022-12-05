@@ -336,7 +336,7 @@
       <Filter>Engine\GameObject\MainPlayer\Player\Base</Filter>
     </ClInclude>
     <ClInclude Include="Move.h">
-      <Filter>Engine\StateHandle\State\Sliding</Filter>
+      <Filter>Engine\StateHandle\State\Move</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

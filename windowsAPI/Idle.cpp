@@ -57,13 +57,9 @@ namespace sw
 	{
 		eObjectState NextState = eObjectState::END;
 
-		if (KEY_PRESSE(eKeyCode::RIGHT))
+		if (KEY_PRESSE(eKeyCode::RIGHT) || KEY_PRESSE(eKeyCode::LEFT))
 		{
-			NextState = eObjectState::RIGHT;
-		}
-		else if (KEY_PRESSE(eKeyCode::LEFT))
-		{
-			NextState = eObjectState::LEFT;
+			NextState = eObjectState::MOVE;
 		}
 		else if (KEY_DOWN(eKeyCode::C))
 		{
@@ -99,7 +95,7 @@ namespace sw
 	{
 		Animator* animator = GetTarget()->GetComponent<Animator>();
 		StateHandle* statehandle = GetTarget()->GetStateHandle();
-		Move* move = statehandle->GetState<Move>(eObjectState::LEFT);
+		Move* move = statehandle->GetState<Move>(eObjectState::MOVE);
 
 		if (move == nullptr)
 		{
@@ -107,11 +103,11 @@ namespace sw
 			return;
 		}
 		// 방향 설정
-		if (move->GetDirtion() == eObjectState::LEFT)
+		if (!move->GetDirtion())
 		{
 			animator->Play(GetL_Animation(), true);
 		}
-		else if (move->GetDirtion() == eObjectState::RIGHT)
+		else if (move->GetDirtion())
 		{
 			animator->Play(GetR_Animation(), true);
 		}

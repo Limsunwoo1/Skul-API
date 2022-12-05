@@ -57,12 +57,12 @@ namespace sw
 
 
 		// 방향설정
-		eObjectState state = player->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
-		if (state == eObjectState::LEFT)
+		if (!state)
 			animator->Play(GetL_Animation(), false);
-		else if (state == eObjectState::RIGHT)
+		else if (state)
 			animator->Play(GetR_Animation(), false);
 	}
 
@@ -72,12 +72,12 @@ namespace sw
 		StateHandle* statehandle = player->GetStateHandle();
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
+			statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(false);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400.f, 0.0f));
 		}
 		else if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
+			statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(true);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(400.f, 0.0f));
 		}
 	}

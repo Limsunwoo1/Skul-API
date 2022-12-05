@@ -13,13 +13,13 @@ namespace sw
 		virtual void Run() override;
 		virtual void End() override;
 
-		eObjectState GetDirtion() {return mDirction; }
-		void SetDirtion(eObjectState type);
+		bool GetDirtion() {return mDirction; }
+		void SetDirtion(bool dirction);
 
 		void SetAnimation();
 		void NextState();
 	private:
-		eObjectState mDirction;
+		bool mDirction;
 		std::wstring mCurAnimation;
 	};
 }

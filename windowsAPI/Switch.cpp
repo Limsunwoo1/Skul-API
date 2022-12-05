@@ -23,12 +23,12 @@ namespace sw
 
 		// 방향설정
 		PlayerBase* player = GetTarget();
-		eObjectState state = player->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
-		if (state == eObjectState::LEFT)
+		if (!state)
 			animator->Play(GetL_Animation(), false);
-		else if (state == eObjectState::RIGHT)
+		else if (state)
 			animator->Play(GetR_Animation(), false);
 	}
 

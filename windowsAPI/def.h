@@ -95,8 +95,7 @@ enum class eObjectState
 
 	UP,
 	DOWN,
-	LEFT,
-	RIGHT,
+	MOVE,
 
 	JUMP,
 	DOUBLEJUMP,

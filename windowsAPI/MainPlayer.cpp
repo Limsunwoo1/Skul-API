@@ -54,19 +54,17 @@ namespace sw
 					&& type != eObjectState::SKILL_2
 					&& type != eObjectState::SLIDING)
 				{
-					eObjectState movetype = mCurPlayer->GetStateHandle()->
-						GetState<Move>(eObjectState::LEFT)->GetDirtion();
+					bool movetype = mCurPlayer->GetStateHandle()->
+						GetState<Move>(eObjectState::MOVE)->GetDirtion();
 
 					mNextPlayer->GetStateHandle()->
-						GetState<Move>(eObjectState::LEFT)->SetDirtion(movetype);
+						GetState<Move>(eObjectState::MOVE)->SetDirtion(movetype);
 
 					PlayerBase* temp = mCurPlayer;
 					mCurPlayer = mNextPlayer;
 					mNextPlayer = temp;
 
 					mCurPlayer->SetState(eObjectState::SWITCH);
-					DeleteComponent<Collider>();
-					DeleteComponent<Rigidbody>();
 					Reset();
 
 					Camera::GetInstance()->SetTarget(mCurPlayer);
@@ -102,7 +100,7 @@ namespace sw
 	void MainPlayer::Reset()
 	{
 		//mCurPlayer->SetPos(GetPos());
-
+		DeleteComponent<Collider>();
 		mCollider = mCurPlayer->GetComponent<Collider>();
 		if (mCollider)
 		{
@@ -110,12 +108,18 @@ namespace sw
 			mCollider->SetOwner(mCurPlayer);
 		}
 
+		bool isground = false;
+		if (mRigidbody)
+		{
+			isground = mRigidbody->GetGround();
+			DeleteComponent<Rigidbody>();
+		}
 		mRigidbody = mCurPlayer->GetComponent<Rigidbody>();
 		if (mRigidbody)
 		{
 			AddComponent(mRigidbody);
 			mRigidbody->SetOwner(mCurPlayer);
-			mRigidbody->SetGround(false);
+			mRigidbody->SetGround(isground);
 		}
 
 		if(mNextPlayer != nullptr)

@@ -11,18 +11,20 @@
 #include "Drop.h"
 #include "Attack.h"
 #include "Switch.h"
+#include "Application.h"
 
 namespace sw
 {
 	SwordSkul::SwordSkul()
 	{
 		//DetaSetting
-		mMaxAttackCount = 1;
+		mMaxAttackCount = 2;
 		SetPos({ 100.0f, 100.0f });
 		SetScale({ 4.f, 4.f });
 
 		InitAnimtion();
 		InitState();
+		InitAttackCollider();
 
 		Rigidbody* rigidbody = AddComponent<Rigidbody>();
 		rigidbody->SetGround(false);
@@ -71,6 +73,22 @@ namespace sw
 			mShaow->Render(hdc);
 
 		GameObject::Render(hdc);
+
+		if (mColliderBox.BoxScale != Vector2::Zero)
+		{
+
+			Vector2 pos = GetPos() + mColliderBox.BoxOffset;
+			Vector2 scale = mColliderBox.BoxScale;
+
+			pos = Camera::GetInstance()->CalculatePos(pos);
+			HPEN oldpen = (HPEN)SelectObject(hdc, Application::GetInstance().GetPen(ePenColor::Green));
+			HBRUSH oldbrush = (HBRUSH)SelectObject(hdc, Application::GetInstance().GetBrush(eBrushColor::Transparent));
+			Rectangle(hdc, pos.x - (scale.x * 0.5f), pos.y - (scale.y * 0.5f)
+				, pos.x + (scale.x * 0.5f), pos.y + (scale.y * 0.5f));
+
+			SelectObject(hdc, oldpen);
+			SelectObject(hdc, oldbrush);
+		}
 	}
 	void SwordSkul::OnCollisionEnter(Collider* other)
 	{
@@ -96,6 +114,9 @@ namespace sw
 
 		mAnimator->CreatAnimations(L"R_Sword_AttackB", L"..\\Resource\\Animation\\SwordSkul\\R_Sword\\AttackB", Vector2(0.f, 10.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Sword_AttackB", L"..\\Resource\\Animation\\SwordSkul\\L_Sword\\AttackB", Vector2(0.f, 10.f), 0.15f);
+
+		mAnimator->CreatAnimations(L"R_Sword_AttackC", L"..\\Resource\\Animation\\SwordSkul\\R_Sword\\AttackC", Vector2(-30.f, 10.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Sword_AttackC", L"..\\Resource\\Animation\\SwordSkul\\L_Sword\\AttackC", Vector2(30.f, 10.f), 0.15f);
 
 		mAnimator->CreatAnimations(L"R_Sword_Jump", L"..\\Resource\\Animation\\SwordSkul\\R_Sword\\Jump", Vector2(0.f, 10.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Sword_Jump", L"..\\Resource\\Animation\\SwordSkul\\L_Sword\\Jump", Vector2(0.f, 10.f), 0.15f);
@@ -141,17 +162,18 @@ namespace sw
 		Attack* attack = new Attack();
 		attack->SetR_AttackSequence(L"R_Sword_AttackA");
 		attack->SetR_AttackSequence(L"R_Sword_AttackB");
+		attack->SetR_AttackSequence(L"R_Sword_AttackC");
 
 		attack->SetL_AttackSequence(L"L_Sword_AttackA");
 		attack->SetL_AttackSequence(L"L_Sword_AttackB");
+		attack->SetL_AttackSequence(L"L_Sword_AttackC");
 
 		Switch* inswitch = new Switch();
 		inswitch->SetR_Animation(L"R_Sword_Switch");
 		inswitch->SetL_Animation(L"L_Sword_Switch");
 
 		mState->PushState(eObjectState::IDLE, idle);
-		mState->PushState(eObjectState::LEFT, move);
-		mState->PushState(eObjectState::RIGHT, move);
+		mState->PushState(eObjectState::MOVE, move);
 		mState->PushState(eObjectState::JUMP, jump);
 		mState->PushState(eObjectState::SLIDING, sliding);
 		mState->PushState(eObjectState::DROP, drop);
@@ -161,7 +183,35 @@ namespace sw
 
 	void SwordSkul::InitAttackCollider()
 	{
+		std::pair<std::wstring, Box> pair;
+		Vector2 scale = Vector2::Zero;
+		Vector2 offset = Vector2::Zero;
 
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(65.f, -25.f);
+		SetColliders(L"R_Sword_AttackA", Box{ scale ,offset });
+
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(75.f, -25.f);
+		SetColliders(L"R_Sword_AttackB", Box{ scale ,offset });
+
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(85.f, -25.f);
+		SetColliders(L"R_Sword_AttackC", Box{ scale ,offset });
+
+		////////////////////////////////////////////////////////
+
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(-65.f, -25.f);
+		SetColliders(L"L_Sword_AttackA", Box{ scale ,offset });
+
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(-75.f, -25.f);
+		SetColliders(L"L_Sword_AttackB", Box{ scale ,offset });
+
+		scale = Vector2(80.f, 80.f);
+		offset = Vector2(-85.f, -25.f);
+		SetColliders(L"L_Sword_AttackC", Box{ scale ,offset });
 	}
 
 	void SwordSkul::SwitchSkill()

@@ -22,7 +22,7 @@ namespace sw
 
 		void SetStartAnimation();
 	private:
-		eObjectState mDirtion;
+		bool mDirtion;
 
 		float mDelta;
 		float mRuntime;

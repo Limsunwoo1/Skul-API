@@ -23,8 +23,6 @@ namespace sw
 		{
 			if (iter->second == nullptr)
 				continue;
-			if(iter->first == eObjectState::RIGHT)
-				continue;
 
 			delete iter->second;
 			iter->second = nullptr;

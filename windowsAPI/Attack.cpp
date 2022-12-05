@@ -36,8 +36,12 @@ namespace sw
 	void Attack::Start(PlayerBase* target)
 	{
 		SetTarget(target);
-		StartCollider();
-		SetStartAnimation();
+
+		if (mAttackCount <= GetTarget()->GetMaxAttackCount())
+		{
+			StartCollider();
+			SetStartAnimation();
+		}
 	}
 	void Attack::Run()
 	{
@@ -65,12 +69,12 @@ namespace sw
 		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
 		const std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Monster);
 		PlayerBase* player = GetTarget();
-		eObjectState state = player->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
-		if (state == eObjectState::LEFT)
+		if (!state)
 			mColliderBox = player->GetColliders(mL_AttackSequence[mAttackCount]);
-		else if (state == eObjectState::RIGHT)
+		else if (state)
 			mColliderBox = player->GetColliders(mR_AttackSequence[mAttackCount]);
 
 		Vector2 pos = player->GetPos();
@@ -95,12 +99,12 @@ namespace sw
 	{
 		// 방향설정
 		PlayerBase* player = GetTarget();
-		eObjectState state = player->GetStateHandle()->GetState<Move>(eObjectState::LEFT)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
-		if (state == eObjectState::LEFT)
+		if (!state)
 			animator->Play(mL_AttackSequence[mAttackCount], false);
-		else if (state == eObjectState::RIGHT)
+		else if (state)
 			animator->Play(mR_AttackSequence[mAttackCount], false);
 
 		mDelta = 0.0f;
@@ -115,17 +119,17 @@ namespace sw
 			// 이동하면서 공격 추가
 			PlayerBase* player = GetTarget();
 			StateHandle* statehandle = player->GetStateHandle();
-			eObjectState state = player->GetStateHandle()->
-				GetState<Move>(eObjectState::LEFT)->GetDirtion();
+			bool state = player->GetStateHandle()->
+				GetState<Move>(eObjectState::MOVE)->GetDirtion();
 
-			if (KEY_PRESSE(eKeyCode::LEFT) && state == eObjectState::LEFT)
+			if (KEY_PRESSE(eKeyCode::LEFT) && state == false)
 			{
-				statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::LEFT);
+				statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(false);
 				player->GetComponent<Rigidbody>()->AddForce(Vector2(-30.f, 0.0f));
 			}
-			else if (KEY_PRESSE(eKeyCode::RIGHT) && state == eObjectState::RIGHT)
+			else if (KEY_PRESSE(eKeyCode::RIGHT) && state == true)
 			{
-				statehandle->GetState<Move>(eObjectState::LEFT)->SetDirtion(eObjectState::RIGHT);
+				statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(true);
 				player->GetComponent<Rigidbody>()->AddForce(Vector2(30.f, 0.0f));
 			}
 			

@@ -205,8 +205,7 @@ namespace sw
 		inswitch->SetL_Animation(L"L_Basic_Switch");
 
 		mState->PushState(eObjectState::IDLE, idle);
-		mState->PushState(eObjectState::LEFT, move);
-		mState->PushState(eObjectState::RIGHT, move);
+		mState->PushState(eObjectState::MOVE, move);
 		mState->PushState(eObjectState::JUMP, jump);
 		mState->PushState(eObjectState::SLIDING, sliding);
 		mState->PushState(eObjectState::DROP, drop);
@@ -240,6 +239,11 @@ namespace sw
 	void BasicSkul::SwitchSkill()
 	{
 		Rigidbody* rigidbody = GetComponent<Rigidbody>();
-		rigidbody->AddForce(Vector2(200.f, 0.f));
+		bool dirction = this->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
+
+		if(dirction)
+			rigidbody->AddForce(Vector2(200.f, 0.f));
+		else
+			rigidbody->AddForce(Vector2(-200.f, 0.f));
 	}
 }

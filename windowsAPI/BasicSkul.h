@@ -21,6 +21,9 @@ namespace sw
 		virtual void InitAttackCollider() override;
 
 		virtual void SwitchSkill() override;
+		virtual void DashEffect() override;
+		virtual void OnAttackEffect(GameObject* other) override;
+
 	};
 }
 

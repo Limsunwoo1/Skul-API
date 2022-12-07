@@ -73,11 +73,16 @@ namespace sw
 
 	void Collider::OnCollisionEnter()
 	{
-		
 		mCollisionCount++;
+		GetOwner()->OnCollisionEnter();
+	}
+	void Collider::OnCollisionStay()
+	{
+		GetOwner()->OnCollisionStay();
 	}
 	void Collider::OnCollisionExit()
 	{
 		mCollisionCount--;
+		GetOwner()->OnCollisionExit();
 	}
 }

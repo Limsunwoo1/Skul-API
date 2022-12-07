@@ -46,25 +46,25 @@ namespace sw
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
 			StateHandle* handle = mCurPlayer->GetStateHandle();
-			eObjectState type = handle->GetStateType();
+			ePlayerState type = handle->GetStateType();
 
 			if (mNextPlayer != nullptr)
 			{
-				if (type != eObjectState::SKILL_1
-					&& type != eObjectState::SKILL_2
-					&& type != eObjectState::SLIDING)
+				if (type != ePlayerState::SKILL_1
+					&& type != ePlayerState::SKILL_2
+					&& type != ePlayerState::SLIDING)
 				{
 					bool movetype = mCurPlayer->GetStateHandle()->
-						GetState<Move>(eObjectState::MOVE)->GetDirtion();
+						GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 
 					mNextPlayer->GetStateHandle()->
-						GetState<Move>(eObjectState::MOVE)->SetDirtion(movetype);
+						GetState<Move>(ePlayerState::MOVE)->SetDirtion(movetype);
 
 					PlayerBase* temp = mCurPlayer;
 					mCurPlayer = mNextPlayer;
 					mNextPlayer = temp;
 
-					mCurPlayer->SetState(eObjectState::SWITCH);
+					mCurPlayer->SetState(ePlayerState::SWITCH);
 					Reset();
 
 					Camera::GetInstance()->SetTarget(mCurPlayer);

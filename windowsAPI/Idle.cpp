@@ -40,51 +40,45 @@ namespace sw
 	void Idle::ResetCount()
 	{
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
-		Jump* jump = dynamic_cast<Jump*>(stateHandle->GetState<Jump>(eObjectState::JUMP));
+		Jump* jump = dynamic_cast<Jump*>(stateHandle->GetState<Jump>(ePlayerState::JUMP));
 		if(jump != nullptr)
 			jump->SetJumpCount(0);
 
-		Sliding* sliding = dynamic_cast<Sliding*>(stateHandle->GetState<Sliding>(eObjectState::SLIDING));
+		Sliding* sliding = dynamic_cast<Sliding*>(stateHandle->GetState<Sliding>(ePlayerState::SLIDING));
 		if (sliding != nullptr)
 			sliding->SetSlidingCount(0);
 
-		Attack* attack = dynamic_cast<Attack*>(stateHandle->GetState<Attack>(eObjectState::ATTACK));
+		Attack* attack = dynamic_cast<Attack*>(stateHandle->GetState<Attack>(ePlayerState::ATTACK));
 		if (attack != nullptr)
 			attack->SetAttackCount(0);
 	}
 
 	void Idle::InputNextState()
 	{
-		eObjectState NextState = eObjectState::END;
+		ePlayerState NextState = ePlayerState::END;
 
 		if (KEY_PRESSE(eKeyCode::RIGHT) || KEY_PRESSE(eKeyCode::LEFT))
 		{
-			NextState = eObjectState::MOVE;
+			NextState = ePlayerState::MOVE;
 		}
 		else if (KEY_DOWN(eKeyCode::C))
 		{
-			NextState = eObjectState::JUMP;
+			NextState = ePlayerState::JUMP;
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{
-			NextState = eObjectState::ATTACK;
+			NextState = ePlayerState::ATTACK;
 		}
 		else if (KEY_DOWN(eKeyCode::Z))
 		{
-			NextState = eObjectState::SLIDING;
-		}
-		else if (KEY_DOWN(eKeyCode::SPACE))
-		{
-
-			NextState = eObjectState::SWITCH;
+			NextState = ePlayerState::SLIDING;
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{
-			
-			NextState = eObjectState::SLIDING;
+			NextState = ePlayerState::ATTACK;
 		}
 
-		if (NextState != eObjectState::END)
+		if (NextState != ePlayerState::END)
 		{
 			End();
 			GetTarget()->SetState(NextState);
@@ -95,7 +89,7 @@ namespace sw
 	{
 		Animator* animator = GetTarget()->GetComponent<Animator>();
 		StateHandle* statehandle = GetTarget()->GetStateHandle();
-		Move* move = statehandle->GetState<Move>(eObjectState::MOVE);
+		Move* move = statehandle->GetState<Move>(ePlayerState::MOVE);
 
 		if (move == nullptr)
 		{

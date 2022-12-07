@@ -12,12 +12,7 @@
 #include <filesystem>
 #include <assert.h>
 
-
-// 자체 제작 해더
-#include "def.h"
-#include "Maths.h"
-
-
+// 사운드 헤더
 #pragma comment(lib, "Msimg32.lib")
 
 #include <mmsystem.h>
@@ -26,6 +21,11 @@
 
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "dsound.lib")
+
+// 자체 제작 해더
+#include "def.h"
+#include "Maths.h"
+#include "UtilString.h"
 
 struct Pixel
 {

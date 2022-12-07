@@ -72,12 +72,13 @@ enum class eColliderLayer : short
 	BackGround,
 	Ground,
 	Tile,
-	Monster,
-	Monster_ProjectTile,
 	Player,
 	Player_ProjectTile,
 
+	Monster,
+	Monster_ProjectTile,
 
+	EFFECT,
 	UI = COLLIDER_LAYER - 1,
 	END = COLLIDER_LAYER,
 };
@@ -89,7 +90,7 @@ enum class eCameraEffect
 	None,
 };
 
-enum class eObjectState
+enum class ePlayerState
 {
 	IDLE,
 

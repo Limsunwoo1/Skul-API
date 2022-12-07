@@ -23,7 +23,7 @@ namespace sw
 
 		// 방향설정
 		PlayerBase* player = GetTarget();
-		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
 		if (!state)
@@ -38,7 +38,7 @@ namespace sw
 		GetTarget()->SwitchSkill();
 
 		if (animator->isComplete())
-			GetTarget()->SetState(eObjectState::IDLE);
+			GetTarget()->SetState(ePlayerState::IDLE);
 	}
 
 	void Switch::End()

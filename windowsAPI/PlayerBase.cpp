@@ -5,7 +5,7 @@
 #include "ResourceManager.h"
 #include "Camera.h"
 #include "EventManager.h"
-#include "AttackCollider.h"
+#include "EffectObject.h"
 
 #include "Scene.h"
 #include "Image.h"
@@ -15,6 +15,8 @@
 #include "Rigidbody.h"
 #include "StateHandle.h"
 #include "Shadow.h"
+
+#include "EffectObject.h"
 
 
 namespace sw
@@ -143,21 +145,28 @@ namespace sw
 
 	void PlayerBase::SwitchSkill()
 	{
+	}
 
+	void PlayerBase::DashEffect()
+	{
+		
+	}
+	void PlayerBase::OnAttackEffect(GameObject* other)
+	{
 	}
 	void PlayerBase::ShadowEffect()
 	{
 
 	}
-	void PlayerBase::SetState(eObjectState type)
+	void PlayerBase::SetState(ePlayerState type)
 	{
 		mState->SetState(type);
 	}
-	eObjectState PlayerBase::GetState()
+	ePlayerState PlayerBase::GetState()
 	{
 		return mState->GetStateType();
 	}
-	eObjectState PlayerBase::GetPrevState()
+	ePlayerState PlayerBase::GetPrevState()
 	{
 		return mState->GetPrevStateType();
 	}

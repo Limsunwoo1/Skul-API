@@ -13,18 +13,18 @@ namespace sw
 
 		void Tick();
 
-		void SetState(eObjectState type);
-		eObjectState GetStateType() { return mCurState.first; }
-		eObjectState GetPrevStateType() { return mPrevState.first; }
+		void SetState(ePlayerState type);
+		ePlayerState GetStateType() { return mCurState.first; }
+		ePlayerState GetPrevStateType() { return mPrevState.first; }
 		void SetTarget(PlayerBase* target) { mTarget = target; }
 		PlayerBase* GetTarget() { return mTarget; }
 
-		void PushState(eObjectState type, State* state);
+		void PushState(ePlayerState type, State* state);
 
 		template<typename T>
-		T* GetState(eObjectState type)
+		T* GetState(ePlayerState type)
 		{
-			std::map<eObjectState, State*>::iterator iter = mStates.find(type);
+			std::map<ePlayerState, State*>::iterator iter = mStates.find(type);
 			if (iter == mStates.end())
 				return nullptr;
 
@@ -34,10 +34,10 @@ namespace sw
 	private:
 		PlayerBase* mTarget;
 		
-		std::map<eObjectState, State*> mStates;
+		std::map<ePlayerState, State*> mStates;
 
-		std::pair<eObjectState, State*> mCurState;
-		std::pair<eObjectState, State*> mPrevState;
+		std::pair<ePlayerState, State*> mCurState;
+		std::pair<ePlayerState, State*> mPrevState;
 	};
 }
 

@@ -70,8 +70,8 @@ namespace sw
 		Image* image = ResourceManager::GetInstance()->Find<Image>(key);
 		if (image != nullptr)
 		{
-			MessageBox(nullptr, L"중복 키 이미지 생성", L"이미지 생성 실패!", MB_OK);
-			return nullptr;
+			//MessageBox(nullptr, L"중복 키 이미지 생성", L"이미지 생성 실패!", MB_OK);
+			return image;
 		}
 
 		// 이미지를 생성해 줘야한다

@@ -84,7 +84,7 @@ namespace sw
 	}
 	void GameObject::OnCollisionEnter()
 	{
-
+		
 	}
 	void GameObject::OnCollisionStay()
 	{

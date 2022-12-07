@@ -34,7 +34,7 @@ namespace sw
 
 		UINT mSlidingCount;
 
-		eObjectState mInputState;
+		ePlayerState mInputState;
 	};
 }
 

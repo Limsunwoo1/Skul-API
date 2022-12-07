@@ -57,7 +57,7 @@ namespace sw
 
 
 		// 방향설정
-		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
 		if (!state)
@@ -72,33 +72,33 @@ namespace sw
 		StateHandle* statehandle = player->GetStateHandle();
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(false);
+			statehandle->GetState<Move>(ePlayerState::MOVE)->SetDirtion(false);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400.f, 0.0f));
 		}
 		else if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(true);
+			statehandle->GetState<Move>(ePlayerState::MOVE)->SetDirtion(true);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(400.f, 0.0f));
 		}
 	}
 
 	void Jump::DownInput()
 	{
-		eObjectState NextState = eObjectState::END;
+		ePlayerState NextState = ePlayerState::END;
 		if (KEY_DOWN(eKeyCode::C))
 		{
-			NextState = eObjectState::JUMP;
+			NextState = ePlayerState::JUMP;
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{
-			NextState = eObjectState::JUMPATTACK;
+			NextState = ePlayerState::JUMPATTACK;
 		}
 		else if (KEY_DOWN(eKeyCode::Z))
 		{
-			NextState = eObjectState::SLIDING;
+			NextState = ePlayerState::SLIDING;
 		}
 
-		if (NextState != eObjectState::END)
+		if (NextState != ePlayerState::END)
 		{
 			End();
 			GetTarget()->SetState(NextState);
@@ -115,7 +115,7 @@ namespace sw
 			return;
 		
 		End();
-		player->SetState(eObjectState::DROP);
+		player->SetState(ePlayerState::DROP);
 		
 		//if (rigidbody->GetGround())
 		//{

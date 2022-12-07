@@ -8,6 +8,7 @@
 namespace sw
 {
 	Animation::Animation()
+		: mAlpha(255)
 	{
 
 	}
@@ -46,7 +47,7 @@ namespace sw
 		func.BlendOp = AC_SRC_OVER;
 		func.BlendFlags = 0;
 		func.AlphaFormat = AC_SRC_ALPHA;
-		func.SourceConstantAlpha = 255; // 0 - 225
+		func.SourceConstantAlpha = mAlpha; // 0 - 225
 
 		//pos += mSpriteSheet[mSpriteIndex].offest;
 

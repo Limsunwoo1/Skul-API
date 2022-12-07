@@ -40,14 +40,14 @@ namespace sw
 		if (rigidbody->GetGround())
 		{
 			End();
-			player->SetState(eObjectState::IDLE);
+			player->SetState(ePlayerState::IDLE);
 			return;
 		}
 
 		Animator* animator = GetTarget()->GetComponent<Animator>();
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(false);
+			statehandle->GetState<Move>(ePlayerState::MOVE)->SetDirtion(false);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400.f, 0.0f));
 
 			animator->Play(GetL_Animation(), false);
@@ -55,7 +55,7 @@ namespace sw
 		}
 		else if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(true);
+			statehandle->GetState<Move>(ePlayerState::MOVE)->SetDirtion(true);
 			player->GetComponent<Rigidbody>()->AddForce(Vector2(400.f, 0.0f));
 
 			animator->Play(GetR_Animation(), false);
@@ -64,7 +64,7 @@ namespace sw
 	void Drop::SetStartAnimation()
 	{
 		PlayerBase* player = GetTarget();
-		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
 		if (!state)
@@ -76,15 +76,15 @@ namespace sw
 	{
 		PlayerBase* player = GetTarget();
 		StateHandle* statehandle = player->GetStateHandle();
-		Jump* jump = statehandle->GetState<Jump>(eObjectState::JUMP);
-		Sliding* sliding = statehandle->GetState<Sliding>(eObjectState::SLIDING);
+		Jump* jump = statehandle->GetState<Jump>(ePlayerState::JUMP);
+		Sliding* sliding = statehandle->GetState<Sliding>(ePlayerState::SLIDING);
 
 		if (KEY_PRESSE(eKeyCode::C))
 		{
 			if (jump->GetJumpCount() < 2)
 			{
 				End();
-				player->SetState(eObjectState::JUMP);
+				player->SetState(ePlayerState::JUMP);
 			}
 		}
 		if (KEY_DOWN(eKeyCode::Z))
@@ -92,7 +92,7 @@ namespace sw
 			if (sliding->GetSlidingCount() < 2)
 			{
 				End();
-				player->SetState(eObjectState::SLIDING);
+				player->SetState(ePlayerState::SLIDING);
 			}
 		}
 	}

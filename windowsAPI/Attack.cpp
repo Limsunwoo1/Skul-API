@@ -5,13 +5,14 @@
 #include "Animation.h"
 #include "Time.h"
 #include "Input.h"
-#include "AttackCollider.h"
+#include "EffectObject.h"
 #include "CollisionManager.h"
 #include "Rigidbody.h"
 #include "Collider.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "CollisionManager.h"
+#include "MonsterBase.h"
 
 namespace sw
 {
@@ -54,7 +55,7 @@ namespace sw
 	{
 		for (GameObject* object : mTemp)
 		{
-			object->OnCollisionExit();
+			object->GetComponent<Collider>()->OnCollisionExit();
 		}
 		mTemp.clear();
 
@@ -69,7 +70,7 @@ namespace sw
 		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
 		const std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Monster);
 		PlayerBase* player = GetTarget();
-		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
 		if (!state)
@@ -86,12 +87,24 @@ namespace sw
 
 		for (GameObject* object : objects)
 		{
+			Collider* collider = object->GetComponent<Collider>();
+			collider->SetPos(object->GetPos());
+
 			bool bCollision = CollisionManager::GetInstance()->CheckCollision(Box{ scale, pos + offset},object);
 			if (!bCollision)
 				continue;
 
 			mTemp.push_back(object);
-			object->OnCollisionEnter();
+			collider->OnCollisionEnter();
+			GetTarget()->OnAttackEffect(object);
+
+			MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+			if (monster != nullptr)
+			{
+				eMonsterState type = monster->GetState();
+				monster->SetAble(type, false);
+				monster->SetState(eMonsterState::HIT);
+			}
 		}
 	}
 
@@ -99,7 +112,7 @@ namespace sw
 	{
 		// 방향설정
 		PlayerBase* player = GetTarget();
-		bool state = player->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
+		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
 		if (!state)
@@ -120,16 +133,16 @@ namespace sw
 			PlayerBase* player = GetTarget();
 			StateHandle* statehandle = player->GetStateHandle();
 			bool state = player->GetStateHandle()->
-				GetState<Move>(eObjectState::MOVE)->GetDirtion();
+				GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 
 			if (KEY_PRESSE(eKeyCode::LEFT) && state == false)
 			{
-				statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(false);
+				statehandle->GetState<Move>(ePlayerState::MOVE)->SetDirtion(false);
 				player->GetComponent<Rigidbody>()->AddForce(Vector2(-30.f, 0.0f));
 			}
 			else if (KEY_PRESSE(eKeyCode::RIGHT) && state == true)
 			{
-				statehandle->GetState<Move>(eObjectState::MOVE)->SetDirtion(true);
+				statehandle->GetState<Move>(ePlayerState::MOVE)->SetDirtion(true);
 				player->GetComponent<Rigidbody>()->AddForce(Vector2(30.f, 0.0f));
 			}
 			
@@ -142,7 +155,7 @@ namespace sw
 		{
 			End();
 			mDelta = 0.0f;
-			player->SetState(eObjectState::IDLE);
+			player->SetState(ePlayerState::IDLE);
 			return;
 		}
 

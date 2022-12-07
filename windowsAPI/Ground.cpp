@@ -9,7 +9,7 @@ namespace sw
 	Ground::Ground()
 	{
 		Collider* collider = AddComponent<Collider>();
-		collider->SetScale(Vector2(3000.f, 50.f));
+		collider->SetScale(Vector2(8000.f, 50.f));
 		collider->SetOwner(this);
 	}
 	Ground::~Ground()

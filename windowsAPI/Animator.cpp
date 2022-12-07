@@ -11,6 +11,7 @@ namespace sw
 		: Component(eComponentType::Animator)
 		, mPlayAnimation(nullptr)
 		, mbLoop(false)
+		, mAlpha(255)
 	{
 
 	}
@@ -50,7 +51,10 @@ namespace sw
 	void Animator::Render(HDC hdc)
 	{
 		if (mPlayAnimation != nullptr)
+		{
+			mPlayAnimation->SetAlpha(mAlpha);
 			mPlayAnimation->Render(hdc);
+		}
 	}
 
 	std::wstring Animator::CreateAniamtionKey(std::wstring path)
@@ -88,9 +92,7 @@ namespace sw
 		Animation* animation = FindAnimation(name);
 		if (animation != nullptr)
 		{
-			MessageBox(nullptr, L"중복 키 애니메이션 생성",
-				L"애니메이션 생성 실패!", MB_OK);
-
+			int a = 0;
 			return;
 		}
 

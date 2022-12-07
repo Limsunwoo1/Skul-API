@@ -36,9 +36,9 @@ namespace sw
 			mCurState.second->Run();
 	}
 
-	void StateHandle::SetState(eObjectState type)
+	void StateHandle::SetState(ePlayerState type)
 	{
-		std::map<eObjectState, State*>::iterator iter = mStates.find(type);
+		std::map<ePlayerState, State*>::iterator iter = mStates.find(type);
 		if (iter == mStates.end())
 			return;
 
@@ -51,11 +51,9 @@ namespace sw
 		mCurState.second->Start(mTarget);
 	}
 
-	void StateHandle::PushState(eObjectState type, State* Instate)
+	void StateHandle::PushState(ePlayerState type, State* Instate)
 	{
 		Instate->SetTarget(mTarget);
 		mStates.insert(std::make_pair(type, Instate));
 	}
-
-
 }

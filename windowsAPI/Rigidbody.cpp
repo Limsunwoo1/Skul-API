@@ -96,7 +96,7 @@ namespace sw
 		PlayerBase* player = dynamic_cast<PlayerBase*>(GetOwner());
 		if (player != nullptr)
 		{
-			if(player->GetState() != eObjectState::SLIDING)
+			if(player->GetState() != ePlayerState::SLIDING)
 			{
 				if (!mbGround)
 				{
@@ -125,6 +125,7 @@ namespace sw
 
 
 		pos = pos + mForce * Time::GetInstance()->DeltaTime();
+		pos = pos + mVelocity * Time::GetInstance()->DeltaTime();
 		GetOwner()->SetPos(pos);
 		mForce.clear();
 	}

@@ -14,6 +14,7 @@ namespace sw
 		void Tick();
 		void SetLayer(eColliderLayer left, eColliderLayer right, bool value = true);
 		bool CheckCollision(Box box, GameObject* object);
+		bool MomentCollsion(Box box, GameObject* object, bool dirction = true);
 	private:
 		void LayerCollision(Scene* scene, eColliderLayer left, eColliderLayer right);
 		void ColliderCollision(Collider* left, Collider* right);

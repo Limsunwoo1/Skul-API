@@ -5,11 +5,12 @@
 #include "Ground.h"
 #include "BasicSkul.h"
 #include "SwordSkul.h"
-#include "AttackCollider.h"
+#include "EffectObject.h"
 #include "MainPlayer.h"
 #include "Input.h"
 #include "SceneManager.h"
 #include "CollisionManager.h"
+#include "Sword_Monster.h"
 
 namespace sw
 {
@@ -29,7 +30,7 @@ namespace sw
 		bg->SetImage(L"Back", L"BackGround.bmp");
 		bg->Initialize();
 		bg->SetPos(Vector2(800.f, 450.f));
-		bg->SetScale(Vector2(1600.f, 900.f));
+		bg->SetScale(Vector2(2400.f, 1350.f));
 
 		Ground* ground = new Ground();
 		ground->SetPos(Vector2(100.f, 500.f));
@@ -40,10 +41,20 @@ namespace sw
 		//BasicSkul* basicskul = new BasicSkul();
 		MainPlayer* player = new MainPlayer();
 
+		SwordMonster* monster2 = new SwordMonster();
+		monster2->SetPos(Vector2(300.f, 300.f));
+		monster2->SetScale(Vector2(4.f,4.f));
+
+		SwordMonster* monster3 = new SwordMonster();
+		monster3->SetPos(Vector2(500.f, 500.f));
+		monster3->SetScale(Vector2(4.f, 4.f));
+
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(player,eColliderLayer::Player);
 		AddGameObject(ground, eColliderLayer::Ground);
 		AddGameObject(monster, eColliderLayer::Monster);
+		AddGameObject(monster2, eColliderLayer::Monster);
+		AddGameObject(monster3, eColliderLayer::Monster);
 
 		/*AttackCollider* R_attack1 = new AttackCollider(swordSkul);
 		R_attack1->SetScale(Vector2(80.f, 80.f));
@@ -103,6 +114,7 @@ namespace sw
 		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjectTile, eColliderLayer::Monster);
 	}
 

@@ -83,8 +83,8 @@ namespace sw
 		bool IsDeath() { return mDeath; }
 		void SetDeath(bool isdeath) { mDeath = isdeath; }
 
-		eObjectState GetState() {return mCurstate;}
-		void SetState(eObjectState state) { mCurstate = state;}
+		ePlayerState GetState() {return mCurstate;}
+		void SetState(ePlayerState state) { mCurstate = state;}
 
 	private:
 		std::vector<Component*> mComponents;
@@ -95,7 +95,7 @@ namespace sw
 		float mDeathTime;
 		bool mDeathTimeOn;
 
-		eObjectState mCurstate;
+		ePlayerState mCurstate;
 	};
 }
 

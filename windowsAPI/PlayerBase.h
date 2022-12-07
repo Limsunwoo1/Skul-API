@@ -9,7 +9,7 @@ namespace sw
 	class StateHandle;
 	class Animator;
 	class Image;
-	class AttackCollider;
+	class EffectObject;
 	class PlayerBase : public GameObject
 	{
 	public:
@@ -28,14 +28,16 @@ namespace sw
 		virtual void InitAttackCollider() = 0;
 
 		virtual void SwitchSkill();
+		virtual void DashEffect();
+		virtual void OnAttackEffect(GameObject* other);
 
 		void ShadowEffect();
 
-		void SetState(eObjectState type);
+		void SetState(ePlayerState type);
 		StateHandle* GetStateHandle() { return mState; }
 
-		eObjectState GetState();
-		eObjectState GetPrevState();
+		ePlayerState GetState();
+		ePlayerState GetPrevState();
 
 		bool GetIsShadow() { return mbShadow; }
 		void SetIsShadow(bool anable) { mbShadow = anable; }
@@ -56,6 +58,7 @@ namespace sw
 		StateHandle* mState;
 		Image* mImage;
 		Animator* mAnimator;
+		EffectObject* mEffect;
 
 		vector<pair<wstring, Box>> mColliders;
 		GameObject* mParentObject;

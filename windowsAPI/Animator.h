@@ -59,12 +59,16 @@ namespace sw
 		std::function<void()>& GetCompleteEvent(const std::wstring key);
 		std::function<void()>& GetEndEvent(const std::wstring key);
 
+		void SetAlpha(int alpha) { mAlpha = alpha; }
+		int GetAlpha() { return mAlpha; }
+
 	private:
 		std::map<const std::wstring, Animation*> mAnimations;
 		std::map<const std::wstring, Events*> mEvents;
 
 		Animation* mPlayAnimation;
 		Image* mSpriteSheet;
+		int mAlpha;
 
 		bool mbLoop;
 	};

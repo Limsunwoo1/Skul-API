@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
+    <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -153,7 +153,7 @@
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Attack.h" />
-    <ClInclude Include="AttackCollider.h" />
+    <ClInclude Include="EffectObject.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BasicSkul.h" />
     <ClInclude Include="Button.h" />
@@ -178,9 +178,11 @@
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="MainPlayer.h" />
     <ClInclude Include="Maths.h" />
+    <ClInclude Include="MonsterBase.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Jump.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="Path.h" />
     <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -197,6 +199,7 @@
     <ClInclude Include="StateHandle.h" />
     <ClInclude Include="Switch.h" />
     <ClInclude Include="SwordSkul.h" />
+    <ClInclude Include="Sword_Monster.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BaseResource.h" />
     <ClInclude Include="Tile.h" />
@@ -207,6 +210,7 @@
     <ClInclude Include="UiBase.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UtilMath.h" />
+    <ClInclude Include="UtilString.h" />
     <ClInclude Include="windowsAPI.h" />
     <ClInclude Include="Wood_Monster_1.h" />
   </ItemGroup>
@@ -215,7 +219,7 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Attack.cpp" />
-    <ClCompile Include="AttackCollider.cpp" />
+    <ClCompile Include="EffectObject.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BasicSkul.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -238,6 +242,7 @@
     <ClCompile Include="MainPlayer.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Jump.cpp" />
+    <ClCompile Include="MonsterBase.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -254,6 +259,7 @@
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateHandle.cpp" />
     <ClCompile Include="Switch.cpp" />
+    <ClCompile Include="Sword_Monster.cpp" />
     <ClCompile Include="SwordSkul.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TilePalette.cpp" />

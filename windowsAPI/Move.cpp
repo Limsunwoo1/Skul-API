@@ -75,37 +75,36 @@ namespace sw
 
 	void Move::NextState()
 	{
-		eObjectState nextState = eObjectState::END;
+		ePlayerState nextState = ePlayerState::END;
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
-		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
+		Jump* jump = stateHandle->GetState<Jump>(ePlayerState::JUMP);
 
 		if (KEY_PRESSE(eKeyCode::C))
 		{
 			if (jump->GetJumpCount() < 2)
 			{
-				nextState = eObjectState::JUMP;
+				nextState = ePlayerState::JUMP;
 			}
 		}
 		else if (KEY_DOWN(eKeyCode::X))
 		{
-			nextState = eObjectState::ATTACK;
+			nextState = ePlayerState::ATTACK;
 		}
-		else if (KEY_DOWN(eKeyCode::Z) ||
-			KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z) ||
-			KEY_PRESSE(eKeyCode::RIGHT) && KEY_DOWN(eKeyCode::Z))
+		else if (KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z)
+			 ||  KEY_PRESSE(eKeyCode::RIGHT) && KEY_DOWN(eKeyCode::Z))
 		{
-			nextState = eObjectState::SLIDING;
+			nextState = ePlayerState::SLIDING;
 		}
 		else if (KEY_UP(eKeyCode::RIGHT))
 		{
-			nextState = eObjectState::IDLE;
+			nextState = ePlayerState::IDLE;
 		}
 		else if (KEY_UP(eKeyCode::LEFT))
 		{
-			nextState = eObjectState::IDLE;
+			nextState = ePlayerState::IDLE;
 		}
 
-		if (nextState != eObjectState::END)
+		if (nextState != ePlayerState::END)
 		{
 			End();
 			GetTarget()->SetState(nextState);

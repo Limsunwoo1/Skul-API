@@ -167,14 +167,48 @@ namespace sw
         Vector2 leftPos = box.BoxOffset;
         Vector2 leftScale = box.BoxScale;
 
+        Collider* collider = object->GetComponent<Collider>();
 
-        Vector2 rightPos = object->GetPos();
-        Vector2 rightScale = object->GetScale();
+        Vector2 rightPos = collider->GetPos();
+        Vector2 rightScale = collider->GetScale();
 
         if (fabs(leftPos.x - rightPos.x) < fabs(leftScale.x / 2.0f + rightScale.x / 2.0f)
             && fabs(leftPos.y - rightPos.y) < fabs(leftScale.y / 2.0f + rightScale.y / 2.0f))
         {
             return true;
+        }
+
+        return false;
+    }
+    bool CollisionManager::MomentCollsion(Box box, GameObject* object, bool dirction)
+    {
+        if (object->IsDeath())
+            return false;
+
+        // 입력받을시 Box.offset = pos + box.BoxOffset
+        Vector2 leftPos = box.BoxOffset;
+        Vector2 leftScale = box.BoxScale;
+
+        Collider* collider = object->GetComponent<Collider>();
+
+        Vector2 rightPos = collider->GetPos();
+        Vector2 rightScale = collider->GetScale();
+
+        if (dirction)
+        {
+            if (leftPos.x < rightPos.x && (leftPos.x + leftScale.x) > rightPos.x - (rightScale.x * 0.5f)
+             && leftPos.y < rightPos.y && (leftPos.y + leftScale.y) > rightPos.y)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if (leftPos.x > rightPos.x && (leftPos.x - leftScale.x) < rightPos.x + (rightScale.x * 0.5f)
+             && leftPos.y < rightPos.y && (leftPos.y + leftScale.y) > rightPos.y)
+            {
+                return true;
+            }
         }
 
         return false;

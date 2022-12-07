@@ -17,7 +17,7 @@ namespace sw
 		, bSliding(false)
 		, bInput(false)
 		, mDirtion(true)
-		, mInputState(eObjectState::END)
+		, mInputState(ePlayerState::END)
 		, mSlidingCount(0)
 	{
 
@@ -32,7 +32,7 @@ namespace sw
 	{
 		SetTarget(target);
 		++mSlidingCount;
-		mInputState = eObjectState::END;
+		mInputState = ePlayerState::END;
 		mDelta = 0.0f;
 
 		if(mSlidingCount <= 2)
@@ -59,21 +59,21 @@ namespace sw
 
 	void Sliding::End()
 	{
-		
+		bInput = false;
 	}
 
 	void Sliding::SetStartAnimation()
 	{
 		mDirtion =
-			GetTarget()->GetStateHandle()->GetState<Move>(eObjectState::MOVE)->GetDirtion();
+			GetTarget()->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 
 		bSliding = true;
 
 		Animator* animator = GetTarget()->GetComponent<Animator>();
 		if (!mDirtion)
-			animator->Play(GetL_Animation(), true);
+			animator->Play(GetL_Animation(), false);
 		else if (mDirtion)
-			animator->Play(GetR_Animation(), true);
+			animator->Play(GetR_Animation(), false);
 	}
 
 	bool Sliding::SlidingRun()
@@ -86,7 +86,7 @@ namespace sw
 			mDelta = mDelay;
 			bSliding = false;
 
-			return false;
+			return true;
 		}
 
 		if (mDelta >= mRuntime)
@@ -94,7 +94,7 @@ namespace sw
 			bSliding = false;
 			mDelta = 0.0f;
 
-			return false;
+			return true;
 		}
 
 		float run = (mRuntime / mDelta);
@@ -102,7 +102,7 @@ namespace sw
 
 		Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
 		StateHandle* statehandle = GetTarget()->GetStateHandle();
-		Move* move = statehandle->GetState<Move>(eObjectState::MOVE);
+		Move* move = statehandle->GetState<Move>(ePlayerState::MOVE);
 
 		if (mDirtion)
 		{
@@ -132,9 +132,7 @@ namespace sw
 			return false;
 		
 		StateHandle* statehandle = GetTarget()->GetStateHandle();
-
-		// objectState Left or Right 아무거나 입력
-		Move* move = statehandle->GetState<Move>(eObjectState::MOVE);
+		Move* move = statehandle->GetState<Move>(ePlayerState::MOVE);
 
 		if (mSlidingCount <= 2)
 		{
@@ -148,27 +146,24 @@ namespace sw
 				move->SetDirtion(true);
 				bInput = true;
 			}
-			else if (KEY_DOWN(eKeyCode::Z))
-			{
-				bInput = true;
-			}
 		}
+
+		return true;
 	}
 
 	void Sliding::InputNextState()
 	{
 		//player->GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 500.f));
 		PlayerBase* player = GetTarget();
-		eObjectState NextState = eObjectState::END;
+		ePlayerState NextState = ePlayerState::END;
 		Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
 		StateHandle* stateHandle = GetTarget()->GetStateHandle();
-		Jump* jump = stateHandle->GetState<Jump>(eObjectState::JUMP);
+		Jump* jump = stateHandle->GetState<Jump>(ePlayerState::JUMP);
 
 		// 재시전 입력되었는지
 		if (bInput)
 		{
 			End();
-			bInput = false;
 			Start(GetTarget());
 			return;
 		}
@@ -178,21 +173,22 @@ namespace sw
 		{
 			if (jump->GetJumpCount() < 2)
 			{
-				player->SetState(eObjectState::JUMP);
+				End();
+				player->SetState(ePlayerState::JUMP);
 				return;
 			}
 		}
 
 		if (rigidbody->GetGround())
 		{
-			NextState = eObjectState::IDLE;
+			NextState = ePlayerState::IDLE;
 		}
 		else
 		{
-			NextState = eObjectState::DROP;
+			NextState = ePlayerState::DROP;
 		}
 
-		if (NextState != eObjectState::END)
+		if (NextState != ePlayerState::END)
 		{
 			End();
 			player->SetState(NextState);

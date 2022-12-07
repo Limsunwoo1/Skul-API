@@ -41,11 +41,15 @@ namespace sw
 		bool isComplete() { return mbComplete; }
 		void SetAnimator(Animator* animator) { mAnimator = animator; }
 
+		int GetAlpha() { return mAlpha; }
+		void SetAlpha(int alpha) { mAlpha = alpha; }
+
 	private:
 		Animator* mAnimator;
 		Image* mImage;
 		std::vector<Sprite> mSpriteSheet;
 		UINT mSpriteIndex;
+		int mAlpha;
 		float mTime;
 
 		bool mStart;

@@ -45,7 +45,7 @@ namespace sw
 		func.BlendOp = AC_SRC_OVER;
 		func.BlendFlags = 0;
 		func.AlphaFormat = AC_SRC_ALPHA;
-		func.SourceConstantAlpha = 150; // 0 - 225
+		func.SourceConstantAlpha = 100; // 0 - 225
 
 		AlphaBlend(hdc
 			, (int)pos.x - 50.f

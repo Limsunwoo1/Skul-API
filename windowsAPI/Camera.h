@@ -17,6 +17,7 @@ namespace sw
 		Vector2 GetDistance() { return mDistance; }
 		Vector2 GetLookPosition() { return mLookPosition; }
 		void SetTarget(GameObject* Gameobj) {mTarget = Gameobj;}
+		void SetToolMode(bool able) { bToolMode = able; }
 
 		void SetCameraEffect(eCameraEffect effect) { mEffect = effect; }
 

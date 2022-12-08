@@ -53,14 +53,16 @@ namespace sw
 	{
 		// 오브젝트 tick 호출한다
 		Scene::Tick();
-
-		if (KEY_DOWN(eKeyCode::N))
+		for (int c = 0; c < (int)eKeyCode::End; ++c)
 		{
-			EventInfo info;
-			info.Type = EventType::ChangeScene;
-			info.Parameter1 = new eSceneType(eSceneType::Play);
-			
-			EventManager::GetInstance()->EventPush(info);
+			if (KEY_DOWN((eKeyCode)c))
+			{
+				EventInfo info;
+				info.Type = EventType::ChangeScene;
+				info.Parameter1 = new eSceneType(eSceneType::Play);
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 		}
 	}
 

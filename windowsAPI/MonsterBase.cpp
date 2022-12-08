@@ -21,9 +21,9 @@ namespace sw
 	{
 		for (int i = 0; i < (int)eMonsterState::END; ++i)
 		{
-			mAble[i] = false;
+			mState[i] = false;
 		}
-		mAble[(int)eMonsterState::IDLE] = true;
+		mState[(int)eMonsterState::IDLE] = true;
 	}
 	MonsterBase::~MonsterBase()
 	{

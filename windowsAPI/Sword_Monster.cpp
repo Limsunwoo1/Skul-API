@@ -193,14 +193,14 @@ namespace sw
 		}
 
 		mDelta += Time::GetInstance()->DeltaTime();
-		if (mAble[(int)eMonsterState::IDLE] == false)
+		if (mState[(int)eMonsterState::IDLE] == false)
 		{
 			if (mDirction)
 				mAnimator->Play(L"R_SwordMonster_Idle");
 			else
 				mAnimator->Play(L"L_SwordMonster_Idle");
 
-			mAble[(int)eMonsterState::IDLE] = true;
+			mState[(int)eMonsterState::IDLE] = true;
 			i++;
 		}
 
@@ -210,24 +210,24 @@ namespace sw
 		mDelta = 0.0f;
 		mPrevState = mCurState;
 		mCurState = eMonsterState::MOVE;
-		mAble[(int)eMonsterState::IDLE] = false;
+		mState[(int)eMonsterState::IDLE] = false;
 	}
 	void SwordMonster::Attack()
 	{
-		if (mAble[(int)eMonsterState::ATTACK] == false)
+		if (mState[(int)eMonsterState::ATTACK] == false)
 		{
 			if (mDirction)
 				mAnimator->Play(L"R_SwordMonster_Attack");
 			else
 				mAnimator->Play(L"L_SwordMonster_Attack");
 
-			mAble[(int)eMonsterState::ATTACK] = true;
+			mState[(int)eMonsterState::ATTACK] = true;
 
 			if (mTarget == nullptr)
 			{
 				mPrevState = mCurState;
 				mCurState = eMonsterState::IDLE;
-				mAble[(int)eMonsterState::ATTACK] = false;
+				mState[(int)eMonsterState::ATTACK] = false;
 				return;
 			}
 
@@ -260,7 +260,7 @@ namespace sw
 		{
 			mPrevState = mCurState;
 			mCurState = eMonsterState::IDLE;
-			mAble[(int)eMonsterState::ATTACK] = false;
+			mState[(int)eMonsterState::ATTACK] = false;
 		}
 	}
 
@@ -268,14 +268,14 @@ namespace sw
 	{
 		mDelta += Time::GetInstance()->DeltaTime();
 
-		if (mAble[(int)eMonsterState::MOVE] == false)
+		if (mState[(int)eMonsterState::MOVE] == false)
 		{
 			if (mDirction)
 				mAnimator->Play(L"R_SwordMonster_Move", true);
 			else
 				mAnimator->Play(L"L_SwordMonster_Move", true);
 
-			mAble[(int)eMonsterState::MOVE] = true;
+			mState[(int)eMonsterState::MOVE] = true;
 		}
 
 		Rigidbody* rigidbody = this->GetComponent<Rigidbody>();
@@ -288,7 +288,7 @@ namespace sw
 
 			if (mDelta > 5.0f)
 			{
-				mAble[(int)eMonsterState::MOVE] = false;
+				mState[(int)eMonsterState::MOVE] = false;
 				mDelta = 0.0f;
 				mPrevState = mCurState;
 				mCurState = eMonsterState::IDLE;
@@ -302,7 +302,7 @@ namespace sw
 				if (mDirction)
 				{
 					mDirction = false;
-					mAble[(int)eMonsterState::MOVE] = false;
+					mState[(int)eMonsterState::MOVE] = false;
 				}
 
 				rigidbody->AddForce(Vector2(-250.f, 0.0f));
@@ -312,7 +312,7 @@ namespace sw
 				if (!mDirction)
 				{
 					mDirction = true;
-					mAble[(int)eMonsterState::MOVE] = false;
+					mState[(int)eMonsterState::MOVE] = false;
 				}
 
 				rigidbody->AddForce(Vector2(250.f, 0.0f));
@@ -323,14 +323,14 @@ namespace sw
 				mPrevState = mCurState;
 				mCurState = eMonsterState::ATTACK;
 				mDelta = 0.0f;
-				mAble[(int)eMonsterState::MOVE] = false;
+				mState[(int)eMonsterState::MOVE] = false;
 			}
 		}
 	}
 	void SwordMonster::Hit()
 	{
 		mDelta += Time::GetInstance()->DeltaTime();
-		if (mAble[(int)eMonsterState::HIT] == false)
+		if (mState[(int)eMonsterState::HIT] == false)
 		{
 			if (mDirction)
 				mAnimator->Play(L"R_SwordMonster_Hit", true);
@@ -344,13 +344,13 @@ namespace sw
 			else
 				rigidbody->AddForce(Vector2(1000.f, 0.f));
 
-			mAble[(int)eMonsterState::HIT] = true;
+			mState[(int)eMonsterState::HIT] = true;
 		}
 
-		if (mDelta > 1.5f)
+		if (mDelta > 1.0f)
 		{
 			mDelta = 0.0f;
-			mAble[(int)eMonsterState::HIT] = false;
+			mState[(int)eMonsterState::HIT] = false;
 			mPrevState = mCurState;
 			mCurState = eMonsterState::MOVE;
 		}

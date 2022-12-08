@@ -35,10 +35,10 @@ namespace sw
 		mScenes[(UINT)eSceneType::Tool] = new ToolScene();
 		mScenes[(UINT)eSceneType::Tool]->Initialize();
 
+		ChangeScene(eSceneType::Logo);
 		// 자식 > 부모 (업캐스팅)
 		//mPlayScene = mScenes[(UINT)eSceneType::Tool];
 		
-		ChangeScene(eSceneType::Tool);
 		// 부모 > 자식 (다운캐스팅)
 	}
 

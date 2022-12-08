@@ -66,16 +66,14 @@ namespace sw
 
 			fileCount++;
 		}
-		// a 가 0 or 1 일때 예외처리추가
-		int a = fileCount / 10;
+		// Y 가 0 or 1 일때 예외처리추가
+		int Y = fileCount / TILE_LINE_X;
+		if ((fileCount % TILE_LINE_X) < 0)
+			++Y;
 
-		mImage = Image::Create(name, width * 10, height * a);
+		mImage = Image::Create(name, width * TILE_LINE_X, height * Y);
 		int size = images.size();
-		size = size / 10;
-		if (size == 0 || size == 1)
-			size = 1;
 		
-
 		int Xindex = 0;
 		int Yindex = 0;
 		for (Image* image : images)
@@ -84,7 +82,7 @@ namespace sw
 				image->GetDC(), 0, 0, SRCCOPY);
 
 			Xindex++;
-			if (Xindex >= 10)
+			if (Xindex >= TILE_LINE_X)
 			{
 				Xindex = 0;
 				Yindex++;
@@ -119,6 +117,7 @@ namespace sw
 			if (GetFocus())
 			{
 				Vector2 mousePos = Input::GetInstance()->GetMousePos();
+				mousePos += Camera::GetInstance()->GetDistance();
 
 				int x = mousePos.x / (TILE_SIZE * TILE_SCALE);
 				int y = mousePos.y / (TILE_SIZE * TILE_SCALE);

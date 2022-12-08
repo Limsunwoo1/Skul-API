@@ -70,8 +70,8 @@ namespace sw
 		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
 		const std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Monster);
 		PlayerBase* player = GetTarget();
-		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
+		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 
 		if (!state)
 			mColliderBox = player->GetColliders(mL_AttackSequence[mAttackCount]);
@@ -84,7 +84,6 @@ namespace sw
 
 		// 렌더용 현제 충돌체 정보
 		player->SetColliderBox(mColliderBox);
-
 		for (GameObject* object : objects)
 		{
 			Collider* collider = object->GetComponent<Collider>();
@@ -103,6 +102,7 @@ namespace sw
 			{
 				eMonsterState type = monster->GetState();
 				monster->SetAble(type, false);
+				monster->SetDirction(!state);  // 공격 방향으로 피격대상 방향변경
 				monster->SetState(eMonsterState::HIT);
 			}
 		}

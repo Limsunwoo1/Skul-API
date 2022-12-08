@@ -39,7 +39,10 @@ namespace sw
 		void SetState(eMonsterState type) { mCurState = type; }
 		eMonsterState GetState() { return mCurState; }
 
-		void SetAble(eMonsterState type, bool able) { mAble[(int)type] = able; }
+		void SetDirction(bool dir) { mDirction = dir; }
+		bool GetDirction() { return mDirction; }
+
+		void SetAble(eMonsterState type, bool able) { mState[(int)type] = able; }
 
 	protected:
 		Image* mImage;
@@ -54,7 +57,7 @@ namespace sw
 		Box mAttackcollider;
 		Box mStaring;
 
-		bool mAble[(int)eMonsterState::END];
+		bool mState[(int)eMonsterState::END];
 		bool mDirction;
 	};
 }

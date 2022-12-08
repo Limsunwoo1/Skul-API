@@ -5,6 +5,12 @@
 #include "windowsAPI.h"
 #include "Application.h"
 
+#include "SceneManager.h"
+#include "Scene.h"
+#include "ToolScene.h"
+#include "TilePalette.h"
+#include "Image.h"
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -172,8 +178,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    sw::Application::GetInstance().Initialize(windowData);
 
-   //return TRUE;
-
+   if (sw::SceneManager::GetInstance()->CheckCurScen(eSceneType::Tool) == false)
+       return TRUE;
+   
    WindowData atlasWindowdata;
    hWnd = CreateWindowW(L"AtlasWindow", szTitle, WS_OVERLAPPEDWINDOW,
        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
@@ -195,11 +202,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 
-#include "SceneManager.h"
-#include "Scene.h"
-#include "ToolScene.h"
-#include "TilePalette.h"
-#include "Image.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {

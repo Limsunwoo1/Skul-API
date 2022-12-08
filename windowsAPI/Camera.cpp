@@ -5,6 +5,7 @@
 #include"GameObject.h"
 #include "Image.h"
 #include "Time.h"
+#include "SceneManager.h"
 
 namespace sw
 {
@@ -17,6 +18,7 @@ namespace sw
 		, mCutton(nullptr)
 		, mCuttonAlpha(0.0f)
 		, mEndTime(5.0f)
+		, bToolMode(false)
 	{
 
 	}
@@ -35,7 +37,9 @@ namespace sw
 
 		mCutton = Image::Create(L"CameraCutton", 1600, 900);
 		mEffect = eCameraEffect::None;
-		bToolMode = true;
+
+		if(SceneManager::GetInstance()->CheckCurScen(eSceneType::Tool))
+			bToolMode = true;
 	}
 
 	void Camera::Tick()
@@ -94,9 +98,7 @@ namespace sw
 	void Camera::Render(HDC hdc)
 	{
 		if (mEffect == eCameraEffect::None)
-		{
-			//return;
-		}
+			return;
 
 		BLENDFUNCTION func = {};
 		func.BlendOp = AC_SRC_OVER;

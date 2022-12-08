@@ -14,6 +14,8 @@ namespace sw
 		void Tick();
 		void Render(HDC hdc);
 		Vector2 CalculatePos(Vector2 pos) { return pos - mDistance; }
+		Vector2 GetDistance() { return mDistance; }
+		Vector2 GetLookPosition() { return mLookPosition; }
 		void SetTarget(GameObject* Gameobj) {mTarget = Gameobj;}
 
 		void SetCameraEffect(eCameraEffect effect) { mEffect = effect; }
@@ -29,6 +31,8 @@ namespace sw
 		float mAlphaTime;
 		float mCuttonAlpha;
 		float mEndTime;
+
+		bool bToolMode;
 	};
 }
 

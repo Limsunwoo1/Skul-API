@@ -29,12 +29,13 @@ namespace sw
 	{
 		WindowData data = Application::GetInstance().GetWindowData();
 		mResolution = Vector2(data.width, data.height);
-		mLookPosition = (mResolution / 2.0f);
+		mLookPosition = (mResolution / 2.0f) + Vector2(9600.f,9600.f);
 
-		mResolution = Vector2(1280, 800);
+		mResolution = Vector2(1600, 900);
 
 		mCutton = Image::Create(L"CameraCutton", 1600, 900);
 		mEffect = eCameraEffect::None;
+		bToolMode = true;
 	}
 
 	void Camera::Tick()
@@ -54,36 +55,38 @@ namespace sw
 			}
 		}
 
-		if (KEY_PRESSE(eKeyCode::UP))
+		if (KEY_DOWN(eKeyCode::UP))
 		{
-			mLookPosition.y -= 600.0f * Time::GetInstance()->DeltaTime();
+			mLookPosition.y -= TILE_SIZE * TILE_SCALE;
 		}
-		if (KEY_PRESSE(eKeyCode::DOWN))
+		if (KEY_DOWN(eKeyCode::DOWN))
 		{
-			mLookPosition.y += 600.0f * Time::GetInstance()->DeltaTime();
+			mLookPosition.y += TILE_SIZE * TILE_SCALE;
 		}
-		if (KEY_PRESSE(eKeyCode::LEFT))
+		if (KEY_DOWN(eKeyCode::LEFT))
 		{
-			mLookPosition.x -= 600.0f * Time::GetInstance()->DeltaTime();
+			mLookPosition.x -= TILE_SIZE * TILE_SCALE;
 		}
-		if (KEY_PRESSE(eKeyCode::RIGHT))
+		if (KEY_DOWN(eKeyCode::RIGHT))
 		{
-			mLookPosition.x += 600.0f * Time::GetInstance()->DeltaTime();
+			mLookPosition.x += TILE_SIZE * TILE_SCALE;
 		}
 
+		if (!bToolMode)
+		{
+			if (mTarget != nullptr)
+				mLookPosition = mTarget->GetPos();
 
-		if (mTarget != nullptr)
-			mLookPosition = mTarget->GetPos();
+			if (mLookPosition.x < 0)
+				mLookPosition.x = 0;
+			if (mLookPosition.x > 3200)
+				mLookPosition.x = 3200;
 
-		if (mLookPosition.x < 0)
-			mLookPosition.x = 0;
-		if (mLookPosition.x > 1600)
-			mLookPosition.x = 1600;
-
-		if (mLookPosition.y < 0)
-			mLookPosition.y = 0;
-		if (mLookPosition.y > 900)
-			mLookPosition.y = 900;
+			if (mLookPosition.y < 0)
+				mLookPosition.y = 0;
+			if (mLookPosition.y > 1350)
+				mLookPosition.y = 1350;
+		}
 
 		mDistance = mLookPosition - (mResolution / 2.0f);
 	}
@@ -91,7 +94,9 @@ namespace sw
 	void Camera::Render(HDC hdc)
 	{
 		if (mEffect == eCameraEffect::None)
-			return;
+		{
+			//return;
+		}
 
 		BLENDFUNCTION func = {};
 		func.BlendOp = AC_SRC_OVER;
@@ -106,5 +111,6 @@ namespace sw
 			, mCutton->GetDC(), 0, 0
 			, mCutton->GetWidth(), mCutton->GetHeight()
 			, func);
+
 	}
 }

@@ -18,6 +18,7 @@ namespace sw
 		void DeleteTile(Vector2 mousePos);
 
 		void TileObserver();
+		void CreatTilePalette(const std::wstring& name, const std::wstring& path);
 		//void CreateTile
 		//void CreateTiles
 

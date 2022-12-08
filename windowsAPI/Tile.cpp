@@ -38,13 +38,13 @@ namespace sw
 			return;
 
 		Vector2 ve = GetPos();
-		//Vector2 renderPos = Camera::GetInstance()->CalculatePos(GetPos());
+		Vector2 renderPos = Camera::GetInstance()->CalculatePos(ve);
 
 		int tileImagY = mY * TILE_SIZE;
 		int tileImagX = mX * TILE_SIZE;
 
 		TransparentBlt(hdc
-			, ve.x, ve.y
+			, renderPos.x, renderPos.y
 			, TILE_SIZE * TILE_SCALE, TILE_SIZE * TILE_SCALE
 			, mAtlas->GetDC()
 			, tileImagX, tileImagY

@@ -9,6 +9,7 @@
 #include "ToolScene.h"
 #include "Image.h"
 #include "Input.h"
+#include "Camera.h"
 
 
 namespace sw
@@ -17,6 +18,7 @@ namespace sw
 	ToolScene::ToolScene()
 	{
 		mTilePalette = new TilePalette();
+        mTilePalette->CreatTilePalette(L"2StageTile", L"..\\Resource\\2_Tile");
 	}
 
 	ToolScene::~ToolScene()
@@ -38,6 +40,7 @@ namespace sw
 	void ToolScene::Render(HDC hdc)
 	{
 		WindowData mainWindow = Application::GetInstance().GetWindowData();
+
         Rectangle(hdc, 0, 0, mainWindow.width, mainWindow.height);
 
 		Scene::Render(hdc);

@@ -9,6 +9,7 @@
 #include "Input.h"
 #include <commdlg.h>
 #include "def.h"
+#include "Camera.h"
 
 namespace sw
 {
@@ -40,6 +41,57 @@ namespace sw
 		}
 	}
 
+	void TilePalette::CreatTilePalette(const std::wstring& name, const std::wstring& path)
+	{
+		UINT width = 0;
+		UINT height = 0;
+		UINT fileCount = 0;
+
+		std::filesystem::path fs(path);
+		std::vector<Image*> images;
+		for (auto& file : std::filesystem::recursive_directory_iterator(path))
+		{
+			std::wstring cnt = std::to_wstring(fileCount);
+			std::wstring filename = file.path().filename();
+			std::wstring fullName = path + L"\\" + filename;
+			Image* image = ResourceManager::GetInstance()->Load<Image>(filename, fullName);
+			images.push_back(image);
+
+			// 제일큰 리소스의 크기 셋팅
+			if (width < image->GetWidth())
+				width = image->GetWidth();
+
+			if (height < image->GetHeight())
+				height = image->GetHeight();
+
+			fileCount++;
+		}
+		// a 가 0 or 1 일때 예외처리추가
+		int a = fileCount / 10;
+
+		mImage = Image::Create(name, width * 10, height * a);
+		int size = images.size();
+		size = size / 10;
+		if (size == 0 || size == 1)
+			size = 1;
+		
+
+		int Xindex = 0;
+		int Yindex = 0;
+		for (Image* image : images)
+		{
+			BitBlt(mImage->GetDC(), width * Xindex, height * Yindex, image->GetWidth(), image->GetHeight(),
+				image->GetDC(), 0, 0, SRCCOPY);
+
+			Xindex++;
+			if (Xindex >= 10)
+			{
+				Xindex = 0;
+				Yindex++;
+			}
+		}
+	}
+
 	void TilePalette::Tick()
 	{
 		if (bObserver)
@@ -50,9 +102,10 @@ namespace sw
 			if (GetFocus())
 			{
 				Vector2 mousePos = Input::GetInstance()->GetMousePos();
+				mousePos += Camera::GetInstance()->GetDistance();
 
-				int x = mousePos.x / (TILE_SIZE * TILE_SCALE);
-				int y = mousePos.y / (TILE_SIZE * TILE_SCALE);
+				int x = (int)mousePos.x / (TILE_SIZE * TILE_SCALE);
+				int y = (int)mousePos.y / (TILE_SIZE * TILE_SCALE);
 
 				Scene* scene = SceneManager::GetInstance()->GetPlayScene();
 				ToolScene* toolscene = dynamic_cast<ToolScene*>(scene);

@@ -156,5 +156,5 @@ typedef ColliderID TileID;
 #define TILE_SIZE 32
 #define TILE_SCALE 2
 
-#define TILE_LINE_X 8
-#define TILE_LINE_Y 3
+#define TILE_LINE_X 10
+#define TILE_LINE_Y 4

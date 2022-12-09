@@ -68,6 +68,7 @@ namespace sw
 
 	void BasicSkul::Tick()
 	{
+		// 코드 개선 해야함
 		static int a = 0;
 		if (a == 0)
 		{

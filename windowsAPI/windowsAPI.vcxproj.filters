@@ -63,33 +63,6 @@
     <Filter Include="Engine\Resorce\Sound">
       <UniqueIdentifier>{c5340955-6493-449e-995f-9e29c4b82b0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Manager\Camera">
-      <UniqueIdentifier>{495acff7-c7ca-4fc7-ae9c-5656512312f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\Collision">
-      <UniqueIdentifier>{14568399-6bd0-4b70-aac6-2b2b2407c626}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\Event">
-      <UniqueIdentifier>{1a74de03-909f-471e-bb1e-e24eb7c15164}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\Input">
-      <UniqueIdentifier>{79a9a81e-74b4-49a1-af1a-a770af50b251}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\Resource">
-      <UniqueIdentifier>{1785ffae-4541-4f27-9d14-a6a46f0e9d5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\Scene">
-      <UniqueIdentifier>{edf7e251-8232-434a-bbd2-557f7d07fffe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\Sound">
-      <UniqueIdentifier>{7c8e9605-509b-438a-8180-d1e01abf005f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\Time">
-      <UniqueIdentifier>{0f1b49c4-f3ea-4d40-af9d-b98c77bd12ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\UI">
-      <UniqueIdentifier>{fc7687e2-6246-4206-8d40-8ba0966b5f81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Compnent\Animator">
       <UniqueIdentifier>{e8482702-d105-40a4-944c-2a1e41a90b24}</UniqueIdentifier>
     </Filter>
@@ -164,6 +137,33 @@
     </Filter>
     <Filter Include="Engine\GameObject\Monster\SwordMonster">
       <UniqueIdentifier>{44b06eb3-f5b4-4572-b9eb-16baca6de1e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\CameraManager">
+      <UniqueIdentifier>{495acff7-c7ca-4fc7-ae9c-5656512312f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\CollisionManager">
+      <UniqueIdentifier>{14568399-6bd0-4b70-aac6-2b2b2407c626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\EventManager">
+      <UniqueIdentifier>{1a74de03-909f-471e-bb1e-e24eb7c15164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\InputManager">
+      <UniqueIdentifier>{79a9a81e-74b4-49a1-af1a-a770af50b251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\ResourceManager">
+      <UniqueIdentifier>{1785ffae-4541-4f27-9d14-a6a46f0e9d5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\SceneManager">
+      <UniqueIdentifier>{edf7e251-8232-434a-bbd2-557f7d07fffe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\SoundManager">
+      <UniqueIdentifier>{7c8e9605-509b-438a-8180-d1e01abf005f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\TimeManager">
+      <UniqueIdentifier>{0f1b49c4-f3ea-4d40-af9d-b98c77bd12ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\UIManager">
+      <UniqueIdentifier>{fc7687e2-6246-4206-8d40-8ba0966b5f81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,31 +255,31 @@
       <Filter>Engine\Resorce\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Engine\Manager\Camera</Filter>
+      <Filter>Engine\Manager\CameraManager</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
-      <Filter>Engine\Manager\Collision</Filter>
+      <Filter>Engine\Manager\CollisionManager</Filter>
     </ClInclude>
     <ClInclude Include="EventManager.h">
-      <Filter>Engine\Manager\Event</Filter>
+      <Filter>Engine\Manager\EventManager</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>Engine\Manager\Input</Filter>
+      <Filter>Engine\Manager\InputManager</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>Engine\Manager\Resource</Filter>
+      <Filter>Engine\Manager\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Engine\Manager\Scene</Filter>
+      <Filter>Engine\Manager\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
-      <Filter>Engine\Manager\Sound</Filter>
+      <Filter>Engine\Manager\SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
-      <Filter>Engine\Manager\Time</Filter>
+      <Filter>Engine\Manager\TimeManager</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
-      <Filter>Engine\Manager\UI</Filter>
+      <Filter>Engine\Manager\UIManager</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Engine\Compnent\Animator\Animation</Filter>
@@ -431,31 +431,31 @@
       <Filter>Engine\Resorce\Sound</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Engine\Manager\Camera</Filter>
+      <Filter>Engine\Manager\CameraManager</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
-      <Filter>Engine\Manager\Collision</Filter>
+      <Filter>Engine\Manager\CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="EventManager.cpp">
-      <Filter>Engine\Manager\Event</Filter>
+      <Filter>Engine\Manager\EventManager</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>Engine\Manager\Input</Filter>
+      <Filter>Engine\Manager\InputManager</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Engine\Manager\Resource</Filter>
+      <Filter>Engine\Manager\ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Engine\Manager\Scene</Filter>
+      <Filter>Engine\Manager\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
-      <Filter>Engine\Manager\Sound</Filter>
+      <Filter>Engine\Manager\SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
-      <Filter>Engine\Manager\Time</Filter>
+      <Filter>Engine\Manager\TimeManager</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
-      <Filter>Engine\Manager\UI</Filter>
+      <Filter>Engine\Manager\UIManager</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Engine\Compnent\Animator\Animation</Filter>

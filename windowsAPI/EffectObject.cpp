@@ -20,7 +20,7 @@ namespace sw
 
 	EffectObject::~EffectObject()
 	{
-		
+		GameObject::~GameObject();
 	}
 
 	void EffectObject::Tick()

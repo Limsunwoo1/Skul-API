@@ -35,11 +35,15 @@ namespace sw
 		Ground* ground = new Ground();
 		ground->SetPos(Vector2(100.f, 500.f));
 
-		Wood_Monster_1* monster = new Wood_Monster_1();
 
 		//SwordSkul* swordSkul = new SwordSkul();
 		//BasicSkul* basicskul = new BasicSkul();
 		MainPlayer* player = new MainPlayer();
+
+		SwordMonster* monster1 = new SwordMonster();
+		monster1->SetPos(Vector2(10.f, 300.f));
+		monster1->SetScale(Vector2(4.f, 4.f));
+		monster1->SetDirction(false);
 
 		SwordMonster* monster2 = new SwordMonster();
 		monster2->SetPos(Vector2(300.f, 300.f));
@@ -52,7 +56,7 @@ namespace sw
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(player,eColliderLayer::Player);
 		AddGameObject(ground, eColliderLayer::Ground);
-		AddGameObject(monster, eColliderLayer::Monster);
+		AddGameObject(monster1, eColliderLayer::Monster);
 		AddGameObject(monster2, eColliderLayer::Monster);
 		AddGameObject(monster3, eColliderLayer::Monster);
 

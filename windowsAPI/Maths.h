@@ -130,7 +130,8 @@ namespace sw
 
 		float Length()
 		{
-			return sqrtf(x * x + y * y);
+			float len = sqrtf((x * x) + (y * y));
+			return len;
 		}
 
 		Vector2& Normalize()

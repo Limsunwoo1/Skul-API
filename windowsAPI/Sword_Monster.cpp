@@ -15,6 +15,7 @@
 #include "Scene.h"
 #include "MainPlayer.h"
 #include "CollisionManager.h"
+#include "PlayerBase.h"
 
 namespace sw
 {
@@ -96,7 +97,7 @@ namespace sw
 		}
 
 		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
-		const std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Player);
+		std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Player);
 		Vector2 pos = GetPos();
 		pos = pos + mStaring.BoxOffset;
 
@@ -114,11 +115,13 @@ namespace sw
 			else
 			{
 				temp = CollisionManager::GetInstance()->
-					MomentCollsion(Box(mStaring.BoxScale, pos), object, mDirction);
+					MomentCollsion(Box(mStaring.BoxScale, pos), object, false);
 			}
 
 			if (temp)
 			{
+				PlayerBase* player = dynamic_cast<PlayerBase*>(object);
+				//mTarget = player->GetParent();
 				mTarget = object;
 				break;
 			}

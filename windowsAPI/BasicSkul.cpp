@@ -42,7 +42,7 @@ namespace sw
 
 		// main player에 콜리젼을 받는다
 		Collider* collider = AddComponent<Collider>();
-		collider->SetScale(Vector2(100.f, 100.f));
+		collider->SetScale(Vector2(80.f, 80.f));
 		collider->SetOwner(this);
 
 		Rigidbody* rigidbody = AddComponent<Rigidbody>();

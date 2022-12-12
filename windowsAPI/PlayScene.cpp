@@ -11,6 +11,7 @@
 #include "SceneManager.h"
 #include "CollisionManager.h"
 #include "Sword_Monster.h"
+#include "Collider.h"
 
 namespace sw
 {
@@ -35,6 +36,12 @@ namespace sw
 		Ground* ground = new Ground();
 		ground->SetPos(Vector2(100.f, 500.f));
 
+		Ground* ground1 = new Ground();
+		ground1->SetPos(Vector2(100.f, 200.f));
+		ground1->SetScale(Vector2(200, 100.f));
+		Collider* collider = ground1->GetComponent<Collider>();
+		collider->SetScale(Vector2(200, 100.f));
+
 
 		//SwordSkul* swordSkul = new SwordSkul();
 		//BasicSkul* basicskul = new BasicSkul();
@@ -56,6 +63,7 @@ namespace sw
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(player,eColliderLayer::Player);
 		AddGameObject(ground, eColliderLayer::Ground);
+		AddGameObject(ground1, eColliderLayer::Ground);
 		AddGameObject(monster1, eColliderLayer::Monster);
 		AddGameObject(monster2, eColliderLayer::Monster);
 		AddGameObject(monster3, eColliderLayer::Monster);

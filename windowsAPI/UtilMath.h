@@ -4,63 +4,62 @@
 
 #define PI 3.141592
 
-namespace sw
-{
-    namespace UtilMath
-    {
-        inline float ToRadian(float Degree)
-        {
-            return Degree * (PI / 180.f);
-        }
 
-        inline float ToDegree(float Radian)
-        {
-            return Radian * (180.f / PI);
-        }
 
-        inline float Sin(float Degree)
-        {
-            return sinf(ToRadian(Degree));
-        }
+ namespace UtilMath
+ {
+     inline float ToRadian(float Degree)
+     {
+         return Degree * (PI / 180.f);
+     }
 
-        inline float Cos(float Degree)
-        {
-            return cosf(ToRadian(Degree));
-        }
+     inline float ToDegree(float Radian)
+     {
+         return Radian * (180.f / PI);
+     }
 
-        // 회전
-        inline Vector2 Rotate(const Vector2 value, float degree)
-        {
-            Vector2 ret = Vector2::Zero;
-            float radian = ToRadian(degree);
-            ret.x = value.x * cosf(radian) - value.y * sinf(radian);
-            ret.y = value.x * sinf(radian) + value.y * cosf(radian);
+     inline float Sin(float Degree)
+     {
+         return sinf(ToRadian(Degree));
+     }
 
-            return ret;
-        }
+     inline float Cos(float Degree)
+     {
+         return cosf(ToRadian(Degree));
+     }
 
-        inline float Dot(Vector2& v1, Vector2& v2)
-        {
-            return (v1.x * v2.x) + (v1.y * v2.y);
-        }
+     // 회전
+     inline sw::Vector2 Rotate(const sw::Vector2 value, float degree)
+     {
+         sw::Vector2 ret = sw::Vector2::Zero;
+         float radian = ToRadian(degree);
+         ret.x = value.x * cosf(radian) - value.y * sinf(radian);
+         ret.y = value.x * sinf(radian) + value.y * cosf(radian);
 
-        inline float Cross(Vector2& v1, Vector2& v2)
-        {
-            return (v1.x * v2.x) - (v1.y * v2.y);
-        }
+         return ret;
+     }
 
-        float lerp(float p1, float p2, float t)
-        {
-            return (1 - t) * p1 + t * p2;
-        }
+     inline float Dot(sw::Vector2& v1, sw::Vector2& v2)
+     {
+         return (v1.x * v2.x) + (v1.y * v2.y);
+     }
 
-        Vector2 lerp(Vector2 v1, Vector2 v2, float t)
-        {
-            Vector2 temp;
-            temp.x = lerp(v1.x, v2.x, t);
-            temp.y = lerp(v1.y, v2.y, t);
+     inline float Cross(sw::Vector2& v1, sw::Vector2& v2)
+     {
+         return (v1.x * v2.x) - (v1.y * v2.y);
+     }
 
-            return temp;
-        }
-    }
-}
+     float lerp(float p1, float p2, float t)
+     {
+         return (1 - t) * p1 + t * p2;
+     }
+
+     sw::Vector2 lerp(sw::Vector2 v1, sw::Vector2 v2, float t)
+     {
+         sw::Vector2 temp;
+         temp.x = lerp(v1.x, v2.x, t);
+         temp.y = lerp(v1.y, v2.y, t);
+
+         return temp;
+     }
+ }

@@ -38,7 +38,7 @@ namespace sw
 			// 땅위에 있을때
 			Vector2 gravity = mGravity;
 			gravity.Normalize();
-			float dot = sw::UtilMath::Dot(mVelocity, gravity);
+			float dot = UtilMath::Dot(mVelocity, gravity);
 			mVelocity -= gravity * dot;
 		}
 		else
@@ -51,7 +51,7 @@ namespace sw
 		// 최대 속도 제한
 		Vector2 gravity = mGravity;
 		gravity.Normalize();
-		float dot = sw::UtilMath::Dot(mVelocity, gravity);
+		float dot = UtilMath::Dot(mVelocity, gravity);
 		gravity = gravity * dot;
 
 		Vector2 sideVelocity = mVelocity - gravity;

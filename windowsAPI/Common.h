@@ -26,6 +26,7 @@
 #include "def.h"
 #include "Maths.h"
 #include "UtilString.h"
+#include "UtilMath.h"
 
 struct Pixel
 {

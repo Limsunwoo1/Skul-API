@@ -17,9 +17,7 @@ namespace sw
 		virtual void OnCollisionExit(Collider* other) override;
 
 	private:
-
-
-
+		float mAngle;
 	};
 }
 

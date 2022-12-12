@@ -43,8 +43,6 @@ namespace sw
 
         Rectangle(hdc, 0, 0, mainWindow.width, mainWindow.height);
 
-		Scene::Render(hdc);
-
 		HPEN GreenPen = CreatePen(PS_SOLID, 2, RGB(0, 130, 0));
 		HPEN oldPen = (HPEN)SelectObject(hdc, GreenPen);
 
@@ -64,6 +62,8 @@ namespace sw
 
 		(HPEN)SelectObject(hdc, oldPen);
 		DeleteObject(GreenPen);
+
+        Scene::Render(hdc);
 	}
 
 	void ToolScene::Enter()
@@ -88,7 +88,6 @@ namespace sw
     {
         mTilePalette->Load(path);
     }
-
 }
 
 LRESULT CALLBACK AtlasWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

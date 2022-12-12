@@ -27,20 +27,14 @@ namespace sw
 
 	void PlayScene::Initialize()
 	{
+		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\TestTile");
+		
 		BackGround* bg = new BackGround();
 		bg->SetImage(L"Back", L"BackGround.bmp");
 		bg->Initialize();
 		bg->SetPos(Vector2(800.f, 450.f));
 		bg->SetScale(Vector2(2400.f, 1350.f));
 
-		Ground* ground = new Ground();
-		ground->SetPos(Vector2(100.f, 500.f));
-
-		Ground* ground1 = new Ground();
-		ground1->SetPos(Vector2(100.f, 200.f));
-		ground1->SetScale(Vector2(200, 100.f));
-		Collider* collider = ground1->GetComponent<Collider>();
-		collider->SetScale(Vector2(200, 100.f));
 
 
 		//SwordSkul* swordSkul = new SwordSkul();
@@ -62,8 +56,6 @@ namespace sw
 
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(player,eColliderLayer::Player);
-		AddGameObject(ground, eColliderLayer::Ground);
-		AddGameObject(ground1, eColliderLayer::Ground);
 		AddGameObject(monster1, eColliderLayer::Monster);
 		AddGameObject(monster2, eColliderLayer::Monster);
 		AddGameObject(monster3, eColliderLayer::Monster);
@@ -125,8 +117,8 @@ namespace sw
 	{
 		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Tile);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Tile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjectTile, eColliderLayer::Monster);
 	}
 

@@ -20,6 +20,11 @@ namespace sw
 	void SceneManager::Initalize()
 	{
 		// 모든씬들을 초기화
+		// 다른씬에서 툴씬을 사용하려면 툴씬이 
+		// 제일 우선적으로 생성되어야 한다.
+		mScenes[(UINT)eSceneType::Tool] = new ToolScene();
+		mScenes[(UINT)eSceneType::Tool]->Initialize();
+
 		mScenes[(UINT)eSceneType::Logo] = new LogoScene();
 		mScenes[(UINT)eSceneType::Logo]->Initialize();
 
@@ -32,10 +37,8 @@ namespace sw
 		mScenes[(UINT)eSceneType::End] = new EndScene();
 		mScenes[(UINT)eSceneType::End]->Initialize();
 
-		mScenes[(UINT)eSceneType::Tool] = new ToolScene();
-		mScenes[(UINT)eSceneType::Tool]->Initialize();
 
-		ChangeScene(eSceneType::Logo);
+		ChangeScene(eSceneType::Play);
 		// 자식 > 부모 (업캐스팅)
 		//mPlayScene = mScenes[(UINT)eSceneType::Tool];
 		
@@ -76,5 +79,10 @@ namespace sw
 
 		mPlayScene = mScenes[(UINT)type];
 		mPlayScene->Enter();
+	}
+	void SceneManager::LoadTileMap(const std::wstring& path)
+	{
+		ToolScene* tool = dynamic_cast<ToolScene*>(mScenes[(UINT)eSceneType::Tool]);
+		tool->LoadTilePalette(path);
 	}
 }

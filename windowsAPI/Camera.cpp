@@ -31,7 +31,7 @@ namespace sw
 	{
 		WindowData data = Application::GetInstance().GetWindowData();
 		mResolution = Vector2(data.width, data.height);
-		mLookPosition = (mResolution / 2.0f) + Vector2(9600.f,9600.f);
+		mLookPosition = (mResolution / 2.0f);
 
 		mResolution = Vector2(1600, 900);
 

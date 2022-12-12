@@ -16,6 +16,10 @@ namespace sw
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
+		void CheckCollider(Collider* other);
+		void Top_Bottom_Collider(Collider* other);
+		void SetAngle();
+
 	private:
 		float mAngle;
 	};

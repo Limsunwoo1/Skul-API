@@ -9,6 +9,7 @@ namespace sw
 		: Component(eComponentType::Rigidbody)
 		, mMass(1.0f)
 		, mFriction(400.f)
+		, bFreez(false)
 	{
 		mLimitVelocity.x = 200.f;
 		mLimitVelocity.y = 1000.f;
@@ -27,6 +28,9 @@ namespace sw
 		// 이동
 		// F = M x A
 		// A = F / M
+		if (bFreez)
+			mForce.x = 0.0f;
+
 		mAccelation = mForce / mMass;
 
 		// 속도에 가속도를 더한다

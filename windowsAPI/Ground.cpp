@@ -2,12 +2,26 @@
 #include "PlayerBase.h"
 #include "Collider.h"
 #include "Rigidbody.h"
+#include "Camera.h"
+#include "Time.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "StateHandle.h"
+#include "Move.h"
+#include "MainPlayer.h"
 
+#define FREEZMAX 2
 
 namespace sw
 {
 	Ground::Ground()
 		: type(eColliderLayer::Ground)
+		, bTopBottomCollide(false)
+		, mPlayerColCount(0)
+		, mDelta(0.0f)
+		, bPlayerDirction(true)
+		, bCheckFreez(false)
+		, mPlayer(nullptr)
 	{
 		Collider* collider = AddComponent<Collider>();
 		collider->SetScale(Vector2(400.f, 50.f));
@@ -19,6 +33,72 @@ namespace sw
 	void Ground::Tick()
 	{
 		GameObject::Tick();
+
+		// 코드 정리하기
+		if (mPlayer != nullptr)
+		{
+			Collider* pCol = mPlayer->GetComponent<Collider>();
+			Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
+			Vector2 pPos = pCol->GetPos();
+			Vector2 pScale = pCol->GetScale();
+
+			Vector2 mPos = GetPos();
+			Vector2 mScale = GetScale();
+
+			if (mPos.y - (mScale.y * 0.5f) > pPos.y + (pScale.y * 0.5f)
+				|| mPos.y + (mScale.y * 0.5f) < pPos.y - (pScale.y * 0.5f))
+			{
+				rigidbody->SetFreez(false);
+				mPlayer = nullptr;
+				bCheckFreez = false;
+				mPlayerColCount = 0;
+			}
+		}
+
+		if (bCheckFreez)
+		{
+			// player rigidbody freez;
+			if(mPlayer != nullptr)
+			{
+				StateHandle* state = mPlayer->GetStateHandle();
+				Move* move = state->GetState<Move>(ePlayerState::MOVE);
+				if (move->GetDirtion() != bPlayerDirction)
+				{
+					Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
+					rigidbody->SetFreez(false);
+					bCheckFreez = false;
+					mPlayerColCount = 0;
+					mPlayer = nullptr;
+				}
+			}
+		}
+		
+
+		mDelta += Time::GetInstance()->DeltaTime();
+		if (mDelta > 1.0f)
+		{
+			mPlayerColCount = 0;
+			mDelta -= 1.0f;
+		}
+		else
+		{
+			if (mPlayerColCount > FREEZMAX)
+			{
+				// player rigidbody freez;
+
+				if(mPlayer != nullptr)
+				{
+					Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
+					rigidbody->SetFreez(true);
+
+					StateHandle* state = mPlayer->GetStateHandle();
+					Move* move = state->GetState<Move>(ePlayerState::MOVE);
+					bPlayerDirction = move->GetDirtion();
+				}
+				mPlayerColCount = 0;
+				bCheckFreez = true;
+			}
+		}
 	}
 	void Ground::Render(HDC hdc)
 	{
@@ -28,23 +108,26 @@ namespace sw
 	void Ground::OnCollisionEnter(Collider* other)
 	{
 		GameObject* playerObj = other->GetOwner();
-		Rigidbody* rigidbody = playerObj->GetComponent<Rigidbody>();
-		rigidbody->SetGround(true);
 
 		CheckCollider(other);
 	}
 
 	void Ground::CheckCollider(Collider* other)
 	{
-		GameObject* playerObj = other->GetOwner();
-		Rigidbody* rigidbody = playerObj->GetComponent<Rigidbody>();
+		GameObject* object = other->GetOwner();
+		Rigidbody* rigidbody = object->GetComponent<Rigidbody>();
 		Vector2 pPos = other->GetPos();
 		Vector2 pSca = other->GetScale();
+
+		bool ground = rigidbody->GetGround();
 
 		Vector2 mCPos = GetComponent<Collider>()->GetPos();
 		Vector2 mCScale = GetComponent<Collider>()->GetScale();
 		SetAngle();
 		float angle = mAngle;
+		if (mPlayerColCount == 0)
+			rigidbody->SetFreez(false);
+		
 
 		if (mCPos.x < pPos.x)
 		{
@@ -73,13 +156,20 @@ namespace sw
 				float fLen = fabs(other->GetPos().x - GetComponent<Collider>()->GetPos().x);
 				float fScale = (other->GetScale().x / 2.0f) + (GetComponent<Collider>()->GetScale().x / 2.0f);
 
-				pPos.x += (fScale - fLen) + 1.0;
-				playerObj->SetPos(pPos);
-				rigidbody->SetGround(false);
+				pPos.x += (fScale - fLen) + 1.0f;
+				object->SetPos(pPos);
 
 				Vector2 velo = rigidbody->GetVelocity();
 				velo.x = 0;
 				rigidbody->SetVelocity(velo);
+
+				PlayerBase* player = dynamic_cast<PlayerBase*>(object);
+
+				if (player != nullptr)
+				{
+					mPlayer = player;
+					mPlayerColCount++;
+				}
 			}
 			else
 				Top_Bottom_Collider(other);
@@ -112,13 +202,24 @@ namespace sw
 				float fScale = (other->GetScale().x / 2.0f) + (GetComponent<Collider>()->GetScale().x / 2.0f);
 
 				float a = fScale - fLen;
-				pPos.x -= (fScale - fLen) + 1.0;
-				playerObj->SetPos(pPos);
-				rigidbody->SetGround(false);
+				pPos.x -= (fScale - fLen) + 1.0f;
+				object->SetPos(pPos);
 
 				Vector2 velo = rigidbody->GetVelocity();
 				velo.x = 0;
 				rigidbody->SetVelocity(velo);
+
+				PlayerBase* player = dynamic_cast<PlayerBase*>(object);
+
+				if (player != nullptr)
+				{
+					mPlayer = player;
+					mPlayerColCount++;
+				}
+				/*if (!ground)
+					rigidbody->SetGround(false);
+				else
+					rigidbody->SetGround(true);*/
 			}
 			else
 				Top_Bottom_Collider(other);
@@ -128,6 +229,7 @@ namespace sw
 	void Ground::Top_Bottom_Collider(Collider* other)
 	{
 		GameObject* playerObj = other->GetOwner();
+		Rigidbody* rigidbody = playerObj->GetComponent<Rigidbody>();
 		Vector2 mCPos = GetComponent<Collider>()->GetPos();
 
 		float fLen = fabs(other->GetPos().y - GetComponent<Collider>()->GetPos().y);
@@ -136,19 +238,24 @@ namespace sw
 		Vector2 playerPos = playerObj->GetPos();
 		if (playerPos.y < mCPos.y)
 		{
-			playerPos.y -= (fScale - fLen) + 1.0f;
+			playerPos.y -= (fScale - fLen) + 2.0f;
 			playerObj->SetPos(playerPos);
+			rigidbody->SetGround(true);
+
+			bTopBottomCollide = true;
 		}
 		else if (playerPos.y > mCPos.y)
 		{
-			Rigidbody* rigidbody = playerObj->GetComponent<Rigidbody>();
-			rigidbody->SetGround(false);
 
 			Vector2 velo = rigidbody->GetVelocity();
 			velo.y = 0;
 			rigidbody->SetVelocity(velo);
-			playerPos.y += (fScale - fLen) + 1.0f;
+			playerPos.y += (fScale - fLen) + 2.0f;
 			playerObj->SetPos(playerPos);
+
+			rigidbody->SetGround(false);
+
+			bTopBottomCollide = true;
 		}
 	}
 
@@ -172,6 +279,10 @@ namespace sw
 	}
 	void Ground::OnCollisionExit(Collider* other)
 	{
-		other->GetOwner()->GetComponent<Rigidbody>()->SetGround(false);
+		Rigidbody* rigidbody = other->GetOwner()->GetComponent<Rigidbody>();
+		if (bTopBottomCollide)
+			rigidbody->SetGround(false);
+
+		bTopBottomCollide = false;
 	}
 }

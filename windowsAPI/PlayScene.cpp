@@ -32,8 +32,8 @@ namespace sw
 		BackGround* bg = new BackGround();
 		bg->SetImage(L"Back", L"BackGround.bmp");
 		bg->Initialize();
-		bg->SetPos(Vector2(800.f, 450.f));
-		bg->SetScale(Vector2(2400.f, 1350.f));
+		bg->SetPos(Vector2(1600.f, 900.f));
+		bg->SetScale(Vector2(3600.f, 1800.f));
 
 
 
@@ -56,9 +56,9 @@ namespace sw
 
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(player,eColliderLayer::Player);
-		/*AddGameObject(monster1, eColliderLayer::Monster);
+		AddGameObject(monster1, eColliderLayer::Monster);
 		AddGameObject(monster2, eColliderLayer::Monster);
-		AddGameObject(monster3, eColliderLayer::Monster);*/
+		AddGameObject(monster3, eColliderLayer::Monster);
 
 		/*AttackCollider* R_attack1 = new AttackCollider(swordSkul);
 		R_attack1->SetScale(Vector2(80.f, 80.f));

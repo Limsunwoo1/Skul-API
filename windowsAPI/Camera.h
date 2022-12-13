@@ -16,10 +16,14 @@ namespace sw
 		Vector2 CalculatePos(Vector2 pos) { return pos - mDistance; }
 		Vector2 GetDistance() { return mDistance; }
 		Vector2 GetLookPosition() { return mLookPosition; }
+		void SetLookPosition(Vector2 pos) { mLookPosition = pos; }
 		void SetTarget(GameObject* Gameobj) {mTarget = Gameobj;}
 		void SetToolMode(bool able) { bToolMode = able; }
 
 		void SetCameraEffect(eCameraEffect effect) { mEffect = effect; }
+
+		bool GetFreezCamera() { return bFreezCamera; }
+		void SetFreezCamera(bool ing) { bFreezCamera = ing; }
 
 	private:
 		Vector2 mResolution; // 화면 해상도
@@ -33,7 +37,9 @@ namespace sw
 		float mCuttonAlpha;
 		float mEndTime;
 
+		bool bFreezCamera;
 		bool bToolMode;
+
 	};
 }
 

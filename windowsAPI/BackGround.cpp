@@ -36,9 +36,9 @@ namespace sw
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
 
-
 		if(mCamera)
 			pos = Camera::GetInstance()->CalculatePos(pos);
+		pos += Camera::GetInstance()->GetDistance() * 0.2f;
 
 		if (!Alph)
 		{

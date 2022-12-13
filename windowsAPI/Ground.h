@@ -3,6 +3,7 @@
 
 namespace sw
 {
+	class PlayerBase;
 	class Ground : public GameObject
 	{
 	public:
@@ -22,9 +23,18 @@ namespace sw
 
 		eColliderLayer GetLayer() { return type; }
 	private:
-		float mAngle;
-
 		eColliderLayer type;
+		float mAngle;
+		float mDelta;
+
+		UINT32 mPlayerColCount;
+		PlayerBase* mPlayer;
+
+		bool bCheckFreez;
+		bool bPlayerDirction;
+		bool bTopBottomCollide;
+
+		
 	};
 }
 

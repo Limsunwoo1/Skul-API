@@ -19,6 +19,8 @@ namespace sw
 		Vector2 GetVelocity() { return mVelocity; }
 		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
 
+		bool GetFreez() { return bFreez; }
+		void SetFreez(bool freez) { bFreez = freez; }
 	private:
 		// 힘과 마찰력을 이용한 이동
 		float mMass;
@@ -33,6 +35,8 @@ namespace sw
 		bool mbGround;
 		// 점프 맥스값
 		Vector2 mLimitVelocity;
+
+		bool bFreez;
 	};
 }
 

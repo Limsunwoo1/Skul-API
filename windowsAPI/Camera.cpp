@@ -18,6 +18,7 @@ namespace sw
 		, mCuttonAlpha(0.0f)
 		, mEndTime(5.0f)
 		, bToolMode(false)
+		, bFreezCamera(false)
 	{
 
 	}

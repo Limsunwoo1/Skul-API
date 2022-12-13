@@ -180,7 +180,7 @@ namespace sw
 
         return false;
     }
-    bool CollisionManager::MomentCollsion(Box box, GameObject* object, bool dirction)
+    bool CollisionManager::MomentCollsion(sw::Box box, GameObject* object, bool dirction)
     {
         if (object->IsDeath())
             return false;

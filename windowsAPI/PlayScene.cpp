@@ -56,9 +56,9 @@ namespace sw
 
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(player,eColliderLayer::Player);
-		AddGameObject(monster1, eColliderLayer::Monster);
+		/*AddGameObject(monster1, eColliderLayer::Monster);
 		AddGameObject(monster2, eColliderLayer::Monster);
-		AddGameObject(monster3, eColliderLayer::Monster);
+		AddGameObject(monster3, eColliderLayer::Monster);*/
 
 		/*AttackCollider* R_attack1 = new AttackCollider(swordSkul);
 		R_attack1->SetScale(Vector2(80.f, 80.f));
@@ -104,7 +104,6 @@ namespace sw
 	void PlayScene::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
-		//sw::MeteorControler::GetMeteorControler()->Render(hdc);
 
 
 		wchar_t szFloat[50] = {};
@@ -117,8 +116,8 @@ namespace sw
 	{
 		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Tile);
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Tile);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjectTile, eColliderLayer::Monster);
 	}
 

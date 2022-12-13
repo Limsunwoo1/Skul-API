@@ -1,10 +1,13 @@
 #pragma once
 #include <math.h>
 
+#define PI 3.141592f
+
 namespace sw
 {
-	struct Vector2
+	class Vector2
 	{
+	public:
 		static Vector2 Zero;
 		static Vector2 One;
 		static Vector2 Right;
@@ -21,7 +24,7 @@ namespace sw
 			this->y = y;
 		}
 
-		void clear()
+		void Clear()
 		{
 			x = 0.0f;
 			y = 0.0f;
@@ -150,12 +153,74 @@ namespace sw
 		~Vector2() = default;
 	};
 
+
+	namespace UtilMath
+	{
+		inline float ToRadian(float Degree)
+		{
+			return Degree * (PI / 180.f);
+		}
+
+		inline float ToDegree(float Radian)
+		{
+			return Radian * (180.f / PI);
+		}
+
+		inline float Sin(float Degree)
+		{
+			return sinf(ToRadian(Degree));
+		}
+
+		inline float Cos(float Degree)
+		{
+			return cosf(ToRadian(Degree));
+		}
+
+		// È¸Àü
+		inline sw::Vector2 Rotate(const sw::Vector2 value, float degree)
+		{
+			sw::Vector2 ret = sw::Vector2::Zero;
+			float radian = ToRadian(degree);
+			ret.x = value.x * cosf(radian) - value.y * sinf(radian);
+			ret.y = value.x * sinf(radian) + value.y * cosf(radian);
+
+			return ret;
+		}
+
+		inline float Dot(sw::Vector2& v1, sw::Vector2& v2)
+		{
+			return (v1.x * v2.x) + (v1.y * v2.y);
+		}
+
+		inline float Cross(sw::Vector2& v1, sw::Vector2& v2)
+		{
+			return (v1.x * v2.x) - (v1.y * v2.y);
+		}
+
+		/*float Lerp(float p1, float p2, float t)
+		{
+			return (1 - t) * p1 + t * p2;
+		}
+
+		sw::Vector2 LerpVector(sw::Vector2 v1, sw::Vector2 v2, float t)
+		{
+			sw::Vector2 temp;
+			temp.x = Lerp(v1.x, v2.x, t);
+			temp.y = Lerp(v1.y, v2.y, t);
+
+			return temp;
+		}*/
+	}
+
 	struct Box
 	{
 		Vector2 BoxScale;
 		Vector2 BoxOffset;
+		
 	};
 
 	typedef Vector2 Vector2D;
 	typedef Vector2 Pos;
+
+
 }

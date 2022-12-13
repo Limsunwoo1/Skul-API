@@ -18,21 +18,15 @@ namespace sw
 		void SetIndex(UINT index);
 		UINT GetIndex() { return mIndex; }
 
-		virtual void OnCollisionEnter(Collider* other) override;
-		virtual void OnCollisionStay(Collider* other) override;
-		virtual void OnCollisionExit(Collider* other) override;
-
-		void CheckCollider(Collider* other);
-		void Top_Bottom_Collider(Collider* other);
-		void SetAngle();
+		eColliderLayer GetLayer() { return type; }
 	private:
 		Image* mAtlas;
 
 		UINT mIndex;
 		UINT mX;
 		UINT mY;
-
-		float mAngle;
+		
+		eColliderLayer type;
 	};
 }
 

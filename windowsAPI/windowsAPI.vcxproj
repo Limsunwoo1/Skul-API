@@ -140,6 +140,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -209,7 +210,6 @@
     <ClInclude Include="ToolScene.h" />
     <ClInclude Include="UiBase.h" />
     <ClInclude Include="UIManager.h" />
-    <ClInclude Include="UtilMath.h" />
     <ClInclude Include="UtilString.h" />
     <ClInclude Include="windowsAPI.h" />
     <ClInclude Include="Wood_Monster_1.h" />

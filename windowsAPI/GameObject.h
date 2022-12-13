@@ -1,10 +1,9 @@
 #pragma once
 #include "Common.h"
-#include "Entity.h"
-#include "Component.h"
 
 namespace sw
 {
+	class Component;
 	class Collider;
 	class GameObject
 	{

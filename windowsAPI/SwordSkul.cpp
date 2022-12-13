@@ -12,7 +12,7 @@
 #include "Attack.h"
 #include "Switch.h"
 #include "Application.h"
-#include "Path.h"
+#include "Shadow.h"
 
 namespace sw
 {

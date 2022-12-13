@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Application.h"
 #include "Camera.h"
+#include "Ground.h"
 
 namespace sw
 {
@@ -44,10 +45,11 @@ namespace sw
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
 
-		mPos = Camera::GetInstance()->CalculatePos(mPos);
+		pos = Camera::GetInstance()->CalculatePos(pos);
 
-		Rectangle(hdc, mPos.x - (mScale.x * 0.5), mPos.y - (mScale.y * 0.5)
-			, mPos.x + (mScale.x * 0.5), mPos.y + (mScale.y * 0.5));
+		Rectangle(hdc, pos.x - (mScale.x * 0.5), pos.y - (mScale.y * 0.5)
+			, pos.x + (mScale.x * 0.5), pos.y + (mScale.y * 0.5));
+		
 
 		SelectObject(hdc, oldPen);
 		DeleteObject(redPen);

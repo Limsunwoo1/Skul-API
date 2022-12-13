@@ -4,17 +4,23 @@
 #include "SceneManager.h"
 #include "Image.h"
 #include "Tile.h"
-#include "Scene.h"
 #include "ToolScene.h"
 #include "Input.h"
 #include <commdlg.h>
 #include "def.h"
 #include "Camera.h"
+#include "Ground.h"
+#include "Collider.h"
 
 namespace sw
 {
 	TilePalette::TilePalette()
 		: bObserver(false)
+		, mMode(true)
+		, mPushObject(nullptr)
+		, mPrevObject(nullptr)
+		, mGroundPos(Vector2::Zero)
+		, mGroundScale(Vector2::Zero)
 	{
 		mImage = ResourceManager::GetInstance()->
 			Load<Image>(L"TileAtlas", L"..\\Resource\\Image\\Tile.bmp");
@@ -92,41 +98,90 @@ namespace sw
 
 	void TilePalette::Tick()
 	{
+		mGround;
+		mGroundKey;
+		mTiles;
 		if (bObserver)
 			TileObserver();
 
-		if (KEY_PRESSE(eKeyCode::LBTN))
+		if (KEY_DOWN(eKeyCode::NUM_0))
 		{
-			if (GetFocus())
+			if (mMode)
+				mMode = false;
+			else
+				mMode = true;
+		}
+
+		if (mMode)
+		{
+			if (KEY_PRESSE(eKeyCode::LBTN))
 			{
-				Vector2 mousePos = Input::GetInstance()->GetMousePos();
-				mousePos += Camera::GetInstance()->GetDistance();
+				if (GetFocus())
+				{
+					Vector2 mousePos = Input::GetInstance()->GetMousePos();
+					mousePos += Camera::GetInstance()->GetDistance();
 
-				int x = (int)mousePos.x / (TILE_SIZE * TILE_SCALE);
-				int y = (int)mousePos.y / (TILE_SIZE * TILE_SCALE);
+					int x = (int)mousePos.x / (TILE_SIZE * TILE_SCALE);
+					int y = (int)mousePos.y / (TILE_SIZE * TILE_SCALE);
 
-				Scene* scene = SceneManager::GetInstance()->GetPlayScene();
-				ToolScene* toolscene = dynamic_cast<ToolScene*>(scene);
-				UINT index = toolscene->GetTileIndex();
+					Scene* scene = SceneManager::GetInstance()->GetPlayScene();
+					ToolScene* toolscene = dynamic_cast<ToolScene*>(scene);
+					UINT index = toolscene->GetTileIndex();
 
-				CreateTile(index, Vector2(x, y));
+					CreateTile(index, Vector2(x, y));
+				}
+			}
+			else if (KEY_PRESSE(eKeyCode::RBTN))
+			{
+				if (GetFocus())
+				{
+					Vector2 mousePos = Input::GetInstance()->GetMousePos();
+					mousePos += Camera::GetInstance()->GetDistance();
+
+					int x = mousePos.x / (TILE_SIZE * TILE_SCALE);
+					int y = mousePos.y / (TILE_SIZE * TILE_SCALE);
+					
+					Scene* scene = SceneManager::GetInstance()->GetPlayScene();
+					ToolScene* toolscene = dynamic_cast<ToolScene*>(scene);
+					UINT index = toolscene->GetTileIndex();
+
+					DeleteTile(mousePos);
+				}
 			}
 		}
-		else if (KEY_PRESSE(eKeyCode::RBTN))
+		else
 		{
-			if (GetFocus())
+			if (KEY_UP(eKeyCode::LBTN))
 			{
-				Vector2 mousePos = Input::GetInstance()->GetMousePos();
-				mousePos += Camera::GetInstance()->GetDistance();
+				CreatGround(mGroundPos, mGroundScale);
+			}
+			else if (KEY_DOWN(eKeyCode::LBTN))
+			{
+				if (GetFocus())
+				{
+					Vector2 mousePos = Input::GetInstance()->GetMousePos();
+					mousePos += Camera::GetInstance()->GetDistance();
 
-				int x = mousePos.x / (TILE_SIZE * TILE_SCALE);
-				int y = mousePos.y / (TILE_SIZE * TILE_SCALE);
+					if(mGroundPos == Vector2::Zero)
+						mGroundPos = mousePos;
+				}
+			}
+			else if (KEY_PRESSE(eKeyCode::LBTN))
+			{
+				if (GetFocus())
+				{
+					Vector2 mousePos = Input::GetInstance()->GetMousePos();
+					mousePos += Camera::GetInstance()->GetDistance();
 
-				Scene* scene = SceneManager::GetInstance()->GetPlayScene();
-				ToolScene* toolscene = dynamic_cast<ToolScene*>(scene);
-				UINT index = toolscene->GetTileIndex();
-
-				DeleteTile(mousePos);
+					mGroundScale = Vector2(mousePos.x - mGroundPos.x, mousePos.y - mGroundPos.y);
+				}
+			}
+			else if (KEY_DOWN(eKeyCode::RBTN))
+			{
+				if (GetFocus())
+				{
+					DeleteGround();
+				}
 			}
 		}
 	}
@@ -134,6 +189,87 @@ namespace sw
 	void TilePalette::Render(HDC hdc)
 	{
 
+	}
+
+	void TilePalette::CreatGround(Vector2 pos, Vector2 scale, bool load)
+	{
+		if (pos == Vector2::Zero)
+			return;
+
+		if (scale == Vector2::Zero)
+			return;
+
+		Ground* ground = nullptr;
+		ColliderID key;
+		if (load)
+		{
+			ground = new Ground();
+			ground->SetPos(Vector2(pos.x , pos.y));
+			ground->SetScale(scale);
+
+			key.left = pos.x;
+			key.right = pos.y;
+			key.ID;
+
+			Collider* col = ground->GetComponent<Collider>();
+			col->SetPos(Vector2(pos.x , pos.y));
+			col->SetScale(scale);
+			col->SetOwner(ground);
+		}
+		else
+		{
+			ground = new Ground();
+			ground->SetPos(Vector2(pos.x + (scale.x * 0.5f), pos.y + (scale.y * 0.5f)));
+			ground->SetScale(scale);
+
+			key.left = pos.x + (scale.x * 0.5f);
+			key.right = pos.y + (scale.y * 0.5f);
+			key.ID;
+
+			Collider* col = ground->GetComponent<Collider>();
+			col->SetPos(Vector2(pos.x + (scale.x * 0.5f), pos.y + (scale.y * 0.5f)));
+			col->SetScale(scale);
+			col->SetOwner(ground);
+		}
+
+		if (ground == nullptr)
+			return;
+
+		EventInfo info;
+		info.Type = EventType::AddObejct;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::Ground);
+		info.Parameter2 = ground;
+		
+		EventManager::GetInstance()->EventPush(info);
+
+		mGround.insert(std::make_pair(key.ID, ground));
+		mGroundKey.push(key.ID);
+
+		mGroundPos = Vector2::Zero;
+		mGroundScale = Vector2::Zero;
+	}
+
+	void TilePalette::DeleteGround()
+	{
+		if (mGroundKey.empty())
+			return;
+
+		std::unordered_map<UINT64, Ground*>::iterator iter;
+		ColliderID key;
+		key.ID = mGroundKey.top();
+		iter = mGround.find(key.ID);
+
+		if (iter == mGround.end())
+			return;
+
+		EventInfo info;
+		info.Type = EventType::DeleteObject;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::Ground);
+		info.Parameter2 = iter->second;
+		EventManager::GetInstance()->EventPush(info);
+
+		mGround.erase(iter);
+		mGroundKey.pop();
 	}
 
 	void TilePalette::CreateTile(UINT index, Vector2 indexPos)
@@ -153,7 +289,9 @@ namespace sw
 			return;
 		}
 
-		Vector2 objectPos = indexPos * (TILE_SIZE * TILE_SCALE);
+		Vector2 objectPos;
+		objectPos.x = (indexPos.x * (TILE_SIZE * TILE_SCALE)) + ((TILE_SIZE * TILE_SCALE) * 0.5f);
+		objectPos.y = indexPos.y * (TILE_SIZE * TILE_SCALE) + ((TILE_SIZE * TILE_SCALE) * 0.5f);
 		Tile* tile = new Tile(objectPos);
 		tile->Initialize(mImage, index);
 
@@ -176,10 +314,12 @@ namespace sw
 			Vector2 iterPos = iter->second->GetPos();
 			Vector2 iterScale = iter->second->GetScale();
 
-			if (iterPos.x > mousePos.x || iterPos.x + (TILE_SIZE * TILE_SCALE) < mousePos.x)
+			if (iterPos.x + ((TILE_SIZE * TILE_SCALE) * 0.5f) < mousePos.x 
+				|| iterPos.x - ((TILE_SIZE * TILE_SCALE) * 0.5f) > mousePos.x)
 				continue;
 
-			if (iterPos.y > mousePos.y || iterPos.y + (TILE_SIZE * TILE_SCALE) < mousePos.y)
+			if (iterPos.y + ((TILE_SIZE * TILE_SCALE) * 0.5f) < mousePos.y 
+				|| iterPos.y - ((TILE_SIZE * TILE_SCALE) * 0.5f) > mousePos.y)
 				continue;
 
 			if (iter->second == nullptr)
@@ -228,12 +368,30 @@ namespace sw
 		std::unordered_map<UINT64, Tile*>::iterator iter = mTiles.begin();
 		for (; iter != mTiles.end(); ++iter)
 		{
+			UINT32 type = (UINT32)(*iter).second->GetLayer();
+			fwrite(&type, sizeof(UINT32), 1, pFile);
+
 			int tileIndex = (*iter).second->GetIndex();
 			fwrite(&tileIndex, sizeof(int), 1, pFile);
 
 			TileID id;
 			id.ID = (*iter).first;
 			fwrite(&id.ID, sizeof(UINT64), 1, pFile);
+		}
+
+		std::unordered_map<UINT64, Ground*>::iterator iterator = mGround.begin();
+		for (; iterator != mGround.end(); ++iterator)
+		{
+			UINT32 type = (UINT32)(*iterator).second->GetLayer();
+			fwrite(&type, sizeof(UINT32), 1, pFile);
+
+			TileID id;
+			id.ID = (*iterator).first;
+			fwrite(&id.ID, sizeof(UINT64), 1, pFile);
+
+			Vector2 scale = (*iterator).second->GetScale();
+			TileID keyscale(scale.x, scale.y);
+			fwrite(&keyscale.ID, sizeof(UINT64), 1, pFile);
 		}
 
 		fclose(pFile);
@@ -268,16 +426,36 @@ namespace sw
 
 		while (true)
 		{
+			UINT32 type;
+
 			int tileIndex = 0;
 			TileID id;
+			ColliderID pos;
+			ColliderID scale;
 
-			if (fread(&tileIndex, sizeof(int), 1, pFile) == NULL)
+			if (fread(&type, sizeof(UINT32), 1, pFile) == NULL)
 				break;
 
-			if (fread(&id.ID, sizeof(UINT64), 1, pFile) == NULL)
-				break;
+			if (type == (UINT32)eColliderLayer::Ground)
+			{
+				if (fread(&pos, sizeof(UINT64), 1, pFile) == NULL)
+					break;
 
-			CreateTile(tileIndex, Vector2(id.left, id.right));
+				if (fread(&scale, sizeof(UINT64), 1, pFile) == NULL)
+					break;
+
+				CreatGround(Vector2(pos.left, pos.right), Vector2(scale.left, scale.right),true);
+			}
+			else if (type == (UINT32)eColliderLayer::Tile)
+			{
+				if (fread(&tileIndex, sizeof(int), 1, pFile) == NULL)
+					break;
+
+				if (fread(&id.ID, sizeof(UINT64), 1, pFile) == NULL)
+					break;
+
+				CreateTile(tileIndex, Vector2(id.left, id.right));
+			}
 		}
 
 		fclose(pFile);
@@ -292,16 +470,36 @@ namespace sw
 
 		while (true)
 		{
+			UINT32 type;
+
 			int tileIndex = 0;
 			TileID id;
+			ColliderID pos;
+			ColliderID scale;
 
-			if (fread(&tileIndex, sizeof(int), 1, pFile) == NULL)
+			if (fread(&type, sizeof(UINT32), 1, pFile) == NULL)
 				break;
 
-			if (fread(&id.ID, sizeof(UINT64), 1, pFile) == NULL)
-				break;
+			if (type == (UINT32)eColliderLayer::Ground)
+			{
+				if (fread(&pos, sizeof(UINT64), 1, pFile) == NULL)
+					break;
 
-			CreateTile(tileIndex, Vector2(id.left, id.right));
+				if (fread(&scale, sizeof(UINT64), 1, pFile) == NULL)
+					break;
+
+				CreatGround(Vector2(pos.left, pos.right), Vector2(scale.left, scale.right), true);
+			}
+			else if (type == (UINT32)eColliderLayer::Tile)
+			{
+				if (fread(&tileIndex, sizeof(int), 1, pFile) == NULL)
+					break;
+
+				if (fread(&id.ID, sizeof(UINT64), 1, pFile) == NULL)
+					break;
+
+				CreateTile(tileIndex, Vector2(id.left, id.right));
+			}
 		}
 
 		fclose(pFile);

@@ -1,7 +1,5 @@
 #include "Application.h"
 #include "windowsAPI.h"
-#include "Application.h"
-
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "EventManager.h"

@@ -1,6 +1,5 @@
 #pragma once
 #include "Entity.h"
-#include "Common.h"
 
 namespace sw
 {

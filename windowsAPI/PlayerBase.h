@@ -1,11 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#include "Shadow.h"
 
 using namespace std;
 
 namespace sw
 {
+	class Shadow;
 	class StateHandle;
 	class Animator;
 	class Image;

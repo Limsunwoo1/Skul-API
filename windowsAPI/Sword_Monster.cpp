@@ -7,7 +7,6 @@
 #include "Image.h"
 #include "Collider.h"
 #include "Animator.h"
-#include "Collider.h"
 #include "Rigidbody.h"
 #include "Time.h"
 #include "Application.h"
@@ -16,6 +15,7 @@
 #include "MainPlayer.h"
 #include "CollisionManager.h"
 #include "PlayerBase.h"
+
 
 namespace sw
 {
@@ -110,12 +110,12 @@ namespace sw
 			if (mDirction)
 			{
 				temp = CollisionManager::GetInstance()->
-					MomentCollsion(Box(mStaring.BoxScale, pos), object);
+					MomentCollsion(Box{ mStaring.BoxScale, pos }, object);
 			}
 			else
 			{
 				temp = CollisionManager::GetInstance()->
-					MomentCollsion(Box(mStaring.BoxScale, pos), object, false);
+					MomentCollsion(Box{ mStaring.BoxScale, pos }, object, false);
 			}
 
 			if (temp)
@@ -240,14 +240,14 @@ namespace sw
 			if (mDirction)
 			{
 				temp = CollisionManager::GetInstance()->
-					MomentCollsion(Box(scale, pos), mTarget);
+					MomentCollsion(Box{ scale, pos }, mTarget);
 
 				int a = 0;
 			}
 			else
 			{
 				temp = CollisionManager::GetInstance()->
-					MomentCollsion(Box(scale, pos), mTarget, mDirction);
+					MomentCollsion(Box{ scale, pos }, mTarget, mDirction);
 
 				int a = 0;
 			}

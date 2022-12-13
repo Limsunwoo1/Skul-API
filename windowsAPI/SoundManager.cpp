@@ -2,7 +2,6 @@
 #include "Application.h"
 
 
-
 namespace sw
 {
 	LPDIRECTSOUND8 SoundManager::mSoundDevice;

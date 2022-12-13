@@ -1,12 +1,10 @@
 ﻿// windowsAPI.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
-#include "Common.h"
 #include "windowsAPI.h"
 #include "Application.h"
 
 #include "SceneManager.h"
-#include "Scene.h"
 #include "ToolScene.h"
 #include "TilePalette.h"
 #include "Image.h"

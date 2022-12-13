@@ -10,6 +10,8 @@
 #include "Image.h"
 #include "Input.h"
 #include "Camera.h"
+#include "TilePalette.h"
+#include "Ground.h"
 
 
 namespace sw
@@ -32,38 +34,84 @@ namespace sw
 	}
 
 	void ToolScene::Tick()
-	{
-        if (mTilePalette)
-            mTilePalette->Tick();
+	{ 
+         if (mTilePalette)
+             mTilePalette->Tick();
 	}
 
 	void ToolScene::Render(HDC hdc)
 	{
+        Scene::Render(hdc);
 		WindowData mainWindow = Application::GetInstance().GetWindowData();
 
-        Rectangle(hdc, 0, 0, mainWindow.width, mainWindow.height);
+        //Rectangle(hdc, 0, 0, mainWindow.width, mainWindow.height);
 
-		HPEN GreenPen = CreatePen(PS_SOLID, 2, RGB(0, 130, 0));
-		HPEN oldPen = (HPEN)SelectObject(hdc, GreenPen);
+        if (mTilePalette->GetCurPos() != Vector2::Zero)
+        {
+            HPEN GreenPen = CreatePen(PS_SOLID, 2, RGB(0, 130, 0));
+            HPEN oldPen = (HPEN)SelectObject(hdc, GreenPen);
 
-		int maxRow = mainWindow.height / TILE_SIZE * TILE_SCALE + 1;
-		for (size_t i = 0; i < maxRow; i++)
-		{
-			MoveToEx(hdc, 0, TILE_SIZE * i * TILE_SCALE, nullptr);
-			LineTo(hdc, mainWindow.width, TILE_SIZE * i * TILE_SCALE);
-		}
+            HBRUSH TarnsBrush = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+            HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, TarnsBrush);
 
-		int maxColumn = mainWindow.width / TILE_SIZE * TILE_SCALE + 1;
-		for (size_t i = 0; i < maxColumn; i++)
-		{
-			MoveToEx(hdc, TILE_SIZE * i * TILE_SCALE, 0, nullptr);
-			LineTo(hdc, TILE_SIZE * i * TILE_SCALE, mainWindow.height);
-		}
+            Vector2 pos = mTilePalette->GetCurPos();
+            Vector2 scale = mTilePalette->GetCurScale();
 
-		(HPEN)SelectObject(hdc, oldPen);
-		DeleteObject(GreenPen);
+            pos = Camera::GetInstance()->CalculatePos(pos);
+            Rectangle(hdc, pos.x, pos.y, pos.x + scale.x, pos.y + scale.y);
+            /*	int maxRow = mainWindow.height / TILE_SIZE * TILE_SCALE + 1;
+                for (size_t i = 0; i < maxRow; i++)
+                {
+                    MoveToEx(hdc, 0, TILE_SIZE * i * TILE_SCALE, nullptr);
+                    LineTo(hdc, mainWindow.width, TILE_SIZE * i * TILE_SCALE);
+                }
 
-        Scene::Render(hdc);
+                int maxColumn = mainWindow.width / TILE_SIZE * TILE_SCALE + 1;
+                for (size_t i = 0; i < maxColumn; i++)
+                {
+                    MoveToEx(hdc, TILE_SIZE * i * TILE_SCALE, 0, nullptr);
+                    LineTo(hdc, TILE_SIZE * i * TILE_SCALE, mainWindow.height);
+                }*/
+
+            (HPEN)SelectObject(hdc, oldPen);
+            (HBRUSH)SelectObject(hdc, oldBrush);
+
+            DeleteObject(GreenPen);
+        }
+
+        const std::vector<GameObject*>& ground = 
+            SceneManager::GetInstance()->GetPlayScene()->GetGameObject(eColliderLayer::Ground);
+
+
+        // 툴씬 좌표, 모드 인터페이스
+        for (GameObject* gd : ground)
+        {
+            if (gd == nullptr)
+                continue;
+
+            gd->Render(hdc);
+        }
+
+        bool mode = mTilePalette->GetMode();
+
+        std::wstring modeC = L"";
+        if (mode)
+        {
+            modeC = L" ( TileMode.. )";
+        }
+        else
+        {
+            modeC = L" ( GroundMode.. )";
+        }
+        Vector2 mousepos = Input::GetInstance()->GetMousePos();
+        mousepos += Camera::GetInstance()->GetDistance();
+        std::wstring X = std::to_wstring((int)mousepos.x);
+        std::wstring Y = std::to_wstring((int)mousepos.y);
+        const std::wstring pos = L"X 좌표 : " + X + L" Y 좌표 : " + Y + modeC;
+        wchar_t szFloat[100] = {};
+        swprintf_s(szFloat, 100, pos.c_str());
+        int strLen = wcsnlen_s(szFloat, 100);
+        TextOut(hdc, 10, 30, szFloat, strLen);
 	}
 
 	void ToolScene::Enter()
@@ -87,6 +135,11 @@ namespace sw
     void ToolScene::LoadTilePalette(const std::wstring& path)
     {
         mTilePalette->Load(path);
+    }
+
+    Image* ToolScene::GetAtlasImage() 
+    {
+        return mTilePalette->GetAtlasImage(); 
     }
 }
 
@@ -112,7 +165,7 @@ LRESULT CALLBACK AtlasWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
         AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
         // 윈도우 크기 변경
         SetWindowPos(hWnd
-            , nullptr, windowData.width, 0
+            , nullptr, windowData.width + 500, 0
             , rect.right - rect.left
             , rect.bottom - rect.top
             , 0);

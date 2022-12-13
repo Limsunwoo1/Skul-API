@@ -1,7 +1,6 @@
 #pragma once
 #include "BaseResource.h"
 
-
 namespace sw
 {
 	class Sound : public BaseResource

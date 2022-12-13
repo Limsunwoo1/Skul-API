@@ -2,15 +2,15 @@
 #include "PlayerBase.h"
 #include "Collider.h"
 #include "Rigidbody.h"
-#include "UtilMath.h"
 
 
 namespace sw
 {
 	Ground::Ground()
+		: type(eColliderLayer::Ground)
 	{
 		Collider* collider = AddComponent<Collider>();
-		collider->SetScale(Vector2(8000.f, 50.f));
+		collider->SetScale(Vector2(400.f, 50.f));
 		collider->SetOwner(this);
 	}
 	Ground::~Ground()

@@ -20,8 +20,11 @@ namespace sw
 		void Top_Bottom_Collider(Collider* other);
 		void SetAngle();
 
+		eColliderLayer GetLayer() { return type; }
 	private:
 		float mAngle;
+
+		eColliderLayer type;
 	};
 }
 

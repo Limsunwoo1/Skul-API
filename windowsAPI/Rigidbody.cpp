@@ -1,6 +1,5 @@
 #include "Rigidbody.h"
 #include "Time.h"
-#include "UtilMath.h"
 #include "PlayerBase.h"
 #include "MainPlayer.h"
 
@@ -111,7 +110,7 @@ namespace sw
 
 			pos = pos + mForce * Time::GetInstance()->DeltaTime();
 			player->SetPos(pos);
-			mForce.clear();
+			mForce.Clear();
 			return;
 		}
 		else
@@ -127,7 +126,7 @@ namespace sw
 		pos = pos + mForce * Time::GetInstance()->DeltaTime();
 		pos = pos + mVelocity * Time::GetInstance()->DeltaTime();
 		GetOwner()->SetPos(pos);
-		mForce.clear();
+		mForce.Clear();
 	}
 
 	void Rigidbody::Render(HDC hdc)

@@ -4,7 +4,6 @@
 #include "Time.h"
 #include"GameObject.h"
 #include "Image.h"
-#include "Time.h"
 #include "SceneManager.h"
 
 namespace sw
@@ -59,21 +58,21 @@ namespace sw
 			}
 		}
 
-		if (KEY_DOWN(eKeyCode::UP))
+		if (KEY_PRESSE(eKeyCode::UP))
 		{
-			mLookPosition.y -= TILE_SIZE * TILE_SCALE;
+			mLookPosition.y -= 600 * Time::GetInstance()->DeltaTime();
 		}
-		if (KEY_DOWN(eKeyCode::DOWN))
+		if (KEY_PRESSE(eKeyCode::DOWN))
 		{
-			mLookPosition.y += TILE_SIZE * TILE_SCALE;
+			mLookPosition.y += 600 * Time::GetInstance()->DeltaTime();
 		}
-		if (KEY_DOWN(eKeyCode::LEFT))
+		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			mLookPosition.x -= TILE_SIZE * TILE_SCALE;
+			mLookPosition.x -= 600 * Time::GetInstance()->DeltaTime();
 		}
-		if (KEY_DOWN(eKeyCode::RIGHT))
+		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			mLookPosition.x += TILE_SIZE * TILE_SCALE;
+			mLookPosition.x += 600 * Time::GetInstance()->DeltaTime();
 		}
 
 		if (!bToolMode)

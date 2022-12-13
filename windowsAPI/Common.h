@@ -2,15 +2,15 @@
 
 // Window 헤더
 #include "framework.h"
-#include <string>
-#include <vector>
-#include <list>
-#include <map>
-#include <queue>
-#include <stack>
 #include <functional>
 #include <filesystem>
 #include <assert.h>
+#include <vector>
+#include <list>
+#include <unordered_map>
+#include <map>
+#include <queue>
+#include <stack>
 
 // 사운드 헤더
 #pragma comment(lib, "Msimg32.lib")
@@ -24,9 +24,8 @@
 
 // 자체 제작 해더
 #include "def.h"
+#include "Path.h"
 #include "Maths.h"
-#include "UtilString.h"
-#include "UtilMath.h"
 
 struct Pixel
 {

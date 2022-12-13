@@ -1,5 +1,4 @@
 #pragma once
-#include "Common.h"
 #include "BaseResource.h"
 
 namespace sw

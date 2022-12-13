@@ -224,9 +224,6 @@
     <ClInclude Include="Object.h">
       <Filter>Engine\Commne</Filter>
     </ClInclude>
-    <ClInclude Include="UtilMath.h">
-      <Filter>Engine\Commne</Filter>
-    </ClInclude>
     <ClInclude Include="ToolScene.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>

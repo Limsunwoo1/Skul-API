@@ -1,7 +1,6 @@
 #include "EffectObject.h"
 #include "Collider.h"
 #include "Camera.h"
-#include "PlayerBase.h"
 #include "Animator.h"
 
 namespace sw

@@ -51,7 +51,7 @@ namespace sw
 		Animator* animator = GetTarget()->GetComponent<Animator>();
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(400.f, 0.0f));
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(400, 0.0f));
 			mDirction = true;
 			std::wstring setAnimation = GetR_Animation();
 			if (mCurAnimation != setAnimation)
@@ -62,7 +62,7 @@ namespace sw
 		}
 		else if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400.f, 0.0f));
+			player->GetComponent<Rigidbody>()->AddForce(Vector2(-400, 0.0f));
 			mDirction = false;
 			std::wstring setAnimation = GetL_Animation();
 			if (mCurAnimation != setAnimation)

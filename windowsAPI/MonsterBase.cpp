@@ -17,6 +17,7 @@ namespace sw
 		, mCurState(eMonsterState::IDLE)
 		, mPrevState(mCurState)
 		, mDirction(true)
+		, mColCount(0)
 
 	{
 		for (int i = 0; i < (int)eMonsterState::END; ++i)

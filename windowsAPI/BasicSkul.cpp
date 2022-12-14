@@ -24,6 +24,8 @@
 #include "Drop.h"
 #include "Switch.h"
 
+#include <iostream>
+
 
 namespace sw
 {
@@ -77,8 +79,8 @@ namespace sw
 		if (mParentObject == nullptr)
 			return;
 
-		GameObject::Tick();
 		mState->Tick();
+		GameObject::Tick();
 
 		if (mShaow)
 			mShaow->Tick();
@@ -97,6 +99,7 @@ namespace sw
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
 
+		std::cout << "·»´õ Æ÷Áî " << pos.x << "  " << pos.y << std::endl;
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
 		if (mShaow)
@@ -126,9 +129,7 @@ namespace sw
 	void BasicSkul::OnCollisionEnter(Collider* other)
 	{
 	}
-	void BasicSkul::OnCollisionStay(Collider* other)
-	{
-	}
+
 	void BasicSkul::OnCollisionExit(Collider* other)
 	{
 	}

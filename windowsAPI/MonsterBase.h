@@ -44,10 +44,14 @@ namespace sw
 
 		void SetAble(eMonsterState type, bool able) { mState[(int)type] = able; }
 
+		UINT32 GetColCount() { return mColCount; }
+		void SetColCount(UINT32 count) { mColCount = count; }
+
 	protected:
 		Image* mImage;
 		Animator* mAnimator;
 		GameObject* mTarget;
+		UINT32 mColCount;
 
 		eMonsterState mCurState;
 		eMonsterState mPrevState;

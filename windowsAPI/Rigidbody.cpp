@@ -2,6 +2,7 @@
 #include "Time.h"
 #include "PlayerBase.h"
 #include "MainPlayer.h"
+#include <iostream>
 
 namespace sw
 {
@@ -28,8 +29,6 @@ namespace sw
 		// ÀÌµ¿
 		// F = M x A
 		// A = F / M
-		if (bFreez)
-			mForce.x = 0.0f;
 
 		mAccelation = mForce / mMass;
 
@@ -107,10 +106,6 @@ namespace sw
 					pos = pos + mVelocity * Time::GetInstance()->DeltaTime();
 				}
 			}
-			else
-			{
-
-			}
 
 			pos = pos + mForce * Time::GetInstance()->DeltaTime();
 			player->SetPos(pos);
@@ -140,6 +135,6 @@ namespace sw
 
 	void Rigidbody::AddForce(Vector2 force)
 	{
-		mForce += force;
+		mForce = force;
 	}
 }

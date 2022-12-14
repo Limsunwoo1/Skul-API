@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "BackGround.h"
 #include "EventManager.h"
+#include "Camera.h"
 
 namespace sw
 {
@@ -74,5 +75,9 @@ namespace sw
 		swprintf_s(szFloat, 50, L"Logo Scene");
 		int strLen = wcsnlen_s(szFloat, 50);
 		TextOut(hdc, 10, 30, szFloat, strLen);
+	}
+	void LogoScene::Enter()
+	{
+		
 	}
 }

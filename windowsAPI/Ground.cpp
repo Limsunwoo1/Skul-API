@@ -10,6 +10,7 @@
 #include "Move.h"
 #include "MainPlayer.h"
 
+#include <iostream>
 #define FREEZMAX 2
 
 namespace sw
@@ -35,70 +36,70 @@ namespace sw
 		GameObject::Tick();
 
 		// 코드 정리하기
-		if (mPlayer != nullptr)
-		{
-			Collider* pCol = mPlayer->GetComponent<Collider>();
-			Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
-			Vector2 pPos = pCol->GetPos();
-			Vector2 pScale = pCol->GetScale();
+		//if (mPlayer != nullptr)
+		//{
+		//	Collider* pCol = mPlayer->GetComponent<Collider>();
+		//	Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
+		//	Vector2 pPos = pCol->GetPos();
+		//	Vector2 pScale = pCol->GetScale();
 
-			Vector2 mPos = GetPos();
-			Vector2 mScale = GetScale();
+		//	Vector2 mPos = GetPos();
+		//	Vector2 mScale = GetScale();
 
-			if (mPos.y - (mScale.y * 0.5f) > pPos.y + (pScale.y * 0.5f)
-				|| mPos.y + (mScale.y * 0.5f) < pPos.y - (pScale.y * 0.5f))
-			{
-				rigidbody->SetFreez(false);
-				mPlayer = nullptr;
-				bCheckFreez = false;
-				mPlayerColCount = 0;
-			}
-		}
+		//	if (mPos.y - (mScale.y * 0.5f) > pPos.y + (pScale.y * 0.5f)
+		//		|| mPos.y + (mScale.y * 0.5f) < pPos.y - (pScale.y * 0.5f))
+		//	{
+		//		rigidbody->SetFreez(false);
+		//		mPlayer = nullptr;
+		//		bCheckFreez = false;
+		//		mPlayerColCount = 0;
+		//	}
+		//}
 
-		if (bCheckFreez)
-		{
-			// player rigidbody freez;
-			if(mPlayer != nullptr)
-			{
-				StateHandle* state = mPlayer->GetStateHandle();
-				Move* move = state->GetState<Move>(ePlayerState::MOVE);
-				if (move->GetDirtion() != bPlayerDirction)
-				{
-					Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
-					rigidbody->SetFreez(false);
-					bCheckFreez = false;
-					mPlayerColCount = 0;
-					mPlayer = nullptr;
-				}
-			}
-		}
+		//if (bCheckFreez)
+		//{
+		//	// player rigidbody freez;
+		//	if(mPlayer != nullptr)
+		//	{
+		//		StateHandle* state = mPlayer->GetStateHandle();
+		//		Move* move = state->GetState<Move>(ePlayerState::MOVE);
+		//		if (move->GetDirtion() != bPlayerDirction)
+		//		{
+		//			Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
+		//			rigidbody->SetFreez(false);
+		//			bCheckFreez = false;
+		//			mPlayerColCount = 0;
+		//			mPlayer = nullptr;
+		//		}
+		//	}
+		//}
 		
 
-		mDelta += Time::GetInstance()->DeltaTime();
-		if (mDelta > 1.0f)
-		{
-			mPlayerColCount = 0;
-			mDelta -= 1.0f;
-		}
-		else
-		{
-			if (mPlayerColCount > FREEZMAX)
-			{
-				// player rigidbody freez;
+		//mDelta += Time::GetInstance()->DeltaTime();
+		//if (mDelta > 1.0f)
+		//{
+		//	mPlayerColCount = 0;
+		//	mDelta -= 1.0f;
+		//}
+		//else
+		//{
+		//	if (mPlayerColCount > FREEZMAX)
+		//	{
+		//		// player rigidbody freez;
 
-				if(mPlayer != nullptr)
-				{
-					Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
-					rigidbody->SetFreez(true);
+		//		if(mPlayer != nullptr)
+		//		{
+		//			Rigidbody* rigidbody = mPlayer->GetComponent<Rigidbody>();
+		//			//rigidbody->SetFreez(true);
 
-					StateHandle* state = mPlayer->GetStateHandle();
-					Move* move = state->GetState<Move>(ePlayerState::MOVE);
-					bPlayerDirction = move->GetDirtion();
-				}
-				mPlayerColCount = 0;
-				bCheckFreez = true;
-			}
-		}
+		//			StateHandle* state = mPlayer->GetStateHandle();
+		//			Move* move = state->GetState<Move>(ePlayerState::MOVE);
+		//			bPlayerDirction = move->GetDirtion();
+		//		}
+		//		mPlayerColCount = 0;
+		//		bCheckFreez = true;
+		//	}
+		//}
 	}
 	void Ground::Render(HDC hdc)
 	{
@@ -125,8 +126,8 @@ namespace sw
 		Vector2 mCScale = GetComponent<Collider>()->GetScale();
 		SetAngle();
 		float angle = mAngle;
-		if (mPlayerColCount == 0)
-			rigidbody->SetFreez(false);
+		//if (mPlayerColCount == 0)
+		//	rigidbody->SetFreez(false);
 		
 
 		if (mCPos.x < pPos.x)
@@ -158,6 +159,7 @@ namespace sw
 
 				pPos.x += (fScale - fLen) + 1.0f;
 				object->SetPos(pPos);
+				other->SetPos(pPos);
 
 				Vector2 velo = rigidbody->GetVelocity();
 				velo.x = 0;
@@ -204,6 +206,7 @@ namespace sw
 				float a = fScale - fLen;
 				pPos.x -= (fScale - fLen) + 1.0f;
 				object->SetPos(pPos);
+				other->SetPos(pPos);
 
 				Vector2 velo = rigidbody->GetVelocity();
 				velo.x = 0;
@@ -241,8 +244,6 @@ namespace sw
 			playerPos.y -= (fScale - fLen) + 2.0f;
 			playerObj->SetPos(playerPos);
 			rigidbody->SetGround(true);
-
-			bTopBottomCollide = true;
 		}
 		else if (playerPos.y > mCPos.y)
 		{
@@ -254,9 +255,9 @@ namespace sw
 			playerObj->SetPos(playerPos);
 
 			rigidbody->SetGround(false);
-
-			bTopBottomCollide = true;
 		}
+
+		bTopBottomCollide = true;
 	}
 
 	void Ground::SetAngle()

@@ -13,6 +13,8 @@ namespace sw
 		void Tick() override;
 		void Render(HDC hdc) override;
 
+		virtual void Enter() override;
+
 	private:
 
 

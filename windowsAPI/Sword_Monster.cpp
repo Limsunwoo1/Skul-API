@@ -40,6 +40,7 @@ namespace sw
 		mAnimator->Play(L"R_SwordMonster_Idle", true);
 
 		Rigidbody* rigdbody = AddComponent<Rigidbody>();
+		rigdbody->SetGround(false);
 		rigdbody->SetOwner(this);
 
 		Collider* collider = AddComponent<Collider>();
@@ -120,7 +121,7 @@ namespace sw
 
 			if (temp)
 			{
-				PlayerBase* player = dynamic_cast<PlayerBase*>(object);
+				//PlayerBase* player = dynamic_cast<PlayerBase*>(object);
 				//mTarget = player->GetParent();
 				mTarget = object;
 				break;
@@ -308,7 +309,7 @@ namespace sw
 					mState[(int)eMonsterState::MOVE] = false;
 				}
 
-				rigidbody->AddForce(Vector2(-250.f, 0.0f));
+				rigidbody->AddForce(Vector2(-200.f, 0.0f));
 			}
 			else
 			{
@@ -318,7 +319,7 @@ namespace sw
 					mState[(int)eMonsterState::MOVE] = false;
 				}
 
-				rigidbody->AddForce(Vector2(250.f, 0.0f));
+				rigidbody->AddForce(Vector2(200.f, 0.0f));
 			}
 			
 			if (abs(distance.x) <= 100 && abs(distance.y) <= 50)

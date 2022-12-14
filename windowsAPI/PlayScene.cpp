@@ -12,7 +12,7 @@
 #include "CollisionManager.h"
 #include "Sword_Monster.h"
 #include "Collider.h"
-
+#include <iostream>
 namespace sw
 {
 	PlayScene::PlayScene()
@@ -27,8 +27,6 @@ namespace sw
 
 	void PlayScene::Initialize()
 	{
-		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\TestTile");
-		
 		BackGround* bg = new BackGround();
 		bg->SetImage(L"Back", L"BackGround.bmp");
 		bg->Initialize();
@@ -105,7 +103,6 @@ namespace sw
 	{
 		Scene::Render(hdc);
 
-
 		wchar_t szFloat[50] = {};
 		swprintf_s(szFloat, 50, L"Paly Scene");
 		int strLen = (int)wcsnlen_s(szFloat, 50);
@@ -114,6 +111,8 @@ namespace sw
 
 	void PlayScene::Enter()
 	{
+		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\TestTile");
+
 		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);

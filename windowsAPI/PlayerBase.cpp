@@ -132,16 +132,6 @@ namespace sw
 
 	}
 
-	void PlayerBase::OnCollisionEnter(Collider* other)
-	{
-	}
-	void PlayerBase::OnCollisionStay(Collider* other)
-	{
-	}
-	void PlayerBase::OnCollisionExit(Collider* other)
-	{
-	}
-
 	void PlayerBase::SwitchSkill()
 	{
 	}

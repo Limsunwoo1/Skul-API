@@ -112,7 +112,12 @@ namespace sw
                 left->OnCollisionEnter(right);
                 right->OnCollisionEnter(left);
 
-                iter->second = true;
+                if(Intersect(left, right))
+                    iter->second = true;
+                else
+                {
+                    iter->second = false;
+                }
             }
             else
             {
@@ -142,11 +147,11 @@ namespace sw
         if (right->GetOwner()->IsDeath())
             return false;
 
-        Vector2 leftPos = left->GetPos();
+        Vector2 leftPos = left->GetOwner()->GetPos();
         Vector2 leftScale = left->GetScale();
 
 
-        Vector2 rightPos = right->GetPos();
+        Vector2 rightPos = right->GetOwner()->GetPos();
         Vector2 rightScale = right->GetScale();
 
         if (fabs(leftPos.x - rightPos.x) < fabs(leftScale.x / 2.0f + rightScale.x / 2.0f)

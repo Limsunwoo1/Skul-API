@@ -8,6 +8,10 @@
 #include "Camera.h"
 #include "Move.h"
 #include "StateHandle.h"
+#include "SceneManager.h"
+#include "Scene.h"
+
+#include <iostream>
 
 namespace sw
 {
@@ -31,11 +35,13 @@ namespace sw
 
 	void MainPlayer::Initialize()
 	{
+		SetPos(Vector2(450.f, 800.f));
 		BasicSkul* basicSkul = new BasicSkul();
 		basicSkul->SetParentObject(basicSkul);
-
+		basicSkul->SetPos(GetPos());
 		SwordSkul* swordSkul = new SwordSkul();
 		swordSkul->SetParentObject(swordSkul);
+		swordSkul->SetPos(GetPos());
 
 		this->SetPlayer(basicSkul);
 		mNextPlayer = swordSkul;
@@ -45,36 +51,14 @@ namespace sw
 	{
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
-			StateHandle* handle = mCurPlayer->GetStateHandle();
-			ePlayerState type = handle->GetStateType();
-
-			if (mNextPlayer != nullptr)
-			{
-				if (type != ePlayerState::SKILL_1
-					&& type != ePlayerState::SKILL_2
-					&& type != ePlayerState::SLIDING)
-				{
-					bool movetype = mCurPlayer->GetStateHandle()->
-						GetState<Move>(ePlayerState::MOVE)->GetDirtion();
-
-					mNextPlayer->GetStateHandle()->
-						GetState<Move>(ePlayerState::MOVE)->SetDirtion(movetype);
-
-					PlayerBase* temp = mCurPlayer;
-					mCurPlayer = mNextPlayer;
-					mNextPlayer = temp;
-
-					mCurPlayer->SetState(ePlayerState::SWITCH);
-					Reset();
-
-					Camera::GetInstance()->SetTarget(mCurPlayer);
-				}
-			}
+			KEY_DOWN_SPACE();
 		}
-		
+
 		if (mCurPlayer)
 			mCurPlayer->Tick();
 
+		SetPos(mCurPlayer->GetPos());
+		CheckGround();
 	}
 	void MainPlayer::Render(HDC hdc)
 	{
@@ -95,6 +79,66 @@ namespace sw
 	{
 		if (mCurPlayer)
 			mCurPlayer->OnCollisionExit(other);
+	}
+
+	void MainPlayer::CheckGround()
+	{
+		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
+		const std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Ground);
+		Collider* col = GetComponent<Collider>();
+		Vector2 CPos = col->GetPos();
+		Vector2 CScale = col->GetScale();
+
+		float under = CPos.y + (CScale.y * 0.5f);
+		std::vector<GameObject*> temp;
+		for (GameObject* object : objects)
+		{
+			float over = object->GetPos().y - (object->GetScale().y * 0.5f);
+			if (fabs(under - over) < 3)
+			{
+				temp.push_back(object);
+			}
+		}
+
+		for (GameObject* object : temp)
+		{
+			Rigidbody* rigid = GetComponent<Rigidbody>();
+			Vector2 objPos = object->GetPos();
+			Vector2 objScale = object->GetScale();
+
+			if (objPos.x + (objScale.x * 0.5f) < CPos.x - (CScale.x * 0.5f)
+				|| objPos.x - (objScale.x * 0.5f) > CPos.x + (CScale.x * 0.5f))
+				rigid->SetGround(false);
+		}
+	}
+
+	void MainPlayer::KEY_DOWN_SPACE()
+	{
+		StateHandle* handle = mCurPlayer->GetStateHandle();
+		ePlayerState type = handle->GetStateType();
+
+		if (mNextPlayer != nullptr)
+		{
+			if (type != ePlayerState::SKILL_1
+				&& type != ePlayerState::SKILL_2
+				&& type != ePlayerState::SLIDING)
+			{
+				bool movetype = mCurPlayer->GetStateHandle()->
+					GetState<Move>(ePlayerState::MOVE)->GetDirtion();
+
+				mNextPlayer->GetStateHandle()->
+					GetState<Move>(ePlayerState::MOVE)->SetDirtion(movetype);
+
+				PlayerBase* temp = mCurPlayer;
+				mCurPlayer = mNextPlayer;
+				mNextPlayer = temp;
+
+				mCurPlayer->SetState(ePlayerState::SWITCH);
+				Reset();
+
+				Camera::GetInstance()->SetTarget(mCurPlayer);
+			}
+		}
 	}
 
 	void MainPlayer::Reset()

@@ -61,35 +61,25 @@ namespace sw
 
 		if (KEY_PRESSE(eKeyCode::UP))
 		{
-			mLookPosition.y -= 600 * Time::GetInstance()->DeltaTime();
+			mLookPosition.y -= 1000 * Time::GetInstance()->DeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::DOWN))
 		{
-			mLookPosition.y += 600 * Time::GetInstance()->DeltaTime();
+			mLookPosition.y += 1000 * Time::GetInstance()->DeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			mLookPosition.x -= 600 * Time::GetInstance()->DeltaTime();
+			mLookPosition.x -= 1000 * Time::GetInstance()->DeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			mLookPosition.x += 600 * Time::GetInstance()->DeltaTime();
+			mLookPosition.x += 1000 * Time::GetInstance()->DeltaTime();
 		}
 
 		if (!bToolMode)
 		{
 			if (mTarget != nullptr)
 				mLookPosition = mTarget->GetPos();
-
-			if (mLookPosition.x < 0)
-				mLookPosition.x = 0;
-			if (mLookPosition.x > 3200)
-				mLookPosition.x = 3200;
-
-			if (mLookPosition.y < 0)
-				mLookPosition.y = 0;
-			if (mLookPosition.y > 1350)
-				mLookPosition.y = 1350;
 		}
 
 		mDistance = mLookPosition - (mResolution / 2.0f);

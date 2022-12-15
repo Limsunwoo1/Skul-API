@@ -3,6 +3,7 @@
 
 namespace sw
 {
+	class MainPlayer;
 	class PlayScene : public Scene
 	{
 	public:
@@ -17,7 +18,7 @@ namespace sw
 		virtual void Exit();
 
 	private:
-
+		MainPlayer* mplayer;
 
 	};
 }

@@ -7,4 +7,9 @@
 // 소드 스컬
 #define SWORDSKUL_R_PATH(path) STRING(L"..\\Resource\\Animation\\SwordSkul\\R_Sword\\%s", path)
 #define SWORDSKUL_L_PATH(path) STRING(L"..\\Resource\\Animation\\SwordSkul\\L_Sword\\%s", path)
-
+// 소드 몬스터
+#define SWORDMONSTER_R_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\R_SwordMonster\\%s", path)
+#define SWORDMONSTER_L_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\L_SwordMonster\\%s", path)
+// 도끼 몬스터
+#define AXEMONSTER_R_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\R_AxeMonster\\%s", path)
+#define AXEMONSTER_L_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\L_AxeMonster\\%s", path)

@@ -23,18 +23,25 @@ namespace sw
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
-		virtual void OnCollisionEnter(Collider* other) override;
-		virtual void OnCollisionStay(Collider* other) override;
-		virtual void OnCollisionExit(Collider* other) override;
+		virtual void OnCollisionEnter(Collider* other) override{};
+		virtual void OnCollisionStay(Collider* other) override{};
+		virtual void OnCollisionExit(Collider* other) override{};
 
-		virtual void OnCollisionEnter() override;
-		virtual void OnCollisionStay() override;
-		virtual void OnCollisionExit() override;
+		virtual void OnCollisionEnter() override{};
+		virtual void OnCollisionStay() override{};
+		virtual void OnCollisionExit() override{};
+
+		virtual void InitializeAnimation() = 0;
+		virtual void InitializeBox() = 0;
+		virtual void InitalizeCollider() = 0;
 
 		virtual void IDLE();
 		virtual void Attack();
-		virtual void MOVE();
-		virtual void HIT();
+		virtual void Move();
+		virtual void Hit();
+		virtual void Staring();
+
+		virtual void Branch();
 
 		void SetState(eMonsterState type) { mCurState = type; }
 		eMonsterState GetState() { return mCurState; }
@@ -46,6 +53,11 @@ namespace sw
 
 		UINT32 GetColCount() { return mColCount; }
 		void SetColCount(UINT32 count) { mColCount = count; }
+
+		void SetDelta(float delta) { mDelta = delta; }
+		bool GetSuperArmer() { return mArmer; }
+
+		void CheckGround();
 
 	protected:
 		Image* mImage;
@@ -61,7 +73,14 @@ namespace sw
 		Box mAttackcollider;
 		Box mStaring;
 
+		std::wstring RName;
+		std::wstring LName;
+
 		bool mState[(int)eMonsterState::END];
 		bool mDirction;
+		bool mArmer;
+
+		UINT32 mAttackX;
+		UINT32 mAttackY;
 	};
 }

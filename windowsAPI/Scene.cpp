@@ -1,6 +1,6 @@
 #include "Scene.h"
 #include "GameObject.h"
-
+#include "Camera.h"
 namespace sw
 {
 	Scene::Scene()
@@ -50,11 +50,20 @@ namespace sw
 		{
 			for (int x = 0; x < mObjects[y].size(); x++)
 			{
+				Vector2 pos = mObjects[y][x]->GetPos();
+				pos = Camera::GetInstance()->CalculatePos(pos);
 				if (mObjects[y][x] == nullptr)
 					continue;
 
 				if (mObjects[y][x]->IsDeath())
 					continue;
+				if (y != (int)eColliderLayer::BackGround)
+				{
+					if (pos.x > 1600 + 100 || pos.x < 0 - 100)
+						continue;
+					if (pos.y > 900 + 100 || pos.y < 0 - 100)
+						continue;
+				}
 
 				mObjects[y][x]->Render(hdc);
 			}

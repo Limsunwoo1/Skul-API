@@ -100,9 +100,15 @@ namespace sw
 			if (monster != nullptr)
 			{
 				eMonsterState type = monster->GetState();
+				if (monster->GetSuperArmer())
+				{
+					monster->Hit();
+					return;
+				}
 				monster->SetAble(type, false);
 				monster->SetDirction(!state);  // 공격 방향으로 피격대상 방향변경
 				monster->SetState(eMonsterState::HIT);
+				monster->SetDelta(0.0f);
 			}
 		}
 	}

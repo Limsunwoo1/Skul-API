@@ -4,6 +4,7 @@
 #include "Move.h"
 #include "StateHandle.h"
 #include "Input.h"
+#include <iostream>
 
 namespace sw
 {
@@ -54,7 +55,6 @@ namespace sw
 		velocity.y = -700.f;
 		rigidbody->SetVelocity(velocity);
 		rigidbody->SetGround(false);
-
 
 		// 방향설정
 		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();

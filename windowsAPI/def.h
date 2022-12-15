@@ -72,11 +72,11 @@ enum class eColliderLayer : short
 	BackGround,
 	Ground,
 	Tile,
-	Monster,
 	Player,
+	Monster,
 
-	Monster_ProjectTile,
 	Player_ProjectTile,
+	Monster_ProjectTile,
 
 	EFFECT,
 	UI = COLLIDER_LAYER - 1,

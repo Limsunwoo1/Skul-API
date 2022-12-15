@@ -126,8 +126,6 @@ namespace sw
 		Vector2 mCScale = GetComponent<Collider>()->GetScale();
 		SetAngle();
 		float angle = mAngle;
-		//if (mPlayerColCount == 0)
-		//	rigidbody->SetFreez(false);
 		
 
 		if (mCPos.x < pPos.x)
@@ -164,14 +162,6 @@ namespace sw
 				Vector2 velo = rigidbody->GetVelocity();
 				velo.x = 0;
 				rigidbody->SetVelocity(velo);
-
-				PlayerBase* player = dynamic_cast<PlayerBase*>(object);
-
-				if (player != nullptr)
-				{
-					mPlayer = player;
-					mPlayerColCount++;
-				}
 			}
 			else
 				Top_Bottom_Collider(other);
@@ -207,18 +197,9 @@ namespace sw
 				pPos.x -= (fScale - fLen) + 1.0f;
 				object->SetPos(pPos);
 				other->SetPos(pPos);
-
 				Vector2 velo = rigidbody->GetVelocity();
 				velo.x = 0;
 				rigidbody->SetVelocity(velo);
-
-				PlayerBase* player = dynamic_cast<PlayerBase*>(object);
-
-				if (player != nullptr)
-				{
-					mPlayer = player;
-					mPlayerColCount++;
-				}
 				/*if (!ground)
 					rigidbody->SetGround(false);
 				else
@@ -247,7 +228,6 @@ namespace sw
 		}
 		else if (playerPos.y > mCPos.y)
 		{
-
 			Vector2 velo = rigidbody->GetVelocity();
 			velo.y = 0;
 			rigidbody->SetVelocity(velo);
@@ -255,9 +235,9 @@ namespace sw
 			playerObj->SetPos(playerPos);
 
 			rigidbody->SetGround(false);
-		}
 
-		bTopBottomCollide = true;
+			bTopBottomCollide = true;
+		}
 	}
 
 	void Ground::SetAngle()

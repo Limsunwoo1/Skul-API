@@ -20,6 +20,9 @@ namespace sw
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
+		void CheckGround();
+
+		void KEY_DOWN_SPACE();
 		void Reset();
 		void SwitchPlayer();
 

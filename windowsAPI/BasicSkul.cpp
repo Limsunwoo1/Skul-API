@@ -33,21 +33,21 @@ namespace sw
 	{
 		//DetaSetting
 		mMaxAttackCount = 1;
-		SetPos({ 100.0f, 100.0f });
+		SetPos({ 5.0f, -50.0f });
 		SetScale({ 5.f, 5.f });
 
 		InitAnimtion();
 		InitState();
 		InitAttackCollider();
 
+		Rigidbody* rigidbody = AddComponent<Rigidbody>();
+		rigidbody->SetGround(false);
+		rigidbody->SetOwner(this);
+
 		// main player에 콜리젼을 받는다
 		Collider* collider = AddComponent<Collider>();
 		collider->SetScale(Vector2(80.f, 80.f));
 		collider->SetOwner(this);
-
-		Rigidbody* rigidbody = AddComponent<Rigidbody>();
-		rigidbody->SetGround(false);
-		rigidbody->SetOwner(this);
 
 		mShaow = new Shadow();
 		mShaow->Initialize(L"R_DashShadow", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\DashEffect\\R_DashEffect.bmp");
@@ -84,11 +84,9 @@ namespace sw
 
 		if (mShaow)
 			mShaow->Tick();
+
 		/*if (mEffect)
 			mEffect->Tick();*/
-
-		Vector2 pos = GetPos();
-		mParentObject->SetPos(pos);
 	}
 
 	void BasicSkul::Render(HDC hdc)
@@ -98,8 +96,7 @@ namespace sw
 
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
-
-		std::cout << "렌더 포즈 " << pos.x << "  " << pos.y << std::endl;
+		std::cout << pos.x << "  " << pos.y << endl;
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
 		if (mShaow)
@@ -124,14 +121,6 @@ namespace sw
 			SelectObject(hdc, oldpen);
 			SelectObject(hdc, oldbrush);
 		}
-	}
-
-	void BasicSkul::OnCollisionEnter(Collider* other)
-	{
-	}
-
-	void BasicSkul::OnCollisionExit(Collider* other)
-	{
 	}
 	void BasicSkul::InitAnimtion()
 	{
@@ -246,19 +235,19 @@ namespace sw
 		Vector2 scale = Vector2::Zero;
 		Vector2 offset = Vector2::Zero;
 
-		scale = Vector2(80.f, 80.f);
+		scale = Vector2(100.f, 80.f);
 		offset = Vector2(65.f, -25.f);
 		SetColliders(L"R_Basic_AttackA",Box{ scale ,offset });
 
-		scale = Vector2(80.f, 80.f);
+		scale = Vector2(100.f, 80.f);
 		offset = Vector2(75.f, -25.f);
 		SetColliders(L"R_Basic_AttackB", Box{ scale ,offset });
 
-		scale = Vector2(80.f, 80.f);
+		scale = Vector2(100.f, 80.f);
 		offset = Vector2(-65.f, -25.f);
 		SetColliders(L"L_Basic_AttackA", Box{ scale ,offset });
 
-		scale = Vector2(80.f, 80.f);
+		scale = Vector2(100.f, 80.f);
 		offset = Vector2(-75.f, -25.f);
 		SetColliders(L"L_Basic_AttackB", Box{ scale ,offset });
 	}

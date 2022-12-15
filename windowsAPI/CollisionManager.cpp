@@ -116,6 +116,8 @@ namespace sw
                     iter->second = true;
                 else
                 {
+                    left->OnCollisionExit(right);
+                    right->OnCollisionExit(left);
                     iter->second = false;
                 }
             }

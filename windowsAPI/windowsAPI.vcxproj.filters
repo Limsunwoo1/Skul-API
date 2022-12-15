@@ -165,6 +165,9 @@
     <Filter Include="Engine\Manager\UIManager">
       <UniqueIdentifier>{fc7687e2-6246-4206-8d40-8ba0966b5f81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameObject\Monster\AxeMonster">
+      <UniqueIdentifier>{62e439fa-d5e3-4bb2-88d6-c3e310cfc7fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -356,6 +359,9 @@
     <ClInclude Include="Path.h">
       <Filter>Engine\Commne</Filter>
     </ClInclude>
+    <ClInclude Include="AxeMonster.h">
+      <Filter>Engine\GameObject\Monster\AxeMonster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -522,6 +528,9 @@
     </ClCompile>
     <ClCompile Include="Sword_Monster.cpp">
       <Filter>Engine\GameObject\Monster\SwordMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="AxeMonster.cpp">
+      <Filter>Engine\GameObject\Monster\AxeMonster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

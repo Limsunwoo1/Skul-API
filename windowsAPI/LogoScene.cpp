@@ -48,6 +48,7 @@ namespace sw
 		AddGameObject(bg, eColliderLayer::BackGround);
 		AddGameObject(Logo, eColliderLayer::BackGround);
 		AddGameObject(presseKey, eColliderLayer::BackGround);
+
 	}
 
 	void LogoScene::Tick()
@@ -78,6 +79,7 @@ namespace sw
 	}
 	void LogoScene::Enter()
 	{
-		
+		Camera::GetInstance()->SetTarget(nullptr);
+		Camera::GetInstance()->SetLookPosition(Vector2(1600.f, 900.f));
 	}
 }

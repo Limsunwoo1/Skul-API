@@ -11,7 +11,9 @@
 #include "SceneManager.h"
 #include "CollisionManager.h"
 #include "Sword_Monster.h"
+#include "AxeMonster.h"
 #include "Collider.h"
+#include "Camera.h"
 #include <iostream>
 namespace sw
 {
@@ -38,25 +40,31 @@ namespace sw
 		//SwordSkul* swordSkul = new SwordSkul();
 		//BasicSkul* basicskul = new BasicSkul();
 		MainPlayer* player = new MainPlayer();
-
+		mplayer = player;
 		SwordMonster* monster1 = new SwordMonster();
-		monster1->SetPos(Vector2(10.f, 300.f));
-		monster1->SetScale(Vector2(4.f, 4.f));
+		monster1->SetPos(Vector2(1500.f, 126.f));
 		monster1->SetDirction(false);
 
 		SwordMonster* monster2 = new SwordMonster();
-		monster2->SetPos(Vector2(300.f, 300.f));
-		monster2->SetScale(Vector2(4.f,4.f));
+		monster2->SetPos(Vector2(1000.f, 253.f));
 
 		SwordMonster* monster3 = new SwordMonster();
-		monster3->SetPos(Vector2(500.f, 500.f));
-		monster3->SetScale(Vector2(4.f, 4.f));
+		monster3->SetPos(Vector2(500.f, 253.f));
+
+		AxeMonster* monster4 = new AxeMonster();
+		monster4->SetPos(Vector2(1800.f, 253.f));
+
+		AxeMonster* monster5 = new AxeMonster();
+		monster5->SetPos(Vector2(3000.f, 253.f));
+		monster5->SetDirction(false);
 
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(player,eColliderLayer::Player);
 		AddGameObject(monster1, eColliderLayer::Monster);
 		AddGameObject(monster2, eColliderLayer::Monster);
 		AddGameObject(monster3, eColliderLayer::Monster);
+		AddGameObject(monster4, eColliderLayer::Monster);
+		AddGameObject(monster5, eColliderLayer::Monster);
 
 		/*AttackCollider* R_attack1 = new AttackCollider(swordSkul);
 		R_attack1->SetScale(Vector2(80.f, 80.f));
@@ -111,13 +119,15 @@ namespace sw
 
 	void PlayScene::Enter()
 	{
-		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\TestTile");
+		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\2Stage_1");
 
 		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjectTile, eColliderLayer::Monster);
+
+		Camera::GetInstance()->SetTarget(mplayer);
 	}
 
 	void PlayScene::Exit()

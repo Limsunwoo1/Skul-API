@@ -13,6 +13,7 @@
 #include "Switch.h"
 #include "Application.h"
 #include "Shadow.h"
+#include <iostream>
 
 namespace sw
 {
@@ -51,14 +52,11 @@ namespace sw
 		if (mParentObject == nullptr)
 			return;
 
-		GameObject::Tick();
 		mState->Tick();
+		GameObject::Tick();
 
 		if (mShaow)
 			mShaow->Tick();
-
-		Vector2 pos = GetPos();
-		mParentObject->SetPos(pos);
 	}
 	void SwordSkul::Render(HDC hdc)
 	{
@@ -67,7 +65,6 @@ namespace sw
 
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
-
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
 		if (mShaow)

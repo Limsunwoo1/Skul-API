@@ -3,14 +3,16 @@
 
 namespace sw
 {
-	class SwordMonster : public MonsterBase
+	class AxeMonster : public MonsterBase
 	{
 	public:
-		SwordMonster();
-		~SwordMonster();
+		AxeMonster();
+		~AxeMonster();
 
 		virtual void InitializeAnimation() override;
 		virtual void InitializeBox() override;
 		virtual void InitalizeCollider() override;
+
+		virtual void Hit() override;
 	};
 }

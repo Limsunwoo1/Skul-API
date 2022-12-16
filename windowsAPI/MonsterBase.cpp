@@ -232,9 +232,9 @@ namespace sw
 		if (mState[(int)eMonsterState::HIT] == false)
 		{
 			if (mDirction)
-				mAnimator->Play(RName + L"Hit", true);
+				mAnimator->Play(RName + L"Hit");
 			else
-				mAnimator->Play(LName + L"Hit", true);
+				mAnimator->Play(LName + L"Hit");
 
 			Rigidbody* rigidbody = this->GetComponent<Rigidbody>();
 
@@ -346,21 +346,9 @@ namespace sw
 			Vector2 objPos = object->GetPos();
 			Vector2 objScale = object->GetScale();
 			if (CPos.x > objPos.x + (objScale.x * 0.5f))
-			{
-				if (mTarget == nullptr)
-				{
-					if (mDirction)
-						mDirction = false;
-					
-				}
 				CPos.x = objPos.x + (objScale.x * 0.5f);
-			}
 			if (CPos.x < objPos.x - (objScale.x * 0.5f))
-			{
-				if (!mDirction)
-					mDirction = true;
 				CPos.x = objPos.x - (objScale.x * 0.5f);
-			}
 
 			SetPos(CPos);
 		}

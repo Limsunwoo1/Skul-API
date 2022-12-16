@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 namespace sw
 {
 	class Shadow;
@@ -10,6 +11,8 @@ namespace sw
 	class Animator;
 	class Image;
 	class EffectObject;
+	class ProjectObject;
+
 	class PlayerBase : public GameObject
 	{
 	public:
@@ -27,11 +30,11 @@ namespace sw
 		virtual void InitState() = 0;
 		virtual void InitAttackCollider() = 0;
 
-		virtual void SwitchSkill();
-		virtual void DashEffect();
-		virtual void OnAttackEffect(GameObject* other);
+		virtual void SwitchSkill(){};
+		virtual void DashEffect(){};
+		virtual void OnAttackEffect(GameObject* other){};
 
-		void ShadowEffect();
+		void ShadowEffect(){};
 
 		void SetState(ePlayerState type);
 		StateHandle* GetStateHandle() { return mState; }
@@ -51,14 +54,14 @@ namespace sw
 		const Box& GetColliders(wstring key) const;
 
 		void SetColliderBox(Box box) { mColliderBox = box; }
-	private:
-		void CompleteEvent();
 
+		virtual void SwitchProject(GameObject* other){};
 	protected:
 		StateHandle* mState;
 		Image* mImage;
 		Animator* mAnimator;
 		EffectObject* mEffect;
+		ProjectObject* mSwitchProject;
 
 		vector<pair<wstring, Box>> mColliders;
 		GameObject* mParentObject;

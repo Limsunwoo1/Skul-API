@@ -37,6 +37,7 @@ namespace sw
 			if (FAILED(resource->Load(path)))
 			{
 				MessageBox(nullptr, L"image Load Failed!!", L"Error", MB_OK);
+				delete resource;
 				return nullptr;
 			}
 

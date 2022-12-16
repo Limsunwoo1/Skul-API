@@ -8,6 +8,7 @@
 #include "ToolScene.h"
 #include "TilePalette.h"
 #include "Image.h"
+#include "MemoryAllocator.h"
 
 #ifdef UNICODE
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
@@ -39,7 +40,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 메모리 누수를 체크해주는 함수
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(6479);
+    //_CrtSetBreakAlloc(7868);
 
     // 1. wndclass 정의 윈도우의 기반(여러가지 속성)이되는 클래스를 정의해준다.
     // 
@@ -103,6 +104,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             // 게임 실행
             sw::Application::GetInstance().Tick();
+            DestoryMemoryAllocator();
         }
     }
 

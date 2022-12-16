@@ -41,7 +41,7 @@ namespace sw
 		virtual void Hit();
 		virtual void Staring();
 
-		virtual void Branch();
+		void Branch();
 
 		void SetState(eMonsterState type) { mCurState = type; }
 		eMonsterState GetState() { return mCurState; }

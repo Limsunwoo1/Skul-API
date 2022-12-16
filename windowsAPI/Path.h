@@ -13,3 +13,6 @@
 // 도끼 몬스터
 #define AXEMONSTER_R_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\R_AxeMonster\\%s", path)
 #define AXEMONSTER_L_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\L_AxeMonster\\%s", path)
+// 메이드 몬스터 1
+#define MAIDMONSTER_1_R_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\R_Maid_1\\%s", path)
+#define MAIDMONSTER_1_L_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\L_Maid_1\\%s", path)

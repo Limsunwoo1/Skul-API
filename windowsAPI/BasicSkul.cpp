@@ -23,6 +23,7 @@
 #include "Attack.h"
 #include "Drop.h"
 #include "Switch.h"
+#include "ProjectObject.h"
 
 #include <iostream>
 
@@ -96,7 +97,6 @@ namespace sw
 
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
-		std::cout << pos.x << "  " << pos.y << endl;
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
 		if (mShaow)
@@ -250,6 +250,9 @@ namespace sw
 		scale = Vector2(100.f, 80.f);
 		offset = Vector2(-75.f, -25.f);
 		SetColliders(L"L_Basic_AttackB", Box{ scale ,offset });
+
+		mSwitchProject = new ProjectObject();
+		mSwitchProject->SetEvent(std::bind(&BasicSkul::SwitchProject, this, std::placeholders::_1));
 	}
 
 	void BasicSkul::SwitchSkill()
@@ -261,6 +264,17 @@ namespace sw
 			rigidbody->AddForce(Vector2(200.f, 0.f));
 		else
 			rigidbody->AddForce(Vector2(-200.f, 0.f));
+	}
+
+	void BasicSkul::SwitchProject(GameObject* object)
+	{
+		Rigidbody* rgid = object->GetComponent<Rigidbody>();
+
+		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
+		if (dirction)
+			rgid->AddForce(Vector2(500.f, 0.0f));
+		else
+			rgid->AddForce(Vector2(-500.f, 0.0f));
 	}
 
 	void BasicSkul::DashEffect()

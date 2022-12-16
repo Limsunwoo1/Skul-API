@@ -168,6 +168,18 @@
     <Filter Include="Engine\GameObject\Monster\AxeMonster">
       <UniqueIdentifier>{62e439fa-d5e3-4bb2-88d6-c3e310cfc7fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Commne\Log">
+      <UniqueIdentifier>{792198ad-d5a2-4a4f-9d07-c5abdfcdcba7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Commne\Log\Debug">
+      <UniqueIdentifier>{b7e8c320-4f93-4c61-859e-cf6f1b05b89d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Monster\MaidMonster_1">
+      <UniqueIdentifier>{ee52f652-7ee1-482e-a761-1caac8193596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\MainPlayer\Player\ProjectObject">
+      <UniqueIdentifier>{6be4f72f-4a77-4cef-9986-6e8b16306ee6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -353,14 +365,41 @@
     <ClInclude Include="Sword_Monster.h">
       <Filter>Engine\GameObject\Monster\SwordMonster</Filter>
     </ClInclude>
-    <ClInclude Include="UtilString.h">
-      <Filter>Engine\Commne</Filter>
-    </ClInclude>
     <ClInclude Include="Path.h">
       <Filter>Engine\Commne</Filter>
     </ClInclude>
     <ClInclude Include="AxeMonster.h">
       <Filter>Engine\GameObject\Monster\AxeMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilString.h">
+      <Filter>Engine\Commne\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilLog.h">
+      <Filter>Engine\Commne\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler.h">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Loger.h">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryTracer.h">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryAllocator.h">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="CallStackTracer.h">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Typedef.h">
+      <Filter>Engine\Commne\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="MaidMonster_1.h">
+      <Filter>Engine\GameObject\Monster\MaidMonster_1</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObject.h">
+      <Filter>Engine\GameObject\MainPlayer\Player\ProjectObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -531,6 +570,27 @@
     </ClCompile>
     <ClCompile Include="AxeMonster.cpp">
       <Filter>Engine\GameObject\Monster\AxeMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler.cpp">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Loger.cpp">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="CallStackTracer.cpp">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryAllocator.cpp">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryTracer.cpp">
+      <Filter>Engine\Commne\Log\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="MaidMonster_1.cpp">
+      <Filter>Engine\GameObject\Monster\MaidMonster_1</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObject.cpp">
+      <Filter>Engine\GameObject\MainPlayer\Player\ProjectObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

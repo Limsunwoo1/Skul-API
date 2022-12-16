@@ -8,6 +8,10 @@
 #include "CollisionManager.h"
 #include "Camera.h"
 #include "UIManager.h"
+#include "MemoryAllocator.h"
+#include "MemoryTracer.h"
+#include "CrashHandler.h"
+#include "Loger.h"
 
 namespace sw
 {
@@ -26,6 +30,17 @@ namespace sw
 
 	void Application::Initialize(WindowData data)
 	{
+		// 디버그용 클래스 초기화 구간
+#ifdef USE_LOGER
+		CLoger::GetInstance()->Init();
+#endif
+#ifdef USE_CRASH_HANDLER
+		NotTraceAllocate([]() {
+			CCrashHandler::GetInstance()->Init();
+			});
+#endif
+		//
+
 		Application::initialize(data);
 
 		Time::GetInstance()->Initialize();
@@ -178,5 +193,8 @@ namespace sw
 		EventManager::GetInstance()->DistroyInstance();
 		CollisionManager::GetInstance()->DistroyInstance();
 		Camera::GetInstance()->DistroyInstance();
+
+		// 디버거 소멸
+		CLoger::GetInstance()->DistroyInstance();
 	}
 }

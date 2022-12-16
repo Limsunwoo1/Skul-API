@@ -21,12 +21,13 @@ namespace sw
 		{
 			delete iter.second;
 		}
-
+		mAnimations.clear();
 		//std::map<std::wstring, Events*> mEvents;
 		for (auto iter : mEvents)
 		{
 			delete iter.second;
 		}
+		mEvents.clear();
 	}
 
 	void Animator::Tick()

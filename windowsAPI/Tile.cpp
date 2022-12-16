@@ -54,12 +54,13 @@ namespace sw
 		bf.BlendOp = AC_SRC_OVER;
 		bf.SourceConstantAlpha = 255;
 
-		AlphaBlend(hdc, renderPos.x - ((TILE_SIZE * TILE_SCALE) * 0.5f), renderPos.y - ((TILE_SIZE * TILE_SCALE) * 0.5f),
+		TransparentBlt(hdc, renderPos.x - ((TILE_SIZE * TILE_SCALE) * 0.5f), renderPos.y - ((TILE_SIZE * TILE_SCALE) * 0.5f),
 			TILE_SIZE * TILE_SCALE, TILE_SIZE * TILE_SCALE
 			, mAtlas->GetDC()
 			, tileImagX, tileImagY
 			, TILE_SIZE, TILE_SIZE
-			, bf);
+			, RGB(255, 0, 255));
+
 		
 
 		GameObject::Render(hdc);

@@ -15,11 +15,19 @@
 #include "Collider.h"
 #include "Camera.h"
 #include <iostream>
+#include "UtilLog.h"
+#include "MaidMonster_1.h"
+
 namespace sw
 {
 	PlayScene::PlayScene()
 	{
-
+		LOG_TODO("로그 예시 코드 확인했으면 지워도 무방");
+		LOG("일반 로그 테스트");
+		WARN_LOG("경고 로그 테스트");
+		ERROR_LOG("에러 로그 테스트");
+		ETC1_LOG("커스텀 로그 테스트");
+		LOG(STRING("문자열 포매팅 테스트 : %d !!!", 30));
 	}
 
 	PlayScene::~PlayScene()
@@ -32,8 +40,8 @@ namespace sw
 		BackGround* bg = new BackGround();
 		bg->SetImage(L"Back", L"BackGround.bmp");
 		bg->Initialize();
-		bg->SetPos(Vector2(1600.f, 900.f));
-		bg->SetScale(Vector2(3600.f, 1800.f));
+		bg->SetPos(Vector2(4000, 100.f));
+		bg->SetScale(Vector2(8000.f, 1800.f));
 
 
 
@@ -42,29 +50,33 @@ namespace sw
 		MainPlayer* player = new MainPlayer();
 		mplayer = player;
 		SwordMonster* monster1 = new SwordMonster();
-		monster1->SetPos(Vector2(1500.f, 126.f));
+		monster1->SetPos(Vector2(1500.f, 100.f));
 		monster1->SetDirction(false);
 
 		SwordMonster* monster2 = new SwordMonster();
-		monster2->SetPos(Vector2(1000.f, 253.f));
+		monster2->SetPos(Vector2(1000.f, 100.f));
 
 		SwordMonster* monster3 = new SwordMonster();
-		monster3->SetPos(Vector2(500.f, 253.f));
+		monster3->SetPos(Vector2(500.f, 100.f));
 
 		AxeMonster* monster4 = new AxeMonster();
-		monster4->SetPos(Vector2(1800.f, 253.f));
+		monster4->SetPos(Vector2(1800.f, 100.f));
 
 		AxeMonster* monster5 = new AxeMonster();
-		monster5->SetPos(Vector2(3000.f, 253.f));
+		monster5->SetPos(Vector2(3000.f, 100.f));
 		monster5->SetDirction(false);
+
+		MaidMonster_1* monster6 = new MaidMonster_1();
+		monster6->SetPos(Vector2(2500.f, 300));
 
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(player,eColliderLayer::Player);
+		AddGameObject(monster4, eColliderLayer::Monster);
+		AddGameObject(monster5, eColliderLayer::Monster);
 		AddGameObject(monster1, eColliderLayer::Monster);
 		AddGameObject(monster2, eColliderLayer::Monster);
 		AddGameObject(monster3, eColliderLayer::Monster);
-		AddGameObject(monster4, eColliderLayer::Monster);
-		AddGameObject(monster5, eColliderLayer::Monster);
+		AddGameObject(monster6, eColliderLayer::Monster);
 
 		/*AttackCollider* R_attack1 = new AttackCollider(swordSkul);
 		R_attack1->SetScale(Vector2(80.f, 80.f));
@@ -119,7 +131,7 @@ namespace sw
 
 	void PlayScene::Enter()
 	{
-		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\2Stage_1");
+		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\Stage_1");
 
 		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/

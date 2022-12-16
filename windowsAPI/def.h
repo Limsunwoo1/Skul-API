@@ -28,6 +28,15 @@ private:									\
 #define KEY_DOWN(KEY) sw::Input::GetInstance()->GetkeyState(KEY) == sw::eKeyState::DOWN
 #define KEY_UP(KEY) sw::Input::GetInstance()->GetkeyState(KEY) == sw:: eKeyState::UP
 
+#ifdef _DEBUG						// 디버그 모드에서 사용할지 여부
+//#	define USE_MEMORY_TRACE
+#	define USE_LOGER
+#else								// 릴리즈 모드에서 사용할지 여부
+#	define USE_MEMORY_TRACE
+//#	define USE_LOGER
+#	define USE_CRASH_HANDLER		// 크래시 핸들러는 디버깅 모드에서는 동작안한다.
+#endif
+
 enum class eSceneType
 {
 	Logo,

@@ -38,7 +38,7 @@ namespace sw
 		mScenes[(UINT)eSceneType::End]->Initialize();
 
 
-		ChangeScene(eSceneType::Logo);
+		ChangeScene(eSceneType::Play);
 		// 자식 > 부모 (업캐스팅)
 		//mPlayScene = mScenes[(UINT)eSceneType::Tool];
 		

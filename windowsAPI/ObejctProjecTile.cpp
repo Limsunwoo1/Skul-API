@@ -1,10 +1,11 @@
-#include "ProjectObject.h"
+#include "ObejctProjecTile.h"
 #include "Animator.h"
 #include "Collider.h"
 #include "Time.h"
+#include "UtilLog.h"
 namespace sw
 {
-	ProjectObject::ProjectObject()
+	ObejctProjecTile::ObejctProjecTile()
 		: GameObject()
 		, mTarget(nullptr)
 		, mDelta(0.0f)
@@ -14,28 +15,34 @@ namespace sw
 		SetDeath(true);
 		Initialize();
 	}
-	ProjectObject::~ProjectObject()
+	ObejctProjecTile::~ObejctProjecTile()
 	{
 	}
 
-	void ProjectObject::Tick()
+	void ObejctProjecTile::Tick()
 	{
 		if (IsDeath())
 			return;
 
+		if (mTarget)
+			SetPos(mTarget->GetPos());
+
 		if (mAble)
-			mDelta = Time::GetInstance()->DeltaTime();
+			mDelta += Time::GetInstance()->DeltaTime();
 
 		GameObject::Tick();
 	}
-	void ProjectObject::Render(HDC hdc)
+	void ObejctProjecTile::Render(HDC hdc)
 	{
 		if (IsDeath())
 			return;
 
+		if (mTarget)
+			SetPos(mTarget->GetPos());
+
 		GameObject::Render(hdc);
 	}
-	void ProjectObject::Initialize()
+	void ObejctProjecTile::Initialize()
 	{
 		mAnimator = AddComponent<Animator>();
 		mAnimator->SetOwner(this);
@@ -43,7 +50,7 @@ namespace sw
 		Collider* collider = AddComponent<Collider>();
 		collider->SetOwner(this);
 	}
-	void ProjectObject::OnCollisionEnter(Collider* other)
+	void ObejctProjecTile::OnCollisionEnter(Collider* other)
 	{
 		if (mAble)
 			return;
@@ -51,27 +58,35 @@ namespace sw
 		mAble = true;
 
 		GameObject* object = other->GetOwner();
-		if(Event)
+		if (Event)
+		{
+			LOG("프로젝타일 충돌엔터");
 			Event(object);
+		}
 		// hp감소
 	}
-	void ProjectObject::OnCollisionStay(Collider* other)
+	void ObejctProjecTile::OnCollisionStay(Collider* other)
 	{
+		LOG(STRING("델타 %f", mDelta));
 		if (mDelta > mReuse_Time)
 		{
 			GameObject* object = other->GetOwner();
-			if(Event)
+			if (Event)
+			{
+				LOG("프로젝타일 충돌스테이");
 				Event(object);
+			}
 			// hp감소
 			mDelta = 0.0f;
 		}
 	}
-	void ProjectObject::OnCollisionExit(Collider* other)
+	void ObejctProjecTile::OnCollisionExit(Collider* other)
 	{
+		LOG("프로젝타일 충돌엔드");
 		mAble = false;
 		mDelta = 0.0f;
 	}
-	void ProjectObject::SetEvent(const TColliderEvent& event)
+	void ObejctProjecTile::SetEvent(const TColliderEvent& event)
 	{
 		Event = event;
 	}

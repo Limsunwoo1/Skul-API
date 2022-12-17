@@ -177,7 +177,10 @@
     <Filter Include="Engine\GameObject\Monster\MaidMonster_1">
       <UniqueIdentifier>{ee52f652-7ee1-482e-a761-1caac8193596}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObject\MainPlayer\Player\ProjectObject">
+    <Filter Include="Engine\Manager\ObjectManager">
+      <UniqueIdentifier>{3b537418-2b1b-4ff3-a98b-c1510ed0b1dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\ProjectObject">
       <UniqueIdentifier>{6be4f72f-4a77-4cef-9986-6e8b16306ee6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -398,8 +401,11 @@
     <ClInclude Include="MaidMonster_1.h">
       <Filter>Engine\GameObject\Monster\MaidMonster_1</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectObject.h">
-      <Filter>Engine\GameObject\MainPlayer\Player\ProjectObject</Filter>
+    <ClInclude Include="ObejctProjecTile.h">
+      <Filter>Engine\GameObject\ProjectObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Engine\Manager\ObjectManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -589,8 +595,11 @@
     <ClCompile Include="MaidMonster_1.cpp">
       <Filter>Engine\GameObject\Monster\MaidMonster_1</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectObject.cpp">
-      <Filter>Engine\GameObject\MainPlayer\Player\ProjectObject</Filter>
+    <ClCompile Include="ObejctProjecTile.cpp">
+      <Filter>Engine\GameObject\ProjectObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Engine\Manager\ObjectManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

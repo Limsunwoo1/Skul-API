@@ -12,6 +12,7 @@
 #include "MemoryTracer.h"
 #include "CrashHandler.h"
 #include "Loger.h"
+#include "ObjectManager.h"
 
 namespace sw
 {
@@ -45,6 +46,7 @@ namespace sw
 
 		Time::GetInstance()->Initialize();
 		Input::GetInstance()->Initialize();
+		ObjectManager::GetInstance()->Initialize();
 		SceneManager::GetInstance()->Initalize();
 		UIManager::GetInstance()->Initialize();
 		Camera::GetInstance()->Initialize();
@@ -181,18 +183,20 @@ namespace sw
 	void Application::Distroyer()
 	{
 		// 매니저 클래스 인스턴스 해제
+		ObjectManager::GetInstance()->Release();
 		SceneManager::GetInstance()->Release();
 		ResourceManager::GetInstance()->Release();
 
 
-		SceneManager::GetInstance()->DistroyInstance();
-		UIManager::GetInstance()->DistroyInstance();
-		ResourceManager::GetInstance()->DistroyInstance();
-		Time::GetInstance()->DistroyInstance();
-		Input::GetInstance()->DistroyInstance();
-		EventManager::GetInstance()->DistroyInstance();
-		CollisionManager::GetInstance()->DistroyInstance();
-		Camera::GetInstance()->DistroyInstance();
+		ObjectManager::GetInstance()->DestroyInstance();
+		SceneManager::GetInstance()->DestroyInstance();
+		UIManager::GetInstance()->DestroyInstance();
+		ResourceManager::GetInstance()->DestroyInstance();
+		Time::GetInstance()->DestroyInstance();
+		Input::GetInstance()->DestroyInstance();
+		EventManager::GetInstance()->DestroyInstance();
+		CollisionManager::GetInstance()->DestroyInstance();
+		Camera::GetInstance()->DestroyInstance();
 
 		// 디버거 소멸
 		CLoger::GetInstance()->DistroyInstance();

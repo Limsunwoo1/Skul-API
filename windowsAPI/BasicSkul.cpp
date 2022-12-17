@@ -23,7 +23,7 @@
 #include "Attack.h"
 #include "Drop.h"
 #include "Switch.h"
-#include "ProjectObject.h"
+#include "ObejctProjecTile.h"
 
 #include <iostream>
 
@@ -70,13 +70,6 @@ namespace sw
 	void BasicSkul::Tick()
 	{
 		// 코드 개선 해야함
-		static int a = 0;
-		if (a == 0)
-		{
-			SceneManager::GetInstance()->GetPlayScene()->AddGameObject(mEffect, eColliderLayer::EFFECT);
-			a++;
-		}
-
 		if (mParentObject == nullptr)
 			return;
 
@@ -251,8 +244,11 @@ namespace sw
 		offset = Vector2(-75.f, -25.f);
 		SetColliders(L"L_Basic_AttackB", Box{ scale ,offset });
 
-		mSwitchProject = new ProjectObject();
+		mSwitchProject = new ObejctProjecTile();
 		mSwitchProject->SetEvent(std::bind(&BasicSkul::SwitchProject, this, std::placeholders::_1));
+		mSwitchProject->SetTarget(this);
+		Collider* collider = mSwitchProject->GetComponent<Collider>();
+		collider->SetScale(Vector2(110.f, 80.f));
 	}
 
 	void BasicSkul::SwitchSkill()
@@ -272,9 +268,9 @@ namespace sw
 
 		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		if (dirction)
-			rgid->AddForce(Vector2(500.f, 0.0f));
+			rgid->AddForce(Vector2(1400.f, 0.0f));
 		else
-			rgid->AddForce(Vector2(-500.f, 0.0f));
+			rgid->AddForce(Vector2(-1400.f, 0.0f));
 	}
 
 	void BasicSkul::DashEffect()

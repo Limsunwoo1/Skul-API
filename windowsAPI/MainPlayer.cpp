@@ -27,6 +27,7 @@ namespace sw
 	{
 		DeleteComponent<Collider>();
 		DeleteComponent<Rigidbody>();
+
 		if(mCurPlayer)
 			delete mCurPlayer;
 		if (mNextPlayer)

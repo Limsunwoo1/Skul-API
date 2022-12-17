@@ -13,7 +13,7 @@ public:										\
 		return mInstance;					\
 	}										\
 											\
-	static void DistroyInstance()			\
+	static void DestroyInstance()			\
 	{										\
 	if (GetInstance())						\
 		delete GetInstance();				\

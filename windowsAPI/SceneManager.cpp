@@ -80,6 +80,15 @@ namespace sw
 		mPlayScene = mScenes[(UINT)type];
 		mPlayScene->Enter();
 	}
+	eSceneType SceneManager::GetPlayeSceneType()
+	{
+		for (int i = (int)eSceneType::Logo; i < (int)eSceneType::End; ++i)
+		{
+			if (mPlayScene == mScenes[i])
+				return (eSceneType)i;
+		}
+		return eSceneType::End;
+	}
 	void SceneManager::LoadTileMap(const std::wstring& path)
 	{
 		ToolScene* tool = dynamic_cast<ToolScene*>(mScenes[(UINT)eSceneType::Tool]);

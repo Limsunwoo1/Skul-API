@@ -11,7 +11,7 @@ namespace sw
 	class Animator;
 	class Image;
 	class EffectObject;
-	class ProjectObject;
+	class ObejctProjecTile;
 
 	class PlayerBase : public GameObject
 	{
@@ -55,13 +55,16 @@ namespace sw
 
 		void SetColliderBox(Box box) { mColliderBox = box; }
 
+		EffectObject* GetEffect() { return mEffect; }
+		ObejctProjecTile* GetProjecTile() { return mSwitchProject; }
+
 		virtual void SwitchProject(GameObject* other){};
 	protected:
 		StateHandle* mState;
 		Image* mImage;
 		Animator* mAnimator;
 		EffectObject* mEffect;
-		ProjectObject* mSwitchProject;
+		ObejctProjecTile* mSwitchProject;
 
 		vector<pair<wstring, Box>> mColliders;
 		GameObject* mParentObject;

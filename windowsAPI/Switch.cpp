@@ -3,6 +3,7 @@
 #include "Animator.h"
 #include "Move.h"
 #include "StateHandle.h"
+#include "ObejctProjecTile.h"
 
 namespace sw
 {
@@ -23,6 +24,9 @@ namespace sw
 
 		// 방향설정
 		PlayerBase* player = GetTarget();
+		if(player->GetProjecTile() != nullptr)
+			player->GetProjecTile()->SetDeath(false);
+
 		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
 
@@ -38,11 +42,17 @@ namespace sw
 		GetTarget()->SwitchSkill();
 
 		if (animator->isComplete())
+		{
+			End();
 			GetTarget()->SetState(ePlayerState::IDLE);
+		}
 	}
 
 	void Switch::End()
 	{
+		PlayerBase* player = GetTarget();
+		if (player->GetProjecTile() != nullptr)
+			player->GetProjecTile()->SetDeath(true);
 		mSwitch = false;
 	}
 }

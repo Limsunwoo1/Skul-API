@@ -20,6 +20,7 @@ namespace sw
 
 		Scene* GetPlayScene() { return mPlayScene; }
 		Scene* GetScene(eSceneType type) { return mScenes[(UINT)type]; }
+		eSceneType GetPlayeSceneType();
 		bool CheckCurScen(eSceneType type) { if (mPlayScene == mScenes[(int)type]) return true; return false; }
 		void LoadTileMap(const std::wstring& path);
 	private:

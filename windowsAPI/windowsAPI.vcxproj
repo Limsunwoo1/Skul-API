@@ -189,11 +189,12 @@
     <ClInclude Include="MonsterBase.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Jump.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="ProjectObject.h" />
+    <ClInclude Include="ObejctProjecTile.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Move.h" />
@@ -260,10 +261,11 @@
     <ClCompile Include="MemoryAllocator.cpp" />
     <ClCompile Include="MemoryTracer.cpp" />
     <ClCompile Include="MonsterBase.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="ProjectObject.cpp" />
+    <ClCompile Include="ObejctProjecTile.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="Rigidbody.cpp" />

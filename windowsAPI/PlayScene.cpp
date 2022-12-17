@@ -17,6 +17,7 @@
 #include <iostream>
 #include "UtilLog.h"
 #include "MaidMonster_1.h"
+#include "ObjectManager.h"
 
 namespace sw
 {
@@ -47,8 +48,7 @@ namespace sw
 
 		//SwordSkul* swordSkul = new SwordSkul();
 		//BasicSkul* basicskul = new BasicSkul();
-		MainPlayer* player = new MainPlayer();
-		mplayer = player;
+
 		SwordMonster* monster1 = new SwordMonster();
 		monster1->SetPos(Vector2(1500.f, 100.f));
 		monster1->SetDirction(false);
@@ -70,7 +70,6 @@ namespace sw
 		monster6->SetPos(Vector2(2500.f, 300));
 
 		AddGameObject(bg,eColliderLayer::BackGround);
-		AddGameObject(player,eColliderLayer::Player);
 		AddGameObject(monster4, eColliderLayer::Monster);
 		AddGameObject(monster5, eColliderLayer::Monster);
 		AddGameObject(monster1, eColliderLayer::Monster);
@@ -139,11 +138,13 @@ namespace sw
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjectTile, eColliderLayer::Monster);
 
-		Camera::GetInstance()->SetTarget(mplayer);
+		ObjectManager::GetInstance()->AddObject(eSceneType::Play);
+		Camera::GetInstance()->SetTarget(ObjectManager::GetInstance()->GetPlayer());
 	}
 
 	void PlayScene::Exit()
 	{
-
+		ObjectManager::GetInstance()->AddObject(eSceneType::Play);
+		Camera::GetInstance()->SetTarget(nullptr);
 	}
 }

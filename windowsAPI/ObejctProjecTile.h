@@ -5,11 +5,11 @@ namespace sw
 {
 	class Animator;
 	typedef std::function<void(GameObject* object)> TColliderEvent;
-	class ProjectObject : public GameObject
+	class ObejctProjecTile : public GameObject
 	{
 	public:
-		ProjectObject();
-		~ProjectObject();
+		ObejctProjecTile();
+		~ObejctProjecTile();
 
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;

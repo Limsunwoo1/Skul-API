@@ -18,7 +18,6 @@ namespace sw
 		virtual void Exit();
 
 	private:
-		MainPlayer* mplayer;
 
 	};
 }

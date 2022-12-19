@@ -45,8 +45,8 @@ namespace sw
 
 	void SwordMonster::InitializeBox()
 	{
-		mStaring.BoxOffset = Vector2(0.0f, -30.f);
-		mStaring.BoxScale = Vector2(400.f, 50.f);
+		mStaringCollider.BoxOffset = Vector2(0.0f, -30.f);
+		mStaringCollider.BoxScale = Vector2(400.f, 50.f);
 
 		mAttackcollider.BoxOffset = Vector2(0.0f, -30.f);
 		mAttackcollider.BoxScale = Vector2(70.f, 70.f);

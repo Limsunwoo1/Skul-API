@@ -43,8 +43,8 @@ namespace sw
 
 	void AxeMonster::InitializeBox()
 	{
-		mStaring.BoxOffset = Vector2(0.0f, -30.f);
-		mStaring.BoxScale = Vector2(400.f, 200.f);
+		mStaringCollider.BoxOffset = Vector2(0.0f, -30.f);
+		mStaringCollider.BoxScale = Vector2(400.f, 200.f);
 
 		mAttackcollider.BoxOffset = Vector2(0.0f, -30.f);
 		mAttackcollider.BoxScale = Vector2(200.f, 200.f);

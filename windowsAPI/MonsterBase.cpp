@@ -13,6 +13,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Application.h"
+#include "ResourceManager.h"
 
 namespace sw
 {
@@ -29,6 +30,7 @@ namespace sw
 		, mAttackX(0)
 		, mAttackY(0)
 		, mArmer(false)
+		, mStaring(false)
 
 	{
 		for (int i = 0; i < (int)eMonsterState::END; ++i)
@@ -43,6 +45,8 @@ namespace sw
 
 		mDelta = 3.0f;
 		mMaxDelta = 3.0f;
+
+		mImage = ResourceManager::GetInstance()->Load<Image>(L"StraingMark", L"..\\Resource\\Image\\Exclamation mark.bmp");
 	}
 	MonsterBase::~MonsterBase()
 	{
@@ -64,8 +68,8 @@ namespace sw
 
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
-		pos = pos + mStaring.BoxOffset;
-		Vector2 boxscale = mStaring.BoxScale;
+		pos = pos + mStaringCollider.BoxOffset;
+		Vector2 boxscale = mStaringCollider.BoxScale;
 
 		HPEN oldpen = (HPEN)SelectObject(hdc, Application::GetInstance().GetPen(ePenColor::Blue));
 		HBRUSH oldbrush = (HBRUSH)SelectObject(hdc, Application::GetInstance().GetBrush(eBrushColor::Transparent));
@@ -81,6 +85,17 @@ namespace sw
 		SelectObject(hdc, oldbrush);
 
 		GameObject::Render(hdc);
+
+		if (mStaring)
+		{
+			Collider* collider = GetComponent<Collider>();
+			TransparentBlt(hdc, pos.x, pos.y - (collider->GetScale().y * 0.5f) - 20.f
+				, 40.f, 40.f
+				, mImage->GetDC()
+				, 0.0f, 0.0f
+				, mImage->GetWidth(), mImage->GetHeight()
+				, RGB(255, 0, 255));
+		}
 	}
 	void MonsterBase::IDLE()
 	{
@@ -259,7 +274,7 @@ namespace sw
 		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
 		std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Player);
 		Vector2 pos = GetPos();
-		pos = pos + mStaring.BoxOffset;
+		pos = pos + mStaringCollider.BoxOffset;
 
 		for (GameObject* object : objects)
 		{
@@ -270,16 +285,17 @@ namespace sw
 			if (mDirction)
 			{
 				temp = CollisionManager::GetInstance()->
-					MomentCollsion(Box{ mStaring.BoxScale, pos }, object);
+					MomentCollsion(Box{ mStaringCollider.BoxScale, pos }, object);
 			}
 			else
 			{
 				temp = CollisionManager::GetInstance()->
-					MomentCollsion(Box{ mStaring.BoxScale, pos }, object, false);
+					MomentCollsion(Box{ mStaringCollider.BoxScale, pos }, object, false);
 			}
 
 			if (temp)
 			{
+				mStaring = true;
 				mTarget = object;
 				break;
 			}

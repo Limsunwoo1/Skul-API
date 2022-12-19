@@ -71,7 +71,7 @@ namespace sw
 		float mMaxDelta;
 
 		Box mAttackcollider;
-		Box mStaring;
+		Box mStaringCollider;
 
 		std::wstring RName;
 		std::wstring LName;
@@ -79,6 +79,7 @@ namespace sw
 		bool mState[(int)eMonsterState::END];
 		bool mDirction;
 		bool mArmer;
+		bool mStaring;
 
 		UINT32 mAttackX;
 		UINT32 mAttackY;

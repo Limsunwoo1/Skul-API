@@ -50,24 +50,24 @@ namespace sw
 		//BasicSkul* basicskul = new BasicSkul();
 
 		SwordMonster* monster1 = new SwordMonster();
-		monster1->SetPos(Vector2(1500.f, 100.f));
+		monster1->SetPos(Vector2(1665.f, 253.f));
 		monster1->SetDirction(false);
 
 		SwordMonster* monster2 = new SwordMonster();
-		monster2->SetPos(Vector2(1000.f, 100.f));
+		monster2->SetPos(Vector2(2300.f, 441.f));
 
 		SwordMonster* monster3 = new SwordMonster();
-		monster3->SetPos(Vector2(500.f, 100.f));
+		monster3->SetPos(Vector2(3600.f, 441.f));
 
 		AxeMonster* monster4 = new AxeMonster();
-		monster4->SetPos(Vector2(1800.f, 100.f));
+		monster4->SetPos(Vector2(4000.f, 441.f));
 
 		AxeMonster* monster5 = new AxeMonster();
-		monster5->SetPos(Vector2(3000.f, 100.f));
+		monster5->SetPos(Vector2(5200.f, 383.f));
 		monster5->SetDirction(false);
 
 		MaidMonster_1* monster6 = new MaidMonster_1();
-		monster6->SetPos(Vector2(2500.f, 300));
+		monster6->SetPos(Vector2(5400.f, 383));
 
 		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(monster4, eColliderLayer::Monster);

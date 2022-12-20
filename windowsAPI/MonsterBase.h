@@ -14,6 +14,7 @@ namespace sw
 
 	class Image;
 	class Animator;
+	class Ground;
 	class MonsterBase : public GameObject
 	{
 	public:
@@ -23,7 +24,7 @@ namespace sw
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
-		virtual void OnCollisionEnter(Collider* other) override{};
+		virtual void OnCollisionEnter(Collider* other) override;
 		virtual void OnCollisionStay(Collider* other) override{};
 		virtual void OnCollisionExit(Collider* other) override{};
 
@@ -63,6 +64,7 @@ namespace sw
 		Image* mImage;
 		Animator* mAnimator;
 		GameObject* mTarget;
+		Ground* mGround;
 		UINT32 mColCount;
 
 		eMonsterState mCurState;
@@ -80,6 +82,7 @@ namespace sw
 		bool mDirction;
 		bool mArmer;
 		bool mStaring;
+		bool mHold;
 
 		UINT32 mAttackX;
 		UINT32 mAttackY;

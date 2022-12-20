@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Input.h"
 #include "EventManager.h"
+#include "UtilLog.h"
 
 #include "Image.h"
 #include "Collider.h"
@@ -14,6 +15,7 @@
 #include "Scene.h"
 #include "Application.h"
 #include "ResourceManager.h"
+#include "Ground.h"
 
 namespace sw
 {
@@ -21,6 +23,7 @@ namespace sw
 		: mImage(nullptr)
 		, mAnimator(nullptr)
 		, mTarget(nullptr)
+		, mGround(nullptr)
 		, mCurState(eMonsterState::IDLE)
 		, mPrevState(mCurState)
 		, mDirction(true)
@@ -31,6 +34,7 @@ namespace sw
 		, mAttackY(0)
 		, mArmer(false)
 		, mStaring(false)
+		, mHold(false)
 
 	{
 		for (int i = 0; i < (int)eMonsterState::END; ++i)
@@ -99,17 +103,6 @@ namespace sw
 	}
 	void MonsterBase::IDLE()
 	{
-		static int i = 0;
-		if (i >= 2)
-		{
-			if (mDirction)
-				mDirction = false;
-			else
-				mDirction = true;
-
-			i = 0;
-		}
-
 		mDelta += Time::GetInstance()->DeltaTime();
 		if (mState[(int)eMonsterState::IDLE] == false)
 		{
@@ -119,7 +112,6 @@ namespace sw
 				mAnimator->Play(LName + L"Idle");
 
 			mState[(int)eMonsterState::IDLE] = true;
-			i++;
 		}
 
 		if (mDelta < mMaxDelta)
@@ -271,6 +263,9 @@ namespace sw
 	}
 	void MonsterBase::Staring()
 	{
+		if (mTarget)
+			return;
+
 		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
 		std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Player);
 		Vector2 pos = GetPos();
@@ -339,34 +334,78 @@ namespace sw
 
 	void MonsterBase::CheckGround()
 	{
-		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
-		const std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Ground);
-		Collider* col = GetComponent<Collider>();
-		Vector2 CPos = col->GetPos();
-		Vector2 CScale = col->GetScale();
+		if (mGround == nullptr)
+			return;
 
-		float under = CPos.y + (CScale.y * 0.5f);
-		std::vector<GameObject*> temp;
-		for (GameObject* object : objects)
+		Collider* col = GetComponent<Collider>();
+		Vector2 cPos = col->GetPos();
+		Vector2 cScale = col->GetScale();
+
+		Vector2 gPos = mGround->GetPos();
+		Vector2 gSclae = mGround->GetScale();
+
+		float right = cPos.x + (cScale.x * 0.5f);
+		float left = cPos.x - (cScale.x * 0.5f);
+
+		float Delta = 0.0f;
+
+		// 코드 개선필요
+		Vector2 pos = cPos;
+		if (gPos.x + (gSclae.x * 0.5f) < right
+			|| gPos.x - (gSclae.x * 0.5f) > left)
 		{
-			float over = object->GetPos().y - (object->GetScale().y * 0.5f);
-			if (fabs(under - over) < 3)
+			if (cPos.x > gPos.x)
+				pos.x = gPos.x + (gSclae.x * 0.5f) - (cScale.x * 0.5f + 1.0f);
+			else if (cPos.x < gPos.x)
+				pos.x = gPos.x - (gSclae.x * 0.5f) + (cScale.x * 0.5f + 1.0f);
+			SetPos(pos);
+
+			if (mTarget == nullptr)
 			{
-				temp.push_back(object);
+				if (mDirction)
+					mDirction = false;
+				else
+					mDirction = true;
 			}
+
+			mState[(UINT32)mCurState] = false;
+			mPrevState = mCurState;
+			SetDelta(Delta);
+			SetState(eMonsterState::IDLE);
 		}
 
-		for (GameObject* object : temp)
+		if(mTarget != nullptr)
 		{
-			Rigidbody* rigid = GetComponent<Rigidbody>();
-			Vector2 objPos = object->GetPos();
-			Vector2 objScale = object->GetScale();
-			if (CPos.x > objPos.x + (objScale.x * 0.5f))
-				CPos.x = objPos.x + (objScale.x * 0.5f);
-			if (CPos.x < objPos.x - (objScale.x * 0.5f))
-				CPos.x = objPos.x - (objScale.x * 0.5f);
+			if (mDirction && mTarget->GetPos().x < pos.x)
+			{
+				if (mCurState == eMonsterState::ATTACK)
+					return;
 
-			SetPos(CPos);
+				mState[(UINT32)mCurState] = false;
+				mDirction = false;
+				Delta += mMaxDelta;
+				SetDelta(Delta);
+			}
+			else if (!mDirction && mTarget->GetPos().x > pos.x)
+			{
+				if (mCurState == eMonsterState::ATTACK)
+					return;
+
+				mState[(UINT32)mCurState] = false;
+				mDirction = true;
+				Delta += mMaxDelta;
+				SetDelta(Delta);
+			}
+		}
+	}
+
+	void MonsterBase::OnCollisionEnter(Collider* other)
+	{
+		if (mGround == nullptr)
+		{
+			Ground* ground = dynamic_cast<Ground*>(other->GetOwner());
+			if (ground != nullptr)
+				mGround = ground;
 		}
 	}
 }

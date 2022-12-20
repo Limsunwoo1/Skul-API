@@ -35,6 +35,10 @@ namespace sw
 		, mArmer(false)
 		, mStaring(false)
 		, mHold(false)
+		, mAttackCooltime(0.0f)
+		, mAttackCooltimeMax(0.0f)
+		, mDelay(0.0f)
+		, mForce(0.0f)
 
 	{
 		for (int i = 0; i < (int)eMonsterState::END; ++i)
@@ -59,6 +63,8 @@ namespace sw
 
 	void MonsterBase::Tick()
 	{
+		mAttackCooltime += Time::GetInstance()->DeltaTime();
+
 		Branch();
 		Staring();
 		GameObject::Tick();
@@ -124,6 +130,7 @@ namespace sw
 	}
 	void MonsterBase::Attack()
 	{
+		mAttackCooltime = 0.0f;
 		if (mState[(int)eMonsterState::ATTACK] == false)
 		{
 			if (mDirction)
@@ -176,6 +183,7 @@ namespace sw
 
 		if (mState[(int)eMonsterState::MOVE] == false)
 		{
+			
 			if (mDirction)
 				mAnimator->Play(RName + L"Move", true);
 			else
@@ -223,6 +231,9 @@ namespace sw
 
 				rigidbody->AddForce(Vector2(200.f, 0.0f));
 			}
+
+			if (mAttackCooltime < mAttackCooltimeMax)
+				return;
 
 			if (abs(distance.x) <= mAttackX && abs(distance.y) <= mAttackY)
 			{

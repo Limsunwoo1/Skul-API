@@ -103,7 +103,7 @@ namespace sw
 				if (monster->GetSuperArmer())
 				{
 					monster->Hit();
-					return;
+					continue;
 				}
 				monster->SetAble(type, false);
 				monster->SetDirction(!state);  // 공격 방향으로 피격대상 방향변경

@@ -15,6 +15,8 @@ namespace sw
 		mAttackX = 300;
 		mAttackY = 200;
 		mArmer = true;
+
+		mAttackCooltimeMax = 3.0f;
 	}
 	AxeMonster::~AxeMonster()
 	{
@@ -35,8 +37,8 @@ namespace sw
 		mAnimator->CreatAnimations(RName + L"Move", AXEMONSTER_R_PATH(L"Move"), Vector2::Zero, 0.1f);
 		mAnimator->CreatAnimations(LName + L"Move", AXEMONSTER_L_PATH(L"Move"), Vector2::Zero, 0.15f);
 
-		mAnimator->CreatAnimations(RName + L"Attack", AXEMONSTER_R_PATH(L"Attack"), Vector2(0.f, 0.f), 0.3f);
-		mAnimator->CreatAnimations(LName + L"Attack", AXEMONSTER_L_PATH(L"Attack"), Vector2(0.f, 0.f), 0.3f);
+		mAnimator->CreatAnimations(RName + L"Attack", AXEMONSTER_R_PATH(L"Attack"), Vector2(0.f, 0.f), 0.5f);
+		mAnimator->CreatAnimations(LName + L"Attack", AXEMONSTER_L_PATH(L"Attack"), Vector2(0.f, 0.f), 0.5f);
 
 		mAnimator->Play(RName + L"Idle", true);
 	}

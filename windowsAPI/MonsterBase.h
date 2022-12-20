@@ -71,6 +71,11 @@ namespace sw
 		eMonsterState mPrevState;
 		float mDelta;
 		float mMaxDelta;
+		float mAttackCooltime;
+		float mAttackCooltimeMax;
+
+		float mDelay;
+		float mForce;
 
 		Box mAttackcollider;
 		Box mStaringCollider;

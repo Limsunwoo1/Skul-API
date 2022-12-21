@@ -10,11 +10,6 @@ namespace sw
 		mAnimator = AddComponent<Animator>();
 		mAnimator->SetOwner(this);
 		SetDeath(true);
-		if (mAnimator == nullptr)
-		{
-			mAnimator = AddComponent<Animator>();
-			mAnimator->SetOwner(this);
-		}
 	}
 
 	EffectObject::~EffectObject()

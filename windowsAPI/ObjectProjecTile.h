@@ -5,11 +5,11 @@ namespace sw
 {
 	class Animator;
 	typedef std::function<void(GameObject* object)> TColliderEvent;
-	class ObejctProjecTile : public GameObject
+	class ObjectProjecTile : public GameObject
 	{
 	public:
-		ObejctProjecTile();
-		~ObejctProjecTile();
+		ObjectProjecTile();
+		~ObjectProjecTile();
 
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
@@ -26,6 +26,9 @@ namespace sw
 		float GetReuse_Time() { return mReuse_Time; }
 
 		void SetEvent(const TColliderEvent& event);
+
+		void SetEffectName(const std::wstring& name) { mEffectName = name; }
+		std::wstring GetEffectName() { return mEffectName; }
 	private:
 		TColliderEvent Event;
 		Animator* mAnimator;
@@ -34,6 +37,8 @@ namespace sw
 		float mDelta;
 		float mReuse_Time;
 		bool mAble;
+
+		std::wstring mEffectName;
 	};
 }
 

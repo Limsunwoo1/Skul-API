@@ -18,8 +18,8 @@ namespace sw
 		virtual void InitAnimtion() override;
 		virtual void InitState() override;
 		virtual void InitAttackCollider() override;
+		virtual void InitSkils() override;
 
-		virtual void DashEffect() override;
 		virtual void OnAttackEffect(GameObject* other) override;
 
 		virtual void SwitchSkill() override;

@@ -64,16 +64,17 @@ namespace sw
 		{
 			mShadows[i]->Tick();
 		}
+		LOG(STRING("½¦µµ¾î Æ½"))
 	}
 
 
 	void Shadow::Render(HDC hdc)
 	{
+		LOG(STRING("½¦µµ¾î ·£´õ"))
 		if (mTarget == nullptr)
 			return;
 		if (!mTarget->GetIsShadow())
 			return;
-
 
 		for (int i = 0; i < mCurEffect; ++i)
 		{

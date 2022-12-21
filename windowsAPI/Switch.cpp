@@ -3,7 +3,7 @@
 #include "Animator.h"
 #include "Move.h"
 #include "StateHandle.h"
-#include "ObejctProjecTile.h"
+#include "ObjectProjecTile.h"
 
 namespace sw
 {
@@ -24,8 +24,14 @@ namespace sw
 
 		// 방향설정
 		PlayerBase* player = GetTarget();
-		if(player->GetProjecTile() != nullptr)
-			player->GetProjecTile()->SetDeath(false);
+		ObjectProjecTile* projectile = player->GetProjecTile(eSkilType::Switch);
+		if (projectile != nullptr)
+		{
+			projectile->SetDeath(false);
+			std::wstring name = projectile->GetEffectName();
+			if (name != L"")
+				projectile->GetComponent<Animator>()->Play(name);
+		}
 
 		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
@@ -51,8 +57,8 @@ namespace sw
 	void Switch::End()
 	{
 		PlayerBase* player = GetTarget();
-		if (player->GetProjecTile() != nullptr)
-			player->GetProjecTile()->SetDeath(true);
+		if (player->GetProjecTile(eSkilType::Switch) != nullptr)
+			player->GetProjecTile(eSkilType::Switch)->SetDeath(true);
 		mSwitch = false;
 	}
 }

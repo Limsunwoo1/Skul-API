@@ -122,21 +122,22 @@ namespace sw
 		{
 			if (type != ePlayerState::SKILL_1
 				&& type != ePlayerState::SKILL_2
-				&& type != ePlayerState::SLIDING)
+				&& type != ePlayerState::SLIDING
+				&& type != ePlayerState::SWITCH)
 			{
 				bool movetype = mCurPlayer->GetStateHandle()->
 					GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 
 				mNextPlayer->GetStateHandle()->
 					GetState<Move>(ePlayerState::MOVE)->SetDirtion(movetype);
-
+				mCurPlayer->SetColliderBox(Box(Vector2::Zero, Vector2::Zero));
 				PlayerBase* temp = mCurPlayer;
 				mCurPlayer = mNextPlayer;
 				mNextPlayer = temp;
 
 				mCurPlayer->SetState(ePlayerState::SWITCH);
 				Reset();
-
+				
 				Camera::GetInstance()->SetTarget(mCurPlayer);
 			}
 		}
@@ -153,23 +154,19 @@ namespace sw
 			mCollider->SetOwner(mCurPlayer);
 		}
 
-		bool isground = false;
 		if (mRigidbody)
-		{
-			isground = mRigidbody->GetGround();
 			DeleteComponent<Rigidbody>();
-		}
+
 		mRigidbody = mCurPlayer->GetComponent<Rigidbody>();
 		if (mRigidbody)
 		{
 			AddComponent(mRigidbody);
 			mRigidbody->SetOwner(mCurPlayer);
-			mRigidbody->SetGround(isground);
+			mRigidbody->SetGround(false);
 		}
 
 		if(mNextPlayer != nullptr)
 			mCurPlayer->SetPos(mNextPlayer->GetPos());
-		//mCurPlayer->SetState(eObjectState::SWITCH);
 	}
 
 	void MainPlayer::SwitchPlayer()

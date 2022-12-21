@@ -13,7 +13,7 @@
 #include "Switch.h"
 #include "Application.h"
 #include "Shadow.h"
-#include <iostream>
+#include "ObjectProjecTile.h"
 
 namespace sw
 {
@@ -27,13 +27,14 @@ namespace sw
 		InitAnimtion();
 		InitState();
 		InitAttackCollider();
+		InitSkils();
 
 		Rigidbody* rigidbody = AddComponent<Rigidbody>();
 		rigidbody->SetGround(false);
 		rigidbody->SetOwner(this);
 
 		Collider* collider = AddComponent<Collider>();
-		collider->SetScale(Vector2(100.f, 100.f));
+		collider->SetScale(Vector2(80.f, 80.f));
 		collider->SetOwner(this);
 
 		this->SetState(ePlayerState::IDLE);
@@ -44,8 +45,6 @@ namespace sw
 		GameObject::~GameObject();
 		if (mState)
 			delete mState;
-		if (mShaow)
-			delete mShaow;
 	}
 	void SwordSkul::Tick()
 	{
@@ -55,8 +54,6 @@ namespace sw
 		mState->Tick();
 		GameObject::Tick();
 
-		if (mShaow)
-			mShaow->Tick();
 	}
 	void SwordSkul::Render(HDC hdc)
 	{
@@ -67,8 +64,7 @@ namespace sw
 		Vector2 scale = GetScale();
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
-		if (mShaow)
-			mShaow->Render(hdc);
+
 
 		GameObject::Render(hdc);
 
@@ -101,19 +97,19 @@ namespace sw
 	{
 		// Animation 세팅
 		mAnimator = new Animator();
-		mAnimator->CreatAnimations(L"R_Sword_IDLE", SWORDSKUL_R_PATH(L"Idle"), Vector2(0.f, 50.f), 0.25f);
-		mAnimator->CreatAnimations(L"L_Sword_IDLE", SWORDSKUL_L_PATH(L"Idle"), Vector2(0.f, 50.f), 0.25f);
+		mAnimator->CreatAnimations(L"R_Sword_IDLE", SWORDSKUL_R_PATH(L"Idle"), Vector2(0.f, 60.f), 0.25f);
+		mAnimator->CreatAnimations(L"L_Sword_IDLE", SWORDSKUL_L_PATH(L"Idle"), Vector2(0.f, 60.f), 0.25f);
 
-		mAnimator->CreatAnimations(L"R_Sword_Run", SWORDSKUL_R_PATH(L"Run"), Vector2(0.f, 0.f), 0.1f);
-		mAnimator->CreatAnimations(L"L_Sword_Run", SWORDSKUL_L_PATH(L"Run"), Vector2(0.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"R_Sword_Run", SWORDSKUL_R_PATH(L"Run"), Vector2(0.f, 10.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Sword_Run", SWORDSKUL_L_PATH(L"Run"), Vector2(0.f, 10.f), 0.1f);
 
-		mAnimator->CreatAnimations(L"R_Sword_AttackA", SWORDSKUL_R_PATH(L"AttackA"), Vector2(0.f, 10.f), 0.15f);
-		mAnimator->CreatAnimations(L"R_Sword_AttackB", SWORDSKUL_R_PATH(L"AttackB"), Vector2(0.f, 10.f), 0.15f);
-		mAnimator->CreatAnimations(L"R_Sword_AttackC", SWORDSKUL_R_PATH(L"AttackC"), Vector2(-30.f, 10.f), 0.15f);
+		mAnimator->CreatAnimations(L"R_Sword_AttackA", SWORDSKUL_R_PATH(L"AttackA"), Vector2(0.f, 10.f), 0.1f);
+		mAnimator->CreatAnimations(L"R_Sword_AttackB", SWORDSKUL_R_PATH(L"AttackB"), Vector2(0.f, 10.f), 0.1f);
+		mAnimator->CreatAnimations(L"R_Sword_AttackC", SWORDSKUL_R_PATH(L"AttackC"), Vector2(-30.f, 10.f), 0.1f);
 
-		mAnimator->CreatAnimations(L"L_Sword_AttackA", SWORDSKUL_L_PATH(L"AttackA"), Vector2(0.f, 10.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Sword_AttackB", SWORDSKUL_L_PATH(L"AttackB"), Vector2(0.f, 10.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Sword_AttackC", SWORDSKUL_L_PATH(L"AttackC"), Vector2(30.f, 10.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Sword_AttackA", SWORDSKUL_L_PATH(L"AttackA"), Vector2(0.f, 10.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Sword_AttackB", SWORDSKUL_L_PATH(L"AttackB"), Vector2(0.f, 10.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Sword_AttackC", SWORDSKUL_L_PATH(L"AttackC"), Vector2(30.f, 10.f), 0.1f);
 
 		mAnimator->CreatAnimations(L"R_Sword_Jump", SWORDSKUL_R_PATH(L"Jump"), Vector2(0.f, 10.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Sword_Jump", SWORDSKUL_L_PATH(L"Jump"), Vector2(0.f, 10.f), 0.15f);
@@ -124,8 +120,8 @@ namespace sw
 		mAnimator->CreatAnimations(L"R_Sword_Dash", SWORDSKUL_R_PATH(L"Dash"), Vector2(0.f, 10.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Sword_Dash", SWORDSKUL_L_PATH(L"Dash"), Vector2(0.f, 10.f), 0.15f);
 
-		mAnimator->CreatAnimations(L"R_Sword_Switch", SWORDSKUL_R_PATH(L"Switch"), Vector2(0.f, 25.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Sword_Switch", SWORDSKUL_L_PATH(L"Switch"), Vector2(0.f, 25.f), 0.15f);
+		mAnimator->CreatAnimations(L"R_Sword_Switch", SWORDSKUL_R_PATH(L"Switch"), Vector2(0.f, 35.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Sword_Switch", SWORDSKUL_L_PATH(L"Switch"), Vector2(0.f, 35.f), 0.15f);
 
 		AddComponent(mAnimator);
 
@@ -211,15 +207,31 @@ namespace sw
 		SetColliders(L"L_Sword_AttackC", Box{ scale ,offset });
 	}
 
-	void SwordSkul::SwitchSkill()
+	void SwordSkul::InitSkils()
 	{
+		// 프로젝타일 세팅
+		ObjectProjecTile* SwitchProjec = mSkils[(int)eSkilType::Switch];
+		SwitchProjec->SetScale(Vector2(3.0f, 3.0f));
+		SwitchProjec->SetEvent(std::bind(&SwordSkul::SwitchProject, this, std::placeholders::_1));
+		SwitchProjec->SetTarget(this);
+		SwitchProjec->SetReuse_Time(0.1f);
+		SwitchProjec->SetEffectName(L"Sword_Switch_Effect");
 
+		Collider* collider = SwitchProjec->GetComponent<Collider>();
+		collider->SetScale(Vector2(280.f, 70.f));
+		Animator* animator = SwitchProjec->GetComponent<Animator>();
+		animator->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\Effect\\SkeletonSword-Switch");
+		animator->SetAlpha(180);
+
+		ObjectProjecTile* SkilA = mSkils[(int)eSkilType::SkilA];
+		ObjectProjecTile* SkilB = mSkils[(int)eSkilType::SkilB];
 	}
-	void SwordSkul::DashEffect()
-	{
-	}
+
 	void SwordSkul::OnAttackEffect(GameObject* other)
 	{
 
+	}
+	void SwordSkul::SwitchProject(GameObject* object)
+	{
 	}
 }

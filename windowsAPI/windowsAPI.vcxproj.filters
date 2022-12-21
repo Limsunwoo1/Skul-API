@@ -401,7 +401,7 @@
     <ClInclude Include="MaidMonster_1.h">
       <Filter>Engine\GameObject\Monster\MaidMonster_1</Filter>
     </ClInclude>
-    <ClInclude Include="ObejctProjecTile.h">
+    <ClInclude Include="ObjectProjecTile.h">
       <Filter>Engine\GameObject\ProjectObject</Filter>
     </ClInclude>
     <ClInclude Include="ObjectManager.h">
@@ -595,7 +595,7 @@
     <ClCompile Include="MaidMonster_1.cpp">
       <Filter>Engine\GameObject\Monster\MaidMonster_1</Filter>
     </ClCompile>
-    <ClCompile Include="ObejctProjecTile.cpp">
+    <ClCompile Include="ObjectProjecTile.cpp">
       <Filter>Engine\GameObject\ProjectObject</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">

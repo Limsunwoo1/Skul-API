@@ -194,7 +194,7 @@
     <ClInclude Include="Path.h" />
     <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="ObejctProjecTile.h" />
+    <ClInclude Include="ObjectProjecTile.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Move.h" />
@@ -265,7 +265,7 @@
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="ObejctProjecTile.cpp" />
+    <ClCompile Include="ObjectProjecTile.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="Rigidbody.cpp" />

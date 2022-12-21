@@ -94,7 +94,9 @@ namespace sw
 
 			mTemp.push_back(object);
 			collider->OnCollisionEnter();
-			GetTarget()->OnAttackEffect(object);
+
+			// Attakc Effect 함수 수정
+			//GetTarget()->OnAttackEffect(object);
 
 			MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
 			if (monster != nullptr)

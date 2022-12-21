@@ -23,7 +23,7 @@
 #include "Attack.h"
 #include "Drop.h"
 #include "Switch.h"
-#include "ObejctProjecTile.h"
+#include "ObjectProjecTile.h"
 
 #include <iostream>
 
@@ -40,6 +40,7 @@ namespace sw
 		InitAnimtion();
 		InitState();
 		InitAttackCollider();
+		InitSkils();
 
 		Rigidbody* rigidbody = AddComponent<Rigidbody>();
 		rigidbody->SetGround(false);
@@ -50,9 +51,16 @@ namespace sw
 		collider->SetScale(Vector2(80.f, 80.f));
 		collider->SetOwner(this);
 
-		mShaow = new Shadow();
-		mShaow->Initialize(L"R_DashShadow", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\DashEffect\\R_DashEffect.bmp");
-		mShaow->SetTarget(this);
+		// ¿ÞÂÊ ½¦µµ¿ì ¸ÕÀú false == left
+		Shadow* LShaow = new Shadow();
+		LShaow->Initialize(L"L_DashShadow", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\DashEffect\\L_DashEffect.bmp");
+		LShaow->SetTarget(this);
+		mShadows.push_back(LShaow);
+
+		Shadow* RShaow = new Shadow();
+		RShaow->Initialize(L"R_DashShadow", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\DashEffect\\R_DashEffect.bmp");
+		RShaow->SetTarget(this);
+		mShadows.push_back(RShaow);
 
 		this->SetState(ePlayerState::IDLE);
 		Camera::GetInstance()->SetTarget(this);
@@ -63,8 +71,11 @@ namespace sw
 		GameObject::~GameObject();
 		if(mState)
 			delete mState;
-		if(mShaow)
-			delete mShaow;
+
+		for (int i = 0; i < mShadows.size(); ++i)
+			delete mShadows[i];
+
+		mShadows.clear();
 	}
 
 	void BasicSkul::Tick()
@@ -76,11 +87,9 @@ namespace sw
 		mState->Tick();
 		GameObject::Tick();
 
-		if (mShaow)
-			mShaow->Tick();
-
-		/*if (mEffect)
-			mEffect->Tick();*/
+		mDirction = mState->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
+		if (mShadows[mDirction])
+			mShadows[mDirction]->Tick();
 	}
 
 	void BasicSkul::Render(HDC hdc)
@@ -92,16 +101,13 @@ namespace sw
 		Vector2 scale = GetScale();
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
-		if (mShaow)
-			mShaow->Render(hdc);
-		/*if (mEffect)
-			mEffect->Render(hdc);*/
+		if (mShadows[mDirction])
+			mShadows[mDirction]->Render(hdc);
 
 		GameObject::Render(hdc);
 
 		if (mColliderBox.BoxScale != Vector2::Zero)
 		{
-			
 			Vector2 pos = GetPos() + mColliderBox.BoxOffset;
 			Vector2 scale= mColliderBox.BoxScale;
 			
@@ -140,14 +146,17 @@ namespace sw
 		mAnimator->CreatAnimations(L"L_Basic_AttackA", BASICSKUL_L_PATH(L"AttackA"), Vector2(20.f, 0.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Basic_AttackB", BASICSKUL_L_PATH(L"AttackB"), Vector2(20.f, 0.f), 0.15f);
 
-		mAnimator->CreatAnimations(L"R_Basic_Switch", BASICSKUL_R_PATH(L"Switch"), Vector2(0.f, 0.f), 0.1f);
-		mAnimator->CreatAnimations(L"L_Basic_Switch", BASICSKUL_L_PATH(L"Switch"), Vector2(0.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"R_Basic_Switch", BASICSKUL_R_PATH(L"Switch"), Vector2(0.f, 10.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Basic_Switch", BASICSKUL_L_PATH(L"Switch"), Vector2(0.f, 10.f), 0.1f);
 
 		AddComponent(mAnimator);
 
 		mAnimator->Play(L"R_Basic_IDLE", true);
-		mAnimator->GetStartEvent(L"R_Basic_Dash") = std::bind(&BasicSkul::DashEffect, this);
-		mAnimator->GetStartEvent(L"L_Basic_Dash") = std::bind(&BasicSkul::DashEffect, this);
+		mAnimator->GetStartEvent(L"R_Basic_Dash") = std::bind(&PlayerBase::DashSmoke, this);
+		mAnimator->GetStartEvent(L"L_Basic_Dash") = std::bind(&PlayerBase::DashSmoke, this);
+
+		mAnimator->GetStartEvent(L"R_Basic_JUMP") = std::bind(&PlayerBase::JumpSmoke, this);
+		mAnimator->GetStartEvent(L"L_Basic_JUMP") = std::bind(&PlayerBase::JumpSmoke, this);
 
 		/*mAnimator->GetStartEvent(L"R_Basic_AttackA") = std::bind(&BasicSkul::AttackEffect, this);
 		mAnimator->GetStartEvent(L"R_Basic_AttackB") = std::bind(&BasicSkul::AttackEffect, this);
@@ -168,14 +177,6 @@ namespace sw
 			mAnimator->CompleteEvent() =
 				std::bind(&Player::CompleteEvent, this);
 		}*/
-		mEffect = new EffectObject();
-		Animator* animator = mEffect->GetComponent<Animator>();
-
-		animator->CreatAnimations(L"R_DashEffect", L"..\\Resource\\Animation\\Effect\\R_DashSmoke", Vector2(65.f,0.f), 0.1f);
-		animator->CreatAnimations(L"L_DashEffect", L"..\\Resource\\Animation\\Effect\\L_DashSmoke", Vector2(-65.f, 0.f), 0.1f);
-
-		animator->CreatAnimations(L"R_AttackEffect", L"..\\Resource\\Animation\\Effect\\R_BasicSkul_HitEffect", Vector2(-5.f, 0.f), 0.05f);
-		animator->CreatAnimations(L"L_AttackEffect", L"..\\Resource\\Animation\\Effect\\L_BasicSkul_HitEffect", Vector2(5.f, 0.f), 0.05f);
 	}
 	void BasicSkul::InitState()
 	{
@@ -243,12 +244,19 @@ namespace sw
 		scale = Vector2(100.f, 80.f);
 		offset = Vector2(-75.f, -25.f);
 		SetColliders(L"L_Basic_AttackB", Box{ scale ,offset });
+	}
 
-		mSwitchProject = new ObejctProjecTile();
-		mSwitchProject->SetEvent(std::bind(&BasicSkul::SwitchProject, this, std::placeholders::_1));
-		mSwitchProject->SetTarget(this);
-		Collider* collider = mSwitchProject->GetComponent<Collider>();
+	void BasicSkul::InitSkils()
+	{
+		ObjectProjecTile* SwitchProject = mSkils[(int)eSkilType::Switch];
+		SwitchProject->SetEvent(std::bind(&BasicSkul::SwitchProject, this, std::placeholders::_1));
+		SwitchProject->SetTarget(this);
+		SwitchProject->SetReuse_Time(0.4f);
+		Collider* collider = SwitchProject->GetComponent<Collider>();
 		collider->SetScale(Vector2(110.f, 80.f));
+
+		ObjectProjecTile* SkilA = mSkils[(int)eSkilType::SkilA];
+		ObjectProjecTile* SkilB = mSkils[(int)eSkilType::SkilB];
 	}
 
 	void BasicSkul::SwitchSkill()
@@ -272,22 +280,6 @@ namespace sw
 		else
 			rgid->AddForce(Vector2(-1400.f, 0.0f));
 	}
-
-	void BasicSkul::DashEffect()
-	{
-		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
-		Animator* animator = mEffect->GetComponent<Animator>();
-		mEffect->SetDeath(false);
-		mEffect->SetPos(GetPos());
-		mEffect->SetScale(Vector2(5.0f, 5.0f));
-
-		if (dirction)
-			animator->Play(L"R_DashEffect");
-		else
-			animator->Play(L"L_DashEffect");
-
-		animator->SetAlpha(255);
-	}
 	void BasicSkul::OnAttackEffect(GameObject* other)
 	{
 		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
@@ -296,10 +288,10 @@ namespace sw
 		mEffect->SetPos(other->GetPos());
 		mEffect->SetScale(Vector2(2.0f, 2.0f));
 
-		if (dirction)
+		/*if (dirction)
 			animator->Play(L"R_AttackEffect");
 		else
-			animator->Play(L"L_AttackEffect");
+			animator->Play(L"L_AttackEffect");*/
 
 		animator->SetAlpha(225);
 	}

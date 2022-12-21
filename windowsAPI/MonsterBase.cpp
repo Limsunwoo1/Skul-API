@@ -16,9 +16,15 @@
 #include "Application.h"
 #include "ResourceManager.h"
 #include "Ground.h"
+#include <random>
 
 namespace sw
 {
+	std::random_device random;
+	std::mt19937 gen(random());
+	std::uniform_int_distribution<int> delay(2, 4);
+	std::uniform_int_distribution<int> force(200, 1000);
+
 	MonsterBase::MonsterBase()
 		: mImage(nullptr)
 		, mAnimator(nullptr)
@@ -38,7 +44,9 @@ namespace sw
 		, mAttackCooltime(0.0f)
 		, mAttackCooltimeMax(0.0f)
 		, mDelay(0.0f)
-		, mForce(0.0f)
+		, mDistance(0.0f)
+		, mMovement(0)
+		, mPrevPos(Vector2::Zero)
 
 	{
 		for (int i = 0; i < (int)eMonsterState::END; ++i)
@@ -54,8 +62,21 @@ namespace sw
 		mDelta = 3.0f;
 		mMaxDelta = 3.0f;
 
-		mImage = ResourceManager::GetInstance()->Load<Image>(L"StraingMark", L"..\\Resource\\Image\\Exclamation mark.bmp");
+		mImage = ResourceManager::GetInstance()->
+			Load<Image>(L"StraingMark", L"..\\Resource\\Image\\Exclamation mark.bmp");
+
+		std::random_device random;
+		std::mt19937 gen(random());
+		std::uniform_int_distribution<int> delay(2,4);
+		std::uniform_int_distribution<int> force(3,6);
+
+		rgen = gen;
+		rDelay = delay;
+		rDistance = force;
+
+		mPrevPos = GetPos();
 	}
+
 	MonsterBase::~MonsterBase()
 	{
 		GameObject::~GameObject();
@@ -64,11 +85,16 @@ namespace sw
 	void MonsterBase::Tick()
 	{
 		mAttackCooltime += Time::GetInstance()->DeltaTime();
+		if (mHold)
+			Hold();
 
 		Branch();
 		Staring();
 		GameObject::Tick();
 		CheckGround();
+
+		// 이전위치 저장
+		mPrevPos = GetPos();
 	}
 
 	void MonsterBase::Render(HDC hdc)
@@ -118,9 +144,10 @@ namespace sw
 				mAnimator->Play(LName + L"Idle");
 
 			mState[(int)eMonsterState::IDLE] = true;
+			mDelay = rDelay(rgen);
 		}
 
-		if (mDelta < mMaxDelta)
+		if (mDelta < mDelay)
 			return;
 
 		mDelta = 0.0f;
@@ -183,24 +210,27 @@ namespace sw
 
 		if (mState[(int)eMonsterState::MOVE] == false)
 		{
-			
 			if (mDirction)
 				mAnimator->Play(RName + L"Move", true);
 			else
 				mAnimator->Play(LName + L"Move", true);
 
 			mState[(int)eMonsterState::MOVE] = true;
+
+			mMovement = 0;
+			mDistance = rDistance(rgen) * 100.f;
 		}
 
 		Rigidbody* rigidbody = this->GetComponent<Rigidbody>();
 		if (mTarget == nullptr)
 		{
+			mMovement += fabs(mPrevPos.x - GetPos().x);
 			if (mDirction)
 				rigidbody->AddForce(Vector2(100.f, 0.0f));
 			else
 				rigidbody->AddForce(Vector2(-100.f, 0.0f));
-
-			if (mDelta > 5.0f)
+			
+			if (mMovement > mDistance)
 			{
 				mState[(int)eMonsterState::MOVE] = false;
 				mDelta = 0.0f;
@@ -210,8 +240,15 @@ namespace sw
 		}
 		else
 		{
-			Vector2 distance = mTarget->GetPos() - GetPos();
-			if (distance.x < 0)
+			Vector2 cPos = mTarget->GetComponent<Collider>()->GetPos();
+			Vector2 cScal = mTarget->GetComponent<Collider>()->GetScale();
+
+			Vector2 mColPos = GetComponent<Collider>()->GetPos();
+			Vector2 mColScale = GetComponent<Collider>()->GetScale();
+
+			Vector2 flen = cPos - mColPos;
+			float fscale = ((cScal.x * 0.5f) + (mColScale.x * 0.5f));
+			if (flen.x < 0)
 			{
 				if (mDirction)
 				{
@@ -219,7 +256,11 @@ namespace sw
 					mState[(int)eMonsterState::MOVE] = false;
 				}
 
-				rigidbody->AddForce(Vector2(-200.f, 0.0f));
+				
+				if (fabs(flen.x) > fscale)
+					rigidbody->AddForce(Vector2(-200.f, 0.0f));
+				else
+					mAnimator->Play(LName + L"Idle", true);
 			}
 			else
 			{
@@ -229,13 +270,16 @@ namespace sw
 					mState[(int)eMonsterState::MOVE] = false;
 				}
 
-				rigidbody->AddForce(Vector2(200.f, 0.0f));
+				if (fabs(flen.x) > fscale)
+					rigidbody->AddForce(Vector2(200.f, 0.0f));
+				else
+					mAnimator->Play(RName + L"Idle", true);
 			}
 
 			if (mAttackCooltime < mAttackCooltimeMax)
 				return;
 
-			if (abs(distance.x) <= mAttackX && abs(distance.y) <= mAttackY)
+			if (abs(flen.x) <= mAttackX && abs(flen.y) <= mAttackY)
 			{
 				mPrevState = mCurState;
 				mCurState = eMonsterState::ATTACK;
@@ -307,6 +351,7 @@ namespace sw
 			}
 		}
 	}
+
 	void MonsterBase::Branch()
 	{
 		switch (mCurState)
@@ -419,5 +464,14 @@ namespace sw
 			if (ground != nullptr)
 				mGround = ground;
 		}
+	}
+
+	void MonsterBase::Hold()
+	{
+		mState[(UINT32)mCurState] = false;
+		mPrevState = mCurState;
+		SetDelta(0.0f);
+		SetState(eMonsterState::IDLE);
+		mHold = false;
 	}
 }

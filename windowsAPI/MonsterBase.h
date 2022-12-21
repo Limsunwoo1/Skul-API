@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include <random>
 
 namespace sw
 {
@@ -60,6 +61,10 @@ namespace sw
 
 		void CheckGround();
 
+		bool GetHold() { return mHold; }
+		void SetHold(bool hold) { mHold = hold; }
+		void Hold();
+
 	protected:
 		Image* mImage;
 		Animator* mAnimator;
@@ -73,10 +78,11 @@ namespace sw
 		float mMaxDelta;
 		float mAttackCooltime;
 		float mAttackCooltimeMax;
-
 		float mDelay;
-		float mForce;
+		float mDistance;
 
+		int mMovement;
+		Vector2 mPrevPos;
 		Box mAttackcollider;
 		Box mStaringCollider;
 
@@ -91,5 +97,9 @@ namespace sw
 
 		UINT32 mAttackX;
 		UINT32 mAttackY;
+
+		std::mt19937 rgen;
+		std::uniform_int_distribution<int> rDelay;
+		std::uniform_int_distribution<int> rDistance;
 	};
 }

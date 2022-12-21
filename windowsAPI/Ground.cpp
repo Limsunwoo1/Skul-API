@@ -9,6 +9,7 @@
 #include "StateHandle.h"
 #include "Move.h"
 #include "MainPlayer.h"
+#include "MonsterBase.h"
 
 #include <iostream>
 #define FREEZMAX 2
@@ -162,6 +163,15 @@ namespace sw
 				Vector2 velo = rigidbody->GetVelocity();
 				velo.x = 0;
 				rigidbody->SetVelocity(velo);
+
+				MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+				if (monster)
+				{
+					LOG(STRING("몬스터충돌"));
+					monster->SetHold(true);
+					if (!monster->GetDirction())
+						monster->SetDirction(true);
+				}
 			}
 			else
 				Top_Bottom_Collider(other);
@@ -193,17 +203,22 @@ namespace sw
 				float fLen = fabs(other->GetPos().x - GetComponent<Collider>()->GetPos().x);
 				float fScale = (other->GetScale().x / 2.0f) + (GetComponent<Collider>()->GetScale().x / 2.0f);
 
-				float a = fScale - fLen;
 				pPos.x -= (fScale - fLen) + 1.0f;
 				object->SetPos(pPos);
 				other->SetPos(pPos);
+
 				Vector2 velo = rigidbody->GetVelocity();
 				velo.x = 0;
 				rigidbody->SetVelocity(velo);
-				/*if (!ground)
-					rigidbody->SetGround(false);
-				else
-					rigidbody->SetGround(true);*/
+
+				MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+				if (monster)
+				{
+					LOG(STRING("몬스터충돌"));
+					monster->SetHold(true);
+					if (monster->GetDirction())
+						monster->SetDirction(false);
+				}
 			}
 			else
 				Top_Bottom_Collider(other);

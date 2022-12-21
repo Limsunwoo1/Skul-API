@@ -360,6 +360,7 @@ namespace sw
 
 		float Delta = 0.0f;
 
+		// 로직변경필요
 		// 코드 개선필요
 		Vector2 pos = cPos;
 		if (gPos.x + (gSclae.x * 0.5f) < right

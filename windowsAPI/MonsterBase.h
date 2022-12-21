@@ -53,9 +53,6 @@ namespace sw
 
 		void SetAble(eMonsterState type, bool able) { mState[(int)type] = able; }
 
-		UINT32 GetColCount() { return mColCount; }
-		void SetColCount(UINT32 count) { mColCount = count; }
-
 		void SetDelta(float delta) { mDelta = delta; }
 		bool GetSuperArmer() { return mArmer; }
 
@@ -65,12 +62,14 @@ namespace sw
 		void SetHold(bool hold) { mHold = hold; }
 		void Hold();
 
+		GameObject* GetTarget() { return mTarget; }
+		void SetTarget(GameObject* object) { mTarget = object; }
+
 	protected:
 		Image* mImage;
 		Animator* mAnimator;
 		GameObject* mTarget;
 		Ground* mGround;
-		UINT32 mColCount;
 
 		eMonsterState mCurState;
 		eMonsterState mPrevState;
@@ -80,6 +79,7 @@ namespace sw
 		float mAttackCooltimeMax;
 		float mDelay;
 		float mDistance;
+		float mStaringTime;
 
 		int mMovement;
 		Vector2 mPrevPos;

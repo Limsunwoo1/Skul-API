@@ -167,9 +167,8 @@ namespace sw
 				MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
 				if (monster)
 				{
-					LOG(STRING("몬스터충돌"));
 					monster->SetHold(true);
-					if (!monster->GetDirction())
+					if (!monster->GetDirction() && monster->GetTarget() == nullptr)
 						monster->SetDirction(true);
 				}
 			}
@@ -214,9 +213,8 @@ namespace sw
 				MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
 				if (monster)
 				{
-					LOG(STRING("몬스터충돌"));
 					monster->SetHold(true);
-					if (monster->GetDirction())
+					if (monster->GetDirction() && monster->GetTarget() == nullptr)
 						monster->SetDirction(false);
 				}
 			}

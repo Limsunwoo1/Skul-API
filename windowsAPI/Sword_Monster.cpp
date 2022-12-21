@@ -13,7 +13,7 @@ namespace sw
 
 		SetScale(Vector2(4.f, 4.f));
 		mAttackX = 100;
-		mAttackY = 50;
+		mAttackY = 80;
 	}
 	SwordMonster::~SwordMonster()
 	{

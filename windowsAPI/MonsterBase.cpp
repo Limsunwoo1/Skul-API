@@ -33,7 +33,6 @@ namespace sw
 		, mCurState(eMonsterState::IDLE)
 		, mPrevState(mCurState)
 		, mDirction(true)
-		, mColCount(0)
 		, RName(L"")
 		, LName(L"")
 		, mAttackX(0)
@@ -45,15 +44,15 @@ namespace sw
 		, mAttackCooltimeMax(0.0f)
 		, mDelay(0.0f)
 		, mDistance(0.0f)
+		, mStaringTime(0.0f)
 		, mMovement(0)
 		, mPrevPos(Vector2::Zero)
 
 	{
-		for (int i = 0; i < (int)eMonsterState::END; ++i)
+		for (int i = (int)eMonsterState::IDLE; i < (int)eMonsterState::END; ++i)
 		{
 			mState[i] = false;
 		}
-		mState[(int)eMonsterState::IDLE] = true;
 
 		Rigidbody* rigdbody = AddComponent<Rigidbody>();
 		rigdbody->SetGround(false);
@@ -67,8 +66,8 @@ namespace sw
 
 		std::random_device random;
 		std::mt19937 gen(random());
-		std::uniform_int_distribution<int> delay(2,4);
-		std::uniform_int_distribution<int> force(3,6);
+		std::uniform_int_distribution<int> delay(2,6);
+		std::uniform_int_distribution<int> force(2,6);
 
 		rgen = gen;
 		rDelay = delay;
@@ -88,8 +87,8 @@ namespace sw
 		if (mHold)
 			Hold();
 
-		Branch();
 		Staring();
+		Branch();
 		GameObject::Tick();
 		CheckGround();
 
@@ -146,7 +145,8 @@ namespace sw
 			mState[(int)eMonsterState::IDLE] = true;
 			mDelay = rDelay(rgen);
 		}
-
+		if (mTarget != nullptr)
+			mDelay = 3.0f;
 		if (mDelta < mDelay)
 			return;
 
@@ -250,30 +250,27 @@ namespace sw
 			float fscale = ((cScal.x * 0.5f) + (mColScale.x * 0.5f));
 			if (flen.x < 0)
 			{
-				if (mDirction)
-				{
-					mDirction = false;
-					mState[(int)eMonsterState::MOVE] = false;
-				}
-
-				
-				if (fabs(flen.x) > fscale)
+				if (fabs(flen.x) >= fscale)
 					rigidbody->AddForce(Vector2(-200.f, 0.0f));
 				else
-					mAnimator->Play(LName + L"Idle", true);
+				{
+					mState[(int)eMonsterState::MOVE] = false;
+					mPrevState = mCurState;
+					mCurState = eMonsterState::IDLE;
+					mDelta = 0.0f;
+				}
 			}
 			else
 			{
-				if (!mDirction)
-				{
-					mDirction = true;
-					mState[(int)eMonsterState::MOVE] = false;
-				}
-
 				if (fabs(flen.x) > fscale)
 					rigidbody->AddForce(Vector2(200.f, 0.0f));
 				else
-					mAnimator->Play(RName + L"Idle", true);
+				{
+					mState[(int)eMonsterState::MOVE] = false;
+					mPrevState = mCurState;
+					mCurState = eMonsterState::IDLE;
+					mDelta = 0.0f;
+				}
 			}
 
 			if (mAttackCooltime < mAttackCooltimeMax)
@@ -318,6 +315,10 @@ namespace sw
 	}
 	void MonsterBase::Staring()
 	{
+		if (mStaring)
+			mStaringTime += Time::GetInstance()->DeltaTime();
+		if (mStaringTime > 2.0f)
+			mStaring = false;
 		if (mTarget)
 			return;
 
@@ -328,9 +329,6 @@ namespace sw
 
 		for (GameObject* object : objects)
 		{
-			if (mTarget != nullptr)
-				break;
-
 			bool temp = false;
 			if (mDirction)
 			{
@@ -347,6 +345,10 @@ namespace sw
 			{
 				mStaring = true;
 				mTarget = object;
+
+				mPrevState = mCurState;
+				mState[(int)mCurState] = false;
+				SetState(eMonsterState::IDLE);
 				break;
 			}
 		}
@@ -431,13 +433,15 @@ namespace sw
 			SetState(eMonsterState::IDLE);
 		}
 
+		if (mCurState == eMonsterState::ATTACK)
+			return;
+		if (mCurState == eMonsterState::IDLE)
+			return;
+
 		if(mTarget != nullptr)
 		{
 			if (mDirction && mTarget->GetPos().x < pos.x)
 			{
-				if (mCurState == eMonsterState::ATTACK)
-					return;
-
 				mState[(UINT32)mCurState] = false;
 				mDirction = false;
 				Delta += mMaxDelta;
@@ -445,9 +449,6 @@ namespace sw
 			}
 			else if (!mDirction && mTarget->GetPos().x > pos.x)
 			{
-				if (mCurState == eMonsterState::ATTACK)
-					return;
-
 				mState[(UINT32)mCurState] = false;
 				mDirction = true;
 				Delta += mMaxDelta;

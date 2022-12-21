@@ -31,11 +31,11 @@ namespace sw
 		mAnimator = AddComponent<Animator>();
 		mAnimator->SetOwner(this);
 
-		mAnimator->CreatAnimations(RName + L"Idle", AXEMONSTER_R_PATH(L"Idle"), Vector2(0.0f, -20.f), 0.1f);
-		mAnimator->CreatAnimations(LName + L"Idle", AXEMONSTER_L_PATH(L"Idle"), Vector2(0.0f, -20.f), 0.1f);
+		mAnimator->CreatAnimations(RName + L"Idle", AXEMONSTER_R_PATH(L"Idle"), Vector2(0.0f, -23.f), 0.1f);
+		mAnimator->CreatAnimations(LName + L"Idle", AXEMONSTER_L_PATH(L"Idle"), Vector2(0.0f, -23.f), 0.1f);
 
-		mAnimator->CreatAnimations(RName + L"Move", AXEMONSTER_R_PATH(L"Move"), Vector2::Zero, 0.1f);
-		mAnimator->CreatAnimations(LName + L"Move", AXEMONSTER_L_PATH(L"Move"), Vector2::Zero, 0.15f);
+		mAnimator->CreatAnimations(RName + L"Move", AXEMONSTER_R_PATH(L"Move"), Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(LName + L"Move", AXEMONSTER_L_PATH(L"Move"), Vector2::Zero, 0.2f);
 
 		mAnimator->CreatAnimations(RName + L"Attack", AXEMONSTER_R_PATH(L"Attack"), Vector2(0.f, 0.f), 0.5f);
 		mAnimator->CreatAnimations(LName + L"Attack", AXEMONSTER_L_PATH(L"Attack"), Vector2(0.f, 0.f), 0.5f);

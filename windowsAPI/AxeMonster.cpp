@@ -2,6 +2,8 @@
 #include "Animator.h"
 #include "Path.h"
 #include "Collider.h"
+#include "ObjectProjecTile.h"
+#include "EventManager.h"
 namespace sw
 {
 	AxeMonster::AxeMonster()
@@ -17,10 +19,45 @@ namespace sw
 		mArmer = true;
 
 		mAttackCooltimeMax = 3.0f;
+
+		for (int i = 0; i < 4; ++i)
+		{
+			mProjecTile.push_back(new ObjectProjecTile());
+			mProjecTile[i]->SetTarget(this);
+			mProjecTile[i]->SetReuse_Time(1.0f);
+			mProjecTile[i]->SetEffectName(L"AxeMonster_AttackEft");
+			Animator* animator = mProjecTile[i]->GetComponent<Animator>();
+			animator->CreatAnimations(L"AxeMonster_AttackEft", 
+				L"..\\Resource\\Animation\\MonsterAttackEffect\\AxeMonster",
+				Vector2::Zero, 0.05);
+			Collider* collider = mProjecTile[i]->GetComponent<Collider>();
+			collider->SetScale(Vector2(80.f, 250.f));
+		}
 	}
 	AxeMonster::~AxeMonster()
 	{
 		GameObject::~GameObject();
+	}
+
+	void AxeMonster::Tick()
+	{
+		MonsterBase::Tick();
+
+		for (int i = 0; i < mProjecTile.size(); ++i)
+		{
+			Animator* animator = mProjecTile[i]->GetComponent<Animator>();
+			if (animator->bPlayAnimation() && animator->isComplete())
+			{
+				mProjecTile[i]->SetDeath(true);
+
+				EventInfo info;
+				info.Type = EventType::DeleteObject;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::Monster_ProjectTile);
+				info.Parameter2 = mProjecTile[i];
+
+				EventManager::GetInstance()->EventPush(info);
+			}
+		}
 	}
 
 	void AxeMonster::InitializeAnimation()
@@ -37,10 +74,13 @@ namespace sw
 		mAnimator->CreatAnimations(RName + L"Move", AXEMONSTER_R_PATH(L"Move"), Vector2::Zero, 0.2f);
 		mAnimator->CreatAnimations(LName + L"Move", AXEMONSTER_L_PATH(L"Move"), Vector2::Zero, 0.2f);
 
-		mAnimator->CreatAnimations(RName + L"Attack", AXEMONSTER_R_PATH(L"Attack"), Vector2(0.f, 0.f), 0.5f);
-		mAnimator->CreatAnimations(LName + L"Attack", AXEMONSTER_L_PATH(L"Attack"), Vector2(0.f, 0.f), 0.5f);
+		mAnimator->CreatAnimations(RName + L"Attack", AXEMONSTER_R_PATH(L"Attack"), Vector2(0.f, 0.f), 0.3f);
+		mAnimator->CreatAnimations(LName + L"Attack", AXEMONSTER_L_PATH(L"Attack"), Vector2(0.f, 0.f), 0.3f);
 
 		mAnimator->Play(RName + L"Idle", true);
+
+		mAnimator->PushImageEvent(RName + L"Attack", 9, std::bind(&AxeMonster::OnSkilAttack, this));
+		mAnimator->PushImageEvent(LName + L"Attack", 9, std::bind(&AxeMonster::OnSkilAttack, this));
 	}
 
 	void AxeMonster::InitializeBox()
@@ -60,5 +100,33 @@ namespace sw
 	void AxeMonster::Hit()
 	{
 		// hp °¨¼Ò
+	}
+
+	void AxeMonster::OnSkilAttack()
+	{
+		int a = 0;
+		float offset = 0.0f;
+
+		for (int i = 0; i < mProjecTile.size(); i++)
+		{
+			if (mDirction)
+				a += 200;
+			else
+				a -= 200;
+
+			mProjecTile[i]->SetDeath(false);
+			mProjecTile[i]->SetOffset(Vector2(a, 10));
+			mProjecTile[i]->SetScale(Vector2(4.0f,4.0f));
+			mProjecTile[i]->GetComponent<Animator>()->Play(mProjecTile[i]->GetEffectName());
+			mProjecTile[i]->SetStartOffset(offset);
+			offset += 0.2;
+
+			EventInfo info;
+			info.Type = EventType::AddObejct;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::Monster_ProjectTile);
+			info.Parameter2 = mProjecTile[i];
+
+			EventManager::GetInstance()->EventPush(info);
+		}
 	}
 }

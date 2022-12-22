@@ -44,6 +44,8 @@ namespace sw
 		int GetAlpha() { return mAlpha; }
 		void SetAlpha(int alpha) { mAlpha = alpha; }
 
+		UINT GetSpriteIndex() { return mSpriteIndex; }
+
 	private:
 		Animator* mAnimator;
 		Image* mImage;

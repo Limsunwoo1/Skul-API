@@ -13,6 +13,8 @@ namespace sw
 		, mReuse_Time(0.2f)
 		, mAble(false)
 		, mEffectName(L"")
+		, mOffeset(Vector2::Zero)
+		, mStartOffset(0.0f)
 	{
 		SetDeath(true);
 		Initialize();
@@ -26,8 +28,12 @@ namespace sw
 		if (IsDeath())
 			return;
 
+		mStartOffset -= Time::GetInstance()->DeltaTime();
+		if (mStartOffset > 0.0f)
+			return;
+
 		if (mTarget)
-			SetPos(mTarget->GetPos());
+			SetPos(mTarget->GetPos() + mOffeset);
 
 		if (mAble)
 			mDelta += Time::GetInstance()->DeltaTime();
@@ -38,9 +44,6 @@ namespace sw
 	{
 		if (IsDeath())
 			return;
-
-		if (mTarget)
-			SetPos(mTarget->GetPos());
 
 		GameObject::Render(hdc);
 	}

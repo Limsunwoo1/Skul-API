@@ -19,6 +19,7 @@ namespace sw
 		void SetOffset(Vector2 offset) { mOffset = offset; }
 		Vector2 GetOffset() { return mOffset; }
 
+		void InitAnimation();
 	private:
 		std::wstring mName;
 		Vector2 mOffset;

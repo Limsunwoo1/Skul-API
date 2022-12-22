@@ -38,17 +38,44 @@ namespace sw
 
 	void PlayScene::Initialize()
 	{
-		BackGround* bg = new BackGround();
-		bg->SetImage(L"Back", L"BackGround.bmp");
-		bg->Initialize();
-		bg->SetPos(Vector2(4000, 100.f));
-		bg->SetScale(Vector2(8000.f, 1800.f));
+		// 배경
+		BackGround* bg1 = new BackGround();
+		bg1->SetImage(L"Back", L"BackGround.bmp");
+		bg1->Initialize();
+		bg1->SetPos(Vector2(100, 500.f));
+		bg1->SetScale(Vector2(1600.f, 900.f));
 
+		BackGround* bg2 = new BackGround();
+		bg2->SetImage(L"Back", L"BackGround.bmp");
+		bg2->Initialize();
+		bg2->SetPos(Vector2(1700, 300.f));
+		bg2->SetScale(Vector2(1600.f, 900.f));
 
+		BackGround* bg3 = new BackGround();
+		bg3->SetImage(L"Back", L"BackGround.bmp");
+		bg3->Initialize();
+		bg3->SetPos(Vector2(3300, 100.f));
+		bg3->SetScale(Vector2(1600.f, 900.f));
 
-		//SwordSkul* swordSkul = new SwordSkul();
-		//BasicSkul* basicskul = new BasicSkul();
+		BackGround* bg4 = new BackGround();
+		bg4->SetImage(L"Back", L"BackGround.bmp");
+		bg4->Initialize();
+		bg4->SetPos(Vector2(4900, 100.f));
+		bg4->SetScale(Vector2(1600.f, 900.f));
 
+		BackGround* bg5 = new BackGround();
+		bg5->SetImage(L"Back", L"BackGround.bmp");
+		bg5->Initialize();
+		bg5->SetPos(Vector2(6500, 100.f));
+		bg5->SetScale(Vector2(1600.f, 900.f));
+
+		AddGameObject(bg1, eColliderLayer::BackGround);
+		AddGameObject(bg2, eColliderLayer::BackGround);
+		AddGameObject(bg3, eColliderLayer::BackGround);
+		AddGameObject(bg4, eColliderLayer::BackGround);
+		AddGameObject(bg5, eColliderLayer::BackGround);
+
+		// 몬스터
 		SwordMonster* monster1 = new SwordMonster();
 		monster1->SetPos(Vector2(1665.f, 200.f));
 		monster1->SetDirction(false);
@@ -69,42 +96,12 @@ namespace sw
 		MaidMonster_1* monster6 = new MaidMonster_1();
 		monster6->SetPos(Vector2(5400.f, 350.f));
 
-		AddGameObject(bg,eColliderLayer::BackGround);
 		AddGameObject(monster4, eColliderLayer::Monster);
 		AddGameObject(monster5, eColliderLayer::Monster);
 		AddGameObject(monster1, eColliderLayer::Monster);
 		AddGameObject(monster2, eColliderLayer::Monster);
 		AddGameObject(monster3, eColliderLayer::Monster);
 		AddGameObject(monster6, eColliderLayer::Monster);
-
-		/*AttackCollider* R_attack1 = new AttackCollider(swordSkul);
-		R_attack1->SetScale(Vector2(80.f, 80.f));
-		R_attack1->SetOffset(Vector2(50.f, -25.f));
-		R_attack1->SetName(L"R_Basic_AttackA");
-
-		AttackCollider* R_attack2 = new AttackCollider(swordSkul);
-		R_attack2->SetScale(Vector2(80.f, 80.f));
-		R_attack2->SetOffset(Vector2(70.f, -25.f));
-		R_attack2->SetName(L"R_Basic_AttackB");
-
-		AttackCollider* L_attack1 = new AttackCollider(swordSkul);
-		L_attack1->SetScale(Vector2(80.f, 80.f));
-		L_attack1->SetOffset(Vector2(-50.f, -25.f));
-		L_attack1->SetName(L"L_Basic_AttackA");
-
-		AttackCollider* L_attack2 = new AttackCollider(swordSkul);
-		L_attack2->SetScale(Vector2(80.f, 80.f));
-		L_attack2->SetOffset(Vector2(-70.f, -25.f));
-		L_attack2->SetName(L"L_Basic_AttackB");
-
-		AddGameObject(R_attack1, eColliderLayer::Player_ProjectTile);
-		AddGameObject(R_attack2, eColliderLayer::Player_ProjectTile);
-		AddGameObject(L_attack1, eColliderLayer::Player_ProjectTile);
-		AddGameObject(L_attack2, eColliderLayer::Player_ProjectTile);*/
-
-		/*AddGameObject(ms1, eColliderLayer::Monster);
-		AddGameObject(ms2, eColliderLayer::Monster);*/
-
 	}
 
 	void PlayScene::Tick()

@@ -3,7 +3,7 @@
 #include "PlayerBase.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "Effect.h"
+#include "EffectObject.h"
 #include "ObjectProjecTile.h"
 
 namespace sw
@@ -14,7 +14,7 @@ namespace sw
 	}
 	ObjectManager::~ObjectManager()
 	{
-
+		
 	}
 
 	void ObjectManager::Initialize()
@@ -39,12 +39,10 @@ namespace sw
 			return;
 
 		scene->AddGameObject(mPlayer, eColliderLayer::Player);
+
 		if (mPlayer->GetPlayer() != nullptr)
 		{
 			PlayerBase* player = mPlayer->GetPlayer();
-			EffectObject* effect = player->GetEffect();
-			scene->AddGameObject((GameObject*)effect, eColliderLayer::EFFECT);
-
 			for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 			{
 				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjectTile);
@@ -54,8 +52,6 @@ namespace sw
 		if (mPlayer->GetNextPlayer() != nullptr)
 		{
 			PlayerBase* player = mPlayer->GetNextPlayer();
-			EffectObject* effect = player->GetEffect();
-			scene->AddGameObject((GameObject*)effect, eColliderLayer::EFFECT);
 			for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 			{
 				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjectTile);
@@ -71,23 +67,41 @@ namespace sw
 		if (!mPlayer)
 			return;
 
-		EffectObject* effect1 = mPlayer->GetPlayer()->GetEffect();
 		scene->DeleteGameObject(mPlayer, eColliderLayer::Player);
-		scene->DeleteGameObject((GameObject*)effect1, eColliderLayer::EFFECT);
 
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
 			scene->DeleteGameObject(mPlayer->GetPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjectTile);
 		}
 
-		EffectObject* effect2 = mPlayer->GetNextPlayer()->GetEffect();
-		scene->DeleteGameObject((GameObject*)effect2, eColliderLayer::EFFECT);
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
 			scene->DeleteGameObject(mPlayer->GetNextPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjectTile);
 		}
 	}
 
+	EffectObject* ObjectManager::GetEffectObject()
+	{
+		EffectObject* effect = nullptr;
+		if (mEffects.empty())
+		{
+			effect = new EffectObject();
+			effect->SetDeath(false);
+			return effect;
+		}
+
+		effect = mEffects.front();
+		mEffects.pop();
+		effect->SetDeath(false);
+
+		return effect;
+	}
+
+	void ObjectManager::PushEffectObject(EffectObject* object)
+	{
+		object->SetDeath(true);
+		mEffects.push(object);
+	}
 }
 
 

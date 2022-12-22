@@ -37,6 +37,21 @@ namespace sw
 		collider->SetScale(Vector2(80.f, 80.f));
 		collider->SetOwner(this);
 
+		// 왼쪽 쉐도우 먼저 false == left
+		Shadow* LShaow = new Shadow();
+		LShaow->SetOffset(Vector2(-50.f, 0));
+		LShaow->SetScale(Vector2(4.f, 4.f));
+		LShaow->Initialize(L"L_Sword_DashShadow", L"..\\Resource\\Animation\\SwordSkul\\L_Sword\\DashEffect\\Dash_0.bmp");
+		LShaow->SetTarget(this);
+		mShadows.push_back(LShaow);
+
+		Shadow* RShaow = new Shadow();
+		RShaow->SetOffset(Vector2(50.f, 0));
+		RShaow->SetScale(Vector2(4.f, 4.f));
+		RShaow->Initialize(L"R_Sword_DashShadow", L"..\\Resource\\Animation\\SwordSkul\\R_Sword\\DashEffect\\Dash_0.bmp");
+		RShaow->SetTarget(this);
+		mShadows.push_back(RShaow);
+
 		this->SetState(ePlayerState::IDLE);
 		Camera::GetInstance()->SetTarget(this);
 	}
@@ -45,6 +60,11 @@ namespace sw
 		GameObject::~GameObject();
 		if (mState)
 			delete mState;
+
+		for (int i = 0; i < mShadows.size(); ++i)
+			delete mShadows[i];
+
+		mShadows.clear();
 	}
 	void SwordSkul::Tick()
 	{
@@ -54,6 +74,8 @@ namespace sw
 		mState->Tick();
 		GameObject::Tick();
 
+		if (mShadows[mSlidingDirction])
+			mShadows[mSlidingDirction]->Tick();
 	}
 	void SwordSkul::Render(HDC hdc)
 	{
@@ -64,7 +86,8 @@ namespace sw
 		Vector2 scale = GetScale();
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
-
+		if (mShadows[mSlidingDirction])
+			mShadows[mSlidingDirction]->Render(hdc);
 
 		GameObject::Render(hdc);
 
@@ -122,10 +145,15 @@ namespace sw
 
 		mAnimator->CreatAnimations(L"R_Sword_Switch", SWORDSKUL_R_PATH(L"Switch"), Vector2(0.f, 35.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Sword_Switch", SWORDSKUL_L_PATH(L"Switch"), Vector2(0.f, 35.f), 0.15f);
-
 		AddComponent(mAnimator);
 
 		mAnimator->Play(L"R_Sword_IDLE", true);
+
+		mAnimator->GetStartEvent(L"R_Sword_Dash") = std::bind(&PlayerBase::DashSmoke, this);
+		mAnimator->GetStartEvent(L"L_Sword_Dash") = std::bind(&PlayerBase::DashSmoke, this);
+
+		mAnimator->GetStartEvent(L"R_Sword_Jump") = std::bind(&PlayerBase::JumpSmoke, this);
+		mAnimator->GetStartEvent(L"L_Sword_Jump") = std::bind(&PlayerBase::JumpSmoke, this);
 	}
 	void SwordSkul::InitState()
 	{
@@ -212,7 +240,7 @@ namespace sw
 		// 프로젝타일 세팅
 		ObjectProjecTile* SwitchProjec = mSkils[(int)eSkilType::Switch];
 		SwitchProjec->SetScale(Vector2(3.0f, 3.0f));
-		SwitchProjec->SetEvent(std::bind(&SwordSkul::SwitchProject, this, std::placeholders::_1));
+		SwitchProjec->SetEvent(std::bind(&SwordSkul::SwitchProjecTile, this, std::placeholders::_1));
 		SwitchProjec->SetTarget(this);
 		SwitchProjec->SetReuse_Time(0.1f);
 		SwitchProjec->SetEffectName(L"Sword_Switch_Effect");
@@ -231,7 +259,7 @@ namespace sw
 	{
 
 	}
-	void SwordSkul::SwitchProject(GameObject* object)
+	void SwordSkul::SwitchProjecTile(GameObject* object)
 	{
 	}
 }

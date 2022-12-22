@@ -9,7 +9,6 @@ namespace sw
 		AddObejct,
 		DeleteObject,
 		ChangeScene,
-		PlayerSwitch,
 		End,
 	};
 

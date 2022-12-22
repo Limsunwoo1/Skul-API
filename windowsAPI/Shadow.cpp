@@ -34,6 +34,8 @@ namespace sw
 		{
 			Effect* effect = new Effect();
 			effect->SetImage(key, path);
+			effect->SetOffset(GetOffset());
+			effect->SetScale(GetScale());
 			mShadows.push_back(effect);
 		}
 	}
@@ -45,7 +47,7 @@ namespace sw
 		if (!mTarget->GetIsShadow())
 			return;
 
-		if (mCurEffect >= 10)
+		if (mCurEffect >= mShdowMax)
 		{
 			mTarget->SetIsShadow(false);
 			mCurEffect = 0;
@@ -64,13 +66,11 @@ namespace sw
 		{
 			mShadows[i]->Tick();
 		}
-		LOG(STRING("½¦µµ¾î Æ½"))
 	}
 
 
 	void Shadow::Render(HDC hdc)
 	{
-		LOG(STRING("½¦µµ¾î ·£´õ"))
 		if (mTarget == nullptr)
 			return;
 		if (!mTarget->GetIsShadow())
@@ -80,7 +80,6 @@ namespace sw
 		{
 			mShadows[i]->Render(hdc);
 		}
-
 	}
 
 	void Shadow::SetTarget(PlayerBase* target)

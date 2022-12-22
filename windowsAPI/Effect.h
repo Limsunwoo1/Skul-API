@@ -21,11 +21,21 @@ namespace sw
 		PlayerBase* GetTarget() { return mTarget; }
 
 		void SetPos(Vector2 pos) { mPos = pos; }
+		Vector2 GetPos() { return mPos; }
+
+		void SetOffset(Vector2 offset) { mOffset = offset; }
+		Vector2 GetOffset() { return mOffset; }
+
+		void SetScale(Vector2 scale) { mScale = scale; }
+		Vector2 GetScale() { return mScale; }
 
 	private:
 		Image* mImage;
-		Vector2 mPos;
 		PlayerBase* mTarget;
+
+		Vector2 mPos;
+		Vector2 mOffset;
+		Vector2 mScale;
 	};
 }
 

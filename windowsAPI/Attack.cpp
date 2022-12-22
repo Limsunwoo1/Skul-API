@@ -83,6 +83,7 @@ namespace sw
 
 		// 렌더용 현제 충돌체 정보
 		player->SetColliderBox(mColliderBox);
+		// 충돌체크
 		for (GameObject* object : objects)
 		{
 			Collider* collider = object->GetComponent<Collider>();
@@ -95,8 +96,8 @@ namespace sw
 			mTemp.push_back(object);
 			collider->OnCollisionEnter();
 
-			// Attakc Effect 함수 수정
-			//GetTarget()->OnAttackEffect(object);
+			// 플레이어에 공격시 피격이펙트
+			GetTarget()->OnAttackEffect(object);
 
 			MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
 			if (monster != nullptr)

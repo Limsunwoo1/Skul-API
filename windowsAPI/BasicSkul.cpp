@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "EventManager.h"
 #include "Application.h"
+#include "ObjectManager.h"
 
 #include "Scene.h"
 #include "Image.h"
@@ -53,12 +54,16 @@ namespace sw
 
 		// 왼쪽 쉐도우 먼저 false == left
 		Shadow* LShaow = new Shadow();
-		LShaow->Initialize(L"L_DashShadow", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\DashEffect\\L_DashEffect.bmp");
+		LShaow->SetOffset(Vector2(-50.f, 0));
+		LShaow->SetScale(GetScale());
+		LShaow->Initialize(L"L_Basic_DashShadow", L"..\\Resource\\Animation\\BasicSkul\\L_Basic\\DashEffect\\L_DashEffect.bmp");
 		LShaow->SetTarget(this);
 		mShadows.push_back(LShaow);
 
 		Shadow* RShaow = new Shadow();
-		RShaow->Initialize(L"R_DashShadow", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\DashEffect\\R_DashEffect.bmp");
+		RShaow->SetOffset(Vector2(50.f, 0));
+		RShaow->SetScale(GetScale());
+		RShaow->Initialize(L"R_Basic_DashShadow", L"..\\Resource\\Animation\\BasicSkul\\R_Basic\\DashEffect\\R_DashEffect.bmp");
 		RShaow->SetTarget(this);
 		mShadows.push_back(RShaow);
 
@@ -87,9 +92,8 @@ namespace sw
 		mState->Tick();
 		GameObject::Tick();
 
-		mDirction = mState->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
-		if (mShadows[mDirction])
-			mShadows[mDirction]->Tick();
+		if (mShadows[mSlidingDirction])
+			mShadows[mSlidingDirction]->Tick();
 	}
 
 	void BasicSkul::Render(HDC hdc)
@@ -101,8 +105,8 @@ namespace sw
 		Vector2 scale = GetScale();
 		pos = Camera::GetInstance()->CalculatePos(pos);
 
-		if (mShadows[mDirction])
-			mShadows[mDirction]->Render(hdc);
+		if (mShadows[mSlidingDirction])
+			mShadows[mSlidingDirction]->Render(hdc);
 
 		GameObject::Render(hdc);
 
@@ -248,14 +252,17 @@ namespace sw
 
 	void BasicSkul::InitSkils()
 	{
-		ObjectProjecTile* SwitchProject = mSkils[(int)eSkilType::Switch];
-		SwitchProject->SetEvent(std::bind(&BasicSkul::SwitchProject, this, std::placeholders::_1));
-		SwitchProject->SetTarget(this);
-		SwitchProject->SetReuse_Time(0.4f);
-		Collider* collider = SwitchProject->GetComponent<Collider>();
+		// 스위치 스킬
+		ObjectProjecTile* SwitchProjecTile = mSkils[(int)eSkilType::Switch];
+		SwitchProjecTile->SetEvent(std::bind(&BasicSkul::SwitchProjecTile, this, std::placeholders::_1));
+		SwitchProjecTile->SetTarget(this);
+		SwitchProjecTile->SetReuse_Time(0.4f);
+		Collider* collider = SwitchProjecTile->GetComponent<Collider>();
 		collider->SetScale(Vector2(110.f, 80.f));
 
+		// 스킬 A
 		ObjectProjecTile* SkilA = mSkils[(int)eSkilType::SkilA];
+		// 스킬 B
 		ObjectProjecTile* SkilB = mSkils[(int)eSkilType::SkilB];
 	}
 
@@ -270,7 +277,7 @@ namespace sw
 			rigidbody->AddForce(Vector2(-200.f, 0.f));
 	}
 
-	void BasicSkul::SwitchProject(GameObject* object)
+	void BasicSkul::SwitchProjecTile(GameObject* object)
 	{
 		Rigidbody* rgid = object->GetComponent<Rigidbody>();
 
@@ -283,16 +290,31 @@ namespace sw
 	void BasicSkul::OnAttackEffect(GameObject* other)
 	{
 		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
-		Animator* animator = mEffect->GetComponent<Animator>();
-		mEffect->SetDeath(false);
-		mEffect->SetPos(other->GetPos());
-		mEffect->SetScale(Vector2(2.0f, 2.0f));
+		EffectObject* effect = ObjectManager::GetInstance()->GetEffectObject();
+		Vector2 otherPos = other->GetPos();
 
-		/*if (dirction)
-			animator->Play(L"R_AttackEffect");
-		else
-			animator->Play(L"L_AttackEffect");*/
-
+		Animator* animator = effect->GetComponent<Animator>();
 		animator->SetAlpha(225);
+		if (dirction)
+		{
+			otherPos.x += 20.f;
+			animator->Play(L_BASICSKUL_HITEFT);
+		}
+		else
+		{
+			otherPos.x -= 20.f;
+			animator->Play(R_BASICSKUL_HITEFT);
+		}
+
+		effect->SetPos(otherPos);
+		effect->SetScale(Vector2(1.5f, 1.5f));
+
+
+		EventInfo info;
+		info.Type = EventType::AddObejct;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::EFFECT);
+		info.Parameter2 = effect;
+
+		EventManager::GetInstance()->EventPush(info);
 	}
 }

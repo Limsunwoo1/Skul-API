@@ -66,7 +66,8 @@ namespace sw
 	{
 		mDirtion =
 			GetTarget()->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
-
+		GetTarget()->SetSildingDirction(mDirtion);
+		
 		bSliding = true;
 
 		Animator* animator = GetTarget()->GetComponent<Animator>();

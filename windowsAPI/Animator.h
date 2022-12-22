@@ -24,6 +24,18 @@ namespace sw
 
 			std::function<void()> mEvent;
 		};
+		struct ImageEvent
+		{
+			std::wstring	mName;
+			UINT			mSheetNum;
+			Event			mEvent;
+			ImageEvent()
+			{
+				mName = L"";
+				mSheetNum = 0;
+				mEvent = nullptr;
+			};
+		};
 		struct Events
 		{
 			Event mStartEvent;
@@ -59,18 +71,24 @@ namespace sw
 		std::function<void()>& GetCompleteEvent(const std::wstring key);
 		std::function<void()>& GetEndEvent(const std::wstring key);
 
+		void PushImageEvent(const std::wstring key, UINT sheetIndex, std::function<void()> fun);
 		void SetAlpha(int alpha) { mAlpha = alpha; }
 		int GetAlpha() { return mAlpha; }
-
+	private:
+		void ImageEventCheck();
+		void FindImageEvent(const std::wstring name);
 	private:
 		std::map<const std::wstring, Animation*> mAnimations;
 		std::map<const std::wstring, Events*> mEvents;
+		std::vector<ImageEvent*> mImageEvent;
+		ImageEvent* mCurEvent;
 
 		Animation* mPlayAnimation;
 		Image* mSpriteSheet;
 		int mAlpha;
 
 		bool mbLoop;
+		bool mEvent_Run;
 	};
 }
 

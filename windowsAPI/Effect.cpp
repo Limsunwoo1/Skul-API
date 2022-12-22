@@ -40,6 +40,8 @@ namespace sw
 			return;
 
 		Vector2 pos = Camera::GetInstance()->CalculatePos(mPos);
+		pos -= mOffset;
+		Vector2 scale = GetScale();
 
 		BLENDFUNCTION func = {};
 		func.BlendOp = AC_SRC_OVER;
@@ -48,10 +50,10 @@ namespace sw
 		func.SourceConstantAlpha = 100; // 0 - 225
 
 		AlphaBlend(hdc
-			, (int)pos.x - 50.f
-			, (int)pos.y - 50.f
-			, (int)100.f
-			, (int)100.f
+			, (int)pos.x - ((mImage->GetWidth()* 0.5f) * (scale.x * 0.5f))
+			, (int)pos.y - ((mImage->GetHeight()* 0.5f) * (scale.x * 0.5f))
+			, (int)mImage->GetWidth() * (scale.y * 0.5f)
+			, (int)mImage->GetHeight() * (scale.y * 0.5f)
 			, mImage->GetDC()
 			, (int)0
 			, (int)0

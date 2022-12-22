@@ -10,7 +10,6 @@ namespace sw
 	class StateHandle;
 	class Animator;
 	class Image;
-	class EffectObject;
 	class ObjectProjecTile;
 
 	enum class eSkilType
@@ -64,15 +63,16 @@ namespace sw
 
 		void SetColliderBox(Box box) { mColliderBox = box; }
 
-		EffectObject* GetEffect() { return mEffect; }
+		void SetSildingDirction(bool dir) { mSlidingDirction = dir; }
+		bool GetSildingDirction() { return mSlidingDirction; }
+
 		ObjectProjecTile* GetProjecTile(eSkilType type) { return mSkils[(int)type]; }
 
-		virtual void SwitchProject(GameObject* other){};
+		virtual void SwitchProjecTile(GameObject* other){};
 	protected:
 		StateHandle* mState;
 		Image* mImage;
 		Animator* mAnimator;
-		EffectObject* mEffect;
 
 		vector<ObjectProjecTile*> mSkils;
 		vector<pair<wstring, Box>> mColliders;
@@ -83,7 +83,7 @@ namespace sw
 
 		std::vector<Shadow*> mShadows;
 		bool mbShadow;
-		bool mDirction;
+		bool mSlidingDirction;
 	};
 }
 

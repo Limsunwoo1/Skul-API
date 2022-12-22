@@ -10,6 +10,7 @@ namespace sw
 		, mPlayAnimation(nullptr)
 		, mbLoop(false)
 		, mAlpha(255)
+		, mEvent_Run(false)
 	{
 
 	}
@@ -27,7 +28,14 @@ namespace sw
 		{
 			delete iter.second;
 		}
+
+		for (auto iter : mImageEvent)
+		{
+			delete iter;
+		}
+
 		mEvents.clear();
+		mImageEvent.clear();
 	}
 
 	void Animator::Tick()
@@ -35,6 +43,8 @@ namespace sw
 		if (mPlayAnimation != nullptr)
 		{
 			mPlayAnimation->Tick();
+			if (mEvent_Run)
+				ImageEventCheck();
 
 			if (mbLoop && mPlayAnimation->isComplete())
 			{
@@ -162,6 +172,8 @@ namespace sw
 		mPlayAnimation->Reset();
 		mbLoop = bLoop;
 
+		FindImageEvent(mPlayAnimation->GetName());
+
 		if (prevAnimation != mPlayAnimation)
 		{
 			if (events != nullptr)
@@ -204,5 +216,43 @@ namespace sw
 		Events* events = FindEvents(key);
 
 		return events->mEndEvent.mEvent;
+	}
+
+	void Animator::PushImageEvent(const std::wstring key, UINT sheetIndex, std::function<void()> fun)
+	{
+		ImageEvent* event = new ImageEvent();
+		event->mName = key;
+		event->mSheetNum = sheetIndex;
+		event->mEvent = fun;
+
+		mImageEvent.push_back(event);
+	}
+
+	void Animator::ImageEventCheck()
+	{
+		if (mCurEvent == nullptr)
+			return;
+		if (mCurEvent->mName != mPlayAnimation->GetName())
+			return;
+		if (mCurEvent->mSheetNum != mPlayAnimation->GetSpriteIndex())
+			return;
+
+		mCurEvent->mEvent();
+		mCurEvent = nullptr;
+		mEvent_Run = false;
+	}
+
+	void Animator::FindImageEvent(const std::wstring name)
+	{
+		if (mPlayAnimation == nullptr)
+			return;
+		for (ImageEvent* event : mImageEvent)
+		{
+			if (event->mName == name)
+			{
+				mCurEvent = event;
+				mEvent_Run = true;
+			}
+		}
 	}
 }

@@ -5,7 +5,7 @@
 #include "ResourceManager.h"
 #include "Camera.h"
 #include "EventManager.h"
-#include "EffectObject.h"
+#include "ObjectManager.h"
 
 #include "Scene.h"
 #include "Image.h"
@@ -18,24 +18,18 @@
 #include "EffectObject.h"
 #include "ObjectProjecTile.h"
 #include "Move.h"
+#include "Path.h"
 
 
 namespace sw
 {
 	PlayerBase::PlayerBase()
+		: mSlidingDirction(true)
 	{
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
 			mSkils.push_back(new ObjectProjecTile());
 		}
-
-		mEffect = new EffectObject();
-		Animator* animator = mEffect->GetComponent<Animator>();
-
-		animator->CreatAnimations(L"R_DashSmoke", L"..\\Resource\\Animation\\Effect\\R_DashSmoke", Vector2(65.f, 0.f), 0.1f);
-		animator->CreatAnimations(L"L_DashSmoke", L"..\\Resource\\Animation\\Effect\\L_DashSmoke", Vector2(-65.f, 0.f), 0.1f);
-
-		animator->CreatAnimations(L"JumpSmoke", L"..\\Resource\\Animation\\Effect\\JumpSmoke", Vector2(0.f, -40.f), 0.05f);
 	}
 
 	PlayerBase::~PlayerBase()
@@ -77,29 +71,42 @@ namespace sw
 	void PlayerBase::DashSmoke()
 	{
 		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
-		Animator* animator = mEffect->GetComponent<Animator>();
-		mEffect->SetDeath(false);
-		mEffect->SetPos(GetPos());
-		mEffect->SetScale(Vector2(5.0f, 5.0f));
+		EffectObject* effect = ObjectManager::GetInstance()->GetEffectObject();
+		Animator* animator = effect->GetComponent<Animator>();
+		effect->SetPos(GetPos());
+		effect->SetScale(Vector2(5.0f, 5.0f));
 
 		if (dirction)
-			animator->Play(L"R_DashSmoke");
+			animator->Play(R_SKUL_DASHSMOKE);
 		else
-			animator->Play(L"L_DashSmoke");
+			animator->Play(L_SKUL_DASHSMOKE);
 
 		animator->SetAlpha(255);
+
+		EventInfo info;
+		info.Type = EventType::AddObejct;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::EFFECT);
+		info.Parameter2 = effect;
+
+		EventManager::GetInstance()->EventPush(info);
 	}
 
 	void PlayerBase::JumpSmoke()
 	{
-		Animator* animator = mEffect->GetComponent<Animator>();
-		mEffect->SetDeath(false);
-		
-		mEffect->SetPos(GetPos());
-		mEffect->SetScale(Vector2(1.0f, 1.0f));
+		EffectObject* effect = ObjectManager::GetInstance()->GetEffectObject();
+		Animator* animator = effect->GetComponent<Animator>();
+		effect->SetPos(GetPos());
+		effect->SetScale(Vector2(1.0f, 1.0f));
 
-		animator->Play(L"JumpSmoke");
+		animator->Play(SKUL_JUMPSMOKE);
 		animator->SetAlpha(255);
+
+		EventInfo info;
+		info.Type = EventType::AddObejct;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::EFFECT);
+		info.Parameter2 = effect;
+
+		EventManager::GetInstance()->EventPush(info);
 	}
 
 	void PlayerBase::SetState(ePlayerState type)

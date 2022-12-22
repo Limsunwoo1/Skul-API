@@ -4,6 +4,7 @@
 namespace sw
 {
 	class MainPlayer;
+	class EffectObject;
 	class ObjectManager
 	{
 		SINGLE(ObjectManager);
@@ -17,8 +18,12 @@ namespace sw
 		void AddObject(eSceneType type);
 		void DeleteObject(eSceneType type);
 
+		EffectObject* GetEffectObject();
+		void PushEffectObject(EffectObject* object);
+
 	private:
 		MainPlayer* mPlayer;
+		std::queue<EffectObject*> mEffects;
 	};
 }
 

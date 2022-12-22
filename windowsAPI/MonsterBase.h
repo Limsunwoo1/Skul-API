@@ -62,6 +62,9 @@ namespace sw
 		void SetHold(bool hold) { mHold = hold; }
 		void Hold();
 
+		bool GetHiting() { return mHiting; }
+		void SetHiting(bool hit) { mHiting = hit; }
+
 		GameObject* GetTarget() { return mTarget; }
 		void SetTarget(GameObject* object) { mTarget = object; }
 
@@ -94,6 +97,7 @@ namespace sw
 		bool mArmer;
 		bool mStaring;
 		bool mHold;
+		bool mHiting;
 
 		UINT32 mAttackX;
 		UINT32 mAttackY;

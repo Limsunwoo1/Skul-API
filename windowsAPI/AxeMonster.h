@@ -3,6 +3,7 @@
 
 namespace sw
 {
+	class ObjectProjecTile;
 	class AxeMonster : public MonsterBase
 	{
 	public:
@@ -13,6 +14,12 @@ namespace sw
 		virtual void InitializeBox() override;
 		virtual void InitalizeCollider() override;
 
+		virtual void Tick() override;
+
 		virtual void Hit() override;
+
+		void OnSkilAttack();
+	private:
+		std::vector<ObjectProjecTile*> mProjecTile;
 	};
 }

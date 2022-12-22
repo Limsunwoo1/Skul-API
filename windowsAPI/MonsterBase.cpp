@@ -303,6 +303,7 @@ namespace sw
 				rigidbody->AddForce(Vector2(1000.f, 0.f));
 
 			mState[(int)eMonsterState::HIT] = true;
+			SetHiting(true);
 		}
 
 		if (mDelta > 1.0f)
@@ -311,6 +312,7 @@ namespace sw
 			mState[(int)eMonsterState::HIT] = false;
 			mPrevState = mCurState;
 			mCurState = eMonsterState::MOVE;
+			SetHiting(false);
 		}
 	}
 	void MonsterBase::Staring()
@@ -427,10 +429,13 @@ namespace sw
 					mDirction = true;
 			}
 
-			mState[(UINT32)mCurState] = false;
-			mPrevState = mCurState;
-			SetDelta(Delta);
-			SetState(eMonsterState::IDLE);
+			if (!mHiting)
+			{
+				mState[(UINT32)mCurState] = false;
+				mPrevState = mCurState;
+				SetDelta(Delta);
+				SetState(eMonsterState::IDLE);
+			}
 		}
 
 		if (mCurState == eMonsterState::ATTACK)
@@ -469,6 +474,10 @@ namespace sw
 
 	void MonsterBase::Hold()
 	{
+		mHold = false;
+		if (mHiting)
+			return;
+
 		mState[(UINT32)mCurState] = false;
 		mPrevState = mCurState;
 		SetDelta(0.0f);

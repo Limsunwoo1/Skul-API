@@ -25,17 +25,27 @@ namespace sw
 		void SetReuse_Time(float speed) {mReuse_Time = speed; }
 		float GetReuse_Time() { return mReuse_Time; }
 
+		void SetOffset(Vector2 offset) { mOffeset = offset; }
+		Vector2 GetOffset() { return mOffeset; }
+
 		void SetEvent(const TColliderEvent& event);
 
 		void SetEffectName(const std::wstring& name) { mEffectName = name; }
 		std::wstring GetEffectName() { return mEffectName; }
+
+		void SetStartOffset(float offset = 0.0f) {mStartOffset = offset;}
+		float GetStartOffset() { return mStartOffset; }
+
 	private:
 		TColliderEvent Event;
 		Animator* mAnimator;
 		GameObject* mTarget;
+		Vector2 mOffeset;
 
 		float mDelta;
 		float mReuse_Time;
+		float mStartOffset;
+
 		bool mAble;
 
 		std::wstring mEffectName;

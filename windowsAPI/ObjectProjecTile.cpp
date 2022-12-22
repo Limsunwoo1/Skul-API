@@ -45,6 +45,9 @@ namespace sw
 		if (IsDeath())
 			return;
 
+		if (mStartOffset > 0.0f)
+			return;
+
 		GameObject::Render(hdc);
 	}
 	void ObjectProjecTile::Initialize()
@@ -58,6 +61,9 @@ namespace sw
 	void ObjectProjecTile::OnCollisionEnter(Collider* other)
 	{
 		if (mAble)
+			return;
+
+		if (mStartOffset > 0.0f)
 			return;
 
 		mAble = true;

@@ -27,7 +27,12 @@
 #include "ObjectProjecTile.h"
 
 #include <iostream>
+#include <random>
 
+
+std::random_device random;
+std::mt19937 gen(random());
+std::uniform_int_distribution<int> YPos(1, 4);
 
 namespace sw
 {
@@ -292,7 +297,8 @@ namespace sw
 		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		EffectObject* effect = ObjectManager::GetInstance()->GetEffectObject();
 		Vector2 otherPos = other->GetPos();
-
+		Vector2 colScale = other->GetComponent<Collider>()->GetScale();
+		Vector2 scale = colScale;
 		Animator* animator = effect->GetComponent<Animator>();
 		animator->SetAlpha(225);
 		if (dirction)
@@ -306,6 +312,10 @@ namespace sw
 			animator->Play(R_BASICSKUL_HITEFT);
 		}
 
+		int i = YPos(gen);
+		scale.y = scale.y / i;
+		LOG(STRING("scale %f", scale.y))
+		otherPos.y = otherPos.y - (colScale.y  * 0.5f)+ scale.y;
 		effect->SetPos(otherPos);
 		effect->SetScale(Vector2(1.5f, 1.5f));
 

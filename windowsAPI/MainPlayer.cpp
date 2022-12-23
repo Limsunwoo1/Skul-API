@@ -120,8 +120,8 @@ namespace sw
 
 		if (mNextPlayer != nullptr)
 		{
-			if (type != ePlayerState::SKILL_1
-				&& type != ePlayerState::SKILL_2
+			if (type != ePlayerState::SKILL_A
+				&& type != ePlayerState::SKILL_B
 				&& type != ePlayerState::SLIDING
 				&& type != ePlayerState::SWITCH)
 			{

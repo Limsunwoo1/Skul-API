@@ -25,6 +25,11 @@ namespace sw
 		bool GetFreezCamera() { return bFreezCamera; }
 		void SetFreezCamera(bool ing) { bFreezCamera = ing; }
 
+		Vector2 GetCameraMaxPos() { return mCameraMaxPos; }
+		void SetCameraMaxPos(Vector2 pos) { mCameraMaxPos = pos; }
+
+		Vector2 GetCameraLowPos() { return mCameraLowPos; }
+		void SetCameraLowPos(Vector2 pos) { mCameraLowPos = pos; }
 	private:
 		Vector2 mResolution; // 화면 해상도
 		Vector2 mLookPosition;
@@ -40,6 +45,8 @@ namespace sw
 		bool bFreezCamera;
 		bool bToolMode;
 
+		Vector2 mCameraMaxPos;
+		Vector2 mCameraLowPos;
 	};
 }
 

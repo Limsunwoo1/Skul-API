@@ -15,6 +15,7 @@ namespace sw
 		, mEffectName(L"")
 		, mOffeset(Vector2::Zero)
 		, mStartOffset(0.0f)
+		, mNotMove(false)
 	{
 		SetDeath(true);
 		Initialize();
@@ -32,7 +33,8 @@ namespace sw
 		if (mStartOffset > 0.0f)
 			return;
 
-		if (mTarget)
+	
+		if (mTarget && !mNotMove)
 			SetPos(mTarget->GetPos() + mOffeset);
 
 		if (mAble)

@@ -38,6 +38,8 @@ namespace sw
 		virtual void InitSkils() = 0;
 
 		virtual void SwitchSkill(){};
+		virtual void OnSkilA() {};
+		virtual void OnSkilB() {};
 		virtual void DashSmoke();
 		virtual void JumpSmoke();
 		virtual void OnAttackEffect(GameObject* other){};

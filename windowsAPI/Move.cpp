@@ -90,6 +90,14 @@ namespace sw
 		{
 			nextState = ePlayerState::ATTACK;
 		}
+		else if (KEY_DOWN(eKeyCode::A))
+		{
+			nextState = ePlayerState::SKILL_A;
+		}
+		else if (KEY_DOWN(eKeyCode::S))
+		{
+			nextState = ePlayerState::SKILL_B;
+		}
 		else if (KEY_PRESSE(eKeyCode::LEFT) && KEY_DOWN(eKeyCode::Z)
 			 ||  KEY_PRESSE(eKeyCode::RIGHT) && KEY_DOWN(eKeyCode::Z))
 		{

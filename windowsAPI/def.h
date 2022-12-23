@@ -116,8 +116,8 @@ enum class ePlayerState
 	ATTACK,
 	JUMPATTACK,
 
-	SKILL_1,
-	SKILL_2,
+	SKILL_A,
+	SKILL_B,
 
 	SWITCH,
 	HIT,

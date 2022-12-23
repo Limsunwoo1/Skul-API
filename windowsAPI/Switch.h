@@ -16,7 +16,6 @@ namespace sw
 
 	private:
 		bool mSwitch;
-		sw::Animator::Event mSwitchSkill;
 	};
 }
 

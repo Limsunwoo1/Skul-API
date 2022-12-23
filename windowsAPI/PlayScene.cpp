@@ -40,31 +40,31 @@ namespace sw
 	{
 		// 배경
 		BackGround* bg1 = new BackGround();
-		bg1->SetImage(L"Back", L"BackGround.bmp");
+		bg1->SetImage(L"Back", L"01 #57758 복사.bmp");
 		bg1->Initialize();
 		bg1->SetPos(Vector2(100, 500.f));
 		bg1->SetScale(Vector2(1600.f, 900.f));
 
 		BackGround* bg2 = new BackGround();
-		bg2->SetImage(L"Back", L"BackGround.bmp");
+		bg2->SetImage(L"Back", L"01 #57758 복사.bmp");
 		bg2->Initialize();
 		bg2->SetPos(Vector2(1700, 300.f));
 		bg2->SetScale(Vector2(1600.f, 900.f));
 
 		BackGround* bg3 = new BackGround();
-		bg3->SetImage(L"Back", L"BackGround.bmp");
+		bg3->SetImage(L"Back", L"01 #57758 복사.bmp");
 		bg3->Initialize();
 		bg3->SetPos(Vector2(3300, 100.f));
 		bg3->SetScale(Vector2(1600.f, 900.f));
 
 		BackGround* bg4 = new BackGround();
-		bg4->SetImage(L"Back", L"BackGround.bmp");
+		bg4->SetImage(L"Back", L"01 #57758 복사.bmp");
 		bg4->Initialize();
 		bg4->SetPos(Vector2(4900, 100.f));
 		bg4->SetScale(Vector2(1600.f, 900.f));
 
 		BackGround* bg5 = new BackGround();
-		bg5->SetImage(L"Back", L"BackGround.bmp");
+		bg5->SetImage(L"Back", L"01 #57758 복사.bmp");
 		bg5->Initialize();
 		bg5->SetPos(Vector2(6500, 100.f));
 		bg5->SetScale(Vector2(1600.f, 900.f));
@@ -134,9 +134,11 @@ namespace sw
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjectTile, eColliderLayer::Monster);
-
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster_ProjectTile, eColliderLayer::Player);
 		ObjectManager::GetInstance()->AddObject(eSceneType::Play);
 		Camera::GetInstance()->SetTarget(ObjectManager::GetInstance()->GetPlayer());
+		Camera::GetInstance()->SetCameraMaxPos(Vector2(8571.f, 1457.f));
+		Camera::GetInstance()->SetCameraLowPos(Vector2(65.f, 0.f));
 	}
 
 	void PlayScene::Exit()

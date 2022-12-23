@@ -183,6 +183,12 @@
     <Filter Include="Engine\GameObject\ProjectObject">
       <UniqueIdentifier>{6be4f72f-4a77-4cef-9986-6e8b16306ee6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\StateHandle\State\SkilA">
+      <UniqueIdentifier>{0b20f149-eae5-49a7-bcf0-0924a0eb0477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\StateHandle\State\SkilB">
+      <UniqueIdentifier>{a08ebe81-63d6-4cfe-b287-3f2d935b110b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -407,6 +413,12 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>Engine\Manager\ObjectManager</Filter>
     </ClInclude>
+    <ClInclude Include="SkilA.h">
+      <Filter>Engine\StateHandle\State\SkilA</Filter>
+    </ClInclude>
+    <ClInclude Include="SkilB.h">
+      <Filter>Engine\StateHandle\State\SkilB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -600,6 +612,12 @@
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>Engine\Manager\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SkilA.cpp">
+      <Filter>Engine\StateHandle\State\SkilA</Filter>
+    </ClCompile>
+    <ClCompile Include="SkilB.cpp">
+      <Filter>Engine\StateHandle\State\SkilB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

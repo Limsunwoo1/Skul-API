@@ -19,6 +19,7 @@ namespace sw
 		virtual void Hit() override;
 
 		void OnSkilAttack();
+		void SkilAttack(GameObject* other);
 	private:
 		std::vector<ObjectProjecTile*> mProjecTile;
 	};

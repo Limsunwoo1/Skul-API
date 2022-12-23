@@ -36,6 +36,9 @@ namespace sw
 		void SetStartOffset(float offset = 0.0f) {mStartOffset = offset;}
 		float GetStartOffset() { return mStartOffset; }
 
+		void SetNotMove(bool move) { mNotMove = move; }
+		bool GetNotMove() { return mNotMove; }
+
 	private:
 		TColliderEvent Event;
 		Animator* mAnimator;
@@ -47,6 +50,7 @@ namespace sw
 		float mStartOffset;
 
 		bool mAble;
+		bool mNotMove;
 
 		std::wstring mEffectName;
 	};

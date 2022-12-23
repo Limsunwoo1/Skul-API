@@ -11,6 +11,8 @@
 #include "Drop.h"
 #include "Attack.h"
 #include "Switch.h"
+#include "SkilA.h"
+#include "SkilB.h"
 #include "Application.h"
 #include "Shadow.h"
 #include "ObjectProjecTile.h"
@@ -145,6 +147,13 @@ namespace sw
 
 		mAnimator->CreatAnimations(L"R_Sword_Switch", SWORDSKUL_R_PATH(L"Switch"), Vector2(0.f, 35.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Sword_Switch", SWORDSKUL_L_PATH(L"Switch"), Vector2(0.f, 35.f), 0.15f);
+
+		mAnimator->CreatAnimations(L"R_Sword_SkilA", SWORDSKUL_R_PATH(L"SkilA"), Vector2(0.f, 10.f), 0.07f);
+		mAnimator->CreatAnimations(L"L_Sword_SkilA", SWORDSKUL_L_PATH(L"SkilA"), Vector2(0.f, 10.f), 0.07f);
+
+		mAnimator->CreatAnimations(L"R_Sword_SkilB", SWORDSKUL_R_PATH(L"SkilB"), Vector2(0.f, 10.f), 0.07f);
+		mAnimator->CreatAnimations(L"L_Sword_SkilB", SWORDSKUL_L_PATH(L"SkilB"), Vector2(0.f, 10.f), 0.07f);
+
 		AddComponent(mAnimator);
 
 		mAnimator->Play(L"R_Sword_IDLE", true);
@@ -193,6 +202,14 @@ namespace sw
 		inswitch->SetR_Animation(L"R_Sword_Switch");
 		inswitch->SetL_Animation(L"L_Sword_Switch");
 
+		SkilA* skilA = new SkilA();
+		skilA->SetR_Animation(L"R_Sword_SkilA");
+		skilA->SetL_Animation(L"L_Sword_SkilA");
+
+		SkilB* skilB = new SkilB();
+		skilB->SetR_Animation(L"R_Sword_SkilB");
+		skilB->SetL_Animation(L"L_Sword_SkilB");
+
 		mState->PushState(ePlayerState::IDLE, idle);
 		mState->PushState(ePlayerState::MOVE, move);
 		mState->PushState(ePlayerState::JUMP, jump);
@@ -200,6 +217,8 @@ namespace sw
 		mState->PushState(ePlayerState::DROP, drop);
 		mState->PushState(ePlayerState::ATTACK, attack);
 		mState->PushState(ePlayerState::SWITCH, inswitch);
+		mState->PushState(ePlayerState::SKILL_A, skilA);
+		mState->PushState(ePlayerState::SKILL_B, skilB);
 	}
 
 	void SwordSkul::InitAttackCollider()
@@ -243,16 +262,43 @@ namespace sw
 		SwitchProjec->SetEvent(std::bind(&SwordSkul::SwitchProjecTile, this, std::placeholders::_1));
 		SwitchProjec->SetTarget(this);
 		SwitchProjec->SetReuse_Time(0.1f);
-		SwitchProjec->SetEffectName(L"Sword_Switch_Effect");
+		SwitchProjec->SetEffectName(L"Sword_Switch_Eft");
 
-		Collider* collider = SwitchProjec->GetComponent<Collider>();
-		collider->SetScale(Vector2(280.f, 70.f));
-		Animator* animator = SwitchProjec->GetComponent<Animator>();
-		animator->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\Effect\\SkeletonSword-Switch");
-		animator->SetAlpha(180);
+		Collider* collider1 = SwitchProjec->GetComponent<Collider>();
+		collider1->SetScale(Vector2(280.f, 70.f));
+		Animator* animator1 = SwitchProjec->GetComponent<Animator>();
+		animator1->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\Effect\\SkeletonSword-Switch");
+		animator1->SetAlpha(180);
 
+		// 스킬 A 세팅
 		ObjectProjecTile* SkilA = mSkils[(int)eSkilType::SkilA];
+		SkilA->SetScale(Vector2(5.0f, 3.0f));
+		SkilA->SetTarget(this);
+		SkilA->SetReuse_Time(0.1f);
+		SkilA->SetEffectName(L"_Sword_SkilA_Eft");
+		SkilA->SetOffset(Vector2(50.f, 0.f));
+		Collider* collider2 = SkilA->GetComponent<Collider>();
+		collider2->SetScale(Vector2(200.f, 70.f));
+		Animator* animator2 = SkilA->GetComponent<Animator>();
+		animator2->CreatAnimations(L"L_Sword_SkilA_Eft", L"..\\Resource\\Animation\\Effect\\L_SkeletonSwordSlashEffect");
+		animator2->CreatAnimations(L"R_Sword_SkilA_Eft", L"..\\Resource\\Animation\\Effect\\R_SkeletonSwordSlashEffect");
+		animator2->SetAlpha(255);
+		//스킬 B 세팅
 		ObjectProjecTile* SkilB = mSkils[(int)eSkilType::SkilB];
+		SkilB->SetScale(Vector2(5.0f, 3.0f));
+		SkilB->SetTarget(this);
+		SkilB->SetReuse_Time(0.1f);
+		SkilB->SetEffectName(L"_Sword_SkilB_Eft");
+		SkilB->SetOffset(Vector2(200.f, 0.f));
+		SkilB->SetNotMove(true);
+		Collider* collider3 = SkilB->GetComponent<Collider>();
+		collider3->SetScale(Vector2(300.f, 70.f));
+		Animator* animator3 = SkilB->GetComponent<Animator>();
+		animator3->CreatAnimations(L"L_Sword_SkilB_Eft", L"..\\Resource\\Animation\\Effect\\L_SkiletonSwordPierceEffect");
+		animator3->CreatAnimations(L"R_Sword_SkilB_Eft"
+			, L"..\\Resource\\Animation\\Effect\\R_SkiletonSwordPierceEffect"
+			, Vector2(0.f,0.f), 0.05);
+		animator3->SetAlpha(255);
 	}
 
 	void SwordSkul::OnAttackEffect(GameObject* other)
@@ -261,5 +307,16 @@ namespace sw
 	}
 	void SwordSkul::SwitchProjecTile(GameObject* object)
 	{
+	}
+
+	void SwordSkul::OnSkilB()
+	{
+		Rigidbody* rigidbody = GetComponent<Rigidbody>();
+		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
+
+		if (dirction)
+			rigidbody->AddForce(Vector2(400.f, 0.f));
+		else
+			rigidbody->AddForce(Vector2(-400.f, 0.f));
 	}
 }

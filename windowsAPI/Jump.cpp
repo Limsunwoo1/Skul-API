@@ -93,6 +93,14 @@ namespace sw
 		{
 			NextState = ePlayerState::JUMPATTACK;
 		}
+		else if (KEY_DOWN(eKeyCode::A))
+		{
+			NextState = ePlayerState::SKILL_A;
+		}
+		else if (KEY_DOWN(eKeyCode::S))
+		{
+			NextState = ePlayerState::SKILL_B;
+		}
 		else if (KEY_DOWN(eKeyCode::Z))
 		{
 			NextState = ePlayerState::SLIDING;

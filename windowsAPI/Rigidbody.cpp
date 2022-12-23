@@ -10,7 +10,7 @@ namespace sw
 		: Component(eComponentType::Rigidbody)
 		, mMass(1.0f)
 		, mFriction(400.f)
-		, bFreez(false)
+		, mSquare(1)
 	{
 		mLimitVelocity.x = 200.f;
 		mLimitVelocity.y = 1000.f;
@@ -107,9 +107,12 @@ namespace sw
 				}
 			}
 
-			pos = pos + mForce * Time::GetInstance()->DeltaTime();
+			pos = pos + mForce * (Time::GetInstance()->DeltaTime() * mSquare);
 			player->SetPos(pos);
 			mForce.Clear();
+
+			// 1硅加 府悸
+			mSquare = 1;
 			return;
 		}
 		else
@@ -122,10 +125,13 @@ namespace sw
 		}
 
 
-		pos = pos + mForce * Time::GetInstance()->DeltaTime();
+		pos = pos + mForce * (Time::GetInstance()->DeltaTime() * mSquare);
 		pos = pos + mVelocity * Time::GetInstance()->DeltaTime();
 		GetOwner()->SetPos(pos);
 		mForce.Clear();
+
+		// 1硅加 府悸
+		mSquare = 1;
 	}
 
 	void Rigidbody::Render(HDC hdc)

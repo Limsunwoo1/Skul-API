@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "ObjectProjecTile.h"
 #include "EventManager.h"
+#include "Rigidbody.h"
 namespace sw
 {
 	AxeMonster::AxeMonster()
@@ -20,18 +21,20 @@ namespace sw
 
 		mAttackCooltimeMax = 3.0f;
 
+		// SkilInit
 		for (int i = 0; i < 4; ++i)
 		{
 			mProjecTile.push_back(new ObjectProjecTile());
 			mProjecTile[i]->SetTarget(this);
-			mProjecTile[i]->SetReuse_Time(1.0f);
+			mProjecTile[i]->SetReuse_Time(0.3f);
 			mProjecTile[i]->SetEffectName(L"AxeMonster_AttackEft");
+			mProjecTile[i]->SetEvent(std::bind(&AxeMonster::SkilAttack, this, std::placeholders::_1));
 			Animator* animator = mProjecTile[i]->GetComponent<Animator>();
 			animator->CreatAnimations(L"AxeMonster_AttackEft", 
 				L"..\\Resource\\Animation\\MonsterAttackEffect\\AxeMonster",
-				Vector2::Zero, 0.05);
+				Vector2(0.f,50.f), 0.05);
 			Collider* collider = mProjecTile[i]->GetComponent<Collider>();
-			collider->SetScale(Vector2(80.f, 250.f));
+			collider->SetScale(Vector2(120.f, 250.f));
 		}
 	}
 	AxeMonster::~AxeMonster()
@@ -68,14 +71,14 @@ namespace sw
 		mAnimator = AddComponent<Animator>();
 		mAnimator->SetOwner(this);
 
-		mAnimator->CreatAnimations(RName + L"Idle", AXEMONSTER_R_PATH(L"Idle"), Vector2(0.0f, -23.f), 0.1f);
-		mAnimator->CreatAnimations(LName + L"Idle", AXEMONSTER_L_PATH(L"Idle"), Vector2(0.0f, -23.f), 0.1f);
+		mAnimator->CreatAnimations(RName + L"Idle", AXEMONSTER_R_PATH(L"Idle"), Vector2(0.0f, 10.f), 0.1f);
+		mAnimator->CreatAnimations(LName + L"Idle", AXEMONSTER_L_PATH(L"Idle"), Vector2(0.0f, 10.f), 0.1f);
 
-		mAnimator->CreatAnimations(RName + L"Move", AXEMONSTER_R_PATH(L"Move"), Vector2::Zero, 0.2f);
-		mAnimator->CreatAnimations(LName + L"Move", AXEMONSTER_L_PATH(L"Move"), Vector2::Zero, 0.2f);
+		mAnimator->CreatAnimations(RName + L"Move", AXEMONSTER_R_PATH(L"Move"), Vector2(0.f, 30.f), 0.2f);
+		mAnimator->CreatAnimations(LName + L"Move", AXEMONSTER_L_PATH(L"Move"), Vector2(0.f, 30.f), 0.2f);
 
-		mAnimator->CreatAnimations(RName + L"Attack", AXEMONSTER_R_PATH(L"Attack"), Vector2(0.f, 0.f), 0.3f);
-		mAnimator->CreatAnimations(LName + L"Attack", AXEMONSTER_L_PATH(L"Attack"), Vector2(0.f, 0.f), 0.3f);
+		mAnimator->CreatAnimations(RName + L"Attack", AXEMONSTER_R_PATH(L"Attack"), Vector2(0.f, 30.f), 0.3f);
+		mAnimator->CreatAnimations(LName + L"Attack", AXEMONSTER_L_PATH(L"Attack"), Vector2(0.f, 30.f), 0.3f);
 
 		mAnimator->Play(RName + L"Idle", true);
 
@@ -95,7 +98,7 @@ namespace sw
 	{
 		Collider* collider = AddComponent<Collider>();
 		collider->SetOwner(this);
-		collider->SetScale(Vector2(300.f, 250.f));
+		collider->SetScale(Vector2(250.f, 180.f));
 	}
 	void AxeMonster::Hit()
 	{
@@ -128,5 +131,17 @@ namespace sw
 
 			EventManager::GetInstance()->EventPush(info);
 		}
+	}
+	void AxeMonster::SkilAttack(GameObject* other)
+	{
+		Rigidbody* rigidbody = other->GetComponent<Rigidbody>();
+		Vector2 velo = rigidbody->GetVelocity();
+		velo.y -= 500.f;
+		rigidbody->SetVelocity(velo);
+		rigidbody->SetGround(false);
+		if (mDirction)
+			rigidbody->AddForce(Vector2(8000.f, 0.0f));
+		else
+			rigidbody->AddForce(Vector2(-8000.f, 0.0f));
 	}
 }

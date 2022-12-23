@@ -95,5 +95,15 @@ namespace sw
 				player->SetState(ePlayerState::SLIDING);
 			}
 		}
+		if (KEY_DOWN(eKeyCode::A))
+		{
+			End();
+			player->SetState(ePlayerState::SKILL_A);
+		}
+		else if (KEY_DOWN(eKeyCode::S))
+		{
+			End();
+			player->SetState(ePlayerState::SKILL_B);
+		}
 	}
 }

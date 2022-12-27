@@ -18,6 +18,7 @@ namespace sw
 		virtual void Render(HDC hdc);
 
 		void SetPos(Vector2 pos) { mPos = pos; }
+		void SetPos(float x, float y) { mPos = Vector2(x, y); }
 		Vector2 GetPos() { return mPos; }
 		void SetScale(Vector2 scale) { mScale = scale; }
 		Vector2 GetScale() { return mScale; }

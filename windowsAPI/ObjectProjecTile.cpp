@@ -37,8 +37,11 @@ namespace sw
 		if (mTarget && !mNotMove)
 			SetPos(mTarget->GetPos() + mOffeset);
 
-		if (mAble)
-			mDelta += Time::GetInstance()->DeltaTime();
+		for (auto iter = mColiedList.begin(); iter != mColiedList.end(); ++iter)
+		{
+			iter->second += Time::GetInstance()->DeltaTime();
+		}
+		
 
 		GameObject::Tick();
 	}
@@ -62,68 +65,42 @@ namespace sw
 	}
 	void ObjectProjecTile::OnCollisionEnter(Collider* other)
 	{
-		if (mAble)
-			return;
-
 		if (mStartOffset > 0.0f)
 			return;
-
-		mAble = true;
-		GameObject* object = other->GetOwner();
-		MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
-		if (monster)
-		{
-			eMonsterState type = monster->GetState();
-			if (monster->GetSuperArmer())
-			{
-				monster->Hit();
-			}
-			else
-			{
-				monster->SetAble(type, false);
-				monster->SetState(eMonsterState::HIT);
-				monster->SetDelta(0.0f);
-			}
-		}
+		auto iter = mColiedList.find(other->GetID());
+		if(iter == mColiedList.end())
+			mColiedList.insert(std::make_pair(other->GetID(), 0.0f));
 
 		if (Event)
 		{
-			Event(object);
+			Event(other->GetOwner());
 		}
 		// hp감소
 	}
 	void ObjectProjecTile::OnCollisionStay(Collider* other)
 	{
-		if (mDelta > mReuse_Time)
+		auto iter = mColiedList.find(other->GetID());
+		if (iter == mColiedList.end())
+			return;
+		LOG(STRING("ID %d", iter->first))
+		LOG(STRING("Delta %f", iter->second))
+		if (iter->second < mReuse_Time)
+			return;
+
+		if (Event)
 		{
-			GameObject* object = other->GetOwner();
-			MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
-			if (monster)
-			{
-				eMonsterState type = monster->GetState();
-				if (monster->GetSuperArmer())
-				{
-					monster->Hit();
-				}
-				else
-				{
-					monster->SetAble(type, false);
-					monster->SetState(eMonsterState::HIT);
-					monster->SetDelta(0.0f);
-				}
-			}
-			if (Event)
-			{
-				Event(object);
-			}
-			// hp감소
-			mDelta = 0.0f;
+			Event(other->GetOwner());
 		}
+
+		iter->second = 0.0f;
 	}
 	void ObjectProjecTile::OnCollisionExit(Collider* other)
 	{
 		mAble = false;
-		mDelta = 0.0f;
+
+		auto iter = mColiedList.find(other->GetID());
+		if (iter != mColiedList.end())
+			mColiedList.erase(iter);
 	}
 	void ObjectProjecTile::SetEvent(const TColliderEvent& event)
 	{

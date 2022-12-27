@@ -25,6 +25,7 @@
 #include "Drop.h"
 #include "Switch.h"
 #include "ObjectProjecTile.h"
+#include "MonsterBase.h"
 
 #include <iostream>
 #include <random>
@@ -261,7 +262,7 @@ namespace sw
 		ObjectProjecTile* SwitchProjecTile = mSkils[(int)eSkilType::Switch];
 		SwitchProjecTile->SetEvent(std::bind(&BasicSkul::SwitchProjecTile, this, std::placeholders::_1));
 		SwitchProjecTile->SetTarget(this);
-		SwitchProjecTile->SetReuse_Time(0.4f);
+		SwitchProjecTile->SetReuse_Time(0.1f);
 		Collider* collider = SwitchProjecTile->GetComponent<Collider>();
 		collider->SetScale(Vector2(110.f, 80.f));
 
@@ -284,13 +285,31 @@ namespace sw
 
 	void BasicSkul::SwitchProjecTile(GameObject* object)
 	{
+		MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+		if (monster == nullptr)
+			return;
+		if (monster->GetSuperArmer())
+		{
+			monster->Hit();
+			return;
+		}
+
 		Rigidbody* rgid = object->GetComponent<Rigidbody>();
 
 		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		if (dirction)
-			rgid->AddForce(Vector2(1400.f, 0.0f));
+			rgid->AddForce(Vector2(1000.f, 0.0f));
 		else
-			rgid->AddForce(Vector2(-1400.f, 0.0f));
+			rgid->AddForce(Vector2(-1000.f, 0.0f));
+
+		eMonsterState type = monster->GetState();
+		if (type != eMonsterState::HIT)
+		{
+			monster->SetAble(type, false);
+			monster->SetState(eMonsterState::HIT);
+		}
+		//monster->SetAble(eMonsterState::HIT, false);
+		monster->SetDelta(0.0f);
 	}
 	void BasicSkul::OnAttackEffect(GameObject* other)
 	{

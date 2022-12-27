@@ -26,6 +26,9 @@ namespace sw
 		virtual void SwitchProjecTile(GameObject* object) override;
 
 		virtual void OnSkilB() override;
+
+	private:
+		Vector2 mArrivalPos;
 	};
 }
 

@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "TilePalette.h"
 #include "Ground.h"
+#include "BackGround.h"
 
 
 namespace sw
@@ -30,7 +31,13 @@ namespace sw
 
 	void ToolScene::Initialize()
 	{
+       /* BackGround* bg = new BackGround();
+        bg->SetImage(L"Back", L"ch2_3 บนป็.bmp");
+        bg->Initialize();
+        bg->SetPos(Vector2(1200, 450.f));
+        bg->SetScale(Vector2(2400.f, 900.f));*/
 
+        //AddGameObject(bg, eColliderLayer::BackGround);
 	}
 
 	void ToolScene::Tick()

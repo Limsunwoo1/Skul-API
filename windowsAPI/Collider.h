@@ -13,6 +13,7 @@ namespace sw
 		virtual void Render(HDC hdc) override;
 
 		void SetScale(Vector2D scale) { mScale = scale; }
+		void SetScale(float x, float y) { mScale = Vector2(x, y); }
 		void SetPos(Vector2D pos) { mPos = pos; }
 		void SetOffset(Vector2D pos) { mOffset = pos; }
 

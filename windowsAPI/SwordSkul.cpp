@@ -16,6 +16,7 @@
 #include "Application.h"
 #include "Shadow.h"
 #include "ObjectProjecTile.h"
+#include "Time.h"
 
 namespace sw
 {
@@ -151,8 +152,8 @@ namespace sw
 		mAnimator->CreatAnimations(L"R_Sword_SkilA", SWORDSKUL_R_PATH(L"SkilA"), Vector2(0.f, 10.f), 0.07f);
 		mAnimator->CreatAnimations(L"L_Sword_SkilA", SWORDSKUL_L_PATH(L"SkilA"), Vector2(0.f, 10.f), 0.07f);
 
-		mAnimator->CreatAnimations(L"R_Sword_SkilB", SWORDSKUL_R_PATH(L"SkilB"), Vector2(0.f, 10.f), 0.07f);
-		mAnimator->CreatAnimations(L"L_Sword_SkilB", SWORDSKUL_L_PATH(L"SkilB"), Vector2(0.f, 10.f), 0.07f);
+		mAnimator->CreatAnimations(L"R_Sword_SkilB", SWORDSKUL_R_PATH(L"SkilB"), Vector2(0.f, 10.f), 0.03f);
+		mAnimator->CreatAnimations(L"L_Sword_SkilB", SWORDSKUL_L_PATH(L"SkilB"), Vector2(0.f, 10.f), 0.03f);
 
 		AddComponent(mAnimator);
 
@@ -287,7 +288,7 @@ namespace sw
 		ObjectProjecTile* SkilB = mSkils[(int)eSkilType::SkilB];
 		SkilB->SetScale(Vector2(5.0f, 3.0f));
 		SkilB->SetTarget(this);
-		SkilB->SetReuse_Time(0.1f);
+		SkilB->SetReuse_Time(1.0f);
 		SkilB->SetEffectName(L"_Sword_SkilB_Eft");
 		SkilB->SetOffset(Vector2(200.f, 0.f));
 		SkilB->SetNotMove(true);
@@ -297,7 +298,7 @@ namespace sw
 		animator3->CreatAnimations(L"L_Sword_SkilB_Eft", L"..\\Resource\\Animation\\Effect\\L_SkiletonSwordPierceEffect");
 		animator3->CreatAnimations(L"R_Sword_SkilB_Eft"
 			, L"..\\Resource\\Animation\\Effect\\R_SkiletonSwordPierceEffect"
-			, Vector2(0.f,0.f), 0.05);
+			, Vector2(0.f,0.f), 0.07);
 		animator3->SetAlpha(255);
 	}
 
@@ -313,10 +314,30 @@ namespace sw
 	{
 		Rigidbody* rigidbody = GetComponent<Rigidbody>();
 		bool dirction = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
+		if (mArrivalPos == Vector2::Zero)
+		{
+			mArrivalPos = GetPos();
+			if(dirction)
+				mArrivalPos.x += 300;
+			else
+				mArrivalPos.x -= 300;
+
+			rigidbody->SetVelocity(Vector2::Zero);
+		}
 
 		if (dirction)
-			rigidbody->AddForce(Vector2(400.f, 0.f));
+		{
+			if(mArrivalPos.x > GetPos().x)
+				rigidbody->AddForce(Vector2(4000.f, 0.0f));
+		}
 		else
-			rigidbody->AddForce(Vector2(-400.f, 0.f));
+		{
+			if(mArrivalPos.x < GetPos().x)
+				rigidbody->AddForce(Vector2(-4000.f, 0.0f));
+		}
+
+
+		if (GetComponent<Animator>()->isComplete())
+			mArrivalPos = Vector2::Zero;
 	}
 }

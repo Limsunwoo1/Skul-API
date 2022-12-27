@@ -100,8 +100,7 @@ namespace sw
 
 		float run = (mRuntime / mDelta);
 		float Inforce = mForce / run;
-		LOG(STRING("슬라이딩 비율 %f", run));
-		LOG(STRING("슬라이딩 포스 %f", Inforce))
+
 		Rigidbody* rigidbody = GetTarget()->GetComponent<Rigidbody>();
 		StateHandle* statehandle = GetTarget()->GetStateHandle();
 		Move* move = statehandle->GetState<Move>(ePlayerState::MOVE);

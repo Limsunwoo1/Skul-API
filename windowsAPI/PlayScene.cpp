@@ -127,7 +127,7 @@ namespace sw
 
 	void PlayScene::Enter()
 	{
-		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\Stage_1");
+		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\Stage_2");
 
 		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/

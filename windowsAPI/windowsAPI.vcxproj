@@ -156,6 +156,7 @@
     <ClInclude Include="Attack.h" />
     <ClInclude Include="AxeMonster.h" />
     <ClInclude Include="CallStackTracer.h" />
+    <ClInclude Include="Ch2BossScene.h" />
     <ClInclude Include="CrashHandler.h" />
     <ClInclude Include="EffectObject.h" />
     <ClInclude Include="BackGround.h" />
@@ -179,6 +180,8 @@
     <ClInclude Include="Idle.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="BossMonster.h" />
+    <ClInclude Include="LeianaBoss.h" />
     <ClInclude Include="Loger.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="MaidMonster_1.h" />
@@ -234,6 +237,7 @@
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="AxeMonster.cpp" />
     <ClCompile Include="CallStackTracer.cpp" />
+    <ClCompile Include="Ch2BossScene.cpp" />
     <ClCompile Include="CrashHandler.cpp" />
     <ClCompile Include="EffectObject.cpp" />
     <ClCompile Include="BackGround.cpp" />
@@ -254,6 +258,8 @@
     <ClCompile Include="Idle.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="BossMonster.cpp" />
+    <ClCompile Include="LeianaBoss.cpp" />
     <ClCompile Include="Loger.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="MaidMonster_1.cpp" />

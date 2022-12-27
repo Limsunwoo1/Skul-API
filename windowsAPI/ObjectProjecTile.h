@@ -53,6 +53,7 @@ namespace sw
 		bool mNotMove;
 
 		std::wstring mEffectName;
+		std::unordered_map<UINT32, float> mColiedList;
 	};
 }
 

@@ -189,6 +189,30 @@
     <Filter Include="Engine\StateHandle\State\SkilB">
       <UniqueIdentifier>{a08ebe81-63d6-4cfe-b287-3f2d935b110b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Scene\EndScene">
+      <UniqueIdentifier>{51d88f0a-adca-43ba-a32b-eb24db55e46a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\LogoScene">
+      <UniqueIdentifier>{9792f0ce-8736-4394-b59e-9838f91f38af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Ch2BossScene">
+      <UniqueIdentifier>{a172fa93-ebaf-4113-8e4e-0063a26a62f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\PlayScene">
+      <UniqueIdentifier>{0eb61f38-9b0b-458c-abbc-2aa1be61f9ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\TitleScene">
+      <UniqueIdentifier>{f1a960e3-041a-49b5-bea8-4e9130766c68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\ToolScene">
+      <UniqueIdentifier>{01c0c770-1a66-4cdb-a9ef-63c37456f4f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Monster\BossMonster">
+      <UniqueIdentifier>{7d233f19-f624-46b8-ae89-655ab7708e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Monster\BossMonster\LeianaBoss">
+      <UniqueIdentifier>{ef7cfa92-8f8b-4c00-98d2-3308ca60d4f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -218,9 +242,6 @@
     <ClInclude Include="Scene.h">
       <Filter>Engine\Scene\Base</Filter>
     </ClInclude>
-    <ClInclude Include="LogoScene.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Engine\Commne</Filter>
     </ClInclude>
@@ -236,20 +257,8 @@
     <ClInclude Include="Component.h">
       <Filter>Engine\Compnent\Base</Filter>
     </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="EndScene.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Engine\Commne</Filter>
-    </ClInclude>
-    <ClInclude Include="ToolScene.h">
-      <Filter>Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Engine\GameObject\Tile</Filter>
@@ -419,6 +428,30 @@
     <ClInclude Include="SkilB.h">
       <Filter>Engine\StateHandle\State\SkilB</Filter>
     </ClInclude>
+    <ClInclude Include="EndScene.h">
+      <Filter>Engine\Scene\EndScene</Filter>
+    </ClInclude>
+    <ClInclude Include="LogoScene.h">
+      <Filter>Engine\Scene\LogoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Ch2BossScene.h">
+      <Filter>Engine\Scene\Ch2BossScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Engine\Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Engine\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolScene.h">
+      <Filter>Engine\Scene\ToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMonster.h">
+      <Filter>Engine\GameObject\Monster\BossMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="LeianaBoss.h">
+      <Filter>Engine\GameObject\Monster\BossMonster\LeianaBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -432,9 +465,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Engine\Scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="LogoScene.cpp">
-      <Filter>Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Engine\Commne</Filter>
@@ -453,18 +483,6 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Engine\Compnent\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="EndScene.cpp">
-      <Filter>Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="ToolScene.cpp">
-      <Filter>Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Engine\GameObject\Tile</Filter>
@@ -618,6 +636,30 @@
     </ClCompile>
     <ClCompile Include="SkilB.cpp">
       <Filter>Engine\StateHandle\State\SkilB</Filter>
+    </ClCompile>
+    <ClCompile Include="EndScene.cpp">
+      <Filter>Engine\Scene\EndScene</Filter>
+    </ClCompile>
+    <ClCompile Include="LogoScene.cpp">
+      <Filter>Engine\Scene\LogoScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch2BossScene.cpp">
+      <Filter>Engine\Scene\Ch2BossScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Engine\Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Engine\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolScene.cpp">
+      <Filter>Engine\Scene\ToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMonster.cpp">
+      <Filter>Engine\GameObject\Monster\BossMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="LeianaBoss.cpp">
+      <Filter>Engine\GameObject\Monster\BossMonster\LeianaBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

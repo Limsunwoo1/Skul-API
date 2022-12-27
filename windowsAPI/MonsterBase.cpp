@@ -84,12 +84,12 @@ namespace sw
 	void MonsterBase::Tick()
 	{
 		mAttackCooltime += Time::GetInstance()->DeltaTime();
+		GameObject::Tick();
 		if (mHold)
 			Hold();
 
 		Staring();
 		Branch();
-		GameObject::Tick();
 		CheckGround();
 
 		// 이전위치 저장
@@ -290,7 +290,7 @@ namespace sw
 		mDelta += Time::GetInstance()->DeltaTime();
 		if (mState[(int)eMonsterState::HIT] == false)
 		{
-			if (mDirction)
+			if (!mDirction)
 				mAnimator->Play(RName + L"Hit");
 			else
 				mAnimator->Play(LName + L"Hit");
@@ -442,6 +442,8 @@ namespace sw
 			return;
 		if (mCurState == eMonsterState::IDLE)
 			return;
+		if (mCurState == eMonsterState::HIT)
+			return;
 
 		if(mTarget != nullptr)
 		{
@@ -449,15 +451,11 @@ namespace sw
 			{
 				mState[(UINT32)mCurState] = false;
 				mDirction = false;
-				Delta += mMaxDelta;
-				SetDelta(Delta);
 			}
 			else if (!mDirction && mTarget->GetPos().x > pos.x)
 			{
 				mState[(UINT32)mCurState] = false;
 				mDirction = true;
-				Delta += mMaxDelta;
-				SetDelta(Delta);
 			}
 		}
 	}

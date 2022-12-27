@@ -38,7 +38,7 @@ namespace sw
 
 		if(mCamera)
 			pos = Camera::GetInstance()->CalculatePos(pos);
-		pos += Camera::GetInstance()->GetDistance() * 0.2f;
+		//pos += Camera::GetInstance()->GetDistance() * 0.2f;
 
 		if (!Alph)
 		{

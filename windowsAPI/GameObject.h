@@ -21,6 +21,7 @@ namespace sw
 		void SetPos(float x, float y) { mPos = Vector2(x, y); }
 		Vector2 GetPos() { return mPos; }
 		void SetScale(Vector2 scale) { mScale = scale; }
+		void SetScale(float x, float y) { mScale = Vector2(x, y); }
 		Vector2 GetScale() { return mScale; }
 
 		void AddComponent(Component* component);

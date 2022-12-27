@@ -133,12 +133,12 @@ namespace sw
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjectTile, eColliderLayer::Monster);
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster_ProjectTile, eColliderLayer::Player);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjecTile, eColliderLayer::Monster);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster_ProjecTile, eColliderLayer::Player);
 		ObjectManager::GetInstance()->AddObject(eSceneType::Play);
 		Camera::GetInstance()->SetTarget(ObjectManager::GetInstance()->GetPlayer());
-		Camera::GetInstance()->SetCameraMaxPos(Vector2(8571.f, 1457.f));
-		Camera::GetInstance()->SetCameraLowPos(Vector2(65.f, 0.f));
+		Camera::GetInstance()->SetCameraMaxPos(Vector2(4453.f, 1400.f));
+		Camera::GetInstance()->SetCameraLowPos(Vector2(20.f, 0.f));
 	}
 
 	void PlayScene::Exit()

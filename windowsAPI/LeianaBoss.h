@@ -4,6 +4,7 @@
 
 namespace sw
 {
+	class Scene;
 	class LeianaBoss : public BossMonster
 	{
 	public:
@@ -23,6 +24,8 @@ namespace sw
 		virtual void Patton2() override;
 		virtual void Patton3() override;
 		virtual void Patton4() override;
+
+		void PushBoss(Scene* scen);
 
 	private:
 		GameObject* mLeftBoss;

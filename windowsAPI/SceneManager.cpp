@@ -4,6 +4,7 @@
 #include "PlayScene.h"
 #include "EndScene.h"
 #include "ToolScene.h"
+#include "Ch2BossScene.h"
 
 namespace sw
 {
@@ -33,6 +34,9 @@ namespace sw
 
 		mScenes[(UINT)eSceneType::Play] = new PlayScene();
 		mScenes[(UINT)eSceneType::Play]->Initialize();
+
+		mScenes[(UINT)eSceneType::Ch2Boss] = new Ch2BossScene();
+		mScenes[(UINT)eSceneType::Ch2Boss]->Initialize();
 
 		mScenes[(UINT)eSceneType::End] = new EndScene();
 		mScenes[(UINT)eSceneType::End]->Initialize();

@@ -16,6 +16,8 @@
 // 메이드 몬스터 1
 #define MAIDMONSTER_1_R_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\R_Maid_1\\%s", path)
 #define MAIDMONSTER_1_L_PATH(path) STRING(L"..\\Resource\\Animation\\Monster\\2_Stage\\L_Maid_1\\%s", path)
+// 2ChBoss
+#define LEIANABOSS_GOLD_PATH STRING(L"..\\Resource\\Animation\\2CH_Boss\\Gold\\")
 
 // 스컬 공용 이펙트
 // 대쉬스모크

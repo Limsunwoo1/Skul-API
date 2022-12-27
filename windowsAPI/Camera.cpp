@@ -80,6 +80,16 @@ namespace sw
 		{
 			if (mTarget != nullptr)
 				mLookPosition = mTarget->GetPos();
+
+			if (mLookPosition.x + (mResolution.x * 0.5f) > mCameraMaxPos.x)
+				mLookPosition.x = mCameraMaxPos.x - (mResolution.x * 0.5f);
+			else if(mLookPosition.x - (mResolution.x * 0.5f) < mCameraLowPos.x)
+				mLookPosition.x = mCameraLowPos.x + (mResolution.x * 0.5f);
+
+			if (mLookPosition.y + (mResolution.y * 0.5f) > mCameraMaxPos.y)
+				mLookPosition.y = mCameraMaxPos.y - (mResolution.y * 0.5f);
+			else if (mLookPosition.y - (mResolution.y * 0.5f) < mCameraLowPos.y)
+				mLookPosition.y = mCameraLowPos.y + (mResolution.y * 0.5f); 
 		}
 
 		mDistance = mLookPosition - (mResolution / 2.0f);

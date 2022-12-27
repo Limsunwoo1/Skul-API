@@ -4,6 +4,8 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "ObjectProjecTile.h"
+#include "Path.h"
+#include "Scene.h"
 
 namespace sw
 {
@@ -18,8 +20,8 @@ namespace sw
 		{
 			mPattonList.push_back(false);
 		}
-
-		SetDelay(2.0f);
+		Initialize();
+		SetDelay(200.0f);
 	}
 
 	LeianaBoss::~LeianaBoss()
@@ -27,7 +29,9 @@ namespace sw
 	}
 	void LeianaBoss::Tick()
 	{
-		GameObject::Tick();
+		mLeftBoss->Tick();
+		mRightBoss->Tick();
+
 		mDelta += Time::GetInstance()->DeltaTime();
 
 		switch (mCurPatton)
@@ -68,19 +72,27 @@ namespace sw
 
 	void LeianaBoss::Render(HDC hdc)
 	{
-		GameObject::Render(hdc);
+		mLeftBoss->Render(hdc);
+		mRightBoss->Render(hdc);
 	}
 
 	void LeianaBoss::Initialize()
 	{
+		// 왼쪽 보스
 		mLeftBoss = new  GameObject();
-		Rigidbody* rgid1 = AddComponent<Rigidbody>();
-		rgid1->SetOwner(mLeftBoss);
+		mLeftBoss->SetPos(0.0f, 100.f);
+		mLeftBoss->SetScale(3.5f, 3.5f);
+		Rigidbody* rgid1 = new Rigidbody();
+		mLeftBoss->AddComponent(rgid1);
 
+		// 오른쪽 보스
 		mRightBoss = new GameObject();
-		Rigidbody* rgid2 = AddComponent<Rigidbody>();
-		rgid2->SetOwner(mRightBoss);
+		mRightBoss->SetPos(1600.f, 100.f);
+		mRightBoss->SetScale(3.5f, 3.5f);
+		Rigidbody* rgid2 = new Rigidbody();
+		mRightBoss->AddComponent(rgid2);
 
+		// Init
 		InitializeAnimation();
 		InitalizeCollider();
 		InitalizeProjecTile();
@@ -88,22 +100,24 @@ namespace sw
 
 	void LeianaBoss::InitializeAnimation()
 	{
-		Animator* animator1 = AddComponent<Animator>();
-		animator1->SetOwner(mLeftBoss);
+		Animator* animator1 = new Animator();
+		animator1->CreatAnimations(L"RIdle", LEIANABOSS_GOLD_PATH + L"Idle\\R", Vector2(-20.f, 10.f), 0.3f);
+		mLeftBoss->AddComponent(animator1);
 
-		Animator* animator2 = AddComponent<Animator>();
-		animator2->SetOwner(mRightBoss);
+		Animator* animator2 = new Animator();
+		animator2->CreatAnimations(L"LIdle", LEIANABOSS_GOLD_PATH + L"Idle\\L",Vector2(20.f, 10.f), 0.3f);
+		mRightBoss->AddComponent(animator2);
 	}
 
 	void LeianaBoss::InitalizeCollider()
 	{
-		Collider* collider1 = AddComponent<Collider>();
-		collider1->SetOwner(mLeftBoss);
-		collider1->SetScale(80.f, 80.f);
+		Collider* collider1 = new Collider();
+		collider1->SetScale(80.f, 120.f);
+		mLeftBoss->AddComponent(collider1);
 
-		Collider* collider2 = AddComponent<Collider>();
-		collider2->SetOwner(mRightBoss);
-		collider2->SetScale(80.f, 80.f);
+		Collider* collider2 = new Collider();
+		collider2->SetScale(80.f, 120.f);
+		mRightBoss->AddComponent(collider2);
 	}
 
 	void LeianaBoss::InitalizeProjecTile()
@@ -142,9 +156,11 @@ namespace sw
 		// 애니메이션랜더
 		if (mPattonList[(int)eBossPatton::Idle] == false)
 		{
-			mLeftBoss->SetPos(0.0f,0.0f);
-			mRightBoss->SetPos(1800.0f, 0.0f);
+			mLeftBoss->SetPos(300.f,600.0f);
+			mLeftBoss->GetComponent<Animator>()->Play(L"RIdle",true);
 
+			mRightBoss->SetPos(1800.0f, 600.0f);
+			mRightBoss->GetComponent<Animator>()->Play(L"LIdle",true);
 			mPattonList[(int)eBossPatton::Idle] = true;
 		}
 		// 랜덤값 으로 다음패턴세팅 하기
@@ -175,5 +191,10 @@ namespace sw
 	void LeianaBoss::Patton4()
 	{
 
+	}
+	void LeianaBoss::PushBoss(Scene* scen)
+	{
+		scen->AddGameObject(mLeftBoss, eColliderLayer::BossMonster);
+		scen->AddGameObject(mRightBoss, eColliderLayer::BossMonster);
 	}
 }

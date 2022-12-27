@@ -45,7 +45,7 @@ namespace sw
 			PlayerBase* player = mPlayer->GetPlayer();
 			for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 			{
-				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjectTile);
+				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace sw
 			PlayerBase* player = mPlayer->GetNextPlayer();
 			for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 			{
-				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjectTile);
+				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
 			}
 		}
 	}
@@ -71,12 +71,12 @@ namespace sw
 
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
-			scene->DeleteGameObject(mPlayer->GetPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjectTile);
+			scene->DeleteGameObject(mPlayer->GetPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
 		}
 
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
-			scene->DeleteGameObject(mPlayer->GetNextPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjectTile);
+			scene->DeleteGameObject(mPlayer->GetNextPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
 		}
 	}
 

@@ -55,7 +55,7 @@ namespace sw
 
 				EventInfo info;
 				info.Type = EventType::DeleteObject;
-				info.Parameter1 = new eColliderLayer(eColliderLayer::Monster_ProjectTile);
+				info.Parameter1 = new eColliderLayer(eColliderLayer::Monster_ProjecTile);
 				info.Parameter2 = mProjecTile[i];
 
 				EventManager::GetInstance()->EventPush(info);
@@ -126,7 +126,7 @@ namespace sw
 
 			EventInfo info;
 			info.Type = EventType::AddObejct;
-			info.Parameter1 = new eColliderLayer(eColliderLayer::Monster_ProjectTile);
+			info.Parameter1 = new eColliderLayer(eColliderLayer::Monster_ProjecTile);
 			info.Parameter2 = mProjecTile[i];
 
 			EventManager::GetInstance()->EventPush(info);

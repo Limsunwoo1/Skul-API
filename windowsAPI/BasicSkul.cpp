@@ -110,7 +110,6 @@ namespace sw
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
 		pos = Camera::GetInstance()->CalculatePos(pos);
-
 		if (mShadows[mSlidingDirction])
 			mShadows[mSlidingDirction]->Render(hdc);
 
@@ -333,7 +332,6 @@ namespace sw
 
 		int i = YPos(gen);
 		scale.y = scale.y / i;
-		LOG(STRING("scale %f", scale.y))
 		otherPos.y = otherPos.y - (colScale.y  * 0.5f)+ scale.y;
 		effect->SetPos(otherPos);
 		effect->SetScale(Vector2(1.5f, 1.5f));

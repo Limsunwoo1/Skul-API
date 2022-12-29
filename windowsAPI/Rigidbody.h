@@ -13,6 +13,7 @@ namespace sw
 		virtual void Render(HDC hdc) override;
 
 		void AddForce(Vector2 force);
+		void AddForce(float x, float y);
 		void SetMass(float mass) { mMass = mass; }
 		void SetGround(bool isGround) { mbGround = isGround; }
 		bool GetGround() { return mbGround; }

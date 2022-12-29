@@ -210,7 +210,13 @@
     <Filter Include="Engine\GameObject\Monster\BossMonster">
       <UniqueIdentifier>{7d233f19-f624-46b8-ae89-655ab7708e9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObject\Monster\BossMonster\LeianaBoss">
+    <Filter Include="Engine\GameObject\Monster\BossMonster\LeianaControler">
+      <UniqueIdentifier>{a8fbf8cf-f923-4729-a0e4-1a5f253d5bbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Monster\BossMonster\LeianaControler\LeianaBossRight">
+      <UniqueIdentifier>{ae64384a-efb6-4b8e-acdd-685b5fc7c498}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Monster\BossMonster\LeianaControler\LeianaBoss">
       <UniqueIdentifier>{ef7cfa92-8f8b-4c00-98d2-3308ca60d4f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -450,7 +456,13 @@
       <Filter>Engine\GameObject\Monster\BossMonster</Filter>
     </ClInclude>
     <ClInclude Include="LeianaBoss.h">
-      <Filter>Engine\GameObject\Monster\BossMonster\LeianaBoss</Filter>
+      <Filter>Engine\GameObject\Monster\BossMonster\LeianaControler\LeianaBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="LeianaBossRight.h">
+      <Filter>Engine\GameObject\Monster\BossMonster\LeianaControler\LeianaBossRight</Filter>
+    </ClInclude>
+    <ClInclude Include="LeianaControler.h">
+      <Filter>Engine\GameObject\Monster\BossMonster\LeianaControler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -659,7 +671,13 @@
       <Filter>Engine\GameObject\Monster\BossMonster</Filter>
     </ClCompile>
     <ClCompile Include="LeianaBoss.cpp">
-      <Filter>Engine\GameObject\Monster\BossMonster\LeianaBoss</Filter>
+      <Filter>Engine\GameObject\Monster\BossMonster\LeianaControler\LeianaBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="LeianaBossRight.cpp">
+      <Filter>Engine\GameObject\Monster\BossMonster\LeianaControler\LeianaBossRight</Filter>
+    </ClCompile>
+    <ClCompile Include="LeianaControler.cpp">
+      <Filter>Engine\GameObject\Monster\BossMonster\LeianaControler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

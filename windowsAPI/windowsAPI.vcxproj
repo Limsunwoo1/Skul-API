@@ -182,6 +182,8 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="BossMonster.h" />
     <ClInclude Include="LeianaBoss.h" />
+    <ClInclude Include="LeianaBossRight.h" />
+    <ClInclude Include="LeianaControler.h" />
     <ClInclude Include="Loger.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="MaidMonster_1.h" />
@@ -260,6 +262,8 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="BossMonster.cpp" />
     <ClCompile Include="LeianaBoss.cpp" />
+    <ClCompile Include="LeianaBossRight.cpp" />
+    <ClCompile Include="LeianaControler.cpp" />
     <ClCompile Include="Loger.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="MaidMonster_1.cpp" />

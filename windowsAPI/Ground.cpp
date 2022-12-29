@@ -231,11 +231,11 @@ namespace sw
 
 		float fLen = fabs(other->GetPos().y - GetComponent<Collider>()->GetPos().y);
 		float fScale = (other->GetScale().y / 2.0f) + (GetComponent<Collider>()->GetScale().y / 2.0f);
-
+		
 		Vector2 playerPos = playerObj->GetPos();
 		if (playerPos.y < mCPos.y)
 		{
-			playerPos.y -= (fScale - fLen) + 2.0f;
+			playerPos.y -= (fScale - fLen) + 1.0f;
 			playerObj->SetPos(playerPos);
 			rigidbody->SetGround(true);
 		}
@@ -244,7 +244,7 @@ namespace sw
 			Vector2 velo = rigidbody->GetVelocity();
 			velo.y = 0;
 			rigidbody->SetVelocity(velo);
-			playerPos.y += (fScale - fLen) + 2.0f;
+			playerPos.y += (fScale - fLen) + 1.0f;
 			playerObj->SetPos(playerPos);
 
 			rigidbody->SetGround(false);

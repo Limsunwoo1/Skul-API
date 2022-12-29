@@ -74,6 +74,9 @@ namespace sw
 		void PushImageEvent(const std::wstring key, UINT sheetIndex, std::function<void()> fun);
 		void SetAlpha(int alpha) { mAlpha = alpha; }
 		int GetAlpha() { return mAlpha; }
+
+		const std::wstring& GetCurAnimationName() const { return mCurAnimationName; }
+		void SetCurAnimationName(const std::wstring& name) { mCurAnimationName = name; }
 	private:
 		void ImageEventCheck();
 		void FindImageEvent(const std::wstring name);
@@ -85,6 +88,7 @@ namespace sw
 
 		Animation* mPlayAnimation;
 		Image* mSpriteSheet;
+		std::wstring mCurAnimationName;
 		int mAlpha;
 
 		bool mbLoop;

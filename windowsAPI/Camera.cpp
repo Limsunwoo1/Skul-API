@@ -59,37 +59,39 @@ namespace sw
 			}
 		}
 
-		if (KEY_PRESSE(eKeyCode::UP))
+		if (bToolMode)
 		{
-			mLookPosition.y -= 1000 * Time::GetInstance()->DeltaTime();
+			if (KEY_PRESSE(eKeyCode::UP))
+			{
+				mLookPosition.y -= 1000 * Time::GetInstance()->DeltaTime();
+			}
+			if (KEY_PRESSE(eKeyCode::DOWN))
+			{
+				mLookPosition.y += 1000 * Time::GetInstance()->DeltaTime();
+			}
+			if (KEY_PRESSE(eKeyCode::LEFT))
+			{
+				mLookPosition.x -= 1000 * Time::GetInstance()->DeltaTime();
+			}
+			if (KEY_PRESSE(eKeyCode::RIGHT))
+			{
+				mLookPosition.x += 1000 * Time::GetInstance()->DeltaTime();
+			}
 		}
-		if (KEY_PRESSE(eKeyCode::DOWN))
-		{
-			mLookPosition.y += 1000 * Time::GetInstance()->DeltaTime();
-		}
-		if (KEY_PRESSE(eKeyCode::LEFT))
-		{
-			mLookPosition.x -= 1000 * Time::GetInstance()->DeltaTime();
-		}
-		if (KEY_PRESSE(eKeyCode::RIGHT))
-		{
-			mLookPosition.x += 1000 * Time::GetInstance()->DeltaTime();
-		}
-
-		if (!bToolMode)
+		else if (!bToolMode)
 		{
 			if (mTarget != nullptr)
 				mLookPosition = mTarget->GetPos();
 
-			if (mLookPosition.x + (mResolution.x * 0.5f) > mCameraMaxPos.x)
+			if (mLookPosition.x + (mResolution.x * 0.5f) >= mCameraMaxPos.x)
 				mLookPosition.x = mCameraMaxPos.x - (mResolution.x * 0.5f);
-			else if(mLookPosition.x - (mResolution.x * 0.5f) < mCameraLowPos.x)
+			else if(mLookPosition.x - (mResolution.x * 0.5f) <= mCameraLowPos.x)
 				mLookPosition.x = mCameraLowPos.x + (mResolution.x * 0.5f);
 
-			if (mLookPosition.y + (mResolution.y * 0.5f) > mCameraMaxPos.y)
+			if (mLookPosition.y + (mResolution.y * 0.5f) >= mCameraMaxPos.y)
 				mLookPosition.y = mCameraMaxPos.y - (mResolution.y * 0.5f);
-			else if (mLookPosition.y - (mResolution.y * 0.5f) < mCameraLowPos.y)
-				mLookPosition.y = mCameraLowPos.y + (mResolution.y * 0.5f); 
+			else if (mLookPosition.y - (mResolution.y * 0.5f) <= mCameraLowPos.y)
+				mLookPosition.y = mCameraLowPos.y + (mResolution.y * 0.5f);
 		}
 
 		mDistance = mLookPosition - (mResolution / 2.0f);
@@ -113,6 +115,5 @@ namespace sw
 			, mCutton->GetDC(), 0, 0
 			, mCutton->GetWidth(), mCutton->GetHeight()
 			, func);
-
 	}
 }

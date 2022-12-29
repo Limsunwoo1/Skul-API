@@ -3,6 +3,7 @@
 
 namespace sw
 {
+	class LeianaControler;
 	class Ch2BossScene : public Scene
 	{
 	public:
@@ -18,7 +19,7 @@ namespace sw
 
 		virtual void Release() override;
 	private:
-
+		LeianaControler* mBoss;
 	};
 }
 

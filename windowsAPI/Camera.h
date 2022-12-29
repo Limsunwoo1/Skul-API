@@ -15,6 +15,7 @@ namespace sw
 		void Render(HDC hdc);
 		Vector2 CalculatePos(Vector2 pos) { return pos - mDistance; }
 		Vector2 GetDistance() { return mDistance; }
+		void SetDistance(Vector2 lookpos) { mDistance = lookpos - (mResolution / 2.0f); }
 		Vector2 GetLookPosition() { return mLookPosition; }
 		void SetLookPosition(Vector2 pos) { mLookPosition = pos; }
 		void SetTarget(GameObject* Gameobj) {mTarget = Gameobj;}

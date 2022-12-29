@@ -57,7 +57,8 @@ namespace sw
 
 				if (mObjects[y][x]->IsDeath())
 					continue;
-				if (y != (int)eColliderLayer::BackGround)
+				if (y != (int)eColliderLayer::BackGround
+					&& y != (int)eColliderLayer::Player)
 				{
 					if (pos.x > 1600 + 100 || pos.x < 0 - 100)
 						continue;

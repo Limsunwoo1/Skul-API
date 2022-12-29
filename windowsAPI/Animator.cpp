@@ -163,6 +163,7 @@ namespace sw
 	}
 	void Animator::Play(const std::wstring name, bool bLoop)
 	{ 
+		SetCurAnimationName(name);
 		Animator::Events* events = FindEvents(name);
 		if (events != nullptr)
 			events->mStartEvent();

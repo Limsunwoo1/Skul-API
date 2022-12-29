@@ -6,11 +6,11 @@ namespace sw
 {
 	class Scene;
 	class LeianaControler;
-	class LeianaBoss : public BossMonster
+	class LeianaBossRight : public BossMonster
 	{
 	public:
-		LeianaBoss();
-		~LeianaBoss();
+		LeianaBossRight();
+		~LeianaBossRight();
 
 		virtual void Tick();
 		virtual void Render(HDC hdc);
@@ -34,7 +34,6 @@ namespace sw
 		virtual void Patton3_Progress() override;
 		virtual void Patton4_Stand_by( bool type = true) override;
 		virtual void Patton4_Progress() override;
-
 
 		void SetOwer(LeianaControler* owner) { mOwner = owner; }
 		LeianaControler* GetOwner() { return mOwner; }

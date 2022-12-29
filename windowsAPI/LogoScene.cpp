@@ -61,7 +61,7 @@ namespace sw
 			{
 				EventInfo info;
 				info.Type = EventType::ChangeScene;
-				info.Parameter1 = new eSceneType(eSceneType::Play);
+				info.Parameter1 = new eSceneType(eSceneType::Ch2Boss);
 
 				EventManager::GetInstance()->EventPush(info);
 			}

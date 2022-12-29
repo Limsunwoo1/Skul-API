@@ -143,4 +143,8 @@ namespace sw
 	{
 		mForce = force;
 	}
+	void Rigidbody::AddForce(float x, float y)
+	{
+		mForce = Vector2(x, y);
+	}
 }

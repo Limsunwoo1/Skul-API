@@ -9,12 +9,15 @@
 #include "MainPlayer.h"
 #include "LeianaControler.h"
 #include "LeianaBossRight.h"
+#include "CollisionManager.h"
 
 namespace sw
 {
 	LeianaBoss::LeianaBoss()
 		: BossMonster()
 		, mOwner(nullptr)
+		, mbIn(false)
+		, mbOut(false)
 	{
 	}
 
@@ -24,21 +27,20 @@ namespace sw
 
 	void LeianaBoss::Tick()
 	{
+		mDelta += Time::GetInstance()->DeltaTime();
 		GameObject::Tick();
-
 		Branch();
 	}
 
 	void LeianaBoss::Render(HDC hdc)
 	{
 		GameObject::Render(hdc);
-		Vector2 pos = GetPos();
 	}
 
 	void LeianaBoss::Initialize()
 	{
 		SetPos(600.f, 0.f);
-		SetScale(3.5f, 3.5f);
+		SetScale(4.5f, 4.5f);
 		Rigidbody* rigd = AddComponent<Rigidbody>();
 		rigd->SetOwner(this);
 		// Init
@@ -65,6 +67,8 @@ namespace sw
 
 		animator->CreatAnimations(L"R_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\LeftBoss\\R");
 		animator->CreatAnimations(L"L_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\LeftBoss\\L");
+
+		animator->Play(L"R_Idle");
 	}
 
 	void LeianaBoss::InitalizeCollider()
@@ -94,6 +98,73 @@ namespace sw
 
 			mPattonList[(int)eBossPatton::Idle] = true;
 		}
+
+		if (GetComponent<Animator>()->GetCurAnimationName() == L"R_Idle"
+			|| GetComponent<Animator>()->GetCurAnimationName() == L"L_Idle")
+		{
+			if (mDelta < 1.0f)
+				return;
+			
+			if (mDirction)
+				GetComponent<Animator>()->Play(L"L_Dash");
+			else
+				GetComponent<Animator>()->Play(L"R_Dash");
+
+			mDelta = 0.0f;
+			return;
+		}
+
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::BossMonster, eColliderLayer::Ground, false);
+		if (!mbIn)
+		{
+			if (mDelta < 1.0f)
+			{
+				CollisionManager::GetInstance()->SetLayer(eColliderLayer::BossMonster, eColliderLayer::Ground, false);
+				Vector2 pos = GetPos();
+				if (mDirction)
+				{ 
+					pos = pos - Time::GetInstance()->DeltaTime() * 400.f;
+				}
+				else
+				{
+					pos = pos + Time::GetInstance()->DeltaTime() * 400.f;
+				}
+				SetPos(pos);
+			}
+			else
+			{
+				if (mDirction)
+					GetComponent<Animator>()->Play(L"R_Dash");
+				else
+					GetComponent<Animator>()->Play(L"L_Dash");
+
+				mDelta = 0.0f;
+				mbIn = true;
+			}
+			return;
+		}
+		else if (!mbOut)
+		{
+			if (mDelta < 1.0f)
+			{
+				CollisionManager::GetInstance()->SetLayer(eColliderLayer::BossMonster, eColliderLayer::Ground, false);
+				Vector2 pos = GetPos();
+				if (mDirction)
+				{
+					pos = pos + Time::GetInstance()->DeltaTime() * 400.f;
+
+				}
+				else
+				{
+					pos = pos - Time::GetInstance()->DeltaTime() * 400.f;
+				}
+				SetPos(pos);
+			}
+
+			return;
+		}
+
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::BossMonster, eColliderLayer::Ground);
 	}
 	void LeianaBoss::Patton1()
 	{

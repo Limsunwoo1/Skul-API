@@ -22,8 +22,9 @@ namespace sw
 	}
 	void LeianaBossRight::Tick()
 	{
+		LOG(STRING("틱 이전 포즈 %f", GetPos().y));
 		GameObject::Tick();
-
+		LOG(STRING("틱 이후 포즈 %f", GetPos().y));
 		Branch();
 	}
 
@@ -34,8 +35,8 @@ namespace sw
 
 	void LeianaBossRight::Initialize()
 	{
-		SetPos(1800.f, 300.f);
-		SetScale(3.5f, 3.5f);
+		SetPos(1800.f, 0.f);
+		SetScale(4.5f, 4.5f);
 		Rigidbody* rigd = AddComponent<Rigidbody>();
 		rigd->SetOwner(this);
 
@@ -57,6 +58,8 @@ namespace sw
 
 		animator->CreatAnimations(L"R_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\RigthBoss\\R");
 		animator->CreatAnimations(L"L_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\RigthBoss\\L");
+
+		animator->Play(L"L_Idle");
 	}
 
 	void LeianaBossRight::InitalizeCollider()
@@ -121,7 +124,7 @@ namespace sw
 				if (mPlayer)
 				{
 					Vector2 pPos = mPlayer->GetPos();
-					SetPos(pPos.x, pPos.y - 300.f);
+					SetPos(pPos.x, 400.f);
 				}
 				SetDeath(false);
 				GetComponent<Rigidbody>()->SetGround(true);

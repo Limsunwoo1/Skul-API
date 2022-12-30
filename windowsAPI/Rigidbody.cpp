@@ -29,7 +29,6 @@ namespace sw
 		// 이동
 		// F = M x A
 		// A = F / M
-
 		mAccelation = mForce / mMass;
 
 		// 속도에 가속도를 더한다
@@ -126,10 +125,8 @@ namespace sw
 
 
 		pos = pos + mForce * (Time::GetInstance()->DeltaTime() * mSquare);
-		pos = pos + mVelocity * Time::GetInstance()->DeltaTime();
 		GetOwner()->SetPos(pos);
 		mForce.Clear();
-
 		// 1배속 리셋
 		mSquare = 1;
 	}

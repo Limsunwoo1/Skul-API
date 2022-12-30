@@ -10,6 +10,7 @@
 #include "Move.h"
 #include "MainPlayer.h"
 #include "MonsterBase.h"
+#include "BossMonster.h"
 
 #include <iostream>
 #define FREEZMAX 2

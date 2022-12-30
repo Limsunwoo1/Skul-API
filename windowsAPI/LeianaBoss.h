@@ -35,12 +35,22 @@ namespace sw
 		virtual void Patton4_Stand_by( bool type = true) override;
 		virtual void Patton4_Progress() override;
 
-
 		void SetOwer(LeianaControler* owner) { mOwner = owner; }
 		LeianaControler* GetOwner() { return mOwner; }
 
+		Vector2 GetScreenSpawnPos() { return mScreenSpawnPos; }
+		void SetScreenSqawnPos(float x, float y) { mScreenSpawnPos = Vector2(x, y); }
+
+		Vector2 GetScreenOutPosPos() { return mScreenOutPos; }
+		void SetScreenOutPosPos(float x, float y) { mScreenOutPos = Vector2(x, y); }
 	private:
 		LeianaControler* mOwner;
+
+		bool mbIn;
+		bool mbOut;
+
+		Vector2 mScreenSpawnPos;
+		Vector2 mScreenOutPos;
 	};
 }
 

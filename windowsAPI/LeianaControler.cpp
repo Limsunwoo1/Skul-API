@@ -94,7 +94,7 @@ namespace sw
 
 		// 랜덤으로 다음패턴 설정 하기
 		// SetNextPatton
-		mNextPatton = eBossPatton::Patton1;
+		/*mNextPatton = eBossPatton::Patton1;
 		mDelta = 0.0f;
 		if (mNextPatton == eBossPatton::Patton1)
 		{
@@ -114,20 +114,10 @@ namespace sw
 			SetCurPatton(eBossPatton::Patton1);
 			mLeft->SetCurPattonState(ePattonState::READY);
 			mPatternProgress = true;
-		}
+		}*/
 	}
 	void LeianaControler::Patton1()
 	{
-		if (!mPattonEnd)
-		{
-			if (!mPattonStarte)
-				mPattonStarte = Dash(false);
-			else
-				mPattonEnd = Dash();
-			
-			return;
-		}
-
 		mLeft->Patton1();
 		mRight->Patton1();
 	}

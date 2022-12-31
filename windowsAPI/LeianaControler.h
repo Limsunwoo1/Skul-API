@@ -37,6 +37,8 @@ namespace sw
 		bool GetCombeMode() { return mCombeMode; }
 		void SetCombeMode(bool on) { mCombeMode = on; }
 
+		int GetPattonCount() { return mPattonCount; }
+
 		void Brunch();
 		void Idle();
 		void Patton1();

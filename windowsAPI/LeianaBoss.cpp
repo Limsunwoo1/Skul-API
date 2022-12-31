@@ -19,6 +19,7 @@ namespace sw
 		, mbIn(false)
 		, mbOut(false)
 		, mHold(false)
+		, mRushEnd(false)
 		, mLScreenSpawnX(600.f)
 		, mRScreenSpawnX(1800.f)
 		, mScreenSpawnY(765.f)
@@ -28,6 +29,7 @@ namespace sw
 		, mDirVec(Vector2::Zero)
 		, mSpeed(0)
 		, mPatton5_Num(0)
+		, mPatton5_TargetPos(0.f,0.f)
 	{
 		SetDirPos(false);
 	}
@@ -140,7 +142,7 @@ namespace sw
 
 			mPattonList[(int)eBossPatton::Idle] = true;
 		}
-		mDelay = 3.0f;
+		mDelay = 2.0f;
 		if (mDelta < mDelay)
 			return;
 		
@@ -470,8 +472,13 @@ namespace sw
 		ScreenIn();
 		if (!mbIn)
 			return;
+		if (mPatton5_Num >= mPatton5_Entry.size())
+		{
+			mPatton5_Num = 0;
+			mPattonState = ePattonState::END;
+		}
 
-		mDelay = 2.0f;
+		mDelay = 0.5f;
 		if (mDelta < mDelay)
 			return;
 
@@ -480,48 +487,49 @@ namespace sw
 			if (mPattonState != ePattonState::READY)
 				return;
 
-			if (GetComponent<Animator>()->GetCurAnimationName() == L"R_RushReady"
-				|| GetComponent<Animator>()->GetCurAnimationName() == L"L_RushReady")
+			mSpeed = 800;
+			if (mPatton5_TargetPos == Vector2::Zero)
 			{
-				if (GetComponent<Animator>()->isComplete())
-				{
-					mPatton5_Num = 0;
-					mPattonState = ePattonState::LANDING;
-				}
-				return;
+				mPatton5_TargetPos = mPlayer->GetPos();
+				mPatton5_TargetPos.y = mScreenSpawnY;
+				if (GetPos().x < mPatton5_TargetPos.x)
+					mDirPos = false;
+				else
+					mDirPos = true;
 			}
 
+			mDirVec = (mPatton5_TargetPos - GetPos()).Normalize();
+
 			if (mDirPos)
-				GetComponent<Animator>()->Play(L"L_RushReady");
+			{
+				if (GetPos().x <= mPatton5_TargetPos.x)
+					mPattonState = ePattonState::LANDING;
+			}
 			else
-				GetComponent<Animator>()->Play(L"R_RushReady");
+			{
+				if (GetPos().x >= mPatton5_TargetPos.x)
+					mPattonState = ePattonState::LANDING;
+			}
+
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_RushReady"
+				&& GetComponent<Animator>()->GetCurAnimationName() != L"L_RushReady")
+			{
+				if (mDirPos)
+					GetComponent<Animator>()->Play(L"R_RushReady");
+				else
+					GetComponent<Animator>()->Play(L"L_RushReady");
+			}
 		}
 		else
 		{
 			if (mPattonState != ePattonState::END)
 				return;
 
-			if (PattonEnd())
-				return;
-
-			if (GetComponent<Animator>()->GetCurAnimationName() == L"R_RushEnd"
-				|| GetComponent<Animator>()->GetCurAnimationName() == L"L_RushEnd")
-			{
-				if (GetComponent<Animator>()->isComplete())
-				{
-					mHold = true;
-					mbIn = false;
-					mPattonState = ePattonState::NONE;
-					mOwner->SetCurPatton(eBossPatton::Idle);
-					mOwner->SetPatternProgress(false);
-				}
-				return;
-			}
-
-			if (mDirPos)
-				GetComponent<Animator>()->Play(L"L_RushEnd");
-			else
-				GetComponent<Animator>()->Play(L"R_RushEnd");
+			mPattonState = ePattonState::NONE;
+			mOwner->GetRightLeiana()->SetCurPattonState(ePattonState::NONE);
+			mOwner->SetPatternProgress(false);
+			mOwner->SetCurPatton(eBossPatton::Idle);
+			mPattonList[(int)eBossPatton::Idle] = false;
 		}
 	}
 	void LeianaBoss::Patton5_Progress()
@@ -529,27 +537,50 @@ namespace sw
 		if (mPattonState != ePattonState::LANDING)
 			return;
 
-		mSpeed = 500;
-		mDirVec = (mPlayer->GetPos() - GetPos()).Normalize();
-
-		if (GetPos().x >= (mPlayer->GetPos().x - 10) || GetPos().x <= (mPlayer->GetPos().x + 10))
+		if (!mRushEnd)
 		{
-			if (GetComponent<Animator>()->GetCurAnimationName() != L"R" + mPatton5_Entry[mPatton5_Num]
-				|| GetComponent<Animator>()->GetCurAnimationName() != L"L" + mPatton5_Entry[mPatton5_Num])
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"L" + mPatton5_Entry[mPatton5_Num]
+				&& GetComponent<Animator>()->GetCurAnimationName() != L"R" + mPatton5_Entry[mPatton5_Num])
 			{
-				if (mDirVec.x > 0)
+				if (mDirPos)
 					GetComponent<Animator>()->Play(L"R" + mPatton5_Entry[mPatton5_Num]);
 				else
 					GetComponent<Animator>()->Play(L"L" + mPatton5_Entry[mPatton5_Num]);
 			}
-
+		}
+		
+		
+		if (GetComponent<Animator>()->GetCurAnimationName() == L"L" + mPatton5_Entry[mPatton5_Num]
+			|| GetComponent<Animator>()->GetCurAnimationName() == L"R" + mPatton5_Entry[mPatton5_Num])
+		{
 			if (GetComponent<Animator>()->isComplete())
-				++mPatton5_Num;
-
-			if (mPatton5_Num >= mPatton5_Entry.size())
 			{
-				mPatton5_Num = 0;
-				mPattonState = ePattonState::END;
+				/*++mPatton5_Num;
+				mDelta = 0.0f;*/
+				//mPattonState = ePattonState::END;
+
+				if (!mRushEnd)
+				{
+					if (mDirPos)
+						GetComponent<Animator>()->Play(L"R_RushEnd");
+					else
+						GetComponent<Animator>()->Play(L"L_RushEnd");
+
+					mRushEnd = true;
+				}
+			}
+		}
+
+		if (GetComponent<Animator>()->GetCurAnimationName() == L"R_RushEnd"
+			|| GetComponent<Animator>()->GetCurAnimationName() == L"L_RushEnd")
+		{
+			if (GetComponent<Animator>()->isComplete())
+			{
+				++mPatton5_Num;
+				mPattonState = ePattonState::READY;
+				mPatton5_TargetPos = Vector2::Zero;
+				mRushEnd = false;
+				mDelta = 0.0f;
 			}
 		}
 	}

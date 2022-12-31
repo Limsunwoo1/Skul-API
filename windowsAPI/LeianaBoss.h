@@ -84,6 +84,7 @@ namespace sw
 		bool mbIn;
 		bool mbOut;
 		bool mHold;
+		bool mRushEnd;
 
 		float mLScreenSpawnX;
 		float mRScreenSpawnX;
@@ -94,6 +95,7 @@ namespace sw
 		float mScreenOutY;
 
 		Vector2 mDirVec;
+		Vector2 mPatton5_TargetPos;
 		UINT mSpeed;
 		UINT mPatton5_Num;
 	};

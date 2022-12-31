@@ -115,7 +115,7 @@ namespace sw
 			mPattonList[(int)eBossPatton::Idle] = true;
 		}
 
-		mDelay = 3.0f;
+		mDelay = 2.0f;
 		if (mDelta < mDelay)
 			return;
 

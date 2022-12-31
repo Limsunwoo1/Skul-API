@@ -137,9 +137,13 @@ namespace sw
 		{
 			mPattonCount = 0;
 			if (mCombeMode)
+			{
 				mCombeMode = false;
+			}
 			else
+			{
 				mCombeMode = true;
+			}
 		}
 
 		if (mLeft->GetScreenOut() && mRight->GetScreenOut())
@@ -149,19 +153,20 @@ namespace sw
 
 			if (mCombeMode)
 			{
-				mPattonCount++;
 				SetCurPatton((eBossPatton)CombePatton(gen1));
 				mLeft->SetCurPattonState(ePattonState::READY);
 				mRight->SetCurPattonState(ePattonState::READY);
-			}
-			else
-			{
 				mPattonCount++;
-				SetCurPatton(eBossPatton::Patton5);
-				mLeft->SetCurPattonState(ePattonState::READY);
 			}
 
-			mDelta = 0.0f;
+			if (!mCombeMode)
+			{
+				SetCurPatton(eBossPatton::Patton5);
+				mLeft->SetCurPattonState(ePattonState::READY);
+
+				mPattonCount++;
+				mDelta = 0.0f;
+			}
 		}
 	}
 	void LeianaControler::Patton1()

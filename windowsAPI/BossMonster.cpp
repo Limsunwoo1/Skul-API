@@ -10,7 +10,7 @@ namespace sw
 		, mPattonState(ePattonState::NONE)
 		, mDelta(0.0f)
 		, mDelay(0.0f)
-		, mDirction(true)
+		, mDirPos(true)
 	{
 		for (int i = (int)eBossPatton::Idle; i < (int)eBossPatton::End; ++i)
 		{
@@ -57,6 +57,34 @@ namespace sw
 		case eBossPatton::Patton4:
 		{
 			Patton4();
+		}
+		case eBossPatton::Patton5:
+		{
+			Patton5();
+		}
+		break;
+		case eBossPatton::Patton6:
+		{
+			Patton6();
+		}
+		break;
+		case eBossPatton::Patton7:
+		{
+			Patton7();
+		}
+		break;
+		case eBossPatton::Patton8:
+		{
+			Patton8();
+		}
+		break;
+		case eBossPatton::Patton9:
+		{
+			Patton9();
+		}
+		case eBossPatton::Patton10:
+		{
+			Patton10();
 		}
 		break;
 		}

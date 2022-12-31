@@ -31,15 +31,26 @@ namespace sw
 		eBossPatton GetCurPatton() { return mCurPatton; }
 		void SetCurPatton(eBossPatton type);
 
+		bool GetPatternProgress() {return mPatternProgress;}
+		void SetPatternProgress(bool on) { mPatternProgress = on; }
+
+		bool GetCombeMode() { return mCombeMode; }
+		void SetCombeMode(bool on) { mCombeMode = on; }
+
 		void Brunch();
 		void Idle();
 		void Patton1();
 		void Patton2();
 		void Patton3();
 		void Patton4();
+		void Patton5();
+		void Patton6();
+		void Patton7();
+		void Patton8();
+		void Patton9();
+		void Patton10();
 
-		bool Dash(bool in = true);
-
+		void ReSetDirPos();
 		void PushBoss(Scene* scene);
 	private:
 		LeianaBoss* mLeft;
@@ -50,8 +61,9 @@ namespace sw
 		float mDelay;
 
 		bool mPatternProgress;
-		bool mPattonStarte;
-		bool mPattonEnd;
+		bool mCombeMode;
+
+		UINT mPattonCount;
 		MainPlayer* mPlayer;
 	};
 }

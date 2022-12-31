@@ -9,6 +9,12 @@ namespace sw
 		Patton2,
 		Patton3,
 		Patton4,
+		Patton5,
+		Patton6,
+		Patton7,
+		Patton8,
+		Patton9,
+		Patton10,
 		End,
 	};
 
@@ -40,6 +46,12 @@ namespace sw
 		virtual void Patton2() {};
 		virtual void Patton3() {};
 		virtual void Patton4() {};
+		virtual void Patton5() {};
+		virtual void Patton6() {};
+		virtual void Patton7() {};
+		virtual void Patton8() {};
+		virtual void Patton9() {};
+		virtual void Patton10() {};
 
 		virtual void Branch();
 
@@ -51,6 +63,18 @@ namespace sw
 		virtual void Patton3_Progress() {}
 		virtual void Patton4_Stand_by( bool type = true) {}
 		virtual void Patton4_Progress() {}
+		virtual void Patton5_Stand_by(bool type = true) {}
+		virtual void Patton5_Progress() {}
+		virtual void Patton6_Stand_by(bool type = true) {}
+		virtual void Patton6_Progress() {}
+		virtual void Patton7_Stand_by(bool type = true) {}
+		virtual void Patton7_Progress() {}
+		virtual void Patton8_Stand_by(bool type = true) {}
+		virtual void Patton8_Progress() {}
+		virtual void Patton9_Stand_by(bool type = true) {}
+		virtual void Patton9_Progress() {}
+		virtual void Patton10_Stand_by(bool type = true) {}
+		virtual void Patton10_Progress() {}
 
 		eBossPatton GetCurPatton() { return mCurPatton; }
 		void SetCurPatton(eBossPatton patton) { mCurPatton = patton; }
@@ -70,8 +94,8 @@ namespace sw
 		MainPlayer* GetPlayer() { return mPlayer; }
 		void SetPlayer(MainPlayer* player) { mPlayer = player; }
 
-		bool GetDirction() { return mDirction; }
-		void SetDirction(bool dir) { mDirction = dir; }
+		bool GetDirPos() { return mDirPos; }
+		void SetDirPos(bool dir) { mDirPos = dir; }
 	protected:
 		std::vector<bool> mPattonList;
 		eBossPatton mCurPatton;
@@ -84,6 +108,7 @@ namespace sw
 		MainPlayer* mPlayer;
 		UINT mHP;
 
-		bool mDirction;
+		// ¿À¸¥ÂÊ true ¿ÞÂÊ false
+		bool mDirPos;
 	};
 }

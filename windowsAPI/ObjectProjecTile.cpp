@@ -14,6 +14,8 @@ namespace sw
 		, mAble(false)
 		, mEffectName(L"")
 		, mOffeset(Vector2::Zero)
+		, mDirVec(Vector2::Zero)
+		, mSpeed(0)
 		, mStartOffset(0.0f)
 		, mNotMove(false)
 	{
@@ -44,6 +46,12 @@ namespace sw
 		
 
 		GameObject::Tick();
+		
+		if (mDirVec != Vector2::Zero)
+		{
+			Vector2 pos = GetPos();
+			pos += mDirVec.Normalize() * Time::GetInstance()->DeltaTime() * mSpeed;
+		}
 	}
 	void ObjectProjecTile::Render(HDC hdc)
 	{
@@ -82,8 +90,7 @@ namespace sw
 		auto iter = mColiedList.find(other->GetID());
 		if (iter == mColiedList.end())
 			return;
-		LOG(STRING("ID %d", iter->first))
-		LOG(STRING("Delta %f", iter->second))
+
 		if (iter->second < mReuse_Time)
 			return;
 
@@ -102,6 +109,7 @@ namespace sw
 		if (iter != mColiedList.end())
 			mColiedList.erase(iter);
 	}
+
 	void ObjectProjecTile::SetEvent(const TColliderEvent& event)
 	{
 		Event = event;

@@ -47,7 +47,6 @@ namespace sw
 		// 맵 데이터 로드
 		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\Ch2BossStage");
 		// 콜리젼 레이어
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::BossMonster, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjecTile, eColliderLayer::BossMonster);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::BossMonster_ProjecTile, eColliderLayer::Player);
@@ -66,7 +65,6 @@ namespace sw
 	}
 	void Ch2BossScene::Exit()
 	{
-		ObjectManager::GetInstance()->DeleteObject(eSceneType::Ch2Boss);
 	}
 	void Ch2BossScene::Release()
 	{

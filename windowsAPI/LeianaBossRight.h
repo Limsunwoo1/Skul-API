@@ -35,11 +35,56 @@ namespace sw
 		virtual void Patton4_Stand_by( bool type = true) override;
 		virtual void Patton4_Progress() override;
 
+		void ScreenOut();
+		void ScreenIn();
+
 		void SetOwer(LeianaControler* owner) { mOwner = owner; }
 		LeianaControler* GetOwner() { return mOwner; }
 
+		float GetScreenLSpawnX() { return mLScreenSpawnX; }
+		void SetScreenLSpawnX(float x) { mLScreenSpawnX = x; }
+
+		float GetScreenRSpawnX() { return mRScreenSpawnX; }
+		void SetScreenRSpawnX(float x) { mRScreenSpawnX = x; }
+
+		float GetScreenSpawnY() { return mScreenSpawnY; }
+		void SetScreenSpawnY(float y) { mScreenSpawnY = y; }
+
+		float GetScreenLOutX() { return mLScreenOutX; }
+		void SetScreenScreenLOutX(float x) { mLScreenOutX = x; }
+
+		float GetScreenROutX() { return mRScreenOutX; }
+		void SetScreenROutX(float x) { mRScreenOutX = x; }
+
+		float GetScreenOutY() { return mScreenOutY; }
+		void SetScreenOutY(float y) { mScreenOutY = y; }
+
+		bool GetScreenIn() { return mbIn; }
+		void SetScreenIn(bool in) { mbIn = in; }
+
+		bool GetScreenOut() { return mbOut; }
+		void SetScreenOut(bool out) { mbOut = out; }
+
+		bool GetHold() { return mHold; }
+		void SetHold(bool hold) { mHold = hold; }
+
 	private:
 		LeianaControler* mOwner;
+
+		bool mbIn;
+		bool mbOut;
+		bool mHold;
+
+		float mLScreenSpawnX;
+		float mRScreenSpawnX;
+		float mScreenSpawnY;
+
+		float mLScreenOutX;
+		float mRScreenOutX;
+		float mScreenOutY;
+
+		Vector2 mDirVec;
+		UINT mSpeed;
 	};
 }
 

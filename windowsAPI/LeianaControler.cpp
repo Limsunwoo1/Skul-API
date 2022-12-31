@@ -7,6 +7,14 @@
 #include "Animator.h"
 #include "Rigidbody.h"
 
+#include <iostream>
+#include <random>
+
+
+std::random_device random1;
+std::mt19937 gen1(random1());
+std::uniform_int_distribution<int> CombePatton(1, 3);
+
 namespace sw
 {
 	LeianaControler::LeianaControler()
@@ -16,8 +24,8 @@ namespace sw
 		, mDelta(0.0f)
 		, mDelay(3.0f)
 		, mPatternProgress(false)
-		, mPattonStarte(false)
-		, mPattonEnd(false)
+		, mCombeMode(true)
+		, mPattonCount(0)
 	{
 		Initialize();
 		mCurPatton = eBossPatton::Idle;
@@ -39,7 +47,6 @@ namespace sw
 		mRight = new LeianaBossRight();
 		mRight->SetOwer(this);
 		mRight->Initialize();
-		mRight->SetDirction(false);
 	}
 	void LeianaControler::SetPlayer(MainPlayer* player)
 	{
@@ -81,40 +88,81 @@ namespace sw
 		{
 			Patton4();
 		}
+		case eBossPatton::Patton5:
+		{
+			Patton5();
+		}
+		break;
+		case eBossPatton::Patton6:
+		{
+			Patton6();
+		}
+		break;
+		case eBossPatton::Patton7:
+		{
+			Patton7();
+		}
+		break;
+		case eBossPatton::Patton8:
+		{
+			Patton8();
+		}
+		break;
+		case eBossPatton::Patton9:
+		{
+			Patton9();
+		}
+		case eBossPatton::Patton10:
+		{
+			Patton10();
+		}
 		break;
 		}
 	}
 	void LeianaControler::Idle()
 	{
+		if (!mPatternProgress)
+		{
+			ReSetDirPos();
+			mPatternProgress = true;
+		}
+
 		mLeft->Idle();
 		mRight->Idle();
 
 		if (mDelta < mDelay)
 			return;
 
-		// 랜덤으로 다음패턴 설정 하기
-		// SetNextPatton
-		/*mNextPatton = eBossPatton::Patton1;
-		mDelta = 0.0f;
-		if (mNextPatton == eBossPatton::Patton1)
+		if (mPattonCount >= 3)
 		{
-			if (mLeft->GetPos().x < mPlayer->GetPos().x)
+			mPattonCount = 0;
+			if (mCombeMode)
+				mCombeMode = false;
+			else
+				mCombeMode = true;
+		}
+
+		if (mLeft->GetScreenOut() && mRight->GetScreenOut())
+		{
+			mLeft->SetScreenOut(false);
+			mRight->SetScreenOut(false);
+
+			if (mCombeMode)
 			{
-				mLeft->SetDirction(true);
-				mLeft->SetPos(600.f,mLeft->GetPos().y);
-				mRight->SetPos(1900.f, mRight->GetPos().y);
+				mPattonCount++;
+				SetCurPatton((eBossPatton)CombePatton(gen1));
+				mLeft->SetCurPattonState(ePattonState::READY);
+				mRight->SetCurPattonState(ePattonState::READY);
 			}
 			else
 			{
-				mLeft->SetDirction(false);
-				mLeft->SetPos(1900.f, mLeft->GetPos().y);
-				mRight->SetPos(600.f, mRight->GetPos().y);
+				mPattonCount++;
+				SetCurPatton(eBossPatton::Patton5);
+				mLeft->SetCurPattonState(ePattonState::READY);
 			}
 
-			SetCurPatton(eBossPatton::Patton1);
-			mLeft->SetCurPattonState(ePattonState::READY);
-			mPatternProgress = true;
-		}*/
+			mDelta = 0.0f;
+		}
 	}
 	void LeianaControler::Patton1()
 	{
@@ -136,76 +184,56 @@ namespace sw
 		mLeft->Patton4();
 		mRight->Patton4();
 	}
-	bool LeianaControler::Dash(bool in)
+	void LeianaControler::Patton5()
 	{
-		Vector2 pos = mLeft->GetPos();
-		mLeft->GetComponent<Rigidbody>()->SetSquare(2);
-		mRight->GetComponent<Rigidbody>()->SetSquare(2);
-		if (in)
+		mLeft->Patton5();
+		mRight->Patton5();
+	}
+	void LeianaControler::Patton6()
+	{
+		mLeft->Patton6();
+		mRight->Patton6();
+	}
+	void LeianaControler::Patton7()
+	{
+		mLeft->Patton7();
+		mRight->Patton7();
+	}
+	void LeianaControler::Patton8()
+	{
+		mLeft->Patton8();
+		mRight->Patton8();
+	}
+	void LeianaControler::Patton9()
+	{
+		mLeft->Patton9();
+		mRight->Patton9();
+	}
+	void LeianaControler::Patton10()
+	{
+		mLeft->Patton10();
+		mRight->Patton10();
+	}
+	
+	void LeianaControler::ReSetDirPos()
+	{
+		if (!mLeft)
+			return;
+		if (!mRight)
+			return;
+
+		if (mLeft->GetPos().x < mRight->GetPos().x)
 		{
-			if (mLeft->GetPos().x < mRight->GetPos().x)
-			{
-				if (mLeft->GetPos().x >= 1000 + 1)
-					return true;
-
-				mLeft->GetComponent<Animator>()->Play(L"R_Dash");
-				mRight->GetComponent<Animator>()->Play(L"L_Dash");
-
-				if (mLeft->GetPos().x < 1000 + 1)
-				{
-					mLeft->GetComponent<Rigidbody>()->AddForce(1000.f, 0.f);
-					mRight->GetComponent<Rigidbody>()->AddForce(-1000.f, 0.f);
-				}
-			}
-			else
-			{
-				if (mLeft->GetPos().x <= 1900)
-					return true;
-
-				mLeft->GetComponent<Animator>()->Play(L"L_Dash");
-				mRight->GetComponent<Animator>()->Play(L"R_Dash");
-
-				if (mLeft->GetPos().x > 1900)
-				{
-					mLeft->GetComponent<Rigidbody>()->AddForce(-1000.f, 0);
-					mRight->GetComponent<Rigidbody>()->AddForce(1000.f, 0);
-				}
-			}
+			mLeft->SetDirPos(false);
+			mRight->SetDirPos(true);
 		}
 		else
 		{
-			if (mLeft->GetPos().x < mRight->GetPos().x)
-			{
-				if (mLeft->GetPos().x <= 169)
-					return true;
-
-				mLeft->GetComponent<Animator>()->Play(L"L_Dash");
-				mRight->GetComponent<Animator>()->Play(L"R_Dash");
-
-				if (mLeft->GetPos().x > 169)
-				{
-					mLeft->GetComponent<Rigidbody>()->AddForce(-1000.f, 0000.f);
-					mRight->GetComponent<Rigidbody>()->AddForce(1000.f, 0000.f);
-				}
-			}
-			else
-			{
-				if (mLeft->GetPos().x >= 2200)
-					return true;
-
-				mLeft->GetComponent<Animator>()->Play(L"R_Dash");
-				mRight->GetComponent<Animator>()->Play(L"L_Dash");
-
-				if (mLeft->GetPos().x < 2200)
-				{
-					mLeft->GetComponent<Rigidbody>()->AddForce(-1000.f, 0000.f);
-					mRight->GetComponent<Rigidbody>()->AddForce(1000.f, 000.f);
-				}
-			}
+			mLeft->SetDirPos(true);
+			mRight->SetDirPos(false);
 		}
-
-		return false;
 	}
+
 	void LeianaControler::PushBoss(Scene* scene)
 	{
 		scene->AddGameObject(mLeft, eColliderLayer::BossMonster);

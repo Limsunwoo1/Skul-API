@@ -14,7 +14,19 @@ namespace sw
 	LeianaBossRight::LeianaBossRight()
 		: BossMonster()
 		, mOwner(nullptr)
+		, mbIn(false)
+		, mbOut(false)
+		, mHold(true)
+		, mLScreenSpawnX(600.f)
+		, mRScreenSpawnX(1800.f)
+		, mScreenSpawnY(765.f)
+		, mLScreenOutX(-20.f)
+		, mRScreenOutX(2452.f)
+		, mScreenOutY(503.f)
+		, mDirVec(Vector2::Zero)
+		, mSpeed(0)
 	{
+		SetDirPos(true);
 	}
 
 	LeianaBossRight::~LeianaBossRight()
@@ -22,10 +34,15 @@ namespace sw
 	}
 	void LeianaBossRight::Tick()
 	{
-		LOG(STRING("틱 이전 포즈 %f", GetPos().y));
+		mDelta += Time::GetInstance()->DeltaTime();
+		mDirVec = Vector2::Zero;
+
 		GameObject::Tick();
-		LOG(STRING("틱 이후 포즈 %f", GetPos().y));
 		Branch();
+
+		Vector2 pos = GetPos();
+		pos += mDirVec * Time::GetInstance()->DeltaTime() * mSpeed;
+		SetPos(pos);
 	}
 
 	void LeianaBossRight::Render(HDC hdc)
@@ -35,15 +52,14 @@ namespace sw
 
 	void LeianaBossRight::Initialize()
 	{
-		SetPos(1800.f, 0.f);
-		SetScale(4.5f, 4.5f);
-		Rigidbody* rigd = AddComponent<Rigidbody>();
-		rigd->SetOwner(this);
-
 		// Init
 		InitializeAnimation();
 		InitalizeCollider();
 		InitalizeProjecTile();
+
+		SetScale(4.5f, 4.5f);
+		mScreenSpawnY = mScreenSpawnY - (GetComponent<Collider>()->GetScale().y * 0.5f);
+		SetPos(mRScreenSpawnX, mScreenSpawnY);
 	}
 
 	void LeianaBossRight::InitializeAnimation()
@@ -56,6 +72,15 @@ namespace sw
 		animator->CreatAnimations(L"MeteorReady", LEIANABOSS_GOLD_PATH + L"combe\\Meteor\\MeteorReady");
 		animator->CreatAnimations(L"MeteorLanding", LEIANABOSS_GOLD_PATH + L"combe\\Meteor\\MetoerLanding");
 
+		animator->CreatAnimations(L"R_MeteorGroundReady", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Ready.01\\R");
+		animator->CreatAnimations(L"L_MeteorGroundReady", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Ready.01\\L");
+
+		animator->CreatAnimations(L"R_MeteorGroundLanding", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Landing\\R");
+		animator->CreatAnimations(L"L_MeteorGroundLanding", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Landing\\L");
+
+		animator->CreatAnimations(L"R_MeteorGroundEnd", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_End\\R");
+
+		animator->CreatAnimations(L"L_MeteorGroundEnd", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_End\\L");
 		animator->CreatAnimations(L"R_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\RigthBoss\\R");
 		animator->CreatAnimations(L"L_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\RigthBoss\\L");
 
@@ -81,14 +106,20 @@ namespace sw
 		// 애니메이션랜더
 		if (mPattonList[(int)eBossPatton::Idle] == false)
 		{
-			if (mDirction)
-				GetComponent<Animator>()->Play(L"R_Idle");
-			else
+			if (mDirPos)
 				GetComponent<Animator>()->Play(L"L_Idle");
+			else
+				GetComponent<Animator>()->Play(L"R_Idle");
 
 
 			mPattonList[(int)eBossPatton::Idle] = true;
 		}
+
+		mDelay = 3.0f;
+		if (mDelta < mDelay)
+			return;
+
+		ScreenOut();
 	}
 	void LeianaBossRight::Patton1()
 	{
@@ -102,12 +133,22 @@ namespace sw
 
 	void LeianaBossRight::Patton2()
 	{
-
+		if (mPattonState == ePattonState::READY)
+			Patton2_Stand_by();
+		if (mPattonState == ePattonState::LANDING)
+			Patton2_Progress();
+		if (mPattonState == ePattonState::END)
+			Patton2_Stand_by(false);
 	}
 
 	void LeianaBossRight::Patton3()
 	{
-
+		if (mPattonState == ePattonState::READY)
+			Patton3_Stand_by();
+		if (mPattonState == ePattonState::LANDING)
+			Patton3_Progress();
+		if (mPattonState == ePattonState::END)
+			Patton3_Stand_by(false);
 	}
 
 	void LeianaBossRight::Patton4()
@@ -117,18 +158,21 @@ namespace sw
 
 	void LeianaBossRight::Patton1_Stand_by( bool type)
 	{
+		ScreenIn();
+		if (!mbIn)
+			return;
+
+		mDelay = 2.0f;
+		if (mDelta < mDelay)
+			return;
+
+		if (mHold)
+			return;
+
 		if (type)
 		{
 			if (IsDeath())
-			{
-				if (mPlayer)
-				{
-					Vector2 pPos = mPlayer->GetPos();
-					SetPos(pPos.x, 400.f);
-				}
 				SetDeath(false);
-				GetComponent<Rigidbody>()->SetGround(true);
-			}
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorReady")
 				GetComponent<Animator>()->Play(L"MeteorReady");
@@ -141,46 +185,173 @@ namespace sw
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_Idle"
 			 && GetComponent<Animator>()->GetCurAnimationName() != L"L_Idle")
 			{
-				if (mDirction)
-					GetComponent<Animator>()->Play(L"R_Idle");
-				else
+				if (mDirPos)
 					GetComponent<Animator>()->Play(L"L_Idle");
+				else
+					GetComponent<Animator>()->Play(L"R_Idle");
 			}
 
 			if (GetComponent<Animator>()->isComplete())
 			{
-				mPattonState = ePattonState::NONE;
-				mOwner->SetCurPatton(eBossPatton::Idle);
+				mHold = true;
 			}
 		}
 	}
 	void LeianaBossRight::Patton1_Progress()
 	{
-		if (GetComponent<Rigidbody>()->GetGround())
-			GetComponent<Rigidbody>()->SetGround(false);
+		mSpeed = 800;
+		mDirVec.y = mScreenSpawnY - GetPos().y;
+		mDirVec.Normalize();
 
 		if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorLanding")
+		{
 			GetComponent<Animator>()->Play(L"MeteorLanding");
+		}
 
-		if (GetComponent<Animator>()->isComplete())
+		if (GetPos().y >= mScreenSpawnY)
 			mPattonState = ePattonState::END;
 
 	}
 	void LeianaBossRight::Patton2_Stand_by(bool type)
 	{
-		
+		ScreenIn();
+		if (!mbIn)
+			return;
+
+		mDelay = 2.0f;
+		if (mDelta < mDelay)
+			return;
+
+		if (type)
+		{
+			if (mPattonState != ePattonState::READY)
+				return;
+
+			if (GetComponent<Animator>()->GetCurAnimationName() == L"R_MeteorGroundReady"
+				|| GetComponent<Animator>()->GetCurAnimationName() == L"L_MeteorGroundReady")
+			{
+				if (GetComponent<Animator>()->isComplete())
+				{
+					mPattonState = ePattonState::LANDING;
+				}
+				return;
+			}
+
+			if (mDirPos)
+				GetComponent<Animator>()->Play(L"L_MeteorGroundReady");
+			else
+				GetComponent<Animator>()->Play(L"R_MeteorGroundReady");
+		}
+		else
+		{
+			if (mPattonState != ePattonState::END)
+				return;
+
+			if (GetComponent<Animator>()->GetCurAnimationName() == L"R_MeteorGroundEnd"
+				|| GetComponent<Animator>()->GetCurAnimationName() == L"L_MeteorGroundEnd")
+			{
+				if (GetComponent<Animator>()->isComplete())
+				{
+					mHold = true;
+				}
+				return;
+			}
+
+			if (mDirPos)
+				GetComponent<Animator>()->Play(L"L_MeteorGroundEnd");
+			else
+				GetComponent<Animator>()->Play(L"R_MeteorGroundEnd");
+		}
 	}
 	void LeianaBossRight::Patton2_Progress()
 	{
-		
+		if (mPattonState != ePattonState::LANDING)
+			return;
+
+		mSpeed = 1000;
+		if (mDirPos)
+		{
+			mDirVec.x = 600.f - GetPos().x;
+			mDirVec.Normalize();
+
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
+				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
+
+			if (GetPos().x <= 600.f)
+			{
+				mPattonState = ePattonState::END;
+			}
+		}
+		else
+		{
+			mDirVec.x = 1800.f - GetPos().x;
+			mDirVec.Normalize();
+
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
+				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
+
+			if (GetPos().x >= 1800.f)
+			{
+				mPattonState = ePattonState::END;
+			}
+		}
 	}
 	void LeianaBossRight::Patton3_Stand_by(bool type)
 	{
-		
+		ScreenIn();
+		if (!mbIn)
+			return;
+
+		mDelay = 3.0f;
+		if (mDelta < mDelay)
+			return;
+
+		if (type)
+		{
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorReady")
+			{
+				GetComponent<Animator>()->Play(L"MeteorReady");
+				SetDeath(true);
+				SetPos(mPlayer->GetPos().x, mScreenSpawnY - 400.f);
+				return;
+			}
+
+			if (IsDeath())
+				SetDeath(false);
+
+			if (GetComponent<Animator>()->isComplete())
+				mPattonState = ePattonState::LANDING;
+		}
+		else
+		{
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_Idle"
+				&& GetComponent<Animator>()->GetCurAnimationName() != L"L_Idle")
+			{
+				if (mDirPos)
+					GetComponent<Animator>()->Play(L"L_Idle");
+				else
+					GetComponent<Animator>()->Play(L"R_Idle");
+			}
+
+			if (GetComponent<Animator>()->isComplete())
+			{
+				mHold = true;
+			}
+		}
 	}
 	void LeianaBossRight::Patton3_Progress()
 	{
-		
+		mSpeed = 800;
+		mDirVec.y = mScreenSpawnY - GetPos().y;
+		mDirVec.Normalize();
+
+		if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorLanding")
+		{
+			GetComponent<Animator>()->Play(L"MeteorLanding");
+		}
+
+		if (GetPos().y >= mScreenSpawnY)
+			mPattonState = ePattonState::END;
 	}
 	void LeianaBossRight::Patton4_Stand_by(bool type)
 	{
@@ -189,5 +360,63 @@ namespace sw
 	void LeianaBossRight::Patton4_Progress()
 	{
 		
+	}
+	void LeianaBossRight::ScreenOut()
+	{
+		if (!mbOut)
+		{
+			Vector2 Pos = GetPos();
+			mSpeed = 4000;
+
+			if (mDirPos)
+			{
+				mDirVec = (Vector2(mRScreenOutX, mScreenOutY) - Pos).Normalize();
+				GetComponent<Animator>()->Play(L"R_Dash");
+				if (Pos.x >= mRScreenOutX && Pos.y <= mScreenOutY)
+					mbOut = true;
+			}
+			else
+			{
+				mDirVec = (Vector2(mLScreenOutX, mScreenOutY) - Pos).Normalize();
+				GetComponent<Animator>()->Play(L"L_Dash");
+				if (Pos.x <= mLScreenOutX && Pos.y <= mScreenOutY)
+					mbOut = true;
+			}
+		}
+	}
+	void LeianaBossRight::ScreenIn()
+	{
+		if (!mbIn)
+		{
+			Vector2 Pos = GetPos();
+			mSpeed = 4000;
+
+			if (mDirPos)
+			{
+				GetComponent<Animator>()->Play(L"L_Dash");
+				mDirVec = (Vector2(mRScreenSpawnX, mScreenSpawnY) - Pos).Normalize();
+
+				if (Pos.x <= mRScreenSpawnX && Pos.y >= mScreenSpawnY)
+				{
+					GetComponent<Animator>()->Play(L"L_Idle");
+
+					mbIn = true;
+					mDelta = 0.0f;
+				}
+			}
+			else
+			{
+				GetComponent<Animator>()->Play(L"R_Dash");
+				mDirVec = (Vector2(mLScreenSpawnX, mScreenSpawnY) - Pos).Normalize();
+
+				if (Pos.x >= mLScreenSpawnX && Pos.y >= mScreenSpawnY)
+				{
+					GetComponent<Animator>()->Play(L"R_Idle");
+
+					mbIn = true;
+					mDelta = 0.0f;
+				}
+			}
+		}
 	}
 }

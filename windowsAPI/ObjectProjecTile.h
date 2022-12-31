@@ -39,11 +39,21 @@ namespace sw
 		void SetNotMove(bool move) { mNotMove = move; }
 		bool GetNotMove() { return mNotMove; }
 
+		Vector2 GetDirVec() { return mDirVec; }
+		void SetDirVec(float x, float y) { mDirVec = Vector2(x, y); }
+		void SetDirVec(Vector2 dir, int speed) { SetDirVec(dir.x, dir.y), SetSpeed(speed); }
+
+		int GetSpeed() { return mSpeed; }
+		void SetSpeed(int speed) { mSpeed = speed; }
 	private:
 		TColliderEvent Event;
 		Animator* mAnimator;
 		GameObject* mTarget;
+
 		Vector2 mOffeset;
+		Vector2 mDirVec;
+
+		int mSpeed;
 
 		float mDelta;
 		float mReuse_Time;

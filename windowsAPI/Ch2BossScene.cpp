@@ -16,7 +16,6 @@ namespace sw
 	}
 	Ch2BossScene::~Ch2BossScene()
 	{
-
 	}
 	void Ch2BossScene::Initialize()
 	{

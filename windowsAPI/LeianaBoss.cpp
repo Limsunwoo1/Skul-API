@@ -10,7 +10,7 @@
 #include "LeianaControler.h"
 #include "LeianaBossRight.h"
 #include "CollisionManager.h"
-
+#include "EventManager.h"
 namespace sw
 {
 	LeianaBoss::LeianaBoss()
@@ -20,12 +20,15 @@ namespace sw
 		, mbOut(false)
 		, mHold(false)
 		, mRushEnd(false)
+		, mPatton6_ProjecTile_Ready(false)
+		, mPatton6_ProjecTile_End(false)
 		, mLScreenSpawnX(600.f)
 		, mRScreenSpawnX(1800.f)
 		, mScreenSpawnY(765.f)
 		, mLScreenOutX(-20.f)
 		, mRScreenOutX(2452.f)
 		, mScreenOutY(503.f)
+		, mRisignPrerceDelay(0.f)
 		, mDirVec(Vector2::Zero)
 		, mSpeed(0)
 		, mPatton5_Num(0)
@@ -76,26 +79,24 @@ namespace sw
 	{
 		Animator* animator = AddComponent<Animator>();
 		animator->SetOwner(this);
-		animator->CreatAnimations(L"R_Idle", LEIANABOSS_GOLD_PATH + L"Idle\\R", Vector2(-40.f,10.f ), 0.3f);
-		animator->CreatAnimations(L"L_Idle", LEIANABOSS_GOLD_PATH + L"Idle\\L");
+		animator->CreatAnimations(L"R_Idle", LEIANABOSS_GOLD_PATH + L"Idle\\R", Vector2(-40.f,20.f ), 0.3f);
+		animator->CreatAnimations(L"L_Idle", LEIANABOSS_GOLD_PATH + L"Idle\\L", Vector2(40.f,20.f), 0.3f);
 
 		animator->CreatAnimations(L"R_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\LeftBoss\\R");
 		animator->CreatAnimations(L"L_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\LeftBoss\\L");
 
-		animator->CreatAnimations(L"MeteorReady", LEIANABOSS_GOLD_PATH + L"combe\\Meteor\\MeteorReady");
+		animator->CreatAnimations(L"MeteorReady", LEIANABOSS_GOLD_PATH + L"combe\\Meteor\\MeteorReady", Vector2(-30.f, 0.f));
 		animator->CreatAnimations(L"MeteorLanding", LEIANABOSS_GOLD_PATH + L"combe\\Meteor\\MetoerLanding");
 
-		animator->CreatAnimations(L"R_MeteorGroundReady", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Ready.01\\R");
-
 		animator->CreatAnimations(L"L_MeteorGroundReady", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Ready.01\\L");
 		animator->CreatAnimations(L"R_MeteorGroundReady", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Ready.01\\R");
-		animator->CreatAnimations(L"L_MeteorGroundReady", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Ready.01\\L");
 
-		animator->CreatAnimations(L"R_MeteorGroundLanding", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Landing\\R");
-		animator->CreatAnimations(L"L_MeteorGroundLanding", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Landing\\L");
 
-		animator->CreatAnimations(L"R_MeteorGroundEnd", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_End\\R");
-		animator->CreatAnimations(L"L_MeteorGroundEnd", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_End\\L");
+		animator->CreatAnimations(L"R_MeteorGroundLanding", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Landing\\R", Vector2(0.f, 10.f));
+		animator->CreatAnimations(L"L_MeteorGroundLanding", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_Landing\\L", Vector2(0.f, 10.f));
+
+		animator->CreatAnimations(L"R_MeteorGroundEnd", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_End\\R", Vector2(0.f, 30.f));
+		animator->CreatAnimations(L"L_MeteorGroundEnd", LEIANABOSS_GOLD_PATH + L"combe\\MeteorGround\\Meteor_Ground_End\\L", Vector2(0.f, 30.f));
 
 		animator->CreatAnimations(L"R_RushReady", LEIANABOSS_GOLD_PATH + L"Rush\\R\\Ready");
 		animator->CreatAnimations(L"L_RushReady", LEIANABOSS_GOLD_PATH + L"Rush\\L\\Ready");
@@ -109,8 +110,20 @@ namespace sw
 		animator->CreatAnimations(L"R_RushC", LEIANABOSS_GOLD_PATH + L"Rush\\R\\RushC");
 		animator->CreatAnimations(L"L_RushC", LEIANABOSS_GOLD_PATH + L"Rush\\L\\RushC");
 
-		animator->CreatAnimations(L"R_RushEnd", LEIANABOSS_GOLD_PATH + L"Rush\\R\\End");
-		animator->CreatAnimations(L"L_RushEnd", LEIANABOSS_GOLD_PATH + L"Rush\\L\\End");
+		animator->CreatAnimations(L"R_RushEnd", LEIANABOSS_GOLD_PATH + L"Rush\\R\\End", Vector2(0.f, 30.f));
+		animator->CreatAnimations(L"L_RushEnd", LEIANABOSS_GOLD_PATH + L"Rush\\L\\End", Vector2(0.f, 30.f));
+
+		animator->CreatAnimations(L"R_RisignePrerceReady", LEIANABOSS_GOLD_PATH + L"RisignPrerce\\Ready\\R",Vector2(40.f, 70.f), 0.2f);
+		animator->CreatAnimations(L"L_RisignePrerceReady", LEIANABOSS_GOLD_PATH + L"RisignPrerce\\Ready\\L", Vector2(-40.f, 70.f), 0.2f);
+
+		animator->CreatAnimations(L"R_RisignePrerceLanding", LEIANABOSS_GOLD_PATH + L"RisignPrerce\\Landing\\R", Vector2(40.f, 70.f), 0.2f);
+		animator->CreatAnimations(L"L_RisignePrerceLanding", LEIANABOSS_GOLD_PATH + L"RisignPrerce\\Landing\\L", Vector2(-40.f, 70.f), 0.2f);
+
+		animator->CreatAnimations(L"R_RisignePrerceEnd", LEIANABOSS_GOLD_PATH + L"RisignPrerce\\End\\R", Vector2(40.f, 70.f), 0.2f);
+		animator->CreatAnimations(L"L_RisignePrerceEnd", LEIANABOSS_GOLD_PATH + L"RisignPrerce\\End\\L", Vector2(-40.f, 70.f), 0.2f);
+
+		animator->CreatAnimations(L"R_RisignePrerceAttack", LEIANABOSS_GOLD_PATH + L"DimensionPierce_Attack\\R", Vector2(0.f, 40.f), 0.2f);
+		animator->CreatAnimations(L"L_RisignePrerceAtaack", LEIANABOSS_GOLD_PATH + L"DimensionPierce_Attack\\L", Vector2(0.f, 40.f), 0.2f);
 
 		animator->Play(L"R_Idle");
 	}
@@ -125,8 +138,32 @@ namespace sw
 
 	void LeianaBoss::InitalizeProjecTile()
 	{
-		// Patton1
-		
+		for (int i = 0; i < 10; ++i)
+		{
+			ObjectProjecTile* projectile = new ObjectProjecTile();
+
+			projectile->SetTarget(this);
+			projectile->SetReuse_Time(1.0f);
+			projectile->SetEffectName(L"2CHBoss_Patton6");
+			projectile->GetComponent<Animator>()->
+				CreatAnimations(L"RisingPiereceEft_Ready", 
+					L"..\\Resource\\Animation\\2CH_Boss\\Gold\\RisingPierceEffect\\Ready");
+
+			projectile->GetComponent<Animator>()->
+				CreatAnimations(L"RisingPiereceEft_Landing",
+					L"..\\Resource\\Animation\\2CH_Boss\\Gold\\RisingPierceEffect\\RisingPierce");
+
+			projectile->GetComponent<Animator>()->
+				CreatAnimations(L"R_DimensionAttackEft", LEIANABOSS_GOLD_PATH + L"DimensionPierceAttackEft\\R");
+
+			projectile->GetComponent<Animator>()->
+				CreatAnimations(L"L_DimensionAttackEft", LEIANABOSS_GOLD_PATH + L"DimensionPierceAttackEft\\L");
+
+			Collider* collider = projectile->GetComponent<Collider>();
+			collider->SetScale(Vector2(30.f, 120.f));
+
+			mProjecTile.push_back(projectile);
+		}
 	}
 
 	void LeianaBoss::Idle()
@@ -195,14 +232,32 @@ namespace sw
 
 	void LeianaBoss::Patton6()
 	{
+		if (mPattonState == ePattonState::READY)
+			Patton6_Stand_by();
+		if (mPattonState == ePattonState::LANDING)
+			Patton6_Progress();
+		if (mPattonState == ePattonState::END)
+			Patton6_Stand_by(false);
 	}
 
 	void LeianaBoss::Patton7()
 	{
+		if (mPattonState == ePattonState::READY)
+			Patton7_Stand_by();
+		if (mPattonState == ePattonState::LANDING)
+			Patton7_Progress();
+		if (mPattonState == ePattonState::END)
+			Patton7_Stand_by(false);
 	}
 
 	void LeianaBoss::Patton8()
 	{
+		if (mPattonState == ePattonState::READY)
+			Patton8_Stand_by();
+		if (mPattonState == ePattonState::LANDING)
+			Patton8_Progress();
+		if (mPattonState == ePattonState::END)
+			Patton8_Stand_by(false);
 	}
 
 	void LeianaBoss::Patton1_Stand_by(bool type)
@@ -487,7 +542,7 @@ namespace sw
 			if (mPattonState != ePattonState::READY)
 				return;
 
-			mSpeed = 800;
+			mSpeed = 1000;
 			if (mPatton5_TargetPos == Vector2::Zero)
 			{
 				mPatton5_TargetPos = mPlayer->GetPos();
@@ -530,6 +585,11 @@ namespace sw
 			mOwner->SetPatternProgress(false);
 			mOwner->SetCurPatton(eBossPatton::Idle);
 			mPattonList[(int)eBossPatton::Idle] = false;
+
+			if (GetPos().x > mPlayer->GetPos().x)
+				mDirPos = true;
+			else
+				mDirPos = false;
 		}
 	}
 	void LeianaBoss::Patton5_Progress()
@@ -586,16 +646,287 @@ namespace sw
 	}
 	void LeianaBoss::Patton6_Stand_by(bool type)
 	{
+		ScreenIn();
+		if (!mbIn)
+			return;
+
+		mDelay = 2.0f;
+		if (mDelta < mDelay)
+			return;
+
+		if (type)
+		{
+			if (mPattonState != ePattonState::READY)
+				return;
+
+			if (GetComponent<Animator>()->GetCurAnimationName() == L"R_RisignePrerceReady"
+				|| GetComponent<Animator>()->GetCurAnimationName() == L"L_RisignePrerceReady")
+			{
+				if (GetComponent<Animator>()->isComplete())
+				{
+					mPattonState = ePattonState::LANDING;
+					mRisignPrerceDelay = 0.0f;
+				}
+				return;
+			}
+
+			if (GetPos().x < mPlayer->GetPos().x)
+				mDirPos = false;
+			else
+				mDirPos = true;
+
+			if (mDirPos)
+				GetComponent<Animator>()->Play(L"R_RisignePrerceReady");
+			else
+				GetComponent<Animator>()->Play(L"L_RisignePrerceReady");
+		}
+		else
+		{
+			if (mPattonState != ePattonState::END)
+				return;
+
+			if (GetComponent<Animator>()->GetCurAnimationName() == L"R_RisignePrerceEnd"
+				|| GetComponent<Animator>()->GetCurAnimationName() == L"L_RisignePrerceEnd")
+			{
+				if (GetComponent<Animator>()->isComplete())
+				{
+					mPattonState = ePattonState::NONE;
+					mHold = false;
+					mbIn = false;
+
+					mOwner->SetCurPatton(eBossPatton::Idle);
+					//mOwner->SetPatternProgress(false);
+				}
+				return;
+			}
+
+			if (mDirPos)
+				GetComponent<Animator>()->Play(L"R_RisignePrerceEnd");
+			else
+				GetComponent<Animator>()->Play(L"L_RisignePrerceEnd");
+		}
 	}
 	void LeianaBoss::Patton6_Progress()
 	{
+		if (mPattonState != ePattonState::LANDING)
+			return;
+
+		if (!mPatton6_ProjecTile_Ready)
+		{
+			if (mDirPos)
+			{
+				if (GetComponent<Animator>()->GetCurAnimationName() != L"R_RisignePrerceLanding")
+					GetComponent<Animator>()->Play(L"R_RisignePrerceLanding");
+			}
+			else
+			{
+				if (GetComponent<Animator>()->GetCurAnimationName() != L"L_RisignePrerceLanding")
+					GetComponent<Animator>()->Play(L"L_RisignePrerceLanding");
+			}
+			Patton6_ProjecTileReady();
+		}
+
+		Patton6_ProjecTileEnd();
+
+		if (mPatton6_ProjecTile_End)
+		{
+			mPatton6_ProjecTile_Ready = false;
+			mPatton6_ProjecTile_End = false;
+			return;
+		}
+
+		Patton6_ProjecTileLading();
 	}
 	void LeianaBoss::Patton7_Stand_by(bool type)
 	{
+		ScreenIn();
+		if (!mbIn)
+			return;
+
+		mDelay = 2.0f;
+		if (mDelta < mDelay)
+			return;
+
+		if (type)
+		{
+			if (mPattonState != ePattonState::READY)
+				return;
+
+			if (GetComponent<Animator>()->GetCurAnimationName() == L"R_MeteorGroundReady"
+				|| GetComponent<Animator>()->GetCurAnimationName() == L"L_MeteorGroundReady")
+			{
+				if (GetComponent<Animator>()->isComplete())
+				{
+					mPattonState = ePattonState::LANDING;
+				}
+				return;
+			}
+
+			if (GetPos().x < mPlayer->GetPos().x)
+				mDirPos = false;
+			else
+				mDirPos = true;
+
+			if (mDirPos)
+				GetComponent<Animator>()->Play(L"L_MeteorGroundReady");
+			else
+				GetComponent<Animator>()->Play(L"R_MeteorGroundReady");
+		}
+		else
+		{
+			if (mPattonState != ePattonState::END)
+				return;
+
+			if (GetComponent<Animator>()->GetCurAnimationName() == L"R_MeteorGroundEnd"
+				|| GetComponent<Animator>()->GetCurAnimationName() == L"L_MeteorGroundEnd")
+			{
+				if (GetComponent<Animator>()->isComplete())
+				{
+					mPattonState = ePattonState::NONE;
+					mHold = false;
+					mbIn = false;
+
+					mOwner->SetCurPatton(eBossPatton::Idle);
+				}
+				return;
+			}
+
+			if (mDirPos)
+				GetComponent<Animator>()->Play(L"L_MeteorGroundEnd");
+			else
+				GetComponent<Animator>()->Play(L"R_MeteorGroundEnd");
+		}
+	}
+	void LeianaBoss::Patton7_Progress()
+	{
+		if (mPattonState != ePattonState::LANDING)
+			return;
+
+		mSpeed = 1000;
+		if (mDirPos)
+		{
+			mDirVec.x = 600.f - GetPos().x;
+			mDirVec.Normalize();
+
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
+				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
+
+			if (GetPos().x <= 600.f)
+			{
+				mPattonState = ePattonState::END;
+			}
+		}
+		else
+		{
+			mDirVec.x = 1800.f - GetPos().x;
+			mDirVec.Normalize();
+
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
+				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
+
+			if (GetPos().x >= 1800.f)
+			{
+				mPattonState = ePattonState::END;
+			}
+		}
+	}
+	void LeianaBoss::Patton8_Stand_by(bool type)
+	{
+		ScreenIn();
+		if (!mbIn)
+			return;
+
+		mDelay = 2.0f;
+		if (mDelta < mDelay)
+			return;
+
+		if (type)
+		{
+			if (mPattonState != ePattonState::READY)
+				return;
+
+			if (GetComponent<Animator>()->isComplete())
+			{
+				if (GetPos().x < mPlayer->GetPos().x)
+					mDirPos = false;
+				else
+					mDirPos = true;
+
+				mPattonState = ePattonState::LANDING;
+			}
+		}
+		else
+		{
+			if (mPattonState != ePattonState::END)
+				return;
+
+			CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile);
+
+			if (mProjecTile[9]->GetComponent<Animator>()->isComplete())
+			{
+				mPattonState = ePattonState::NONE;
+				mHold = false;
+				mbIn = false;
+
+				mOwner->SetCurPatton(eBossPatton::Idle);
+
+				mProjecTile[9]->SetDeath(true);
+				EventInfo info;
+				info.Type = EventType::DeleteObject;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile[9];
+
+				EventManager::GetInstance()->EventPush(info);
+			}
+		}
 	}
 	void LeianaBoss::Patton8_Progress()
 	{
+		if (mPattonState != ePattonState::LANDING)
+			return;
+
+		if (GetComponent<Animator>()->GetCurAnimationName() == L"R_RisignePrerceAttack"
+			|| GetComponent<Animator>()->GetCurAnimationName() == L"L_RisignePrerceAtaack")
+		{
+			if (GetComponent<Animator>()->isComplete())
+			{
+				mPattonState = ePattonState::END;
+				Vector2 offset = Vector2::Zero;
+				offset = mPlayer->GetPos() - GetPos();
+
+				if (mDirPos)
+					mProjecTile[9]->GetComponent<Animator>()->Play(L"R_DimensionAttackEft");
+				else
+					mProjecTile[9]->GetComponent<Animator>()->Play(L"L_DimensionAttackEft");
+
+				mProjecTile[9]->SetDeath(false);
+				mProjecTile[9]->SetScale(Vector2(3.0f, 4.0f));
+				mProjecTile[9]->SetOffset(offset);
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile[9];
+
+				EventManager::GetInstance()->EventPush(info);
+
+				CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile, false);
+				return;
+			}
+		}
+
+		if (mDirPos)
+		{
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_RisignePrerceAttack")
+				GetComponent<Animator>()->Play(L"R_RisignePrerceAttack");
+		}
+		else
+		{
+			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_RisignePrerceAtaack")
+				GetComponent<Animator>()->Play(L"L_RisignePrerceAtaack");
+		}
 	}
+
 	void LeianaBoss::ScreenOut()
 	{
 		if (!mbOut)
@@ -672,5 +1003,96 @@ namespace sw
 		}
 		
 		return false;
+	}
+	void LeianaBoss::Patton6_ProjecTileReady()
+	{
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile, false);
+		int doubleCount = 0;
+		float offsetPos = 60.f;
+		float offsetDelta = 0.1f;
+
+		for (int i = 0; i < mProjecTile.size(); i++)
+		{
+			if (doubleCount >= 2)
+			{
+				offsetDelta += 0.1f;
+				offsetPos += 60.f;
+
+				doubleCount = 0;
+			}
+
+			if (doubleCount < 1)
+				mProjecTile[i]->SetOffset(Vector2(-1 * fabs(offsetPos), -30.f));
+			else
+				mProjecTile[i]->SetOffset(Vector2(fabs(offsetPos), -30.f));
+
+			mProjecTile[i]->SetDeath(false);
+			mProjecTile[i]->SetScale(Vector2(2.0f, 3.0f));
+			mProjecTile[i]->SetStartOffset(offsetDelta);
+			mProjecTile[i]->GetComponent<Animator>()->Play(L"RisingPiereceEft_Ready");
+
+			EventInfo info;
+			info.Type = EventType::AddObejct;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTile[i];
+
+			EventManager::GetInstance()->EventPush(info);
+
+			++doubleCount;
+		}
+		mPatton6_ProjecTile_Ready = true;
+	}
+	void LeianaBoss::Patton6_ProjecTileLading()
+	{
+		for (int i = 0; i < mProjecTile.size(); ++i)
+		{
+			Animator* animator = mProjecTile[i]->GetComponent<Animator>();
+			if (!animator->isComplete())
+				return;
+			else
+				mProjecTile[i]->SetDeath(true);
+		}
+
+		int doubleCount = 0;
+		float offsetdelta = 0.1f;
+		for (int i = 0; i < mProjecTile.size(); ++i)
+		{
+			mProjecTile[i]->SetDeath(false);
+			mProjecTile[i]->GetComponent<Animator>()->Play(L"RisingPiereceEft_Landing");
+
+			if (doubleCount >= 2)
+			{
+				offsetdelta += 0.1f;
+				doubleCount = 0;
+			}
+
+			mProjecTile[i]->SetStartOffset(offsetdelta);
+			++doubleCount;
+		}
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile);
+	}
+	void LeianaBoss::Patton6_ProjecTileEnd()
+	{
+		for (int i = 0; i < mProjecTile.size(); ++i)
+		{
+			Animator* animator = mProjecTile[i]->GetComponent<Animator>();
+			if (!animator->isComplete() || animator->GetCurAnimationName() != L"RisingPiereceEft_Landing")
+				return;
+		}
+
+		for (int i = 0; i < mProjecTile.size(); ++i)
+		{
+			mProjecTile[i]->SetDeath(true);
+
+			EventInfo info;
+			info.Type = EventType::DeleteObject;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTile[i];
+
+			EventManager::GetInstance()->EventPush(info);
+		}
+
+		mPatton6_ProjecTile_End = true;
+		mPattonState = ePattonState::END;
 	}
 }

@@ -14,6 +14,7 @@
 std::random_device random1;
 std::mt19937 gen1(random1());
 std::uniform_int_distribution<int> CombePatton(1, 3);
+std::uniform_int_distribution<int> SoloPatton(5, 8);
 
 namespace sw
 {
@@ -25,8 +26,12 @@ namespace sw
 		, mDelay(3.0f)
 		, mPatternProgress(false)
 		, mCombeMode(true)
-		, mPattonCount(0)
+		, mDarkMode(false)
+		, mPattonCount(0.f)
 	{
+		SetHp(90);
+		SetPower(5);
+
 		Initialize();
 		mCurPatton = eBossPatton::Idle;
 	}
@@ -133,19 +138,6 @@ namespace sw
 		if (mDelta < mDelay)
 			return;
 
-		if (mPattonCount >= 3)
-		{
-			mPattonCount = 0;
-			if (mCombeMode)
-			{
-				mCombeMode = false;
-			}
-			else
-			{
-				mCombeMode = true;
-			}
-		}
-
 		if (mLeft->GetScreenOut() && mRight->GetScreenOut())
 		{
 			mLeft->SetScreenOut(false);
@@ -153,19 +145,47 @@ namespace sw
 
 			if (mCombeMode)
 			{
+				mLeft->SetScreenIn(false);
+				mRight->SetScreenIn(false);
+
 				SetCurPatton((eBossPatton)CombePatton(gen1));
 				mLeft->SetCurPattonState(ePattonState::READY);
 				mRight->SetCurPattonState(ePattonState::READY);
-				mPattonCount++;
+				mPattonCount += 1.0f;
 			}
 
 			if (!mCombeMode)
 			{
-				SetCurPatton(eBossPatton::Patton5);
+				mLeft->SetScreenOut(true);
+				SetCurPatton((eBossPatton)SoloPatton(gen1));
 				mLeft->SetCurPattonState(ePattonState::READY);
 
-				mPattonCount++;
+				mPattonCount += 0.5f;
 				mDelta = 0.0f;
+			}
+		}
+
+		if (mPattonCount >= 3.0f)
+		{
+			mPattonCount = 0.0f;
+			if (mCombeMode)
+			{
+				mCombeMode = false;
+			}
+			else
+			{
+				mCombeMode = true;
+
+				mLeft->SetScreenIn(false);
+				mRight->SetScreenIn(false);
+
+				mLeft->SetScreenOut(false);
+				mRight->SetScreenOut(false);
+
+				mLeft->SetDelta(0.0f);
+				mRight->SetDelta(0.0f);
+
+				mPatternProgress = false;
 			}
 		}
 	}

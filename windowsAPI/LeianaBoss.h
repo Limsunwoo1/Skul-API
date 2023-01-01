@@ -6,6 +6,7 @@ namespace sw
 {
 	class Scene;
 	class LeianaControler;
+	class ObjectProjecTile;
 	class LeianaBoss : public BossMonster
 	{
 	public:
@@ -43,8 +44,13 @@ namespace sw
 		virtual void Patton6_Stand_by(bool type = true) override;
 		virtual void Patton6_Progress() override;
 		virtual void Patton7_Stand_by(bool type = true) override;
+		virtual void Patton7_Progress() override;
+		virtual void Patton8_Stand_by(bool type = true) override;
 		virtual void Patton8_Progress() override;
 
+		void Patton6_ProjecTileReady();
+		void Patton6_ProjecTileLading();
+		void Patton6_ProjecTileEnd();
 		void ScreenOut();
 		void ScreenIn();
 		bool PattonEnd();
@@ -81,10 +87,14 @@ namespace sw
 	private:
 		LeianaControler* mOwner;
 		std::vector<wstring> mPatton5_Entry;
+		std::vector<ObjectProjecTile*> mProjecTile;
 		bool mbIn;
 		bool mbOut;
 		bool mHold;
 		bool mRushEnd;
+
+		bool mPatton6_ProjecTile_Ready;
+		bool mPatton6_ProjecTile_End;
 
 		float mLScreenSpawnX;
 		float mRScreenSpawnX;
@@ -94,6 +104,7 @@ namespace sw
 		float mRScreenOutX;
 		float mScreenOutY;
 
+		float mRisignPrerceDelay;
 		Vector2 mDirVec;
 		Vector2 mPatton5_TargetPos;
 		UINT mSpeed;

@@ -37,6 +37,12 @@ namespace sw
 		bool GetCombeMode() { return mCombeMode; }
 		void SetCombeMode(bool on) { mCombeMode = on; }
 
+		void SetHp(UINT hp) { mHp = hp; }
+		UINT GetHp() { return mHp; }
+
+		void SetPower(UINT power) { mPower = power; }
+		UINT GetPower() { return mPower; }
+
 		int GetPattonCount() { return mPattonCount; }
 
 		void Brunch();
@@ -58,15 +64,19 @@ namespace sw
 		LeianaBoss* mLeft;
 		LeianaBossRight* mRight;
 		eBossPatton mCurPatton;
-		eBossPatton mNextPatton;
+		eBossPatton mPrevePatton;
 		float mDelta;
 		float mDelay;
 
 		bool mPatternProgress;
 		bool mCombeMode;
+		bool mDarkMode;
 
-		UINT mPattonCount;
+		float mPattonCount;
 		MainPlayer* mPlayer;
+
+		UINT mHp;
+		UINT mPower;
 	};
 }
 

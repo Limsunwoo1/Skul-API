@@ -10,6 +10,8 @@ namespace sw
 	AxeMonster::AxeMonster()
 		: MonsterBase()
 	{
+		SetHp(30);
+		SetPower(2);
 		InitializeAnimation();
 		InitalizeCollider();
 		InitializeBox();

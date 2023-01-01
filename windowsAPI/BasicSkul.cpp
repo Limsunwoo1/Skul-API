@@ -39,6 +39,7 @@ namespace sw
 {
 	BasicSkul::BasicSkul()
 	{
+		SetPower(3);
 		//DetaSetting
 		mMaxAttackCount = 1;
 		SetPos({ 5.0f, -50.0f });
@@ -91,6 +92,10 @@ namespace sw
 
 	void BasicSkul::Tick()
 	{
+		SetHp(mParentObject->GetHp());
+		if (GetHp() < 0)
+			SetDeath(true);
+
 		// 코드 개선 해야함
 		if (mParentObject == nullptr)
 			return;

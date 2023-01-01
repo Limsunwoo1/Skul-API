@@ -9,6 +9,7 @@ namespace sw
 		, mDeath (false)
 		, mDeathTime(-100.0f)
 		, mDeathTimeOn(false)
+		, mHp(0)
 	{
 	}
 
@@ -18,6 +19,7 @@ namespace sw
 		, mDeath(false)
 		, mDeathTime(-100.0f)
 		, mDeathTimeOn(false)
+		, mHp(0)
 	{
 
 	}

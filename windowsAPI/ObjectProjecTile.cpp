@@ -84,6 +84,9 @@ namespace sw
 			Event(other->GetOwner());
 		}
 		// hp°¨¼Ò
+		int hp = other->GetOwner()->GetHp();
+		int power = mTarget->GetPower();
+		other->GetOwner()->SetHp(hp - power);
 	}
 	void ObjectProjecTile::OnCollisionStay(Collider* other)
 	{
@@ -98,6 +101,10 @@ namespace sw
 		{
 			Event(other->GetOwner());
 		}
+
+		int hp = other->GetOwner()->GetHp();
+		int power = mTarget->GetPower();
+		other->GetOwner()->SetHp(hp - power);
 
 		iter->second = 0.0f;
 	}

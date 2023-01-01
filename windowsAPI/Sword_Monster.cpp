@@ -7,6 +7,9 @@ namespace sw
 	SwordMonster::SwordMonster()
 		: MonsterBase()
 	{
+		SetHp(12);
+		SetPower(1);
+
 		InitializeAnimation();
 		InitalizeCollider();
 		InitializeBox();

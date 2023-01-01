@@ -22,6 +22,7 @@ namespace sw
 		, bPlayerSwitch(false)
 	{
 		Initialize();
+		SetHp(150);
 	}
 	MainPlayer::~MainPlayer()
 	{

@@ -23,6 +23,8 @@ namespace sw
 	SwordSkul::SwordSkul()
 	{
 		//DetaSetting
+		SetPower(4);
+
 		mMaxAttackCount = 2;
 		SetPos({ 100.0f, 100.0f });
 		SetScale({ 4.f, 4.f });
@@ -71,6 +73,10 @@ namespace sw
 	}
 	void SwordSkul::Tick()
 	{
+		SetHp(mParentObject->GetHp());
+		if (GetHp() < 0)
+			SetDeath(true);
+
 		if (mParentObject == nullptr)
 			return;
 

@@ -83,6 +83,9 @@ namespace sw
 
 	void MonsterBase::Tick()
 	{
+		if (GetHp() < 0)
+			SetDeath(true);
+
 		mAttackCooltime += Time::GetInstance()->DeltaTime();
 		GameObject::Tick();
 		if (mHold)

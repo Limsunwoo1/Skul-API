@@ -87,6 +87,12 @@ namespace sw
 		ePlayerState GetState() {return mCurstate;}
 		void SetState(ePlayerState state) { mCurstate = state;}
 
+		void SetHp(UINT hp) { mHp = hp; }
+		int GetHp() { return mHp; }
+
+		void SetPower(UINT power) { mPower = power; }
+		UINT GetPower() { return mPower; }
+
 	private:
 		std::vector<Component*> mComponents;
 		Vector2D mPos;
@@ -96,6 +102,8 @@ namespace sw
 		float mDeathTime;
 		bool mDeathTimeOn;
 
+		int mHp;
+		UINT mPower;
 		ePlayerState mCurstate;
 	};
 }

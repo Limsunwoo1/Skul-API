@@ -7,6 +7,8 @@ namespace sw
 	MaidMonster_1::MaidMonster_1()
 		: MonsterBase()
 	{
+		SetHp(12);
+		SetPower(1);
 		InitializeAnimation();
 		InitalizeCollider();
 		InitializeBox();

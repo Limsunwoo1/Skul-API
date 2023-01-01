@@ -12,6 +12,7 @@
 #include "Scene.h"
 #include "CollisionManager.h"
 #include "MonsterBase.h"
+#include "BossMonster.h"
 
 namespace sw
 {
@@ -68,6 +69,8 @@ namespace sw
 	{
 		Scene* scene = SceneManager::GetInstance()->GetPlayScene();
 		const std::vector<GameObject*>& objects = scene->GetGameObject(eColliderLayer::Monster);
+		const std::vector<GameObject*>& bossObjects = scene->GetGameObject(eColliderLayer::BossMonster);
+
 		PlayerBase* player = GetTarget();
 		Animator* animator = player->GetComponent<Animator>();
 		bool state = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
@@ -103,6 +106,7 @@ namespace sw
 			if (monster != nullptr)
 			{
 				eMonsterState type = monster->GetState();
+				monster->SetHp(monster->GetHp() - GetTarget()->GetPower());
 				if (monster->GetSuperArmer())
 				{
 					monster->Hit();
@@ -112,7 +116,26 @@ namespace sw
 				monster->SetDirction(!state);  // 공격 방향으로 피격대상 방향변경
 				monster->SetState(eMonsterState::HIT);
 				monster->SetDelta(0.0f);
+				continue;
 			}
+		}
+
+		for (GameObject* boss : bossObjects)
+		{
+			Collider* collider = boss->GetComponent<Collider>();
+			collider->SetPos(boss->GetPos());
+
+			bool bCollision = CollisionManager::GetInstance()->CheckCollision(Box{ scale, pos + offset }, boss);
+			if (!bCollision)
+				continue;
+
+			mTemp.push_back(boss);
+			collider->OnCollisionEnter();
+
+			// 플레이어에 공격시 피격이펙트
+			GetTarget()->OnAttackEffect(boss);
+
+			boss->SetHp(boss->GetHp() - GetTarget()->GetPower());
 		}
 	}
 

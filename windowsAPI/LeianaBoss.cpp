@@ -39,6 +39,14 @@ namespace sw
 
 	LeianaBoss::~LeianaBoss()
 	{
+		for (GameObject* object : mProjecTiles)
+		{
+			if (object != nullptr)
+				continue;
+
+			delete object;
+		}
+		mProjecTiles.clear();
 	}
 
 	void LeianaBoss::Tick()
@@ -162,8 +170,15 @@ namespace sw
 			Collider* collider = projectile->GetComponent<Collider>();
 			collider->SetScale(Vector2(30.f, 120.f));
 
-			mProjecTile.push_back(projectile);
+			mProjecTiles.push_back(projectile);
 		}
+
+		mProjecTile = new ObjectProjecTile();
+		mProjecTile->SetTarget(this);
+		mProjecTile->SetReuse_Time(1.0f);
+
+		Collider* collider = mProjecTile->GetComponent<Collider>();
+		collider->SetScale(Vector2(30.f, 120.f));
 	}
 
 	void LeianaBoss::Idle()
@@ -312,6 +327,15 @@ namespace sw
 				GetComponent<Animator>()->Play(L"L_MeteorGroundEnd");
 			else
 				GetComponent<Animator>()->Play(L"R_MeteorGroundEnd");
+
+			mProjecTile->SetDeath(true);
+
+			EventInfo info;
+			info.Type = EventType::DeleteObject;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTile;
+
+			EventManager::GetInstance()->EventPush(info);
 		}
 	}
 	void LeianaBoss::Patton1_Progress()
@@ -326,7 +350,19 @@ namespace sw
 			mDirVec.Normalize();
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
+			{
 				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
+
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(Vector2(-40.f, 0.f));
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 
 			if (GetPos().x <= 600.f)
 			{
@@ -349,7 +385,19 @@ namespace sw
 			mDirVec.Normalize();
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
+			{
 				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
+
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(Vector2(40.f, 0.f));
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 
 			if (GetPos().x >= 1800.f)
 			{
@@ -419,6 +467,15 @@ namespace sw
 				GetComponent<Animator>()->Play(L"L_MeteorGroundEnd");
 			else
 				GetComponent<Animator>()->Play(L"R_MeteorGroundEnd");
+
+			mProjecTile->SetDeath(true);
+
+			EventInfo info;
+			info.Type = EventType::DeleteObject;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTile;
+
+			EventManager::GetInstance()->EventPush(info);
 		}
 	}
 	void LeianaBoss::Patton2_Progress()
@@ -433,7 +490,21 @@ namespace sw
 			mDirVec.Normalize();
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
+			{
 				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
+
+				int num = GetProJecTileNum();
+
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(Vector2(-40.f, 0.f));
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 
 			if (GetPos().x <= 600.f)
 			{
@@ -446,7 +517,19 @@ namespace sw
 			mDirVec.Normalize();
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
+			{
 				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
+
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(Vector2(40.f, 0.f));
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 
 			if (GetPos().x >= 1800.f)
 			{
@@ -471,6 +554,7 @@ namespace sw
 				GetComponent<Animator>()->Play(L"MeteorReady");
 				SetDeath(true);
 				SetPos(mPlayer->GetPos().x, mScreenSpawnY - 400.f);
+				ProJecTileNumSetting();
 				return;
 			}
 
@@ -492,6 +576,18 @@ namespace sw
 					GetComponent<Animator>()->Play(L"L_Idle");
 				else
 					GetComponent<Animator>()->Play(L"R_Idle");
+
+				int num = GetProJecTileNum();
+				mProjecTiles[num]->SetDeath(true);
+
+				EventInfo info;
+				info.Type = EventType::DeleteObject;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTiles[num];
+
+				EventManager::GetInstance()->EventPush(info);
+
+				SetProJecTileNum(0);
 			}
 
 			if (GetComponent<Animator>()->isComplete())
@@ -509,6 +605,18 @@ namespace sw
 		if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorLanding")
 		{
 			GetComponent<Animator>()->Play(L"MeteorLanding");
+
+			int num = GetProJecTileNum();
+
+			mProjecTiles[num]->SetDeath(false);
+			mProjecTiles[num]->SetOffset(Vector2(0.f, 30.f));
+
+			EventInfo info;
+			info.Type = EventType::AddObejct;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTiles[num];
+
+			EventManager::GetInstance()->EventPush(info);
 		}
 
 		if (GetPos().y >= mScreenSpawnY)
@@ -531,6 +639,7 @@ namespace sw
 		{
 			mPatton5_Num = 0;
 			mPattonState = ePattonState::END;
+			type = false;
 		}
 
 		mDelay = 0.5f;
@@ -602,10 +711,29 @@ namespace sw
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L" + mPatton5_Entry[mPatton5_Num]
 				&& GetComponent<Animator>()->GetCurAnimationName() != L"R" + mPatton5_Entry[mPatton5_Num])
 			{
+				Vector2 offset = Vector2::Zero;
+
 				if (mDirPos)
+				{
 					GetComponent<Animator>()->Play(L"R" + mPatton5_Entry[mPatton5_Num]);
+					offset.x = -40.f;
+				}
 				else
+				{
 					GetComponent<Animator>()->Play(L"L" + mPatton5_Entry[mPatton5_Num]);
+					offset.x = 40.f;
+				}
+
+				mProjecTile->GetComponent<Collider>()->SetScale(Vector2(80.f, 80.f));
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(offset);
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
 			}
 		}
 		
@@ -615,16 +743,22 @@ namespace sw
 		{
 			if (GetComponent<Animator>()->isComplete())
 			{
-				/*++mPatton5_Num;
-				mDelta = 0.0f;*/
-				//mPattonState = ePattonState::END;
-
 				if (!mRushEnd)
 				{
 					if (mDirPos)
 						GetComponent<Animator>()->Play(L"R_RushEnd");
 					else
 						GetComponent<Animator>()->Play(L"L_RushEnd");
+
+					mProjecTile->GetComponent<Collider>()->SetScale(Vector2(30.f, 120.f));
+					mProjecTile->SetDeath(true);
+
+					EventInfo info;
+					info.Type = EventType::DeleteObject;
+					info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+					info.Parameter2 = mProjecTile;
+
+					EventManager::GetInstance()->EventPush(info);
 
 					mRushEnd = true;
 				}
@@ -795,6 +929,15 @@ namespace sw
 				GetComponent<Animator>()->Play(L"L_MeteorGroundEnd");
 			else
 				GetComponent<Animator>()->Play(L"R_MeteorGroundEnd");
+
+			mProjecTile->SetDeath(true);
+
+			EventInfo info;
+			info.Type = EventType::DeleteObject;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTile;
+
+			EventManager::GetInstance()->EventPush(info);
 		}
 	}
 	void LeianaBoss::Patton7_Progress()
@@ -809,7 +952,19 @@ namespace sw
 			mDirVec.Normalize();
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
+			{
 				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
+
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(Vector2(-40.f, 0.f));
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 
 			if (GetPos().x <= 600.f)
 			{
@@ -822,7 +977,19 @@ namespace sw
 			mDirVec.Normalize();
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
+			{
 				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
+
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(Vector2(40.f, 0.f));
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 
 			if (GetPos().x >= 1800.f)
 			{
@@ -862,7 +1029,7 @@ namespace sw
 
 			CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile);
 
-			if (mProjecTile[9]->GetComponent<Animator>()->isComplete())
+			if (mProjecTiles[9]->GetComponent<Animator>()->isComplete())
 			{
 				mPattonState = ePattonState::NONE;
 				mHold = false;
@@ -870,11 +1037,11 @@ namespace sw
 
 				mOwner->SetCurPatton(eBossPatton::Idle);
 
-				mProjecTile[9]->SetDeath(true);
+				mProjecTiles[9]->SetDeath(true);
 				EventInfo info;
 				info.Type = EventType::DeleteObject;
 				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
-				info.Parameter2 = mProjecTile[9];
+				info.Parameter2 = mProjecTiles[9];
 
 				EventManager::GetInstance()->EventPush(info);
 			}
@@ -895,18 +1062,18 @@ namespace sw
 				offset = mPlayer->GetPos() - GetPos();
 
 				if (mDirPos)
-					mProjecTile[9]->GetComponent<Animator>()->Play(L"R_DimensionAttackEft");
+					mProjecTiles[9]->GetComponent<Animator>()->Play(L"R_DimensionAttackEft");
 				else
-					mProjecTile[9]->GetComponent<Animator>()->Play(L"L_DimensionAttackEft");
+					mProjecTiles[9]->GetComponent<Animator>()->Play(L"L_DimensionAttackEft");
 
-				mProjecTile[9]->SetDeath(false);
-				mProjecTile[9]->SetScale(Vector2(3.0f, 4.0f));
-				mProjecTile[9]->SetOffset(offset);
+				mProjecTiles[9]->SetDeath(false);
+				mProjecTiles[9]->SetScale(Vector2(3.0f, 4.0f));
+				mProjecTiles[9]->SetOffset(offset);
 
 				EventInfo info;
 				info.Type = EventType::AddObejct;
 				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
-				info.Parameter2 = mProjecTile[9];
+				info.Parameter2 = mProjecTiles[9];
 
 				EventManager::GetInstance()->EventPush(info);
 
@@ -1004,37 +1171,47 @@ namespace sw
 		
 		return false;
 	}
+	void LeianaBoss::ProJecTileNumSetting()
+	{
+		for (int i = 0; i < mProjecTiles.size(); ++i)
+		{
+			if (mProjecTiles[i]->IsDeath())
+			{
+				SetProJecTileNum(i);
+			}
+		}
+	}
 	void LeianaBoss::Patton6_ProjecTileReady()
 	{
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile, false);
 		int doubleCount = 0;
 		float offsetPos = 60.f;
-		float offsetDelta = 0.1f;
+		float offsetDelta = 0.05f;
 
-		for (int i = 0; i < mProjecTile.size(); i++)
+		for (int i = 0; i < mProjecTiles.size(); i++)
 		{
 			if (doubleCount >= 2)
 			{
-				offsetDelta += 0.1f;
+				offsetDelta += 0.05f;
 				offsetPos += 60.f;
 
 				doubleCount = 0;
 			}
 
 			if (doubleCount < 1)
-				mProjecTile[i]->SetOffset(Vector2(-1 * fabs(offsetPos), -30.f));
+				mProjecTiles[i]->SetOffset(Vector2(-1 * fabs(offsetPos), -30.f));
 			else
-				mProjecTile[i]->SetOffset(Vector2(fabs(offsetPos), -30.f));
+				mProjecTiles[i]->SetOffset(Vector2(fabs(offsetPos), -30.f));
 
-			mProjecTile[i]->SetDeath(false);
-			mProjecTile[i]->SetScale(Vector2(2.0f, 3.0f));
-			mProjecTile[i]->SetStartOffset(offsetDelta);
-			mProjecTile[i]->GetComponent<Animator>()->Play(L"RisingPiereceEft_Ready");
+			mProjecTiles[i]->SetDeath(false);
+			mProjecTiles[i]->SetScale(Vector2(2.0f, 3.0f));
+			mProjecTiles[i]->SetStartOffset(offsetDelta);
+			mProjecTiles[i]->GetComponent<Animator>()->Play(L"RisingPiereceEft_Ready");
 
 			EventInfo info;
 			info.Type = EventType::AddObejct;
 			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
-			info.Parameter2 = mProjecTile[i];
+			info.Parameter2 = mProjecTiles[i];
 
 			EventManager::GetInstance()->EventPush(info);
 
@@ -1044,50 +1221,50 @@ namespace sw
 	}
 	void LeianaBoss::Patton6_ProjecTileLading()
 	{
-		for (int i = 0; i < mProjecTile.size(); ++i)
+		for (int i = 0; i < mProjecTiles.size(); ++i)
 		{
-			Animator* animator = mProjecTile[i]->GetComponent<Animator>();
+			Animator* animator = mProjecTiles[i]->GetComponent<Animator>();
 			if (!animator->isComplete())
 				return;
 			else
-				mProjecTile[i]->SetDeath(true);
+				mProjecTiles[i]->SetDeath(true);
 		}
 
 		int doubleCount = 0;
-		float offsetdelta = 0.1f;
-		for (int i = 0; i < mProjecTile.size(); ++i)
+		float offsetdelta = 0.05f;
+		for (int i = 0; i < mProjecTiles.size(); ++i)
 		{
-			mProjecTile[i]->SetDeath(false);
-			mProjecTile[i]->GetComponent<Animator>()->Play(L"RisingPiereceEft_Landing");
+			mProjecTiles[i]->SetDeath(false);
+			mProjecTiles[i]->GetComponent<Animator>()->Play(L"RisingPiereceEft_Landing");
 
 			if (doubleCount >= 2)
 			{
-				offsetdelta += 0.1f;
+				offsetdelta += 0.05f;
 				doubleCount = 0;
 			}
 
-			mProjecTile[i]->SetStartOffset(offsetdelta);
+			mProjecTiles[i]->SetStartOffset(offsetdelta);
 			++doubleCount;
 		}
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile);
 	}
 	void LeianaBoss::Patton6_ProjecTileEnd()
 	{
-		for (int i = 0; i < mProjecTile.size(); ++i)
+		for (int i = 0; i < mProjecTiles.size(); ++i)
 		{
-			Animator* animator = mProjecTile[i]->GetComponent<Animator>();
+			Animator* animator = mProjecTiles[i]->GetComponent<Animator>();
 			if (!animator->isComplete() || animator->GetCurAnimationName() != L"RisingPiereceEft_Landing")
 				return;
 		}
 
-		for (int i = 0; i < mProjecTile.size(); ++i)
+		for (int i = 0; i < mProjecTiles.size(); ++i)
 		{
-			mProjecTile[i]->SetDeath(true);
+			mProjecTiles[i]->SetDeath(true);
 
 			EventInfo info;
 			info.Type = EventType::DeleteObject;
 			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
-			info.Parameter2 = mProjecTile[i];
+			info.Parameter2 = mProjecTiles[i];
 
 			EventManager::GetInstance()->EventPush(info);
 		}

@@ -77,6 +77,7 @@ namespace sw
 		if (GetHp() < 0)
 			SetDeath(true);
 
+		LOG(STRING("Sowrd hp %d", GetHp()))
 		if (mParentObject == nullptr)
 			return;
 

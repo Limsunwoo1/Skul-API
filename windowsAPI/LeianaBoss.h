@@ -84,10 +84,13 @@ namespace sw
 
 		bool GetHold() { return mHold; }
 		void SetHold(bool hold) { mHold = hold; }
+
+		void ProJecTileNumSetting();
 	private:
 		LeianaControler* mOwner;
 		std::vector<wstring> mPatton5_Entry;
-		std::vector<ObjectProjecTile*> mProjecTile;
+		std::vector<ObjectProjecTile*> mProjecTiles;
+		ObjectProjecTile* mProjecTile;
 		bool mbIn;
 		bool mbOut;
 		bool mHold;

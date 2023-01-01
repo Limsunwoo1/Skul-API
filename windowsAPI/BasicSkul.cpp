@@ -96,6 +96,7 @@ namespace sw
 		if (GetHp() < 0)
 			SetDeath(true);
 
+		LOG(STRING("Basic hp %d", GetHp()))
 		// 코드 개선 해야함
 		if (mParentObject == nullptr)
 			return;

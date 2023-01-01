@@ -21,8 +21,8 @@ namespace sw
 		, mNextPlayer(nullptr)
 		, bPlayerSwitch(false)
 	{
-		Initialize();
 		SetHp(150);
+		Initialize();
 	}
 	MainPlayer::~MainPlayer()
 	{
@@ -41,9 +41,12 @@ namespace sw
 		BasicSkul* basicSkul = new BasicSkul();
 		basicSkul->SetParentObject(basicSkul);
 		basicSkul->SetPos(GetPos());
+		basicSkul->SetHp(GetHp());
+
 		SwordSkul* swordSkul = new SwordSkul();
 		swordSkul->SetParentObject(swordSkul);
 		swordSkul->SetPos(GetPos());
+		swordSkul->SetHp(GetHp());
 
 		this->SetPlayer(basicSkul);
 		mNextPlayer = swordSkul;
@@ -51,6 +54,10 @@ namespace sw
 	}
 	void MainPlayer::Tick()
 	{
+		if(mCurPlayer)
+			SetHp(mCurPlayer->GetHp());
+
+		LOG(STRING("main Hp %d", GetHp()))
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
 			KEY_DOWN_SPACE();
@@ -166,8 +173,13 @@ namespace sw
 			mRigidbody->SetGround(false);
 		}
 
-		if(mNextPlayer != nullptr)
+		if (mNextPlayer != nullptr)
+		{
 			mCurPlayer->SetPos(mNextPlayer->GetPos());
+			mCurPlayer->SetHp(mNextPlayer->GetHp());
+		}
+
+
 	}
 
 	void MainPlayer::SwitchPlayer()

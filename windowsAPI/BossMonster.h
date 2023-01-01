@@ -96,6 +96,9 @@ namespace sw
 
 		bool GetDirPos() { return mDirPos; }
 		void SetDirPos(bool dir) { mDirPos = dir; }
+
+		UINT GetProJecTileNum() { return mProjecTileNum; }
+		void SetProJecTileNum(UINT num) {mProjecTileNum = num;}
 	protected:
 		std::vector<bool> mPattonList;
 		eBossPatton mCurPatton;
@@ -106,9 +109,9 @@ namespace sw
 		float mDelay;
 
 		MainPlayer* mPlayer;
-		UINT mHP;
-
+		UINT mProjecTileNum;
 		// 오른쪽 true 왼쪽 false
 		bool mDirPos;
+		
 	};
 }

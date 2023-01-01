@@ -47,10 +47,14 @@ namespace sw
 	{
 		mLeft = new LeianaBoss();
 		mLeft->SetOwer(this);
+		mLeft->SetHp(GetHp());
+		mLeft->SetPower(GetPower());
 		mLeft->Initialize();
 
 		mRight = new LeianaBossRight();
 		mRight->SetOwer(this);
+		mRight->SetHp(GetHp());
+		mRight->SetPower(GetPower());
 		mRight->Initialize();
 	}
 	void LeianaControler::SetPlayer(MainPlayer* player)
@@ -148,7 +152,8 @@ namespace sw
 				mLeft->SetScreenIn(false);
 				mRight->SetScreenIn(false);
 
-				SetCurPatton((eBossPatton)CombePatton(gen1));
+				//SetCurPatton((eBossPatton)CombePatton(gen1));
+				SetCurPatton(eBossPatton::Patton3);
 				mLeft->SetCurPattonState(ePattonState::READY);
 				mRight->SetCurPattonState(ePattonState::READY);
 				mPattonCount += 1.0f;
@@ -157,7 +162,8 @@ namespace sw
 			if (!mCombeMode)
 			{
 				mLeft->SetScreenOut(true);
-				SetCurPatton((eBossPatton)SoloPatton(gen1));
+				//SetCurPatton((eBossPatton)SoloPatton(gen1));
+				SetCurPatton(eBossPatton::Patton6);
 				mLeft->SetCurPattonState(ePattonState::READY);
 
 				mPattonCount += 0.5f;

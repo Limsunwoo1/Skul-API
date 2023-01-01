@@ -6,6 +6,7 @@ namespace sw
 {
 	class Scene;
 	class LeianaControler;
+	class ObjectProjecTile;
 	class LeianaBossRight : public BossMonster
 	{
 	public:
@@ -70,7 +71,7 @@ namespace sw
 
 	private:
 		LeianaControler* mOwner;
-
+		ObjectProjecTile* mProjecTile;
 		bool mbIn;
 		bool mbOut;
 		bool mHold;

@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "MainPlayer.h"
 #include "LeianaControler.h"
+#include "EventManager.h"
 
 namespace sw
 {
@@ -98,7 +99,13 @@ namespace sw
 	void LeianaBossRight::InitalizeProjecTile()
 	{
 		// Patton1
+		mProjecTile = new ObjectProjecTile();
 
+		mProjecTile->SetTarget(this);
+		mProjecTile->SetReuse_Time(1.0f);
+
+		Collider* collider = mProjecTile->GetComponent<Collider>();
+		collider->SetScale(Vector2(30.f, 120.f));
 	}
 
 	void LeianaBossRight::Idle()
@@ -189,6 +196,14 @@ namespace sw
 					GetComponent<Animator>()->Play(L"L_Idle");
 				else
 					GetComponent<Animator>()->Play(L"R_Idle");
+
+				mProjecTile->SetDeath(true);
+				EventInfo info;
+				info.Type = EventType::DeleteObject;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
 			}
 
 			if (GetComponent<Animator>()->isComplete())
@@ -206,6 +221,16 @@ namespace sw
 		if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorLanding")
 		{
 			GetComponent<Animator>()->Play(L"MeteorLanding");
+
+			mProjecTile->SetDeath(false);
+			mProjecTile->SetOffset(Vector2(0.f, 30.f));
+
+			EventInfo info;
+			info.Type = EventType::AddObejct;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTile;
+
+			EventManager::GetInstance()->EventPush(info);
 		}
 
 		if (GetPos().y >= mScreenSpawnY)
@@ -261,6 +286,14 @@ namespace sw
 				GetComponent<Animator>()->Play(L"L_MeteorGroundEnd");
 			else
 				GetComponent<Animator>()->Play(L"R_MeteorGroundEnd");
+
+			mProjecTile->SetDeath(true);
+			EventInfo info;
+			info.Type = EventType::DeleteObject;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTile;
+
+			EventManager::GetInstance()->EventPush(info);
 		}
 	}
 	void LeianaBossRight::Patton2_Progress()
@@ -275,7 +308,19 @@ namespace sw
 			mDirVec.Normalize();
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
+			{
 				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
+
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(Vector2(-40.f, 0.f));
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 
 			if (GetPos().x <= 600.f)
 			{
@@ -288,7 +333,19 @@ namespace sw
 			mDirVec.Normalize();
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
+			{
 				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
+
+				mProjecTile->SetDeath(false);
+				mProjecTile->SetOffset(Vector2(40.f, 0.f));
+
+				EventInfo info;
+				info.Type = EventType::AddObejct;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
+			}
 
 			if (GetPos().x >= 1800.f)
 			{
@@ -331,6 +388,14 @@ namespace sw
 					GetComponent<Animator>()->Play(L"L_Idle");
 				else
 					GetComponent<Animator>()->Play(L"R_Idle");
+
+				mProjecTile->SetDeath(true);
+				EventInfo info;
+				info.Type = EventType::DeleteObject;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+				info.Parameter2 = mProjecTile;
+
+				EventManager::GetInstance()->EventPush(info);
 			}
 
 			if (GetComponent<Animator>()->isComplete())
@@ -348,6 +413,16 @@ namespace sw
 		if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorLanding")
 		{
 			GetComponent<Animator>()->Play(L"MeteorLanding");
+
+			mProjecTile->SetDeath(false);
+			mProjecTile->SetOffset(Vector2(0.f, 30.f));
+
+			EventInfo info;
+			info.Type = EventType::AddObejct;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTile;
+
+			EventManager::GetInstance()->EventPush(info);
 		}
 
 		if (GetPos().y >= mScreenSpawnY)

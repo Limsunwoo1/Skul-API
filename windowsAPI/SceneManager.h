@@ -23,8 +23,14 @@ namespace sw
 		eSceneType GetPlayeSceneType();
 		bool CheckCurScen(eSceneType type) { if (mPlayScene == mScenes[(int)type]) return true; return false; }
 		void LoadTileMap(const std::wstring& path);
+
+		void SetMonsterCount();
+		UINT GetMonsterCount() { return mMonsterCount; }
+		void ClearObject();
 	private:
 		Scene* mScenes[(UINT)eSceneType::Max];
 		Scene* mPlayScene;
+
+		UINT mMonsterCount;
 	};
 }

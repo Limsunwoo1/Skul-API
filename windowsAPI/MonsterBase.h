@@ -44,6 +44,7 @@ namespace sw
 		virtual void Staring();
 
 		virtual void Branch();
+		virtual void ProejcTielDelte() {};
 
 		void SetState(eMonsterState type) { mCurState = type; }
 		eMonsterState GetState() { return mCurState; }
@@ -64,6 +65,9 @@ namespace sw
 
 		bool GetHiting() { return mHiting; }
 		void SetHiting(bool hit) { mHiting = hit; }
+
+		bool GetStraing() { return mStaring; }
+		void SetStraing(bool staring) { mStaring = staring; }
 
 		GameObject* GetTarget() { return mTarget; }
 		void SetTarget(GameObject* object) { mTarget = object; }

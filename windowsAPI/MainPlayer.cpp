@@ -37,7 +37,7 @@ namespace sw
 
 	void MainPlayer::Initialize()
 	{
-		SetPos(Vector2(450.f, 800.f));
+		SetPos(Vector2(0.f, 0.f));
 		BasicSkul* basicSkul = new BasicSkul();
 		basicSkul->SetParentObject(basicSkul);
 		basicSkul->SetPos(GetPos());
@@ -54,10 +54,11 @@ namespace sw
 	}
 	void MainPlayer::Tick()
 	{
-		if(mCurPlayer)
+		if (mCurPlayer)
+		{
 			SetHp(mCurPlayer->GetHp());
+		}
 
-		LOG(STRING("main Hp %d", GetHp()))
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
 			KEY_DOWN_SPACE();

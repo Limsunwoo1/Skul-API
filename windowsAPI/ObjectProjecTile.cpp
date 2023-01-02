@@ -4,6 +4,9 @@
 #include "Time.h"
 #include "UtilLog.h"
 #include "MonsterBase.h"
+#include "MainPlayer.h"
+#include "PlayerBase.h"
+#include "StateHandle.h"
 namespace sw
 {
 	ObjectProjecTile::ObjectProjecTile()
@@ -84,6 +87,19 @@ namespace sw
 			Event(other->GetOwner());
 		}
 		// hp°¨¼Ò
+		PlayerBase* player = dynamic_cast<PlayerBase*>(other->GetOwner());
+		if (player != nullptr)
+		{
+			ePlayerState state = player->GetStateHandle()->GetStateType();
+			if (state != ePlayerState::SLIDING)
+			{
+				int hp = other->GetOwner()->GetHp();
+				int power = mTarget->GetPower();
+				other->GetOwner()->SetHp(hp - power);
+			}
+			return;
+		}
+
 		int hp = other->GetOwner()->GetHp();
 		int power = mTarget->GetPower();
 		other->GetOwner()->SetHp(hp - power);

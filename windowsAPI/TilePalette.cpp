@@ -504,4 +504,9 @@ namespace sw
 
 		fclose(pFile);
 	}
+	void TilePalette::Reset()
+	{
+		mTiles.clear();
+		mGround.clear();
+	}
 }

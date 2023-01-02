@@ -131,6 +131,7 @@ namespace sw
 		Application::Render();
 
 		// 모든 업데이트 렌더링 후 add, delete 
+		SceneManager::GetInstance()->ClearObject();
 		EventManager::GetInstance()->Tick();
 	}
 

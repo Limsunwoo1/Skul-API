@@ -219,6 +219,21 @@
     <Filter Include="Engine\GameObject\Monster\BossMonster\LeianaControler\LeianaBoss">
       <UniqueIdentifier>{ef7cfa92-8f8b-4c00-98d2-3308ca60d4f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameObject\GateObject">
+      <UniqueIdentifier>{bdd41bf2-b924-400e-9c76-99456af15857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\GateObject\Gate">
+      <UniqueIdentifier>{f1fcca3b-8cb3-42a6-a237-224adea55109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\GateObject\Item">
+      <UniqueIdentifier>{6a92ed3f-c69c-4bf3-a42b-6e1d9fa9b017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\StartScene">
+      <UniqueIdentifier>{c3bc7d30-14e5-4a4e-a11b-cd8cf2de2c9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\GateObject\Gate\Go_toBossgate">
+      <UniqueIdentifier>{46c43d6c-73fa-4632-942b-db26e557945a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -446,7 +461,7 @@
     <ClInclude Include="PlayScene.h">
       <Filter>Engine\Scene\PlayScene</Filter>
     </ClInclude>
-    <ClInclude Include="TitleScene.h">
+    <ClInclude Include="PlayScene2.h">
       <Filter>Engine\Scene\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="ToolScene.h">
@@ -463,6 +478,18 @@
     </ClInclude>
     <ClInclude Include="LeianaControler.h">
       <Filter>Engine\GameObject\Monster\BossMonster\LeianaControler</Filter>
+    </ClInclude>
+    <ClInclude Include="GateObject.h">
+      <Filter>Engine\GameObject\GateObject\Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Engine\GameObject\GateObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>Engine\Scene\StartScene</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGate.h">
+      <Filter>Engine\GameObject\GateObject\Gate\Go_toBossgate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -661,7 +688,7 @@
     <ClCompile Include="PlayScene.cpp">
       <Filter>Engine\Scene\PlayScene</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
+    <ClCompile Include="PlayScene2.cpp">
       <Filter>Engine\Scene\TitleScene</Filter>
     </ClCompile>
     <ClCompile Include="ToolScene.cpp">
@@ -678,6 +705,18 @@
     </ClCompile>
     <ClCompile Include="LeianaControler.cpp">
       <Filter>Engine\GameObject\Monster\BossMonster\LeianaControler</Filter>
+    </ClCompile>
+    <ClCompile Include="GateObject.cpp">
+      <Filter>Engine\GameObject\GateObject\Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Engine\GameObject\GateObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>Engine\Scene\StartScene</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGate.cpp">
+      <Filter>Engine\GameObject\GateObject\Gate\Go_toBossgate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

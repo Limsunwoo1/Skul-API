@@ -195,8 +195,8 @@ namespace sw
 
 			if (temp)
 			{
-				int a = 0;
 				// Ãæµ¹
+				mTarget->SetHp(mTarget->GetHp() - GetPower());
 			}
 		}
 
@@ -348,6 +348,29 @@ namespace sw
 
 			if (temp)
 			{
+				std::vector<GameObject*>& monsterobjects = scene->GetGameObject(eColliderLayer::Monster);
+				for (GameObject* mobject : monsterobjects)
+				{
+					Vector2 monsterobjects = mobject->GetPos();
+
+					if (monsterobjects.x >= GetPos().x - 300.f && monsterobjects.x <= GetPos().x + 300.f)
+					{
+						if (monsterobjects.y < GetPos().y - 100.f || monsterobjects.y > GetPos().y + 100.f)
+							return;
+
+						MonsterBase* monster = dynamic_cast<MonsterBase*>(mobject);
+						if (monster == nullptr)
+							continue;
+						if (monster == this)
+							continue;
+
+						monster->SetTarget(object);
+						monster->SetStraing(true);
+						monster->SetAble(monster->GetState(), false);
+						monster->SetState(eMonsterState::IDLE);
+					}
+				}
+
 				mStaring = true;
 				mTarget = object;
 

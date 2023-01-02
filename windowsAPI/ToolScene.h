@@ -26,7 +26,8 @@ namespace sw
 		void SetTileIndex(UINT index) { mTileIndex = index;}
 		UINT GetTileIndex() { return mTileIndex; }
 
-		
+		TilePalette* GetTilePalete() {return mTilePalette;}
+
 	private:
 		TilePalette* mTilePalette;
 		UINT mTileIndex;

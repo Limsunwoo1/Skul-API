@@ -3,11 +3,11 @@
 
 namespace sw
 {
-	class TitleScene : public Scene
+	class PlayScene2 : public Scene
 	{
 	public:
-		TitleScene();
-		virtual ~TitleScene();
+		PlayScene2();
+		virtual ~PlayScene2();
 
 		void Initialize() override;
 		void Tick() override;

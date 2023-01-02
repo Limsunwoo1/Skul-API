@@ -40,8 +40,9 @@ private:									\
 enum class eSceneType
 {
 	Logo,
-	Title,
+	Start,
 	Play,
+	Play2,
 	Ch2Boss,
 	End,
 	Tool,
@@ -82,6 +83,8 @@ enum class eColliderLayer : short
 	BackGround,
 	Ground,
 	Tile,
+	Gate,
+	Item,
 	Monster,
 	NamedMonster,
 	BossMonster,

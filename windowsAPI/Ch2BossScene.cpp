@@ -8,6 +8,7 @@
 #include "ObjectManager.h"
 #include "MainPlayer.h"
 #include "PlayerBase.h"
+#include "Rigidbody.h"
 namespace sw
 {
 	Ch2BossScene::Ch2BossScene()
@@ -52,9 +53,11 @@ namespace sw
 
 		// 플레이어
 		ObjectManager::GetInstance()->AddObject(eSceneType::Ch2Boss);
-		ObjectManager::GetInstance()->GetPlayer()->SetPos(1200.f, 0.0f);
-		ObjectManager::GetInstance()->GetPlayer()->GetPlayer()->SetPos(1200.f, 0.0f);
-		ObjectManager::GetInstance()->GetPlayer()->GetNextPlayer()->SetPos(1200.f, 0.0f);
+		ObjectManager::GetInstance()->GetPlayer()->SetPos(1200.f, 800.0f);
+		if (ObjectManager::GetInstance()->GetPlayer()->GetPlayer())
+			ObjectManager::GetInstance()->GetPlayer()->GetPlayer()->SetPos(1200.f, 800.0f);
+
+		ObjectManager::GetInstance()->GetPlayer()->GetComponent<Rigidbody>()->SetGround(true);
 
 		// 카메라
 		Camera::GetInstance()->SetTarget(ObjectManager::GetInstance()->GetPlayer());
@@ -64,9 +67,14 @@ namespace sw
 	}
 	void Ch2BossScene::Exit()
 	{
-	}
-	void Ch2BossScene::Release()
-	{
-
+		//콜리젼
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground,false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjecTile, eColliderLayer::BossMonster, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::BossMonster_ProjecTile, eColliderLayer::Player, false);
+		// 오브젝트
+		ObjectManager::GetInstance()->DeleteObject(eSceneType::Ch2Boss);
+		ObjectManager::GetInstance()->GetPlayer()->GetComponent<Rigidbody>()->SetGround(false);
+		// 카메라
+		Camera::GetInstance()->SetTarget(nullptr);
 	}
 }

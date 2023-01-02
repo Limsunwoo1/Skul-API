@@ -16,8 +16,6 @@ namespace sw
 
 		virtual void Enter() override;
 		virtual void Exit() override;
-
-		virtual void Release() override;
 	private:
 		LeianaControler* mBoss;
 	};

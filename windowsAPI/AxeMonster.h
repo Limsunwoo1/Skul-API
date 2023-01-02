@@ -17,6 +17,7 @@ namespace sw
 		virtual void Tick() override;
 
 		virtual void Hit() override;
+		virtual void ProejcTielDelte() override;
 
 		void OnSkilAttack();
 		void SkilAttack(GameObject* other);

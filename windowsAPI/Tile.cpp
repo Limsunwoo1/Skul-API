@@ -38,6 +38,9 @@ namespace sw
 
 	void Tile::Render(HDC hdc)
 	{
+		if (IsDeath())
+			return;
+
 		if (mAtlas == nullptr)
 			return;
 

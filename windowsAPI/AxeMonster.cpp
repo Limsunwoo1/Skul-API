@@ -10,7 +10,7 @@ namespace sw
 	AxeMonster::AxeMonster()
 		: MonsterBase()
 	{
-		SetHp(30);
+		SetHp(50);
 		SetPower(2);
 		InitializeAnimation();
 		InitalizeCollider();
@@ -28,7 +28,7 @@ namespace sw
 		{
 			mProjecTile.push_back(new ObjectProjecTile());
 			mProjecTile[i]->SetTarget(this);
-			mProjecTile[i]->SetReuse_Time(0.3f);
+			mProjecTile[i]->SetReuse_Time(0.8f);
 			mProjecTile[i]->SetEffectName(L"AxeMonster_AttackEft");
 			mProjecTile[i]->SetEvent(std::bind(&AxeMonster::SkilAttack, this, std::placeholders::_1));
 			Animator* animator = mProjecTile[i]->GetComponent<Animator>();
@@ -42,6 +42,11 @@ namespace sw
 	AxeMonster::~AxeMonster()
 	{
 		GameObject::~GameObject();
+		for (int i = 0; i < 4; ++i)
+		{
+			delete mProjecTile[i];
+		}
+		mProjecTile.clear();
 	}
 
 	void AxeMonster::Tick()
@@ -105,6 +110,19 @@ namespace sw
 	void AxeMonster::Hit()
 	{
 		// hp °¨¼Ò
+	}
+
+	void AxeMonster::ProejcTielDelte()
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			EventInfo info;
+			info.Type = EventType::DeleteObject;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::Monster_ProjecTile);
+			info.Parameter2 = mProjecTile[i];
+			EventManager::GetInstance()->EventPush(info);
+		}
+		mProjecTile.clear();
 	}
 
 	void AxeMonster::OnSkilAttack()

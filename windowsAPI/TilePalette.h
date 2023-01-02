@@ -35,7 +35,7 @@ namespace sw
 		void Load(const std::wstring& path);
 
 		Image* GetAtlasImage() {return mImage;}
-
+		void Reset();
 	private:
 		Image* mImage;
 		std::unordered_map<UINT64, Tile*> mTiles;

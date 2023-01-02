@@ -21,6 +21,7 @@
 #include "EventManager.h"
 #include "Rigidbody.h"
 #include "GateObject.h"
+#include "Item.h"
 
 namespace sw
 {
@@ -113,6 +114,10 @@ namespace sw
 		gate->SetNextScene(eSceneType::Ch2Boss);
 		gate->SetBossGate(true);
 		AddGameObject(gate, eColliderLayer::Gate);
+
+		Item* item = new Item();
+		item->SetPos(4350.f, 670.f);
+		AddGameObject(item, eColliderLayer::Gate);
 	}
 
 	void PlayScene2::Tick()
@@ -141,12 +146,13 @@ namespace sw
 		SceneManager::GetInstance()->LoadTileMap(L"..\\Resource\\TileData\\Stage_2");
 
 		// 콜리젼 레이어
-		/*CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster_ProjectTile);
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Monster);*/
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Item, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjecTile, eColliderLayer::Monster);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster_ProjecTile, eColliderLayer::Player);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Item);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Gate);
 
 		// 플레이어
 		ObjectManager::GetInstance()->AddObject(eSceneType::Play2);
@@ -162,10 +168,13 @@ namespace sw
 	void PlayScene2::Exit()
 	{
 		// 콜리젼
-		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground,false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground, false);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Item, eColliderLayer::Ground, false);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjecTile, eColliderLayer::Monster, false);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster_ProjecTile, eColliderLayer::Player, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Item, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Gate,false);
 		// 오브젝트
 		ObjectManager::GetInstance()->GetPlayer()->GetComponent<Rigidbody>()->SetGround(false);
 		ObjectManager::GetInstance()->DeleteObject(eSceneType::Play2);

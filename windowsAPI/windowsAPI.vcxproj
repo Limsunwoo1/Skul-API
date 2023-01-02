@@ -155,7 +155,6 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="AxeMonster.h" />
-    <ClInclude Include="BossGate.h" />
     <ClInclude Include="CallStackTracer.h" />
     <ClInclude Include="Ch2BossScene.h" />
     <ClInclude Include="CrashHandler.h" />
@@ -212,6 +211,7 @@
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="SkilA.h" />
     <ClInclude Include="SkilB.h" />
+    <ClInclude Include="SkulHeadItem.h" />
     <ClInclude Include="Sliding.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundManager.h" />
@@ -242,7 +242,6 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="AxeMonster.cpp" />
-    <ClCompile Include="BossGate.cpp" />
     <ClCompile Include="CallStackTracer.cpp" />
     <ClCompile Include="Ch2BossScene.cpp" />
     <ClCompile Include="CrashHandler.cpp" />
@@ -293,6 +292,7 @@
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SkilA.cpp" />
     <ClCompile Include="SkilB.cpp" />
+    <ClCompile Include="SkulHeadItem.cpp" />
     <ClCompile Include="Sliding.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="BaseResource.cpp" />

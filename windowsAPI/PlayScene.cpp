@@ -21,6 +21,7 @@
 #include "EventManager.h"
 #include "Rigidbody.h"
 #include "GateObject.h"
+#include "Item.h"
 
 namespace sw
 {
@@ -218,6 +219,10 @@ namespace sw
 		gate->SetPos(8200.f, 280.f);
 		gate->SetNextScene(eSceneType::Play2);
 		AddGameObject(gate, eColliderLayer::Gate);
+
+		Item* item = new Item();
+		item->SetPos(7800.f, 350.f);
+		AddGameObject(item, eColliderLayer::Gate);
 	}
 
 	void PlayScene::Tick()
@@ -253,8 +258,11 @@ namespace sw
 		// 콜리젼 레이어
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Item, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjecTile, eColliderLayer::Monster);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster_ProjecTile, eColliderLayer::Player);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Item);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Gate);
 
 		// 플레이어
 		ObjectManager::GetInstance()->AddObject(eSceneType::Play);
@@ -273,8 +281,11 @@ namespace sw
 		// 콜리젼
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground,false);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster, eColliderLayer::Ground, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Item, eColliderLayer::Ground, false);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player_ProjecTile, eColliderLayer::Monster, false);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Monster_ProjecTile, eColliderLayer::Player, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Item, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Gate, false);
 		//오브젝트
 		ObjectManager::GetInstance()->GetPlayer()->GetComponent<Rigidbody>()->SetGround(false);
 		ObjectManager::GetInstance()->DeleteObject(eSceneType::Play);

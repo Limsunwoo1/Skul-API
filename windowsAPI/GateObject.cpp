@@ -25,8 +25,8 @@ namespace sw
 	{
 		GameObject::Tick();
 
-		int a = SceneManager::GetInstance()->GetMonsterCount();
-		if (SceneManager::GetInstance()->GetMonsterCount() <= 0)
+
+		if (SceneManager::GetInstance()->GetPlayScene()->GetSceneChange())
 		{
 			SetDeactiveate(false);
 		}

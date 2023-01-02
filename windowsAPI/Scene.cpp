@@ -4,6 +4,7 @@
 namespace sw
 {
 	Scene::Scene()
+		: mSceneChange(false)
 	{
 		mObjects.resize((UINT)eColliderLayer::END);
 	}

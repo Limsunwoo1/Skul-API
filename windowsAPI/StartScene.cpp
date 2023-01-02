@@ -10,6 +10,7 @@
 #include "Rigidbody.h"
 #include "PlayerBase.h"
 #include "GateObject.h"
+#include "Item.h"
 
 namespace sw
 {
@@ -70,19 +71,14 @@ namespace sw
 		gate->SetPos(2118.f, 470.f);
 		gate->SetNextScene(eSceneType::Play);
 		AddGameObject(gate, eColliderLayer::Gate);
+
+		Item* item = new Item();
+		item->SetPos(1750.f, 540.f);
+		AddGameObject(item, eColliderLayer::Gate);
 	}
 	void StartScene::Tick()
 	{
 		Scene::Tick();
-
-		if (KEY_DOWN(eKeyCode::N))
-		{
-			EventInfo info;
-			info.Type = EventType::ChangeScene;
-			info.Parameter1 = new eSceneType(eSceneType::Play);
-
-			EventManager::GetInstance()->EventPush(info);
-		}
 	}
 
 	void StartScene::Render(HDC hdc)
@@ -97,6 +93,8 @@ namespace sw
 		// 콜리젼 레이어
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground);
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Gate);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Item);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Ground, eColliderLayer::Item);
 
 		// 플레이어
 		ObjectManager::GetInstance()->AddObject(eSceneType::Start);
@@ -116,6 +114,9 @@ namespace sw
 	{
 		//콜리젼
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Ground,false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Gate, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::Item, false);
+		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Ground, eColliderLayer::Item, false);
 		// 오브젝트
 		ObjectManager::GetInstance()->DeleteObject(eSceneType::Start);
 		// 카메라

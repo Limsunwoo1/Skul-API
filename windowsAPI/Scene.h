@@ -26,7 +26,10 @@ namespace sw
 
 		virtual void Release();
 
+		void SetSceneChange(bool on) { mSceneChange = on; }
+		bool GetSceneChange() { return mSceneChange; }
 	private:
 		std::vector<std::vector<GameObject*>> mObjects;
+		bool mSceneChange;
 	};
 }

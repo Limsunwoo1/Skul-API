@@ -231,8 +231,8 @@
     <Filter Include="Engine\Scene\StartScene">
       <UniqueIdentifier>{c3bc7d30-14e5-4a4e-a11b-cd8cf2de2c9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObject\GateObject\Gate\Go_toBossgate">
-      <UniqueIdentifier>{46c43d6c-73fa-4632-942b-db26e557945a}</UniqueIdentifier>
+    <Filter Include="Engine\GameObject\GateObject\Item\SkulHeadItem">
+      <UniqueIdentifier>{63430eeb-13a6-4929-b161-31a3a9e92d33}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -488,8 +488,8 @@
     <ClInclude Include="StartScene.h">
       <Filter>Engine\Scene\StartScene</Filter>
     </ClInclude>
-    <ClInclude Include="BossGate.h">
-      <Filter>Engine\GameObject\GateObject\Gate\Go_toBossgate</Filter>
+    <ClInclude Include="SkulHeadItem.h">
+      <Filter>Engine\GameObject\GateObject\Item\SkulHeadItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -715,8 +715,8 @@
     <ClCompile Include="StartScene.cpp">
       <Filter>Engine\Scene\StartScene</Filter>
     </ClCompile>
-    <ClCompile Include="BossGate.cpp">
-      <Filter>Engine\GameObject\GateObject\Gate\Go_toBossgate</Filter>
+    <ClCompile Include="SkulHeadItem.cpp">
+      <Filter>Engine\GameObject\GateObject\Item\SkulHeadItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

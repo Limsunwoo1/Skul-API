@@ -22,6 +22,7 @@
 #include "Rigidbody.h"
 #include "GateObject.h"
 #include "Item.h"
+#include "StaticObject.h"
 
 namespace sw
 {
@@ -37,7 +38,6 @@ namespace sw
 
 	PlayScene::~PlayScene()
 	{
-		Scene::Release();
 	}
 
 	void PlayScene::Initialize()
@@ -181,7 +181,7 @@ namespace sw
 		monster23->SetPos(Vector2(5000.f, 270.f));
 		monster23->SetDirction(false);
 
-		/*AddGameObject(monster4, eColliderLayer::Monster);
+		AddGameObject(monster4, eColliderLayer::Monster);
 		AddGameObject(monster5, eColliderLayer::Monster);
 		AddGameObject(monster6, eColliderLayer::Monster);
 		AddGameObject(monster7, eColliderLayer::Monster);
@@ -200,7 +200,7 @@ namespace sw
 		AddGameObject(monster20, eColliderLayer::Monster);
 		AddGameObject(monster21, eColliderLayer::Monster);
 		AddGameObject(monster22, eColliderLayer::Monster);
-		AddGameObject(monster23, eColliderLayer::Monster);*/
+		AddGameObject(monster23, eColliderLayer::Monster);
 
 		MaidMonster_1* monster24 = new MaidMonster_1();
 		monster24->SetPos(Vector2(5800.f, 270.f));
@@ -214,7 +214,204 @@ namespace sw
 		AddGameObject(monster24, eColliderLayer::Monster);
 		AddGameObject(monster25, eColliderLayer::Monster);
 		AddGameObject(monster26, eColliderLayer::Monster);
+		// STaticObject
+		StaticObject* object1 = new StaticObject(L"StaticObject5");
+		object1->SetPos(700.f, 760.f);
+		object1->SetScale(3.f, 3.f);
 
+		StaticObject* object2 = new StaticObject(L"StaticObject5");
+		object2->SetPos(750.f, 760.f);
+		object2->SetScale(3.f, 3.f);
+
+		StaticObject* object3 = new StaticObject(L"StaticObject5");
+		object3->SetPos(800.f, 760.f);
+		object3->SetScale(3.f, 3.f);
+
+		StaticObject* object4 = new StaticObject(L"StaticObject5");
+		object4->SetPos(850, 760.f);
+		object4->SetScale(3.f, 3.f);
+
+		StaticObject* object5 = new StaticObject(L"StaticObject5");
+		object5->SetPos(900, 760.f);
+		object5->SetScale(3.f, 3.f);
+
+		StaticObject* object6 = new StaticObject(L"StaticObject5");
+		object6->SetPos(950, 760.f);
+		object6->SetScale(3.f, 3.f);
+
+		StaticObject* object7 = new StaticObject(L"StaticObject5");
+		object7->SetPos(1000, 760.f);
+		object7->SetScale(3.f, 3.f);
+
+		StaticObject* object8 = new StaticObject(L"StaticObject5");
+		object8->SetPos(1050, 760.f);
+		object8->SetScale(3.f, 3.f);
+
+		StaticObject* object9 = new StaticObject(L"StaticObject5");
+		object9->SetPos(1100, 760.f);
+		object9->SetScale(3.f, 3.f);
+
+		StaticObject* object10 = new StaticObject(L"StaticObject5");
+		object10->SetPos(1150, 760.f);
+		object10->SetScale(3.f, 3.f);
+
+		StaticObject* object11 = new StaticObject(L"StaticObject5");
+		object11->SetPos(1200, 760.f);
+		object11->SetScale(3.f, 3.f);
+
+		AddGameObject(object1, eColliderLayer::StaticObject);
+		AddGameObject(object2, eColliderLayer::StaticObject);
+		AddGameObject(object3, eColliderLayer::StaticObject);
+		AddGameObject(object4, eColliderLayer::StaticObject);
+		AddGameObject(object5, eColliderLayer::StaticObject);
+		AddGameObject(object6, eColliderLayer::StaticObject);
+		AddGameObject(object7, eColliderLayer::StaticObject);
+		AddGameObject(object8, eColliderLayer::StaticObject);
+		AddGameObject(object9, eColliderLayer::StaticObject);
+		AddGameObject(object10, eColliderLayer::StaticObject);
+		AddGameObject(object11, eColliderLayer::StaticObject);
+
+		StaticObject* object12 = new StaticObject(L"StaticObject1");
+		object12->SetPos(2300, 0.f);
+		object12->SetScale(4.f, 3.f);
+
+		StaticObject* object13 = new StaticObject(L"StaticObject1");
+		object13->SetPos(2900, 0.f);
+		object13->SetScale(4.f, 3.f);
+
+		StaticObject* object14 = new StaticObject(L"StaticObject1");
+		object14->SetPos(3500.f, 0.f);
+		object14->SetScale(4.f, 3.f);
+
+		StaticObject* object15 = new StaticObject(L"StaticObject1");
+		object15->SetPos(4000.f, 0.f);
+		object15->SetScale(4.f, 3.f);
+
+		StaticObject* object16 = new StaticObject(L"StaticObject1");
+		object16->SetPos(4500.f, 0.f);
+		object16->SetScale(4.f, 3.f);
+
+		StaticObject* object16_1 = new StaticObject(L"StaticObject1");
+		object16_1->SetPos(5200.f, 0.f);
+		object16_1->SetScale(4.f, 3.f);
+
+		StaticObject* object17_1 = new StaticObject(L"StaticObject1");
+		object17_1->SetPos(5900.f, 0.f);
+		object17_1->SetScale(4.f, 3.f);
+
+		StaticObject* object18_1 = new StaticObject(L"StaticObject1");
+		object18_1->SetPos(6600.f, 0.f);
+		object18_1->SetScale(4.f, 3.f);
+
+		StaticObject* object19_1 = new StaticObject(L"StaticObject1");
+		object19_1->SetPos(7300.f, 0.f);
+		object19_1->SetScale(4.f, 3.f);
+
+		StaticObject* object20_1 = new StaticObject(L"StaticObject1");
+		object20_1->SetPos(8000.f, 0.f);
+		object20_1->SetScale(4.f, 3.f);
+
+		AddGameObject(object12, eColliderLayer::StaticObject);
+		AddGameObject(object13, eColliderLayer::StaticObject);
+		AddGameObject(object14, eColliderLayer::StaticObject);
+		AddGameObject(object15, eColliderLayer::StaticObject);
+		AddGameObject(object16, eColliderLayer::StaticObject);
+		AddGameObject(object16_1, eColliderLayer::StaticObject);
+		AddGameObject(object17_1, eColliderLayer::StaticObject);
+		AddGameObject(object18_1, eColliderLayer::StaticObject);
+		AddGameObject(object19_1, eColliderLayer::StaticObject);
+		AddGameObject(object20_1, eColliderLayer::StaticObject);
+
+		StaticObject* object17 = new StaticObject(L"StaticObject7");
+		object17->SetPos(2600.f, 340.f);
+		object17->SetScale(5.f, 4.f);
+
+		StaticObject* object18 = new StaticObject(L"StaticObject7");
+		object18->SetPos(4100.f, 340.f);
+		object18->SetScale(5.f, 4.f);
+
+		StaticObject* object19 = new StaticObject(L"StaticObject8");
+		object19->SetPos(6100.f, 230.f);
+		object19->SetScale(3.f, 3.f);
+
+		AddGameObject(object17, eColliderLayer::StaticObject);
+		AddGameObject(object18, eColliderLayer::StaticObject);
+		AddGameObject(object19, eColliderLayer::StaticObject);
+
+		StaticObject* object20 = new StaticObject(L"StaticObject11");
+		object20->SetPos(1800.f, 190.f);
+		object20->SetScale(5.f, 5.f);
+		AddGameObject(object20, eColliderLayer::StaticObject);
+
+		StaticObject* object21 = new StaticObject(L"StaticObject13");
+		object21->SetPos(1090.f, 420.f);
+		object21->SetScale(4.f, 4.f);
+		AddGameObject(object21, eColliderLayer::StaticObject);
+
+		StaticObject* object22 = new StaticObject(L"StaticObject5");
+		object22->SetPos(5200.f, 310.f);
+		object22->SetScale(3.f, 3.f);
+
+		StaticObject* object23 = new StaticObject(L"StaticObject5");
+		object23->SetPos(5250.f, 310.f);
+		object23->SetScale(3.f, 3.f);
+
+		StaticObject* object24 = new StaticObject(L"StaticObject5");
+		object24->SetPos(5300.f, 310.f);
+		object24->SetScale(3.f, 3.f);
+
+		StaticObject* object25 = new StaticObject(L"StaticObject5");
+		object25->SetPos(5350.f, 310.f);
+		object25->SetScale(3.f, 3.f);
+
+		StaticObject* object26 = new StaticObject(L"StaticObject5");
+		object26->SetPos(5400.f, 310.f);
+		object26->SetScale(3.f, 3.f);
+
+		StaticObject* object27 = new StaticObject(L"StaticObject5");
+		object27->SetPos(5450.f, 310.f);
+		object27->SetScale(3.f, 3.f);
+
+		StaticObject* object28 = new StaticObject(L"StaticObject5");
+		object28->SetPos(5500.f, 310.f);
+		object28->SetScale(3.f, 3.f);
+
+		StaticObject* object29 = new StaticObject(L"StaticObject5");
+		object29->SetPos(5550.f, 310.f);
+		object29->SetScale(3.f, 3.f);
+
+		AddGameObject(object22, eColliderLayer::StaticObject);
+		AddGameObject(object23, eColliderLayer::StaticObject);
+		AddGameObject(object24, eColliderLayer::StaticObject);
+		AddGameObject(object25, eColliderLayer::StaticObject);
+		AddGameObject(object26, eColliderLayer::StaticObject);
+		AddGameObject(object27, eColliderLayer::StaticObject);
+		AddGameObject(object28, eColliderLayer::StaticObject);
+		AddGameObject(object29, eColliderLayer::StaticObject);
+
+		StaticObject* object30 = new StaticObject(L"StaticObject13");
+		object30->SetPos(4850.f, 340.f);
+		object30->SetScale(4.f, 4.f);
+		AddGameObject(object30, eColliderLayer::StaticObject);
+
+		StaticObject* object31 = new StaticObject(L"StaticObject2");
+		object31->SetPos(6830.f, 310.f);
+		object31->SetScale(2.f, 2.f);
+
+		StaticObject* object32 = new StaticObject(L"StaticObject2");
+		object32->SetPos(6900.f, 280.f);
+		object32->SetScale(2.f, 3.f);
+
+		StaticObject* object33 = new StaticObject(L"StaticObject2");
+		object33->SetPos(6970.f, 310.f);
+		object33->SetScale(2.f, 2.f);
+
+		AddGameObject(object31, eColliderLayer::StaticObject);
+		AddGameObject(object32, eColliderLayer::StaticObject);
+		AddGameObject(object33, eColliderLayer::StaticObject);
+
+		////////////////////////////////////////////////////////////////
+		//GateObject
 		GateObject* gate = new GateObject();
 		gate->SetPos(8200.f, 280.f);
 		gate->SetNextScene(eSceneType::Play2);

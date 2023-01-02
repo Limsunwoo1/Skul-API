@@ -234,6 +234,9 @@
     <Filter Include="Engine\GameObject\GateObject\Item\SkulHeadItem">
       <UniqueIdentifier>{63430eeb-13a6-4929-b161-31a3a9e92d33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameObject\StaticObject">
+      <UniqueIdentifier>{51c78004-b241-48e0-8938-109ae48d5b9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -491,6 +494,9 @@
     <ClInclude Include="SkulHeadItem.h">
       <Filter>Engine\GameObject\GateObject\Item\SkulHeadItem</Filter>
     </ClInclude>
+    <ClInclude Include="StaticObject.h">
+      <Filter>Engine\GameObject\StaticObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -717,6 +723,9 @@
     </ClCompile>
     <ClCompile Include="SkulHeadItem.cpp">
       <Filter>Engine\GameObject\GateObject\Item\SkulHeadItem</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObject.cpp">
+      <Filter>Engine\GameObject\StaticObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

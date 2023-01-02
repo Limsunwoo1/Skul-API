@@ -83,6 +83,7 @@ enum class eColliderLayer : short
 	BackGround,
 	Ground,
 	Tile,
+	StaticObject,
 	Gate,
 	Item,
 	Monster,

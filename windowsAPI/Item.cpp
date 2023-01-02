@@ -76,6 +76,7 @@ namespace sw
 			EventManager::GetInstance()->EventPush(info2);
 
 			SceneManager::GetInstance()->GetPlayScene()->SetSceneChange(true);
+			other->OnCollisionExit(GetComponent<Collider>());
 		}
 	}
 	void Item::OnCollisionExit(Collider* other)

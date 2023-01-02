@@ -90,6 +90,8 @@ namespace sw
 			info.Parameter1 = new eSceneType(mNextScene);
 
 			EventManager::GetInstance()->EventPush(info);
+
+			other->OnCollisionExit(GetComponent<Collider>());
 		}
 	}
 

@@ -11,7 +11,6 @@ namespace sw
 
 	Scene::~Scene()
 	{
-		Release();
 	}
 
 	void Scene::Initialize()

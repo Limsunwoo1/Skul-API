@@ -189,8 +189,6 @@ namespace sw
 			mCurPlayer->SetPos(mNextPlayer->GetPos());
 			mCurPlayer->SetHp(mNextPlayer->GetHp());
 		}
-
-
 	}
 
 	void MainPlayer::SwitchPlayer()
@@ -233,16 +231,21 @@ namespace sw
 		}
 		else
 		{
+			SetPos(mCurPlayer->GetPos());
+			mNextPlayer->SetPos(mCurPlayer->GetPos());
+			player->SetPos(GetPos());
+
 			mHeadParent->DeleteChild(mCurPlayer->GetHeadImage());
 			mHeadParent->DeleteChild(mNextPlayer->GetHeadImage());
 
+			player->GetHeadImage()->SetPos(mHeadParent->GetPos() - Vector2(35.f, -70.f));
 			mHeadParent->SetChild(Vector2(35.f, -70.f), player->GetHeadImage());
+			mNextPlayer->GetHeadImage()->SetPos(mHeadParent->GetPos());
 			mHeadParent->SetChild(Vector2::Zero, mNextPlayer->GetHeadImage());
 
 			player->GetHeadImage()->SetSize(Vector2(115.f, 115.f));
 			mNextPlayer->GetHeadImage()->SetSize(mHeadParent->GetSize() - 30);
 			player->SetState(ePlayerState::SWITCH);
-
 			// Head item µå¶ø
 
 		}
@@ -254,7 +257,6 @@ namespace sw
 		UIManager::GetInstance()->Push(eUIType::Character_MainHead, mNextPlayer->GetHeadImage());
 		UIManager::GetInstance()->Push(eUIType::Character);
 		UIManager::GetInstance()->Push(eUIType::Character_MainHead);
-
 
 		mCurPlayer = player;
 		mCurPlayer->SetParentObject(this);

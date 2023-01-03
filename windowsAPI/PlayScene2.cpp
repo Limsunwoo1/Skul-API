@@ -303,9 +303,22 @@ namespace sw
 		Camera::GetInstance()->SetCameraMaxPos(Vector2(5138.f, 1400.f));
 		Camera::GetInstance()->SetCameraLowPos(Vector2(20.f, 50.f));
 		//ui
+		vector<GameObject*>& objects = this->GetGameObject(eColliderLayer::Monster);
+		for (GameObject* object : objects)
+		{
+			MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+
+			if (monster == nullptr)
+				continue;
+
+			monster->PushUi();
+		}
+
 		UIManager::GetInstance()->Push(eUIType::HP_PANEL);
 		UIManager::GetInstance()->Push(eUIType::HP);
 		UIManager::GetInstance()->Push(eUIType::Character_Panel);
+		UIManager::GetInstance()->Push(eUIType::Character_MainHead);
+		UIManager::GetInstance()->Push(eUIType::Character);
 		UIManager::GetInstance()->Push(eUIType::Skil_Panel);
 	}
 	void PlayScene2::Exit()
@@ -323,11 +336,14 @@ namespace sw
 		ObjectManager::GetInstance()->DeleteObject(eSceneType::Play2);
 		//카메라
 		Camera::GetInstance()->SetTarget(nullptr);
-		//ui
+		// ui
 		UIManager::GetInstance()->Pop(eUIType::HP_PANEL);
 		UIManager::GetInstance()->Pop(eUIType::HP);
 		UIManager::GetInstance()->Pop(eUIType::Character_Panel);
+		UIManager::GetInstance()->Pop(eUIType::Character_MainHead);
+		UIManager::GetInstance()->Pop(eUIType::Character);
 		UIManager::GetInstance()->Pop(eUIType::Skil_Panel);
+		UIManager::GetInstance()->MonsterHpClear();
 		// 타일데이터
 		vector<GameObject*>& objects = this->GetGameObject(eColliderLayer::Tile);
 		for (GameObject* object : objects)

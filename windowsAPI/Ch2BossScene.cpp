@@ -9,6 +9,7 @@
 #include "MainPlayer.h"
 #include "PlayerBase.h"
 #include "Rigidbody.h"
+#include "UIManager.h"
 namespace sw
 {
 	Ch2BossScene::Ch2BossScene()
@@ -78,6 +79,14 @@ namespace sw
 		Camera::GetInstance()->SetDistance(Vector2(1200.f, 0.0f));
 		Camera::GetInstance()->SetCameraMaxPos(Vector2(2295.f, 950.f));
 		Camera::GetInstance()->SetCameraLowPos(Vector2(126.f, 50));
+
+		// ui
+		UIManager::GetInstance()->Push(eUIType::HP_PANEL);
+		UIManager::GetInstance()->Push(eUIType::HP);
+		UIManager::GetInstance()->Push(eUIType::Character_Panel);
+		UIManager::GetInstance()->Push(eUIType::Character_MainHead);
+		UIManager::GetInstance()->Push(eUIType::Character);
+		UIManager::GetInstance()->Push(eUIType::Skil_Panel);
 	}
 	void Ch2BossScene::Exit()
 	{
@@ -90,5 +99,13 @@ namespace sw
 		ObjectManager::GetInstance()->GetPlayer()->GetComponent<Rigidbody>()->SetGround(false);
 		// Ä«¸Þ¶ó
 		Camera::GetInstance()->SetTarget(nullptr);
+
+		// ui
+		UIManager::GetInstance()->Pop(eUIType::HP_PANEL);
+		UIManager::GetInstance()->Pop(eUIType::HP);
+		UIManager::GetInstance()->Pop(eUIType::Character_Panel);
+		UIManager::GetInstance()->Pop(eUIType::Character_MainHead);
+		UIManager::GetInstance()->Pop(eUIType::Character);
+		UIManager::GetInstance()->Pop(eUIType::Skil_Panel);
 	}
 }

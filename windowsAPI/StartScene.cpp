@@ -163,7 +163,7 @@ namespace sw
 
 		Item* item = new Item();
 		item->SetPos(1750.f, 540.f);
-		item->SetHeadType(eSkulHead::Sword);
+		item->SetHeadType(eSkulHead::Samurai);
 		AddGameObject(item, eColliderLayer::Gate);
 	}
 	void StartScene::Tick()

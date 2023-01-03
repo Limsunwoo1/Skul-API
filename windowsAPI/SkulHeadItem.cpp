@@ -10,6 +10,7 @@
 #include "SwordSkul.h"
 #include "SceneManager.h"
 #include "EventManager.h"
+#include "samurai.h"
 
 namespace sw
 {
@@ -46,6 +47,14 @@ namespace sw
 
 	void SkulHeadItem::Tick()
 	{
+		if (mHeadType == eSkulHead::Sword)
+		{
+			GetComponent<Animator>()->Play(L"SowrdSkulHead");
+		}
+		if (mHeadType == eSkulHead::Samurai)
+		{
+			GetComponent<Animator>()->Play(L"SamuraiHead");
+		}
 		GameObject::Tick();
 	}
 
@@ -75,10 +84,10 @@ namespace sw
 			case eSkulHead::Sword:
 			{
 				SwordSkul* sword = new SwordSkul();
-				ObjectManager::GetInstance()->GetPlayer()->SetPlayer(sword);
-
 				Scene* scene = SceneManager::GetInstance()->GetPlayScene();
 				ObjectManager::GetInstance()->DeleteObject(scene);
+
+				ObjectManager::GetInstance()->GetPlayer()->SetPlayer(sword);
 				ObjectManager::GetInstance()->AddObject(scene);
 
 				EventInfo info;
@@ -92,7 +101,20 @@ namespace sw
 			break;
 			case eSkulHead::Samurai:
 			{
+				Samurai* samurai = new Samurai();
+				Scene* scene = SceneManager::GetInstance()->GetPlayScene();
+				ObjectManager::GetInstance()->DeleteObject(scene);
 
+				ObjectManager::GetInstance()->GetPlayer()->SetPlayer(samurai);
+				ObjectManager::GetInstance()->AddObject(scene);
+
+				EventInfo info;
+				info.Type = EventType::DeleteObject;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::Item);
+				info.Parameter2 = this;
+
+				EventManager::GetInstance()->EventPush(info);
+				other->OnCollisionExit(GetComponent<Collider>());
 			}
 			break;
 			}

@@ -201,9 +201,6 @@
     <Filter Include="Engine\Scene\PlayScene">
       <UniqueIdentifier>{0eb61f38-9b0b-458c-abbc-2aa1be61f9ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Scene\TitleScene">
-      <UniqueIdentifier>{f1a960e3-041a-49b5-bea8-4e9130766c68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Scene\ToolScene">
       <UniqueIdentifier>{01c0c770-1a66-4cdb-a9ef-63c37456f4f3}</UniqueIdentifier>
     </Filter>
@@ -239,6 +236,12 @@
     </Filter>
     <Filter Include="Engine\Compnent\GenericAnimator">
       <UniqueIdentifier>{6d7ac6c4-5f58-49f8-89b1-27c399e8717c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\PlayScene2">
+      <UniqueIdentifier>{f1a960e3-041a-49b5-bea8-4e9130766c68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\MainPlayer\Player\samurai">
+      <UniqueIdentifier>{6cb32235-e4c3-4888-8449-e41e0fcb7a04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -468,7 +471,7 @@
       <Filter>Engine\Scene\PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene2.h">
-      <Filter>Engine\Scene\TitleScene</Filter>
+      <Filter>Engine\Scene\PlayScene2</Filter>
     </ClInclude>
     <ClInclude Include="ToolScene.h">
       <Filter>Engine\Scene\ToolScene</Filter>
@@ -505,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="GenericAnimator.h">
       <Filter>Engine\Compnent\GenericAnimator</Filter>
+    </ClInclude>
+    <ClInclude Include="samurai.h">
+      <Filter>Engine\GameObject\MainPlayer\Player\samurai</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -704,7 +710,7 @@
       <Filter>Engine\Scene\PlayScene</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene2.cpp">
-      <Filter>Engine\Scene\TitleScene</Filter>
+      <Filter>Engine\Scene\PlayScene2</Filter>
     </ClCompile>
     <ClCompile Include="ToolScene.cpp">
       <Filter>Engine\Scene\ToolScene</Filter>
@@ -741,6 +747,9 @@
     </ClCompile>
     <ClCompile Include="GenericAnimator.cpp">
       <Filter>Engine\Compnent\GenericAnimator</Filter>
+    </ClCompile>
+    <ClCompile Include="samurai.cpp">
+      <Filter>Engine\GameObject\MainPlayer\Player\samurai</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

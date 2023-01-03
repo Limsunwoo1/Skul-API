@@ -27,7 +27,6 @@ namespace sw
 		SetPower(4);
 
 		mMaxAttackCount = 2;
-		SetPos({ 100.0f, 100.0f });
 		SetScale({ 4.f, 4.f });
 
 		InitAnimtion();

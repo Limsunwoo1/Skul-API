@@ -1,0 +1,36 @@
+#pragma once
+#include "PlayerBase.h"
+
+namespace sw
+{
+	class Samurai : public PlayerBase
+	{
+	public:
+		Samurai();
+		virtual ~Samurai();
+
+		virtual void Tick() override;
+		virtual void Render(HDC hdc) override;
+
+		virtual void OnCollisionEnter(Collider* other);
+		virtual void OnCollisionStay(Collider* other);
+		virtual void OnCollisionExit(Collider* other);
+
+		virtual void InitAnimtion() override;
+		virtual void InitState() override;
+		virtual void InitAttackCollider() override;
+		virtual void InitSkils() override;
+
+		virtual void OnAttackEffect(GameObject* other) override;
+
+		virtual void SwitchProjecTile(GameObject* object) override;
+		virtual void SkilAProjecTile(GameObject* object) override;
+		virtual void SkilBProjecTile(GameObject* object) override;
+		virtual void OnSkilB() override;
+
+	private:
+		Vector2 mArrivalPos;
+	};
+}
+
+

@@ -420,6 +420,7 @@ namespace sw
 
 		Item* item = new Item();
 		item->SetPos(7800.f, 350.f);
+		item->SetHeadType(eSkulHead::Sword);
 		AddGameObject(item, eColliderLayer::Gate);
 	}
 
@@ -502,6 +503,8 @@ namespace sw
 		UIManager::GetInstance()->Push(eUIType::HP_PANEL);
 		UIManager::GetInstance()->Push(eUIType::HP);
 		UIManager::GetInstance()->Push(eUIType::Character_Panel);
+		UIManager::GetInstance()->Push(eUIType::Character_MainHead);
+		UIManager::GetInstance()->Push(eUIType::Character);
 		UIManager::GetInstance()->Push(eUIType::Skil_Panel);
 	}
 
@@ -524,6 +527,8 @@ namespace sw
 		UIManager::GetInstance()->Pop(eUIType::HP_PANEL);
 		UIManager::GetInstance()->Pop(eUIType::HP);
 		UIManager::GetInstance()->Pop(eUIType::Character_Panel);
+		UIManager::GetInstance()->Pop(eUIType::Character_MainHead);
+		UIManager::GetInstance()->Pop(eUIType::Character);
 		UIManager::GetInstance()->Pop(eUIType::Skil_Panel);
 		UIManager::GetInstance()->MonsterHpClear();
 		// 타일데이터

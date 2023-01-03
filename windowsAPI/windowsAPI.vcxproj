@@ -208,6 +208,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Rigidbody.h" />
+    <ClInclude Include="samurai.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shadow.h" />
@@ -292,6 +293,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
+    <ClCompile Include="samurai.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shadow.cpp" />

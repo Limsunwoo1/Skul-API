@@ -19,8 +19,12 @@ namespace sw
 
 		void SetDeactiveate(bool active) { mbDeactivate = active; }
 		bool GetDeactivate() { return mbDeactivate; }
+
+		void SetHeadType(eSkulHead type) { mHeadType = type; }
+		eSkulHead GetHeadType() { return mHeadType; }
 	private:
 		UINT mMonsterCount;
+		eSkulHead mHeadType;
 		bool mbDeactivate;
 	};
 }

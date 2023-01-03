@@ -11,7 +11,8 @@ namespace sw
 	class Animator;
 	class Image;
 	class ObjectProjecTile;
-
+	class HUD;
+	class UiBase;
 	enum class eSkilType
 	{
 		Switch,
@@ -70,7 +71,13 @@ namespace sw
 
 		ObjectProjecTile* GetProjecTile(eSkilType type) { return mSkils[(int)type]; }
 
-		virtual void SwitchProjecTile(GameObject* other){};
+		virtual void SwitchProjecTile(GameObject* object){};
+		virtual void SkilAProjecTile(GameObject* object) {};
+		virtual void SkilBProjecTile(GameObject* object) {};
+
+		UiBase* GetHeadImage() { return (UiBase*)mHeadImage; }
+		UiBase* GetSKilAImage() { return (UiBase*)mSkilAImage; }
+		UiBase* GetSKilBImage() { return (UiBase*)mSkilBImage; }
 	protected:
 		StateHandle* mState;
 		Image* mImage;
@@ -86,6 +93,10 @@ namespace sw
 		std::vector<Shadow*> mShadows;
 		bool mbShadow;
 		bool mSlidingDirction;
+
+		HUD* mHeadImage;
+		HUD* mSkilAImage;
+		HUD* mSkilBImage;
 	};
 }
 

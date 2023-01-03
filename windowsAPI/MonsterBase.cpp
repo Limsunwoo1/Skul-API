@@ -43,6 +43,7 @@ namespace sw
 		, mArmer(false)
 		, mStaring(false)
 		, mHold(false)
+		, mUiOn(false)
 		, mAttackCooltime(0.0f)
 		, mAttackCooltimeMax(0.0f)
 		, mDelay(0.0f)
@@ -319,6 +320,11 @@ namespace sw
 	}
 	void MonsterBase::Hit()
 	{
+		if (!mUiOn)
+		{
+			OnActive();
+			mUiOn = true;
+		}
 		mDelta += Time::GetInstance()->DeltaTime();
 		if (mState[(int)eMonsterState::HIT] == false)
 		{

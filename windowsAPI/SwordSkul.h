@@ -24,7 +24,8 @@ namespace sw
 		virtual void OnAttackEffect(GameObject* other) override;
 
 		virtual void SwitchProjecTile(GameObject* object) override;
-
+		virtual void SkilAProjecTile(GameObject* object) override;
+		virtual void SkilBProjecTile(GameObject* object) override;
 		virtual void OnSkilB() override;
 
 	private:

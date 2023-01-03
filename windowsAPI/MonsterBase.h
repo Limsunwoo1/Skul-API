@@ -111,6 +111,7 @@ namespace sw
 		bool mStaring;
 		bool mHold;
 		bool mHiting;
+		bool mUiOn;
 
 		UINT32 mAttackX;
 		UINT32 mAttackY;

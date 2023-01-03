@@ -17,6 +17,7 @@
 #include "Shadow.h"
 #include "ObjectProjecTile.h"
 #include "Time.h"
+#include "MonsterBase.h"
 
 namespace sw
 {
@@ -59,6 +60,11 @@ namespace sw
 
 		this->SetState(ePlayerState::IDLE);
 		Camera::GetInstance()->SetTarget(this);
+
+		// UiImage
+		mHeadImage = new HUD(eUIType::Character);
+		mHeadImage->SetSize(Vector2(3.0f, 3.0f));
+		mHeadImage->ImageLoad(L"SwordSkulHeadImage", L"..\\Resource\\Animation\\HeadUi\\HeadUI\\Skeleton_Sword_4 #55412 복사.bmp");
 	}
 	SwordSkul::~SwordSkul()
 	{
@@ -280,6 +286,7 @@ namespace sw
 		// 스킬 A 세팅
 		ObjectProjecTile* SkilA = mSkils[(int)eSkilType::SkilA];
 		SkilA->SetScale(Vector2(5.0f, 3.0f));
+		SkilA->SetEvent(std::bind(&SwordSkul::SkilAProjecTile, this, std::placeholders::_1));
 		SkilA->SetTarget(this);
 		SkilA->SetReuse_Time(0.1f);
 		SkilA->SetEffectName(L"_Sword_SkilA_Eft");
@@ -293,6 +300,7 @@ namespace sw
 		//스킬 B 세팅
 		ObjectProjecTile* SkilB = mSkils[(int)eSkilType::SkilB];
 		SkilB->SetScale(Vector2(5.0f, 3.0f));
+		SkilB->SetEvent(std::bind(&SwordSkul::SkilBProjecTile, this, std::placeholders::_1));
 		SkilB->SetTarget(this);
 		SkilB->SetReuse_Time(1.0f);
 		SkilB->SetEffectName(L"_Sword_SkilB_Eft");
@@ -314,6 +322,56 @@ namespace sw
 	}
 	void SwordSkul::SwitchProjecTile(GameObject* object)
 	{
+		MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+		if (monster == nullptr)
+			return;
+		if (monster->GetSuperArmer())
+		{
+			monster->Hit();
+			return;
+		}
+		eMonsterState type = monster->GetState();
+		if (type != eMonsterState::HIT)
+		{
+			monster->SetAble(type, false);
+			monster->SetState(eMonsterState::HIT);
+		}
+	}
+
+	void SwordSkul::SkilAProjecTile(GameObject* object)
+	{
+		MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+		if (monster == nullptr)
+			return;
+		if (monster->GetSuperArmer())
+		{
+			monster->Hit();
+			return;
+		}
+		eMonsterState type = monster->GetState();
+		if (type != eMonsterState::HIT)
+		{
+			monster->SetAble(type, false);
+			monster->SetState(eMonsterState::HIT);
+		}
+	}
+
+	void SwordSkul::SkilBProjecTile(GameObject* object)
+	{
+		MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+		if (monster == nullptr)
+			return;
+		if (monster->GetSuperArmer())
+		{
+			monster->Hit();
+			return;
+		}
+		eMonsterState type = monster->GetState();
+		if (type != eMonsterState::HIT)
+		{
+			monster->SetAble(type, false);
+			monster->SetState(eMonsterState::HIT);
+		}
 	}
 
 	void SwordSkul::OnSkilB()

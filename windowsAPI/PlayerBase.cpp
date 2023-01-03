@@ -25,6 +25,9 @@ namespace sw
 {
 	PlayerBase::PlayerBase()
 		: mSlidingDirction(true)
+		, mHeadImage(nullptr)
+		, mSkilAImage(nullptr)
+		, mSkilBImage(nullptr)
 	{
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{

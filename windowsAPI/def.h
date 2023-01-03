@@ -135,11 +135,20 @@ enum class ePlayerState
 	END,
 };
 
+enum class eSkulHead
+{
+	Basic,
+	Sword,
+	Samurai,
+	End,
+};
+
 enum class eUIType
 {
 	HP_PANEL,
 	Character_Panel,
 	Skil_Panel,
+	Character_MainHead,
 	Character,
 	Skil,
 	HP,

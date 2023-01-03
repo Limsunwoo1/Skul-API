@@ -59,8 +59,10 @@ namespace sw
 
 		if (KEY_DOWN(eKeyCode::F))
 		{
+			eSkulHead hd = GetHeadType();
 			SkulHeadItem* item = new SkulHeadItem();
 			item->SetPos(GetPos());
+			item->SetSkulHeadType(GetHeadType());
 			EventInfo info;
 			info.Type = EventType::AddObejct;
 			info.Parameter1 = new eColliderLayer(eColliderLayer::Item);

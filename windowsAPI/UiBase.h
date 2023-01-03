@@ -44,8 +44,10 @@ namespace sw
 
 		void ImageLoad(const std::wstring& key, const std::wstring& path);
 		void SetChild(Vector2 vector, UiBase* child);
+		void DeleteChild(UiBase* child);
 
 		eUIType GetType() { return mType; }
+		void SetType(eUIType type) { mType = type; }
 		bool GetIsFullScreen() { return mbFullScreen; }
 		void SetIsFullScreen(bool enable) { mbFullScreen = enable; }
 		void SetParent(UiBase* parent) { mParent = parent; }

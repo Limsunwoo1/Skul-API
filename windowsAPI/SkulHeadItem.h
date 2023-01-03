@@ -3,13 +3,6 @@
 
 namespace sw
 {
-	enum class eSkulHead
-	{
-		Basic,
-		Sword,
-		Samurai,
-		End,
-	};
 
 	class SkulHeadItem : public GameObject
 	{
@@ -25,7 +18,7 @@ namespace sw
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
-		void SetSkulHeadType(eSkulHead type) { mHeadType; }
+		void SetSkulHeadType(eSkulHead type) { mHeadType = type; }
 	private:
 		eSkulHead mHeadType;
 	};

@@ -5,6 +5,7 @@ namespace sw
 {
 	class MainPlayer;
 	class EffectObject;
+	class Scene;
 	class ObjectManager
 	{
 		SINGLE(ObjectManager);
@@ -16,7 +17,9 @@ namespace sw
 		void SetPlayer(MainPlayer* player) { mPlayer = player; }
 
 		void AddObject(eSceneType type);
+		void AddObject(Scene* scene);
 		void DeleteObject(eSceneType type);
+		void DeleteObject(Scene* scene);
 
 		EffectObject* GetEffectObject();
 		void PushEffectObject(EffectObject* object);

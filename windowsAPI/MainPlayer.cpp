@@ -10,6 +10,8 @@
 #include "StateHandle.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "UiBase.h"
+#include "UIManager.h"
 
 #include <iostream>
 
@@ -43,13 +45,13 @@ namespace sw
 		basicSkul->SetPos(GetPos());
 		basicSkul->SetHp(GetHp());
 
-		SwordSkul* swordSkul = new SwordSkul();
+		/*SwordSkul* swordSkul = new SwordSkul();
 		swordSkul->SetParentObject(swordSkul);
 		swordSkul->SetPos(GetPos());
-		swordSkul->SetHp(GetHp());
+		swordSkul->SetHp(GetHp());*/
 
-		this->SetPlayer(basicSkul);
-		mNextPlayer = swordSkul;
+		SetPlayer( basicSkul);
+		//mNextPlayer = swordSkul;
 		Camera::GetInstance()->SetTarget(basicSkul);
 	}
 	void MainPlayer::Tick()
@@ -148,6 +150,14 @@ namespace sw
 				Reset();
 				
 				Camera::GetInstance()->SetTarget(mCurPlayer);
+				
+				mHeadParent->DeleteChild(mCurPlayer->GetHeadImage());
+				mHeadParent->DeleteChild(mNextPlayer->GetHeadImage());
+
+				mHeadParent->SetChild(Vector2(35.f, -70.f), mCurPlayer->GetHeadImage());
+				mHeadParent->SetChild(Vector2::Zero, mNextPlayer->GetHeadImage());
+				mCurPlayer->GetHeadImage()->SetSize(Vector2(115.f, 115.f));
+				mNextPlayer->GetHeadImage()->SetSize(mHeadParent->GetSize() - 30);
 			}
 		}
 	}
@@ -198,6 +208,54 @@ namespace sw
 
 	void MainPlayer::SetPlayer(PlayerBase* player)
 	{
+		if (mCurPlayer == nullptr)
+		{
+			mCurPlayer = player;
+			mCurPlayer->SetParentObject(this);
+			Reset();
+			return;
+		}
+
+		if (mNextPlayer == nullptr)
+		{
+			mHeadParent->DeleteChild(mCurPlayer->GetHeadImage());
+
+			mHeadParent->SetChild(Vector2(35.f, -70.f), player->GetHeadImage());
+			mHeadParent->SetChild(Vector2::Zero, mCurPlayer->GetHeadImage());
+
+			player->GetHeadImage()->SetSize(Vector2(115.f, 115.f));
+			mCurPlayer->GetHeadImage()->SetSize(mHeadParent->GetSize() - 30);
+
+
+			mNextPlayer = mCurPlayer;
+			mCurPlayer = player;
+			mCurPlayer->SetState(ePlayerState::SWITCH);
+		}
+		else
+		{
+			mHeadParent->DeleteChild(mCurPlayer->GetHeadImage());
+			mHeadParent->DeleteChild(mNextPlayer->GetHeadImage());
+
+			mHeadParent->SetChild(Vector2(35.f, -70.f), player->GetHeadImage());
+			mHeadParent->SetChild(Vector2::Zero, mNextPlayer->GetHeadImage());
+
+			player->GetHeadImage()->SetSize(Vector2(115.f, 115.f));
+			mNextPlayer->GetHeadImage()->SetSize(mHeadParent->GetSize() - 30);
+			player->SetState(ePlayerState::SWITCH);
+
+			// Head item 드랍
+
+		}
+		// ui 세팅
+		UIManager::GetInstance()->Pop(eUIType::Character);
+		UIManager::GetInstance()->Pop(eUIType::Character_MainHead);
+
+		UIManager::GetInstance()->Push(eUIType::Character, player->GetHeadImage());
+		UIManager::GetInstance()->Push(eUIType::Character_MainHead, mNextPlayer->GetHeadImage());
+		UIManager::GetInstance()->Push(eUIType::Character);
+		UIManager::GetInstance()->Push(eUIType::Character_MainHead);
+
+
 		mCurPlayer = player;
 		mCurPlayer->SetParentObject(this);
 		Reset();

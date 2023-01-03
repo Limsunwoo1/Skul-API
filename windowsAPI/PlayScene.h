@@ -18,6 +18,6 @@ namespace sw
 		virtual void Exit();
 
 	private:
-
+		
 	};
 }

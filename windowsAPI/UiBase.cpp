@@ -67,4 +67,17 @@ namespace sw
 		child->SetParent(this);
 		mChilds.push_back(make_pair(vector, child));
 	}
+	void UiBase::DeleteChild(UiBase* child)
+	{
+		std::vector<pair<Vector2, UiBase*>>::iterator iter;
+		iter = mChilds.begin();
+		for (; iter != mChilds.end(); ++iter)
+		{
+			if (iter->second == child)
+			{
+				mChilds.erase(iter);
+				return;
+			}
+		}
+	}
 }

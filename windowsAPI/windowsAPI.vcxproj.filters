@@ -237,6 +237,9 @@
     <Filter Include="Engine\GameObject\StaticObject">
       <UniqueIdentifier>{51c78004-b241-48e0-8938-109ae48d5b9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Compnent\GenericAnimator">
+      <UniqueIdentifier>{6d7ac6c4-5f58-49f8-89b1-27c399e8717c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -500,6 +503,9 @@
     <ClInclude Include="HpBar.h">
       <Filter>Engine\UI</Filter>
     </ClInclude>
+    <ClInclude Include="GenericAnimator.h">
+      <Filter>Engine\Compnent\GenericAnimator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -732,6 +738,9 @@
     </ClCompile>
     <ClCompile Include="HpBar.cpp">
       <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericAnimator.cpp">
+      <Filter>Engine\Compnent\GenericAnimator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

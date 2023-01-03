@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "HpBar.h"
 #include "Collider.h"
+#include "MonsterBase.h"
 
 namespace sw
 {
@@ -33,10 +34,14 @@ namespace sw
 	{
 		if (mTarget)
 		{
+			MonsterBase* monster = dynamic_cast<MonsterBase*>(mTarget);
+			if (!monster)
+				return;
+
 			Vector2 pos = mTarget->GetPos();
 			pos = Camera::GetInstance()->CalculatePos(pos);
 			Vector2 colScale = mTarget->GetComponent<Collider>()->GetScale();
-			SetPos(Vector2(pos.x, pos.y + ((colScale.y * 0.5f) + 30.f)));
+			SetPos(Vector2(pos.x, pos.y - ((colScale.y * 0.5f) + 30.f)));
 		}
 
 		for (int i = 0; i < mChilds.size(); ++i)

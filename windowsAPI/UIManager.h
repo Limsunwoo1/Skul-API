@@ -26,6 +26,7 @@ namespace sw
 		void OnFail();
 		void OnLoad(eUIType type);
 
+		void Push(eUIType type, UiBase* ui);
 		void Push(eUIType type);
 		void Pop(eUIType type);
 

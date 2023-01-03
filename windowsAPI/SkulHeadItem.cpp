@@ -2,6 +2,14 @@
 #include "Animator.h"
 #include "Rigidbody.h"
 #include "Collider.h"
+#include "Input.h"
+#include "MainPlayer.h"
+#include "PlayerBase.h"
+#include "ObjectManager.h"
+#include "BasicSkul.h"
+#include "SwordSkul.h"
+#include "SceneManager.h"
+#include "EventManager.h"
 
 namespace sw
 {
@@ -54,6 +62,41 @@ namespace sw
 	{
 		if (!GetComponent<Rigidbody>()->GetGround())
 			return;
+
+		if (KEY_DOWN(eKeyCode::F))
+		{
+			switch (mHeadType)
+			{
+			case eSkulHead::Basic:
+			{
+				
+			}
+			break;
+			case eSkulHead::Sword:
+			{
+				SwordSkul* sword = new SwordSkul();
+				ObjectManager::GetInstance()->GetPlayer()->SetPlayer(sword);
+
+				Scene* scene = SceneManager::GetInstance()->GetPlayScene();
+				ObjectManager::GetInstance()->DeleteObject(scene);
+				ObjectManager::GetInstance()->AddObject(scene);
+
+				EventInfo info;
+				info.Type = EventType::DeleteObject;
+				info.Parameter1 = new eColliderLayer(eColliderLayer::Item);
+				info.Parameter2 = this;
+
+				EventManager::GetInstance()->EventPush(info);
+				other->OnCollisionExit(GetComponent<Collider>());
+			}
+			break;
+			case eSkulHead::Samurai:
+			{
+
+			}
+			break;
+			}
+		}
 	}
 
 	void SkulHeadItem::OnCollisionExit(Collider* other)

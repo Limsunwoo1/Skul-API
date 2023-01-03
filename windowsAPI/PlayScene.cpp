@@ -496,7 +496,6 @@ namespace sw
 			if (monster == nullptr)
 				continue;
 
-			monster->OnActive();
 			monster->PushUi();
 		}
 

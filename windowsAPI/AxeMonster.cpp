@@ -115,6 +115,11 @@ namespace sw
 	void AxeMonster::Hit()
 	{
 		// hp °¨¼Ò
+		if (!mUiOn)
+		{
+			OnActive();
+			mUiOn = true;
+		}
 	}
 
 	void AxeMonster::ProejcTielDelte()

@@ -29,6 +29,7 @@
 
 #include <iostream>
 #include <random>
+#include "HUD.h"
 
 
 std::random_device random;
@@ -76,6 +77,11 @@ namespace sw
 
 		this->SetState(ePlayerState::IDLE);
 		Camera::GetInstance()->SetTarget(this);
+
+		// UiImage
+		mHeadImage = new HUD(eUIType::Character_MainHead);
+		mHeadImage->SetSize(Vector2(3.0f, 3.0f));
+		mHeadImage->ImageLoad(L"BasicSkulHeadImage", L"..\\Resource\\Animation\\HeadUi\\HeadUI\\Skul #58243 บนป็.bmp");
 	}
 
 	BasicSkul::~BasicSkul()

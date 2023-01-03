@@ -2,6 +2,9 @@
 #include "Application.h"
 #include "Panel.h"
 #include "HpBar.h"
+#include "ObjectManager.h"
+#include "PlayerBase.h"
+#include "MainPlayer.h"
 
 namespace sw
 {
@@ -44,6 +47,24 @@ namespace sw
 		charterpanel->SetSize(Vector2(90.f, 90.f));
 		mUIs.insert(std::make_pair(eUIType::Character_Panel, charterpanel));
 
+		//UiBase* headImage = ObjectManager::GetInstance()->GetPlayer()->GetNextPlayer()->GetHeadImage();
+		/*if (headImage)
+		{
+			headImage->SetSize(charterpanel->GetSize() - 30);
+			charterpanel->SetChild(Vector2::Zero, headImage);
+			ObjectManager::GetInstance()->GetPlayer()->SetHeadParent(charterpanel);
+			mUIs.insert(std::make_pair(eUIType::Character, headImage));
+		}*/
+
+		UiBase* mainhead = ObjectManager::GetInstance()->GetPlayer()->GetPlayer()->GetHeadImage();
+		if (mainhead)
+		{
+			mainhead->SetSize(Vector2(115.f, 115.f));
+			charterpanel->SetChild(Vector2(35.f, -70.f), mainhead);
+			ObjectManager::GetInstance()->GetPlayer()->SetHeadParent(charterpanel);
+			mUIs.insert(std::make_pair(eUIType::Character_MainHead, mainhead));
+		}
+		/// ////////////////////////////
 		HUD* skilpanel = new HUD(eUIType::Skil_Panel);
 		skilpanel->ImageLoad(L"SkilPanel", L"..\\Resource\\Ui\\Player_Subskill2_Frame บนป็.bmp");
 		skilpanel->SetPos(Vector2(500.f, 500.f));
@@ -187,6 +208,10 @@ namespace sw
 	void UIManager::OnFail()
 	{
 		mCurrentData = nullptr;
+	}
+	void UIManager::Push(eUIType type, UiBase* ui)
+	{
+		mUIs.insert(make_pair(type, ui));
 	}
 	void UIManager::Push(eUIType type)
 	{

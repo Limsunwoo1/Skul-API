@@ -6,6 +6,7 @@ namespace sw
 	class PlayerBase;
 	class Collider;
 	class Rigidbody;
+	class UiBase;
 	class MainPlayer : public GameObject
 	{
 	public:
@@ -32,6 +33,11 @@ namespace sw
 
 		void SetPlayerSwitch(bool change) { bPlayerSwitch = change; }
 		bool GetPlayerSwitch() { return bPlayerSwitch; }
+
+		void SetHeadParent(UiBase* ui) { mHeadParent = ui; }
+		void SetSkilAHeadParent(UiBase* ui) { mSkilAParent = ui; }
+		void SetSkilBHeadParent(UiBase* ui) { mSkilBParent = ui; }
+
 	private:
 		PlayerBase* mCurPlayer;
 		PlayerBase* mNextPlayer;
@@ -40,6 +46,10 @@ namespace sw
 		Collider* mCollider;
 
 		bool bPlayerSwitch;
+
+		UiBase* mHeadParent;
+		UiBase* mSkilAParent;
+		UiBase* mSkilBParent;
 	};
 }
 

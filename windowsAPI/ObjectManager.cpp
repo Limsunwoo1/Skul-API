@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "EffectObject.h"
 #include "ObjectProjecTile.h"
+#include "UIManager.h"
 
 namespace sw
 {
@@ -24,6 +25,8 @@ namespace sw
 
 	void ObjectManager::Release()
 	{
+		UIManager::GetInstance()->DeleteUi(eUIType::Character);
+		UIManager::GetInstance()->DeleteUi(eUIType::Character_MainHead);
 		eSceneType type = SceneManager::GetInstance()->GetPlayeSceneType();
 		DeleteObject(type);
 		if (mPlayer)

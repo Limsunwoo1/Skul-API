@@ -268,6 +268,15 @@ namespace sw
 			mUiBases.push(uiBase);
 		}
 	}
+	inline void UIManager::DeleteUi(eUIType type)
+	{
+		std::unordered_map<eUIType, UiBase*>::iterator iter;
+		iter = mUIs.find(type);
+		if (iter == mUIs.end())
+			return;
+
+		mUIs.erase(iter);
+	}
 	inline void UIManager::DeleteMonsterHp(UINT key)
 	{
 		std::map<UINT, pair<UiBase*, UiBase*>>::iterator iter;

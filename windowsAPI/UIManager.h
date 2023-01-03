@@ -38,6 +38,7 @@ namespace sw
 
 		inline void SetUiInstance(eUIType type, UiBase* ui) { mUIs.insert(make_pair(type, ui)); }
 		inline void SetMonsterInstance(UINT key,UiBase* base1, UiBase* base2) { mMonsterHp.insert(make_pair(key,make_pair(base1, base2))); }
+		inline void DeleteUi(eUIType type);
 		inline void DeleteMonsterHp(UINT key);
 		inline void MonsterHpClear() { mMonsterHp.clear(); }
 	private:

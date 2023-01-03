@@ -37,6 +37,12 @@ namespace sw
 
 	PlayerBase::~PlayerBase()
 	{
+		if (mHeadImage)
+			delete mHeadImage;
+		if (mSkilAImage)
+			delete mSkilAImage;
+		if (mSkilBImage)
+			delete mSkilBImage;
 		GameObject::~GameObject();
 	}
 

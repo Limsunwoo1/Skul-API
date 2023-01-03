@@ -45,11 +45,6 @@ namespace sw
 		basicSkul->SetPos(GetPos());
 		basicSkul->SetHp(GetHp());
 
-		/*SwordSkul* swordSkul = new SwordSkul();
-		swordSkul->SetParentObject(swordSkul);
-		swordSkul->SetPos(GetPos());
-		swordSkul->SetHp(GetHp());*/
-
 		SetPlayer( basicSkul);
 		//mNextPlayer = swordSkul;
 		Camera::GetInstance()->SetTarget(basicSkul);
@@ -231,6 +226,9 @@ namespace sw
 		}
 		else
 		{
+			UIManager::GetInstance()->DeleteUi(eUIType::Character);
+			UIManager::GetInstance()->DeleteUi(eUIType::Character_MainHead);
+
 			SetPos(mCurPlayer->GetPos());
 			mNextPlayer->SetPos(mCurPlayer->GetPos());
 			player->SetPos(GetPos());

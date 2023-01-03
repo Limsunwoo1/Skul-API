@@ -17,6 +17,7 @@
 #include "ResourceManager.h"
 #include "Ground.h"
 #include <random>
+#include "UIManager.h"
 
 namespace sw
 {
@@ -30,6 +31,8 @@ namespace sw
 		, mAnimator(nullptr)
 		, mTarget(nullptr)
 		, mGround(nullptr)
+		, mHpPanel(nullptr)
+		, mHpBar(nullptr)
 		, mCurState(eMonsterState::IDLE)
 		, mPrevState(mCurState)
 		, mDirction(true)
@@ -74,17 +77,43 @@ namespace sw
 		rDistance = force;
 
 		mPrevPos = GetPos();
+
+		mHpPanel = new Panel(eUIType::MonsterHp_Panel);
+		mHpPanel->ImageLoad(L"MonsterPanel", L"..\\Resource\\Ui\\Player_Subbar_Frame 복사.bmp");
+		mHpPanel->SetPos(Vector2(GetPos().x, GetPos().y + 100));
+		mHpPanel->SetSize(Vector2(this->GetHp() * 3.f, 15.f));
+		mHpPanel->SetTarget(this);
+
+		mHpBar = new HpBar(eUIType::MonsterHp);
+		mHpBar->ImageLoad(L"Hp", L"..\\Resource\\Ui\\Player_SubBar3 복사.bmp");
+		mHpBar->SetSize(Vector2(this->GetHp() * 3.f, 8.f));
+		mHpBar->SetTarget(this);
+
+		mHpPanel->InActive();
+		mHpBar->InActive();
+		mHpPanel->SetChild(Vector2(0.f, 0.f), mHpBar);
+		PushUi();
 	}
 
 	MonsterBase::~MonsterBase()
 	{
+		mHpPanel->InActive();
+		mHpPanel->SetSize(Vector2(0.0f, 0.0f));
+		mHpBar->InActive();
+		UIManager::GetInstance()->DeleteMonsterHp((UINT)this);
 		GameObject::~GameObject();
 	}
 
 	void MonsterBase::Tick()
 	{
 		if (GetHp() < 0)
+		{
+			mHpPanel->InActive();
+			mHpPanel->SetSize(Vector2(0.0f, 0.0f));
+			mHpBar->InActive();
+			UIManager::GetInstance()->DeleteMonsterHp((UINT)this);
 			SetDeath(true);
+		}
 
 		mAttackCooltime += Time::GetInstance()->DeltaTime();
 		GameObject::Tick();
@@ -507,5 +536,19 @@ namespace sw
 		SetDelta(0.0f);
 		SetState(eMonsterState::IDLE);
 		mHold = false;
+	}
+	void MonsterBase::PushUi()
+	{
+		UIManager::GetInstance()->SetMonsterInstance((UINT)this ,mHpPanel, mHpBar);
+	}
+	void MonsterBase::InActive()
+	{
+		mHpPanel->InActive();
+		mHpBar->InActive();
+	}
+	void MonsterBase::OnActive()
+	{
+		mHpPanel->Active();
+		mHpBar->Active();
 	}
 }

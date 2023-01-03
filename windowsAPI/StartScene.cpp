@@ -12,6 +12,7 @@
 #include "GateObject.h"
 #include "Item.h"
 #include "StaticObject.h"
+#include "UIManager.h"
 
 namespace sw
 {
@@ -157,7 +158,7 @@ namespace sw
 
 		GateObject* gate = new GateObject();
 		gate->SetPos(2118.f, 470.f);
-		gate->SetNextScene(eSceneType::Play2);
+		gate->SetNextScene(eSceneType::Play);
 		AddGameObject(gate, eColliderLayer::Gate);
 
 		Item* item = new Item();
@@ -166,6 +167,20 @@ namespace sw
 	}
 	void StartScene::Tick()
 	{
+		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeOut
+		&& Camera::GetInstance()->GetCuttonAlpha() >= 1.0f)
+		{
+			Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeIn);
+			Camera::GetInstance()->SetAlphaTime(0.0f);
+		}
+
+		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeIn
+			&& Camera::GetInstance()->GetCuttonAlpha() <= 0.0f)
+		{
+			Camera::GetInstance()->SetCameraEffect(eCameraEffect::None);
+			Camera::GetInstance()->SetAlphaTime(0.0f);
+		}
+
 		Scene::Tick();
 	}
 
@@ -196,6 +211,11 @@ namespace sw
 		Camera::GetInstance()->SetTarget(ObjectManager::GetInstance()->GetPlayer());
 		Camera::GetInstance()->SetCameraMaxPos(Vector2(2370.f, 900.f));
 		Camera::GetInstance()->SetCameraLowPos(Vector2(542.f, 0.f));
+		//ui
+		UIManager::GetInstance()->Push(eUIType::HP_PANEL);
+		UIManager::GetInstance()->Push(eUIType::HP);
+		UIManager::GetInstance()->Push(eUIType::Character_Panel);
+		UIManager::GetInstance()->Push(eUIType::Skil_Panel);
 	}
 
 	void StartScene::Exit()
@@ -209,6 +229,11 @@ namespace sw
 		ObjectManager::GetInstance()->DeleteObject(eSceneType::Start);
 		// 카메라
 		Camera::GetInstance()->SetTarget(nullptr);
+		// ui
+		UIManager::GetInstance()->Pop(eUIType::HP_PANEL);
+		UIManager::GetInstance()->Pop(eUIType::HP);
+		UIManager::GetInstance()->Pop(eUIType::Character_Panel);
+		UIManager::GetInstance()->Pop(eUIType::Skil_Panel);
 		// 타일데이터
 		vector<GameObject*>& objects = this->GetGameObject(eColliderLayer::Tile);
 		for (GameObject* object : objects)

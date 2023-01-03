@@ -91,7 +91,6 @@ namespace sw
 				*iter = nullptr;*/
 
 				mObjects[(UINT)type].erase(iter);
-
 				return;
 			}
 		}

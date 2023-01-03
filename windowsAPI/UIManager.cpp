@@ -1,5 +1,7 @@
 #include "UIManager.h"
 #include "Application.h"
+#include "Panel.h"
+#include "HpBar.h"
 
 namespace sw
 {
@@ -24,11 +26,34 @@ namespace sw
 	void UIManager::Initialize()
 	{
 		// 여기에서 ui 메모리에 할당하면 된다.
+		Panel* PlayerHpPanel = new Panel(eUIType::HP_PANEL);
+		PlayerHpPanel->ImageLoad(L"HpPanel", L"..\\Resource\\Ui\\Player_Normal_Frame 복사.bmp");
+		PlayerHpPanel->SetPos(Vector2(250.f, 750.f));
+		PlayerHpPanel->SetSize(Vector2(500, 196.f));
+		mUIs.insert(std::make_pair(eUIType::HP_PANEL, PlayerHpPanel));
 
-		UiBase* newUI = new UiBase(eUIType::HP);
+		HpBar* newUI = new HpBar(eUIType::HP);
+		newUI->ImageLoad(L"Hp", L"..\\Resource\\Ui\\Player_SubBar3 복사.bmp");
+		newUI->SetPos(Vector2(500.f, 500.f));
+		newUI->SetSize(Vector2(350.f, 30.f));
 		mUIs.insert(std::make_pair(eUIType::HP, newUI));
 
-		newUI = new UiBase(eUIType::MP);
+		HUD* charterpanel = new HUD(eUIType::Character_Panel);
+		charterpanel->ImageLoad(L"SubSkulFrame", L"..\\Resource\\Ui\\Player_Subskull_Frame 복사.bmp");
+		charterpanel->SetPos(Vector2(500.f, 500.f));
+		charterpanel->SetSize(Vector2(90.f, 90.f));
+		mUIs.insert(std::make_pair(eUIType::Character_Panel, charterpanel));
+
+		HUD* skilpanel = new HUD(eUIType::Skil_Panel);
+		skilpanel->ImageLoad(L"SkilPanel", L"..\\Resource\\Ui\\Player_Subskill2_Frame 복사.bmp");
+		skilpanel->SetPos(Vector2(500.f, 500.f));
+		skilpanel->SetSize(Vector2(80.f, 80.f));
+		mUIs.insert(std::make_pair(eUIType::Skil_Panel, skilpanel));
+
+		PlayerHpPanel->SetChild(Vector2(-122.f, 32.f), newUI);
+		PlayerHpPanel->SetChild(Vector2(-195.f, 40.f), charterpanel);
+		PlayerHpPanel->SetChild(Vector2(40.f, -10.f), skilpanel);
+		/*newUI = new UiBase(eUIType::MP);
 		mUIs.insert(std::make_pair(eUIType::MP, newUI));
 
 		newUI = new UiBase(eUIType::SHOP);
@@ -38,8 +63,11 @@ namespace sw
 		mUIs.insert(std::make_pair(eUIType::INVENTORY, newUI));
 
 		newUI = new UiBase(eUIType::OPTION);
-		mUIs.insert(std::make_pair(eUIType::OPTION, newUI));
-
+		mUIs.insert(std::make_pair(eUIType::OPTION, newUI));*/
+		/*Push(eUIType::HP_PANEL);
+		Push(eUIType::HP);
+		Push(eUIType::Character_Panel);
+		Push(eUIType::Skil_Panel);*/
 	}
 
 	void UIManager::OnLoad(eUIType type)
@@ -56,7 +84,6 @@ namespace sw
 
 	void UIManager::Tick()
 	{
-		
 		std::stack<UiBase*> uiBases = mUiBases;
 
 		while (!uiBases.empty())
@@ -69,6 +96,20 @@ namespace sw
 			uiBases.pop();
 		}
 
+		std::map<UINT, pair<UiBase*, UiBase*>>::iterator iter;
+		iter = mMonsterHp.begin();
+		for (; iter != mMonsterHp.end(); ++iter)
+		{
+			if (iter->second.first && iter->second.second)
+			{
+				iter->second.first->Tick();
+				Vector2 pos = iter->second.first->GetPos();
+				Vector2 size = iter->second.first->GetSize();
+
+				iter->second.second->SetPos(Vector2(pos.x - (size.x * 0.5f), pos.y - (size.y * 0.5f)));
+				iter->second.second->Tick();
+			}
+		}
 		if (mRequestUIQueue.size() > 0)
 		{
 			//UI 로드 해줘
@@ -101,6 +142,17 @@ namespace sw
 				uiBase->Render(hdc);
 			}
 			tempStack.pop();
+		}
+
+		std::map<UINT, pair<UiBase*, UiBase*>>::iterator iter;
+		iter = mMonsterHp.begin();
+		for (;iter != mMonsterHp.end(); ++iter)
+		{
+			if (iter->second.first && iter->second.second)
+			{
+				iter->second.first->Render(hdc);
+				iter->second.second->Render(hdc);
+			}
 		}
 	}
 
@@ -190,5 +242,16 @@ namespace sw
 			tempStack.pop();
 			mUiBases.push(uiBase);
 		}
+	}
+	inline void UIManager::DeleteMonsterHp(UINT key)
+	{
+		std::map<UINT, pair<UiBase*, UiBase*>>::iterator iter;
+		iter = mMonsterHp.find(key);
+		if (iter == mMonsterHp.end())
+			return;
+
+		delete iter->second.first;
+		delete iter->second.second;
+		mMonsterHp.erase(iter);
 	}
 }

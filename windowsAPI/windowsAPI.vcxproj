@@ -177,6 +177,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GateObject.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HpBar.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Idle.h" />
     <ClInclude Include="Image.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GateObject.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HpBar.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Idle.cpp" />
     <ClCompile Include="Image.cpp" />

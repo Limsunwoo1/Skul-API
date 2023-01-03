@@ -14,6 +14,7 @@ namespace sw
 		void Render(HDC hdc) override;
 
 		virtual void Enter() override;
+		virtual void Exit() override;
 
 	private:
 

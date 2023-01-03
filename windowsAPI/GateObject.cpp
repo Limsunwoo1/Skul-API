@@ -5,7 +5,7 @@
 #include "Scene.h"
 #include "Input.h"
 #include "EventManager.h"
-
+#include "Camera.h"
 namespace sw
 {
 	GateObject::GateObject()
@@ -92,6 +92,8 @@ namespace sw
 			EventManager::GetInstance()->EventPush(info);
 
 			other->OnCollisionExit(GetComponent<Collider>());
+			Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeOut);
+			Camera::GetInstance()->SetAlphaTime(2.0f);
 		}
 	}
 

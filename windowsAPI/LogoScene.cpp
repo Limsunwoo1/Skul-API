@@ -64,6 +64,9 @@ namespace sw
 				info.Parameter1 = new eSceneType(eSceneType::Start);
 
 				EventManager::GetInstance()->EventPush(info);
+
+				Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeOut);
+				Camera::GetInstance()->SetAlphaTime(2.0f);
 			}
 		}
 	}
@@ -81,5 +84,9 @@ namespace sw
 	{
 		Camera::GetInstance()->SetTarget(nullptr);
 		Camera::GetInstance()->SetLookPosition(Vector2(1600.f, 900.f));
+	}
+	void LogoScene::Exit()
+	{
+		
 	}
 }

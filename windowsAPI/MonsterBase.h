@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include <random>
+#include "HpBar.h"
+#include "Panel.h"
 
 namespace sw
 {
@@ -72,11 +74,18 @@ namespace sw
 		GameObject* GetTarget() { return mTarget; }
 		void SetTarget(GameObject* object) { mTarget = object; }
 
+		void PushUi();
+		void InActive();
+		void OnActive();
+
 	protected:
 		Image* mImage;
 		Animator* mAnimator;
 		GameObject* mTarget;
 		Ground* mGround;
+		
+		Panel* mHpPanel;
+		HpBar* mHpBar;
 
 		eMonsterState mCurState;
 		eMonsterState mPrevState;

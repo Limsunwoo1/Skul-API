@@ -137,8 +137,16 @@ enum class ePlayerState
 
 enum class eUIType
 {
+	HP_PANEL,
+	Character_Panel,
+	Skil_Panel,
+	Character,
+	Skil,
 	HP,
 	MP,
+	MonsterHp_Panel,
+	MonsterHp,
+
 	SHOP,
 	INVENTORY,
 	OPTION,

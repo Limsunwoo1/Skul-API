@@ -17,6 +17,11 @@ namespace sw
 		SetScale(Vector2(4.f, 4.f));
 		mAttackX = 100;
 		mAttackY = 80;
+
+		Vector2 colscale = GetComponent<Collider>()->GetScale();
+		mHpPanel->SetPos(Vector2(GetPos().x, GetPos().y - (colscale.y * 0.5f)));
+		mHpPanel->SetSize(Vector2(GetHp() * 5.f, 15.f));
+		mHpBar->SetSize(Vector2(GetHp() * 5.f, 8.f));
 	}
 	SwordMonster::~SwordMonster()
 	{

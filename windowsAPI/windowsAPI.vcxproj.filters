@@ -497,6 +497,9 @@
     <ClInclude Include="StaticObject.h">
       <Filter>Engine\GameObject\StaticObject</Filter>
     </ClInclude>
+    <ClInclude Include="HpBar.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -726,6 +729,9 @@
     </ClCompile>
     <ClCompile Include="StaticObject.cpp">
       <Filter>Engine\GameObject\StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="HpBar.cpp">
+      <Filter>Engine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

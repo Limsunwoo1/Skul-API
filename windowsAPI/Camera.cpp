@@ -16,7 +16,7 @@ namespace sw
 		, mEffect(eCameraEffect::None)
 		, mCutton(nullptr)
 		, mCuttonAlpha(0.0f)
-		, mEndTime(5.0f)
+		, mEndTime(2.0f)
 		, bToolMode(false)
 		, bFreezCamera(false)
 	{

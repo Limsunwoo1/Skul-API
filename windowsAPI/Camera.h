@@ -22,6 +22,7 @@ namespace sw
 		void SetToolMode(bool able) { bToolMode = able; }
 
 		void SetCameraEffect(eCameraEffect effect) { mEffect = effect; }
+		eCameraEffect GetCameraEffect() { return mEffect; }
 
 		bool GetFreezCamera() { return bFreezCamera; }
 		void SetFreezCamera(bool ing) { bFreezCamera = ing; }
@@ -31,6 +32,9 @@ namespace sw
 
 		Vector2 GetCameraLowPos() { return mCameraLowPos; }
 		void SetCameraLowPos(Vector2 pos) { mCameraLowPos = pos; }
+
+		float GetCuttonAlpha() { return mCuttonAlpha; }
+		void SetAlphaTime(float time) { mAlphaTime = time; }
 	private:
 		Vector2 mResolution; // 화면 해상도
 		Vector2 mLookPosition;

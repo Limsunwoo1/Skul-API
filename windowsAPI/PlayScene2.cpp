@@ -23,6 +23,7 @@
 #include "GateObject.h"
 #include "Item.h"
 #include "StaticObject.h"
+#include "UIManager.h"
 
 namespace sw
 {
@@ -245,6 +246,20 @@ namespace sw
 
 	void PlayScene2::Tick()
 	{
+		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeOut
+			&& Camera::GetInstance()->GetCuttonAlpha() >= 1.0f)
+		{
+			Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeIn);
+			Camera::GetInstance()->SetAlphaTime(0.0f);
+		}
+
+		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeIn
+			&& Camera::GetInstance()->GetCuttonAlpha() <= 0.0f)
+		{
+			Camera::GetInstance()->SetCameraEffect(eCameraEffect::None);
+			Camera::GetInstance()->SetAlphaTime(0.0f);
+		}
+
 		// 오브젝트 tick 호출한다
 		Scene::Tick();
 
@@ -287,6 +302,11 @@ namespace sw
 		Camera::GetInstance()->SetTarget(ObjectManager::GetInstance()->GetPlayer());
 		Camera::GetInstance()->SetCameraMaxPos(Vector2(5138.f, 1400.f));
 		Camera::GetInstance()->SetCameraLowPos(Vector2(20.f, 50.f));
+		//ui
+		UIManager::GetInstance()->Push(eUIType::HP_PANEL);
+		UIManager::GetInstance()->Push(eUIType::HP);
+		UIManager::GetInstance()->Push(eUIType::Character_Panel);
+		UIManager::GetInstance()->Push(eUIType::Skil_Panel);
 	}
 	void PlayScene2::Exit()
 	{
@@ -303,6 +323,11 @@ namespace sw
 		ObjectManager::GetInstance()->DeleteObject(eSceneType::Play2);
 		//카메라
 		Camera::GetInstance()->SetTarget(nullptr);
+		//ui
+		UIManager::GetInstance()->Pop(eUIType::HP_PANEL);
+		UIManager::GetInstance()->Pop(eUIType::HP);
+		UIManager::GetInstance()->Pop(eUIType::Character_Panel);
+		UIManager::GetInstance()->Pop(eUIType::Skil_Panel);
 		// 타일데이터
 		vector<GameObject*>& objects = this->GetGameObject(eColliderLayer::Tile);
 		for (GameObject* object : objects)

@@ -62,9 +62,9 @@ namespace sw
 		SetSize(Vector2(mImage->GetWidth(), mImage->GetHeight()));
 	}
 
-	void UiBase::AddChild(UiBase* uiBase)
+	void UiBase::SetChild(Vector2 vector, UiBase* child)
 	{
-		mChilds.push_back(uiBase);
-		uiBase->mParent = this;
+		child->SetParent(this);
+		mChilds.push_back(make_pair(vector, child));
 	}
 }

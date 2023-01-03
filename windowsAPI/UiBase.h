@@ -43,7 +43,7 @@ namespace sw
 		void UIClear();
 
 		void ImageLoad(const std::wstring& key, const std::wstring& path);
-		void AddChild(UiBase* uiBase);
+		void SetChild(Vector2 vector, UiBase* child);
 
 		eUIType GetType() { return mType; }
 		bool GetIsFullScreen() { return mbFullScreen; }
@@ -69,8 +69,8 @@ namespace sw
 		virtual void OnRender(HDC hdc) {};
 		virtual void OnClear() {};
 
-	private:
-		std::vector<UiBase*> mChilds;
+	protected:
+		std::vector<pair<Vector2, UiBase*>> mChilds;
 
 		eUIType mType;
 		bool mbFullScreen;

@@ -23,6 +23,11 @@ namespace sw
 
 		mAttackCooltimeMax = 3.0f;
 
+		Vector2 colscale = GetComponent<Collider>()->GetScale();
+		mHpPanel->SetPos(Vector2(GetPos().x, GetPos().y - (colscale.y * 0.5f)));
+		mHpPanel->SetSize(Vector2(GetHp() * 5.f, 15.f));
+		mHpBar->SetSize(Vector2(GetHp() * 5.f, 8.f));
+
 		// SkilInit
 		for (int i = 0; i < 4; ++i)
 		{

@@ -3,6 +3,7 @@
 
 namespace sw
 {
+	class GameObject;
 	class Panel : public UiBase
 	{
 	public:
@@ -15,6 +16,12 @@ namespace sw
 		virtual void OnTick() override;
 		virtual void OnRender(HDC hdc) override;
 		virtual void OnClear() override;
+
+		void SetChild(Vector2 vector,UiBase* child);
+		void SetTarget(GameObject* target) { mTarget = target; }
+	public:
+		std::vector<pair<Vector2 ,UiBase*>> mChilds;
+		GameObject* mTarget;
 	};
 }
 

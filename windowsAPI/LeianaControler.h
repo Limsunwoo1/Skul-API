@@ -70,7 +70,7 @@ namespace sw
 
 		bool mPatternProgress;
 		bool mCombeMode;
-		bool mDarkMode;
+		bool mModeChange;
 
 		float mPattonCount;
 		MainPlayer* mPlayer;

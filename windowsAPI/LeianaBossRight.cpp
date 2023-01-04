@@ -37,13 +37,11 @@ namespace sw
 	void LeianaBossRight::Tick()
 	{
 		mDelta += Time::GetInstance()->DeltaTime();
-		mDirVec = Vector2::Zero;
-
 		GameObject::Tick();
-		Branch();
 
 		Vector2 pos = GetPos();
 		pos += mDirVec * Time::GetInstance()->DeltaTime() * mSpeed;
+		mDirVec = Vector2::Zero;
 		SetPos(pos);
 	}
 

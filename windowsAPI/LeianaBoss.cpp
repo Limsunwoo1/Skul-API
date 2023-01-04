@@ -44,13 +44,11 @@ namespace sw
 	void LeianaBoss::Tick()
 	{
 		mDelta += Time::GetInstance()->DeltaTime();
-		mDirVec = Vector2::Zero;
-
 		GameObject::Tick();
-		Branch();
 		
 		Vector2 pos = GetPos();
 		pos += mDirVec * Time::GetInstance()->DeltaTime() * mSpeed;
+		mDirVec = Vector2::Zero;
 		SetPos(pos);
 	}
 
@@ -569,17 +567,15 @@ namespace sw
 				else
 					GetComponent<Animator>()->Play(L"R_Idle");
 
-				int num = GetProJecTileNum();
-				mProjecTiles[num]->SetDeath(true);
+				mProjecTile->SetDeath(true);
 
 				EventInfo info;
 				info.Type = EventType::DeleteObject;
 				info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
-				info.Parameter2 = mProjecTiles[num];
+				info.Parameter2 = mProjecTile;
 
 				EventManager::GetInstance()->EventPush(info);
 
-				SetProJecTileNum(0);
 			}
 
 			if (GetComponent<Animator>()->isComplete())
@@ -598,15 +594,13 @@ namespace sw
 		{
 			GetComponent<Animator>()->Play(L"MeteorLanding");
 
-			int num = GetProJecTileNum();
-
-			mProjecTiles[num]->SetDeath(false);
-			mProjecTiles[num]->SetOffset(Vector2(0.f, 30.f));
+			mProjecTile->SetDeath(false);
+			mProjecTile->SetOffset(Vector2(0.f, 30.f));
 
 			EventInfo info;
 			info.Type = EventType::AddObejct;
 			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
-			info.Parameter2 = mProjecTiles[num];
+			info.Parameter2 = mProjecTile;
 
 			EventManager::GetInstance()->EventPush(info);
 		}
@@ -818,7 +812,7 @@ namespace sw
 				{
 					mPattonState = ePattonState::NONE;
 					mHold = false;
-					mbIn = false;
+					//mbIn = false;
 
 					mOwner->SetCurPatton(eBossPatton::Idle);
 					//mOwner->SetPatternProgress(false);
@@ -910,7 +904,7 @@ namespace sw
 				{
 					mPattonState = ePattonState::NONE;
 					mHold = false;
-					mbIn = false;
+					//mbIn = false;
 
 					mOwner->SetCurPatton(eBossPatton::Idle);
 				}
@@ -1023,11 +1017,12 @@ namespace sw
 
 			if (mProjecTiles[9]->GetComponent<Animator>()->isComplete())
 			{
-				mPattonState = ePattonState::NONE;
 				mHold = false;
-				mbIn = false;
+				//mbIn = false;
 
+				mPattonState = ePattonState::NONE;
 				mOwner->SetCurPatton(eBossPatton::Idle);
+				mPattonList[(int)eBossPatton::Idle] = false;
 
 				mProjecTiles[9]->SetDeath(true);
 				EventInfo info;

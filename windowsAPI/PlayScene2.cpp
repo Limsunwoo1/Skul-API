@@ -246,19 +246,7 @@ namespace sw
 
 	void PlayScene2::Tick()
 	{
-		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeOut
-			&& Camera::GetInstance()->GetCuttonAlpha() >= 1.0f)
-		{
-			Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeIn);
-			Camera::GetInstance()->SetAlphaTime(0.0f);
-		}
-
-		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeIn
-			&& Camera::GetInstance()->GetCuttonAlpha() <= 0.0f)
-		{
-			Camera::GetInstance()->SetCameraEffect(eCameraEffect::None);
-			Camera::GetInstance()->SetAlphaTime(0.0f);
-		}
+		FadeInOut();
 
 		// 오브젝트 tick 호출한다
 		Scene::Tick();

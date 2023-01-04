@@ -37,23 +37,24 @@ namespace sw
 	}
 	void Ch2BossScene::Tick()
 	{
-		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeOut
-			&& Camera::GetInstance()->GetCuttonAlpha() >= 1.0f)
-		{
-			Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeIn);
-			Camera::GetInstance()->SetAlphaTime(0.0f);
-		}
-
-		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeIn
-			&& Camera::GetInstance()->GetCuttonAlpha() <= 0.0f)
-		{
-			Camera::GetInstance()->SetCameraEffect(eCameraEffect::None);
-			Camera::GetInstance()->SetAlphaTime(0.0f);
-		}
+		FadeInOut();
 
 		if(mBoss)
 			mBoss->Tick();
-		Scene::Tick();
+		
+		for (int y = 0; y < mObjects.size(); y++)
+		{
+			for (int x = 0; x < mObjects[y].size(); x++)
+			{
+				if (mObjects[y][x] == nullptr)
+					continue;
+
+				if (mObjects[y][x]->IsDeath())
+					continue;
+
+				mObjects[y][x]->Tick();
+			}
+		}
 	}
 	void Ch2BossScene::Render(HDC hdc)
 	{

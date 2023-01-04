@@ -13,6 +13,7 @@ namespace sw
 	class ObjectProjecTile;
 	class HUD;
 	class UiBase;
+	class Scene;
 	enum class eSkilType
 	{
 		Switch,
@@ -39,6 +40,8 @@ namespace sw
 		virtual void InitSkils() = 0;
 		virtual void InitMyObject() {};
 		virtual void DeleteMyobject() {};
+		virtual void InitMyObject(Scene* scene) {};
+		virtual void DeleteMyobject(Scene* scene) {};
 
 		virtual void SwitchSkill(){};
 		virtual void OnSkilA() {};

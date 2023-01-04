@@ -31,11 +31,16 @@ namespace sw
 		virtual void OnSkilB() override;
 		virtual void InitMyObject() override;
 		virtual void DeleteMyobject() override;
+		virtual void InitMyObject(Scene* scene) override;
+		virtual void DeleteMyobject(Scene* scene) override;
 
 		void SkillAStart();
 		void SkillAMoonStart();
 		void SkillAMoonEnd();
 		void SkillASetProjecTile();
+
+		void SwitchStart();
+		void SwitchProjecTileOn();
 	private:
 		Vector2 mArrivalPos;
 		StaticObject* mBaldoBackGround;
@@ -47,6 +52,7 @@ namespace sw
 		float mbaldoRun;
 
 		bool mAProjecTileOn;
+		bool mSwitchProejcTileOn;
 	};
 }
 

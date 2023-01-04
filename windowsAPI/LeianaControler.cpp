@@ -40,7 +40,6 @@ namespace sw
 	}
 	void LeianaControler::Tick()
 	{
-		mDelta += Time::GetInstance()->DeltaTime();
 		Brunch();
 	}
 	void LeianaControler::Initialize()

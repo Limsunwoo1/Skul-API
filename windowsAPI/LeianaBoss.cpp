@@ -39,16 +39,6 @@ namespace sw
 
 	LeianaBoss::~LeianaBoss()
 	{
-		for (GameObject* object : mProjecTiles)
-		{
-			if (object == nullptr)
-				continue;
-
-			delete object;
-		}
-		mProjecTiles.clear();
-
-		delete mProjecTile;
 	}
 
 	void LeianaBoss::Tick()

@@ -5,7 +5,6 @@
 #include "PlayerBase.h"
 #include "StateHandle.h"
 #include "samurai.h"
-#include "EventManager.h"
 namespace sw
 {
 	SkilA::SkilA()

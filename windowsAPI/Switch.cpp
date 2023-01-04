@@ -4,7 +4,7 @@
 #include "Move.h"
 #include "StateHandle.h"
 #include "ObjectProjecTile.h"
-
+#include "samurai.h"
 namespace sw
 {
 	Switch::Switch()
@@ -21,7 +21,12 @@ namespace sw
 	void Switch::Start(PlayerBase* target)
 	{
 		SetTarget(target);
-
+		Samurai* samurai = dynamic_cast<Samurai*>(target);
+		if (samurai)
+		{
+			samurai->SwitchStart();
+			return;
+		}
 		// 방향설정
 		PlayerBase* player = GetTarget();
 		ObjectProjecTile* projectile = player->GetProjecTile(eSkilType::Switch);
@@ -45,6 +50,10 @@ namespace sw
 	void Switch::Run()
 	{
 		Animator* animator = GetTarget()->GetComponent<Animator>();
+		Samurai* samurai = dynamic_cast<Samurai*>(GetTarget());
+		if (samurai)
+			return;
+
 		GetTarget()->SwitchSkill();
 
 		if (animator->isComplete())

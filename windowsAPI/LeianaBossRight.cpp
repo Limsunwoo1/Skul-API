@@ -32,7 +32,6 @@ namespace sw
 
 	LeianaBossRight::~LeianaBossRight()
 	{
-		delete mProjecTile;
 		GameObject::~GameObject();
 	}
 	void LeianaBossRight::Tick()

@@ -20,6 +20,7 @@
 #include "MonsterBase.h"
 #include "StaticObject.h"
 #include "EventManager.h"
+#include "Scene.h"
 
 namespace sw
 {
@@ -28,6 +29,7 @@ namespace sw
 		//DetaSetting
 		SetPower(4);
 		mAProjecTileOn = false;
+		mSwitchProejcTileOn = false;
 		mMaxAttackCount = 2;
 		SetPos({ 100.0f, 100.0f });
 		SetScale({ 5.f, 5.f });
@@ -285,13 +287,13 @@ namespace sw
 		SwitchProjec->SetEvent(std::bind(&Samurai::SwitchProjecTile, this, std::placeholders::_1));
 		SwitchProjec->SetTarget(this);
 		SwitchProjec->SetReuse_Time(0.1f);
-		SwitchProjec->SetEffectName(L"Sword_Switch_Eft");
-
+		SwitchProjec->SetEffectName(L"Samurai_Switch_Eft");
+		SwitchProjec->SetOffset(Vector2(200.f, 0.f));
 		Collider* collider1 = SwitchProjec->GetComponent<Collider>();
-		collider1->SetScale(Vector2(280.f, 70.f));
+		collider1->SetScale(Vector2(400.f, 70.f));
 		Animator* animator1 = SwitchProjec->GetComponent<Animator>();
-		animator1->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\Effect\\SkeletonSword-Switch");
-		animator1->SetAlpha(180);
+		animator1->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\SamuraiSwitchEft");
+		animator1->SetAlpha(255);
 
 		// 스킬 A 세팅
 		ObjectProjecTile* SkilA = mSkils[(int)eSkilType::SkilA];
@@ -433,6 +435,11 @@ namespace sw
 
 		EventManager::GetInstance()->EventPush(info1);
 	}
+	void Samurai::InitMyObject(Scene* scene)
+	{
+		scene->AddGameObject(mBaldoBackGround, eColliderLayer::StaticObject);
+		scene->AddGameObject(mBaldoMoon, eColliderLayer::StaticObject);
+	}
 	void Samurai::DeleteMyobject()
 	{
 		EventInfo info;
@@ -448,6 +455,11 @@ namespace sw
 		info1.Parameter2 = mBaldoMoon;
 
 		EventManager::GetInstance()->EventPush(info1);
+	}
+	void Samurai::DeleteMyobject(Scene* scene)
+	{
+		scene->DeleteGameObject(mBaldoBackGround, eColliderLayer::StaticObject);
+		scene->DeleteGameObject(mBaldoMoon, eColliderLayer::StaticObject);
 	}
 	void Samurai::SkillAStart()
 	{
@@ -586,6 +598,86 @@ namespace sw
 			projectile->SetOffset(offset);
 			projectile->GetComponent<Animator>()->Play(name);
 			mAProjecTileOn = true;
+		}
+	}
+	void Samurai::SwitchStart()
+	{
+		bool state = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
+		Animator* animator = this->GetComponent<Animator>();
+
+		if (!state)
+			animator->Play(L"L_Samurai_Switch", false);
+		else if (state)
+			animator->Play(L"R_Samurai_Switch", false);
+
+		if (MyGenericAnimator.IsRunning())
+			MyGenericAnimator.Stop();
+
+		AnimatorParam param;
+		param.AnimType = EAnimType::Linear;
+		param.StartValue = 0.f;
+		param.EndValue = 100.f;
+		param.DurationTime = 0.5f;
+		float value = 60.f;
+		param.DurationFunc = [this, state, value](float InCurValue)
+		{
+			if (InCurValue > value)
+				SwitchProjecTileOn();
+
+			GetComponent<Rigidbody>()->SetSquare(0);
+			GetComponent<Rigidbody>()->SetVelocity(Vector2::Zero);
+			Vector2 pos = GetPos();
+			Vector2 Dur = Vector2::Zero;
+			if (state)
+				Dur.x = 1.0f;
+			else
+				Dur.x = -1.0f;
+
+			//pos += Dur * Time::GetInstance()->DeltaTime() * 1000.f;
+			SetPos(pos);
+		};
+		param.CompleteFunc = [this](float InCurValue)
+		{
+			this->GetStateHandle()->GetState<Switch>(ePlayerState::SWITCH)->End();
+			this->SetState(ePlayerState::IDLE);
+			mSwitchProejcTileOn = false;
+
+			MyGenericAnimator.Stop();
+		};
+		MyGenericAnimator.Start(param);
+	}
+	void Samurai::SwitchProjecTileOn()
+	{
+		bool state = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
+		if (!mSwitchProejcTileOn)
+		{
+			ObjectProjecTile* projectile = this->GetProjecTile(eSkilType::Switch);
+			if (projectile != nullptr)
+			{
+				projectile->SetDeath(false);
+				Vector2 offset = projectile->GetOffset();
+				std::wstring name = projectile->GetEffectName();
+				if (name == L"")
+					return;
+
+				projectile->SetDeath(false);
+				projectile->SetScale(5.f, 5.f);
+
+				if (state)
+				{
+					offset.x = fabs(offset.x);
+					offset.y = fabs(offset.y);
+				}
+				else
+				{
+					offset.x = -1 * (fabs(offset.x));
+					offset.y = -1 * (fabs(offset.y));
+				}
+				projectile->SetOffset(offset);
+				if (name != L"")
+					projectile->GetComponent<Animator>()->Play(name);
+				mSwitchProejcTileOn = true;
+			}
 		}
 	}
 }

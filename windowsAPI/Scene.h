@@ -20,6 +20,7 @@ namespace sw
 
 		void AddGameObject(GameObject* object, eColliderLayer type);
 		void DeleteGameObject(GameObject* object, eColliderLayer type);
+		void FadeInOut();
 
 		std::vector<GameObject*>& GetGameObject(eColliderLayer type) { return mObjects[(UINT)type]; }
 		std::vector<std::vector<GameObject*>>& GetGameObjects() { return mObjects; }
@@ -28,7 +29,7 @@ namespace sw
 
 		void SetSceneChange(bool on) { mSceneChange = on; }
 		bool GetSceneChange() { return mSceneChange; }
-	private:
+	protected:
 		std::vector<std::vector<GameObject*>> mObjects;
 		bool mSceneChange;
 	};

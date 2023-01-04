@@ -159,7 +159,7 @@ namespace sw
 
 		GateObject* gate = new GateObject();
 		gate->SetPos(2118.f, 470.f);
-		gate->SetNextScene(eSceneType::Play);
+		gate->SetNextScene(eSceneType::Ch2Boss);
 		AddGameObject(gate, eColliderLayer::Gate);
 
 		Item* item = new Item();
@@ -169,19 +169,7 @@ namespace sw
 	}
 	void StartScene::Tick()
 	{
-		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeOut
-		&& Camera::GetInstance()->GetCuttonAlpha() >= 1.0f)
-		{
-			Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeIn);
-			Camera::GetInstance()->SetAlphaTime(0.0f);
-		}
-
-		if (Camera::GetInstance()->GetCameraEffect() == eCameraEffect::FadeIn
-			&& Camera::GetInstance()->GetCuttonAlpha() <= 0.0f)
-		{
-			Camera::GetInstance()->SetCameraEffect(eCameraEffect::None);
-			Camera::GetInstance()->SetAlphaTime(0.0f);
-		}
+		FadeInOut();
 
 		Scene::Tick();
 	}

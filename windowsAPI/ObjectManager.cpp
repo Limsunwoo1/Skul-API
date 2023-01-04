@@ -46,6 +46,7 @@ namespace sw
 		if (mPlayer->GetPlayer() != nullptr)
 		{
 			PlayerBase* player = mPlayer->GetPlayer();
+			player->InitMyObject();
 			for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 			{
 				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
@@ -55,6 +56,7 @@ namespace sw
 		if (mPlayer->GetNextPlayer() != nullptr)
 		{
 			PlayerBase* player = mPlayer->GetNextPlayer();
+			player->InitMyObject();
 			for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 			{
 				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
@@ -74,6 +76,7 @@ namespace sw
 		if (mPlayer->GetPlayer() != nullptr)
 		{
 			PlayerBase* player = mPlayer->GetPlayer();
+			player->InitMyObject();
 			for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 			{
 				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
@@ -83,6 +86,7 @@ namespace sw
 		if (mPlayer->GetNextPlayer() != nullptr)
 		{
 			PlayerBase* player = mPlayer->GetNextPlayer();
+			player->InitMyObject();
 			for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 			{
 				scene->AddGameObject(player->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
@@ -103,6 +107,7 @@ namespace sw
 		if(mPlayer->GetPlayer() == nullptr)
 			return;
 
+		mPlayer->GetPlayer()->DeleteMyobject();
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
 			scene->DeleteGameObject(mPlayer->GetPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
@@ -111,6 +116,7 @@ namespace sw
 		if (mPlayer->GetNextPlayer() == nullptr)
 			return;
 
+		mPlayer->GetNextPlayer()->DeleteMyobject();
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
 			scene->DeleteGameObject(mPlayer->GetNextPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
@@ -129,6 +135,7 @@ namespace sw
 		if (mPlayer->GetPlayer() == nullptr)
 			return;
 
+		mPlayer->GetPlayer()->DeleteMyobject();
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
 			scene->DeleteGameObject(mPlayer->GetPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);
@@ -137,6 +144,7 @@ namespace sw
 		if (mPlayer->GetNextPlayer() == nullptr)
 			return;
 
+		mPlayer->GetNextPlayer()->DeleteMyobject();
 		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
 		{
 			scene->DeleteGameObject(mPlayer->GetNextPlayer()->GetProjecTile((eSkilType)i), eColliderLayer::Player_ProjecTile);

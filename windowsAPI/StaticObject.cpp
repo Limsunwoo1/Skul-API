@@ -32,6 +32,9 @@ namespace sw
 		animator->CreatAnimations(L"StaticObject13", L"..\\Resource\\Animation\\StaticObject\\Object13");
 		animator->CreatAnimations(L"StaticObject14", L"..\\Resource\\Animation\\StaticObject\\Object14");
 		animator->CreatAnimations(L"StaticObject15", L"..\\Resource\\Animation\\StaticObject\\Object15");
+		animator->CreatAnimations(L"StaticObject16", L"..\\Resource\\Animation\\StaticObject\\Object16");
+		animator->CreatAnimations(L"StaticObject17", L"..\\Resource\\Animation\\StaticObject\\Object17");
+		animator->CreatAnimations(L"StaticObject18", L"..\\Resource\\Animation\\StaticObject\\Object18");
 	}
 
 	void StaticObject::Tick()

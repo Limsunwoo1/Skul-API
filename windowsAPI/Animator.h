@@ -77,6 +77,8 @@ namespace sw
 
 		const std::wstring& GetCurAnimationName() const { return mCurAnimationName; }
 		void SetCurAnimationName(const std::wstring& name) { mCurAnimationName = name; }
+
+		void SetOnRender(bool on) { mbRender = on; }
 	private:
 		void ImageEventCheck();
 		void FindImageEvent(const std::wstring name);
@@ -93,6 +95,7 @@ namespace sw
 
 		bool mbLoop;
 		bool mEvent_Run;
+		bool mbRender;
 	};
 }
 

@@ -4,6 +4,8 @@
 #include "Move.h"
 #include "PlayerBase.h"
 #include "StateHandle.h"
+#include "samurai.h"
+#include "EventManager.h"
 namespace sw
 {
 	SkilB::SkilB()
@@ -65,6 +67,7 @@ namespace sw
 	{
 		Animator* animator = GetTarget()->GetComponent<Animator>();
 		GetTarget()->OnSkilB();
+
 
 		if (animator->isComplete())
 		{

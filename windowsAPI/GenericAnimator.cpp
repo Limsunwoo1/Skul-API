@@ -69,7 +69,10 @@ void GenericAnimator::Stop(bool InCompleteEvent)
 	if (InCompleteEvent)
 	{
 		if (Param.CompleteFunc)
+		{
 			Param.CompleteFunc(EndValue);
+			return;
+		}
 	}
 
 	Param = AnimatorParam();

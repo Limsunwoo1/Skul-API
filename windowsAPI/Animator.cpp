@@ -11,6 +11,7 @@ namespace sw
 		, mbLoop(false)
 		, mAlpha(255)
 		, mEvent_Run(false)
+		, mbRender(true)
 	{
 
 	}
@@ -61,6 +62,8 @@ namespace sw
 	{
 		if (mPlayAnimation != nullptr)
 		{
+			if (!mbRender)
+				return;
 			mPlayAnimation->SetAlpha(mAlpha);
 			mPlayAnimation->Render(hdc);
 		}

@@ -37,6 +37,8 @@ namespace sw
 		virtual void InitState() = 0;
 		virtual void InitAttackCollider() = 0;
 		virtual void InitSkils() = 0;
+		virtual void InitMyObject() {};
+		virtual void DeleteMyobject() {};
 
 		virtual void SwitchSkill(){};
 		virtual void OnSkilA() {};

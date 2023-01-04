@@ -5,6 +5,9 @@
 #include "ObjectProjecTile.h"
 #include "EventManager.h"
 #include "Rigidbody.h"
+#include "MainPlayer.h"
+#include "PlayerBase.h"
+#include "StateHandle.h"
 namespace sw
 {
 	AxeMonster::AxeMonster()

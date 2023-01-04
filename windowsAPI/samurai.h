@@ -1,8 +1,10 @@
 #pragma once
 #include "PlayerBase.h"
+#include "GenericAnimator.h"
 
 namespace sw
 {
+	class StaticObject;
 	class Samurai : public PlayerBase
 	{
 	public:
@@ -27,9 +29,24 @@ namespace sw
 		virtual void SkilAProjecTile(GameObject* object) override;
 		virtual void SkilBProjecTile(GameObject* object) override;
 		virtual void OnSkilB() override;
+		virtual void InitMyObject() override;
+		virtual void DeleteMyobject() override;
 
+		void SkillAStart();
+		void SkillAMoonStart();
+		void SkillAMoonEnd();
+		void SkillASetProjecTile();
 	private:
 		Vector2 mArrivalPos;
+		StaticObject* mBaldoBackGround;
+		StaticObject* mBaldoMoon;
+
+		GenericAnimator MyGenericAnimator;
+
+		float mbaldo;
+		float mbaldoRun;
+
+		bool mAProjecTileOn;
 	};
 }
 

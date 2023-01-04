@@ -4,6 +4,8 @@
 #include "Move.h"
 #include "PlayerBase.h"
 #include "StateHandle.h"
+#include "samurai.h"
+#include "EventManager.h"
 namespace sw
 {
 	SkilA::SkilA()
@@ -19,6 +21,13 @@ namespace sw
 	void SkilA::Start(PlayerBase* target)
 	{
 		SetTarget(target);
+
+		Samurai* samurai = dynamic_cast<Samurai*>(target);
+		if (samurai)
+		{
+			samurai->SkillAStart();
+			return;
+		}
 
 		PlayerBase* player = GetTarget();
 		bool dirc = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
@@ -59,6 +68,10 @@ namespace sw
 	void SkilA::Run()
 	{
 		Animator* animator = GetTarget()->GetComponent<Animator>();
+		Samurai* samurai = dynamic_cast<Samurai*>(GetTarget());
+		if (samurai)
+			return;
+
 		GetTarget()->OnSkilA();
 
 		if (animator->isComplete())

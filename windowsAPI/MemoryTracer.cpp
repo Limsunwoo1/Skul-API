@@ -71,7 +71,7 @@ void CMemoryTracer::OnAllocated(void* InAddress, size_t InSize)
 	if (!InAddress || ThreadId != std::this_thread::get_id())
 		return;
 
-	SetDefaultMemoryAllocator();
+	//SetDefaultMemoryAllocator();
 
 	CallStack stack;
 
@@ -83,7 +83,7 @@ void CMemoryTracer::OnAllocated(void* InAddress, size_t InSize)
 	memoryBlock->CallStack = std::make_shared<CallStack>(stack);
 	MemoryBlockMap[InAddress] = memoryBlock;
 
-	SetCustomMemoryAllocator();
+	//SetCustomMemoryAllocator();
 }
 
 void CMemoryTracer::OnDeallocated(void* InAddress)
@@ -91,7 +91,7 @@ void CMemoryTracer::OnDeallocated(void* InAddress)
 	if (ThreadId != std::this_thread::get_id())
 		return;
 
-	SetDefaultMemoryAllocator();
+	//SetDefaultMemoryAllocator();
 
 	auto iter = MemoryBlockMap.find(InAddress);
 	if (iter != MemoryBlockMap.end())
@@ -105,7 +105,7 @@ void CMemoryTracer::OnDeallocated(void* InAddress)
 		MemoryBlockMap.erase(iter);
 	}
 
-	SetCustomMemoryAllocator();
+	//SetCustomMemoryAllocator();
 }
 
 void CMemoryTracer::PrintMemoryBlockAll()

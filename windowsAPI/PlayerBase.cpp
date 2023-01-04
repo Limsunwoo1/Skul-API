@@ -43,6 +43,13 @@ namespace sw
 			delete mSkilAImage;
 		if (mSkilBImage)
 			delete mSkilBImage;
+
+		for (int i = (int)eSkilType::Switch; i < (int)eSkilType::End; ++i)
+		{
+			delete mSkils[i];
+		}
+		mSkils.clear();
+
 		GameObject::~GameObject();
 	}
 

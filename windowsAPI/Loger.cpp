@@ -40,11 +40,11 @@ CLoger* CLoger::GetInstance()
 {
 	if (!Instance)
 	{
-		SetDefaultMemoryAllocator();
+		//SetDefaultMemoryAllocator();
 
 		Instance = new CLoger();
 
-		SetCustomMemoryAllocator();
+		//SetCustomMemoryAllocator();
 	}
 	return Instance;
 }
@@ -58,11 +58,11 @@ void CLoger::DistroyInstance()
 
 void CLoger::Init()
 {
-	SetDefaultMemoryAllocator();
+	//SetDefaultMemoryAllocator();
 
 	LogThread = new Thread(CLoger::LogUpdate);
 
-	SetCustomMemoryAllocator();
+	//SetCustomMemoryAllocator();
 
 	if (LogThread)
 		LogThread->detach();
@@ -71,7 +71,7 @@ void CLoger::Init()
 
 void CLoger::AddLogMessage(const LogMessage& InLogMessage)
 {
-	SetDefaultMemoryAllocator();
+	//SetDefaultMemoryAllocator();
 
 	ThreadPtr pushLogThread = new Thread(ThreadAddLog, InLogMessage);
 	if (pushLogThread)
@@ -79,7 +79,7 @@ void CLoger::AddLogMessage(const LogMessage& InLogMessage)
 
 	delete pushLogThread;
 
-	SetCustomMemoryAllocator();
+	//SetCustomMemoryAllocator();
 }
 
 void CLoger::PushLogMessage(const LogMessage& InLogMessage)
@@ -188,9 +188,9 @@ void CLoger::ThreadAddLog(const LogMessage& InLogMessage)
 void CLoger::ThreadEnd()
 {
 	RunLogThread = false;
-	while (WaitEndThread)
+	/*while (WaitEndThread)
 	{
 		std::cout << "WaitEndThread" << "\n";
 	}
-	std::cout << "ThreadEnd" << "\n";
+	std::cout << "ThreadEnd" << "\n";*/
 }

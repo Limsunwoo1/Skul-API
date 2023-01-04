@@ -27,6 +27,7 @@ namespace sw
 	}
 	ObjectProjecTile::~ObjectProjecTile()
 	{
+		GameObject::~GameObject();
 	}
 
 	void ObjectProjecTile::Tick()

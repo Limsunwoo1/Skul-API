@@ -18,6 +18,8 @@ namespace sw
 	}
 	Ch2BossScene::~Ch2BossScene()
 	{
+		delete mBoss;
+		Scene::Release();
 	}
 	void Ch2BossScene::Initialize()
 	{

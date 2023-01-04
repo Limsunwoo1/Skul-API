@@ -84,7 +84,7 @@ namespace sw
 		AddGameObject(bg5, eColliderLayer::BackGround);
 
 		// ¸ó½ºÅÍ
-		SwordMonster* monster1 = new SwordMonster();
+		/*SwordMonster* monster1 = new SwordMonster();
 		monster1->SetPos(Vector2(1665.f, 200.f));
 		monster1->SetDirction(false);
 
@@ -102,7 +102,7 @@ namespace sw
 		monster5->SetDirction(false);
 
 		MaidMonster_1* monster6 = new MaidMonster_1();
-		monster6->SetPos(Vector2(5400.f, 350.f));
+		monster6->SetPos(Vector2(5400.f, 350.f));*/
 
 		/*AddGameObject(monster4, eColliderLayer::Monster);
 		AddGameObject(monster5, eColliderLayer::Monster);

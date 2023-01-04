@@ -39,6 +39,7 @@ namespace sw
 
 	PlayScene::~PlayScene()
 	{
+		Scene::Release();
 	} 
 
 	void PlayScene::Initialize()

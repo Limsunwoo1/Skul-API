@@ -41,12 +41,14 @@ namespace sw
 	{
 		for (GameObject* object : mProjecTiles)
 		{
-			if (object != nullptr)
+			if (object == nullptr)
 				continue;
 
 			delete object;
 		}
 		mProjecTiles.clear();
+
+		delete mProjecTile;
 	}
 
 	void LeianaBoss::Tick()

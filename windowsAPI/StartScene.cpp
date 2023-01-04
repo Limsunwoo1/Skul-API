@@ -21,6 +21,7 @@ namespace sw
 	}
 	StartScene::~StartScene()
 	{
+		Scene::Release();
 	}
 
 	void StartScene::Initialize()

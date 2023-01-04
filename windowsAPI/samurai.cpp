@@ -135,41 +135,41 @@ namespace sw
 	{
 		// Animation ¼¼ÆÃ
 		mAnimator = new Animator();
-		mAnimator->CreatAnimations(L"R_Smurai_IDLE", SAMURAI_R_PATH(L"Idle"), Vector2(0.f, 0.f), 0.25f);
-		mAnimator->CreatAnimations(L"L_Smurai_IDLE", SAMURAI_L_PATH(L"Idle"), Vector2(0.f,0.f), 0.25f);
-
-		mAnimator->CreatAnimations(L"R_Smurai_Run", SAMURAI_R_PATH(L"Walk"), Vector2(0.f, 10.f), 0.1f);
-		mAnimator->CreatAnimations(L"L_Smurai_Run", SAMURAI_L_PATH(L"Walk"), Vector2(0.f, 10.f), 0.1f);
-
-		mAnimator->CreatAnimations(L"R_Smurai_AttackA", SAMURAI_R_PATH(L"AttackA"), Vector2(0.f, 0.f), 0.1f);
-		mAnimator->CreatAnimations(L"R_Smurai_AttackB", SAMURAI_R_PATH(L"AttackB"), Vector2(-30.f, 0.f), 0.1f);
-		mAnimator->CreatAnimations(L"R_Smurai_AttackC", SAMURAI_R_PATH(L"AttackC"), Vector2(-30.f, 0.f), 0.1f);
-
-		mAnimator->CreatAnimations(L"L_Smurai_AttackA", SAMURAI_L_PATH(L"AttackA"), Vector2(0.f, 0.f), 0.1f);
-		mAnimator->CreatAnimations(L"L_Smurai_AttackB", SAMURAI_L_PATH(L"AttackB"), Vector2(30.f, 0.f), 0.1f);
-		mAnimator->CreatAnimations(L"L_Smurai_AttackC", SAMURAI_L_PATH(L"AttackC"), Vector2(30.f, 0.f), 0.1f);
-
-		mAnimator->CreatAnimations(L"R_Smurai_Jump", SAMURAI_R_PATH(L"Jump"), Vector2(0.f, 10.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Smurai_Jump", SAMURAI_L_PATH(L"Jump"), Vector2(0.f, 10.f), 0.15f);
-
-		mAnimator->CreatAnimations(L"R_Smurai_Drop", SAMURAI_R_PATH(L"FallRepeat"), Vector2(0.f, 10.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Smurai_Drop", SAMURAI_L_PATH(L"FallRepeat"), Vector2(0.f, 10.f), 0.15f);
-
-		mAnimator->CreatAnimations(L"R_Smurai_Dash", SAMURAI_R_PATH(L"Dash"), Vector2(0.f, 10.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Smurai_Dash", SAMURAI_L_PATH(L"Dash"), Vector2(0.f, 10.f), 0.15f);
-
-		mAnimator->CreatAnimations(L"R_Smurai_Switch", SAMURAI_R_PATH(L"Switch"), Vector2(0.f, 30.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Smurai_Switch", SAMURAI_L_PATH(L"Switch"), Vector2(0.f, 30.f), 0.15f);
-
-		mAnimator->CreatAnimations(L"R_Smurai_SkilA", SAMURAI_R_PATH(L"Skill"), Vector2(0.f, 10.f), 0.07f);
-		mAnimator->CreatAnimations(L"L_Smurai_SkilA", SAMURAI_L_PATH(L"Skill"), Vector2(0.f, 10.f), 0.07f);
-
-		mAnimator->CreatAnimations(L"R_Smurai_SkilB", SAMURAI_R_PATH(L"Skill2"), Vector2(0.f, 10.f), 0.03f);
-		mAnimator->CreatAnimations(L"L_Smurai_SkilB", SAMURAI_L_PATH(L"Skill2"), Vector2(0.f, 10.f), 0.03f);
+		mAnimator->CreatAnimations(L"R_Samurai_IDLE", SAMURAI_R_PATH(L"Idle"), Vector2(0.f, 0.f), 0.25f);
+		mAnimator->CreatAnimations(L"L_Samurai_IDLE", SAMURAI_L_PATH(L"Idle"), Vector2(0.f,0.f), 0.25f);
+										
+		mAnimator->CreatAnimations(L"R_Samurai_Run", SAMURAI_R_PATH(L"Walk"), Vector2(0.f, 10.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Samurai_Run", SAMURAI_L_PATH(L"Walk"), Vector2(0.f, 10.f), 0.1f);
+										
+		mAnimator->CreatAnimations(L"R_Samurai_AttackA", SAMURAI_R_PATH(L"AttackA"), Vector2(0.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"R_Samurai_AttackB", SAMURAI_R_PATH(L"AttackB"), Vector2(-30.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"R_Samurai_AttackC", SAMURAI_R_PATH(L"AttackC"), Vector2(-30.f, 0.f), 0.1f);
+										
+		mAnimator->CreatAnimations(L"L_Samurai_AttackA", SAMURAI_L_PATH(L"AttackA"), Vector2(0.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Samurai_AttackB", SAMURAI_L_PATH(L"AttackB"), Vector2(30.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Samurai_AttackC", SAMURAI_L_PATH(L"AttackC"), Vector2(30.f, 0.f), 0.1f);
+										
+		mAnimator->CreatAnimations(L"R_Samurai_Jump", SAMURAI_R_PATH(L"Jump"), Vector2(0.f, 10.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Samurai_Jump", SAMURAI_L_PATH(L"Jump"), Vector2(0.f, 10.f), 0.15f);
+										
+		mAnimator->CreatAnimations(L"R_Samurai_Drop", SAMURAI_R_PATH(L"FallRepeat"), Vector2(0.f, 10.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Samurai_Drop", SAMURAI_L_PATH(L"FallRepeat"), Vector2(0.f, 10.f), 0.15f);
+										
+		mAnimator->CreatAnimations(L"R_Samurai_Dash", SAMURAI_R_PATH(L"Dash"), Vector2(0.f, 10.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Samurai_Dash", SAMURAI_L_PATH(L"Dash"), Vector2(0.f, 10.f), 0.15f);
+										
+		mAnimator->CreatAnimations(L"R_Samurai_Switch", SAMURAI_R_PATH(L"Switch"), Vector2(0.f, 30.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Samurai_Switch", SAMURAI_L_PATH(L"Switch"), Vector2(0.f, 30.f), 0.15f);
+										
+		mAnimator->CreatAnimations(L"R_Samurai_SkilA", SAMURAI_R_PATH(L"Skill"), Vector2(0.f, 10.f), 0.07f);
+		mAnimator->CreatAnimations(L"L_Samurai_SkilA", SAMURAI_L_PATH(L"Skill"), Vector2(0.f, 10.f), 0.07f);
+										
+		mAnimator->CreatAnimations(L"R_Samurai_SkilB", SAMURAI_R_PATH(L"Skill2"), Vector2(0.f, 10.f), 0.03f);
+		mAnimator->CreatAnimations(L"L_Samurai_SkilB", SAMURAI_L_PATH(L"Skill2"), Vector2(0.f, 10.f), 0.03f);
 
 		AddComponent(mAnimator);
 
-		mAnimator->Play(L"R_Smurai_IDLE", true);
+		mAnimator->Play(L"R_Samurai_IDLE", true);
 
 		//mAnimator->GetStartEvent(L"R_Sword_Dash") = std::bind(&PlayerBase::DashSmoke, this);
 		//mAnimator->GetStartEvent(L"L_Sword_Dash") = std::bind(&PlayerBase::DashSmoke, this);
@@ -183,45 +183,45 @@ namespace sw
 		this->mState->SetTarget(this);
 
 		Idle* idle = new Idle();
-		idle->SetR_Animation(L"R_Smurai_IDLE");
-		idle->SetL_Animation(L"L_Smurai_IDLE");
+		idle->SetR_Animation(L"R_Samurai_IDLE");
+		idle->SetL_Animation(L"L_Samurai_IDLE");
 
 		Move* move = new Move();
-		move->SetR_Animation(L"R_Smurai_Run");
-		move->SetL_Animation(L"L_Smurai_Run");
+		move->SetR_Animation(L"R_Samurai_Run");
+		move->SetL_Animation(L"L_Samurai_Run");
 
 		Jump* jump = new Jump();
-		jump->SetR_Animation(L"R_Smurai_Jump");
-		jump->SetL_Animation(L"L_Smurai_Jump");
+		jump->SetR_Animation(L"R_Samurai_Jump");
+		jump->SetL_Animation(L"L_Samurai_Jump");
 
 		Sliding* sliding = new Sliding();
-		sliding->SetR_Animation(L"R_Smurai_Dash");
-		sliding->SetL_Animation(L"L_Smurai_Dash");
+		sliding->SetR_Animation(L"R_Samurai_Dash");
+		sliding->SetL_Animation(L"L_Samurai_Dash");
 
 		Drop* drop = new Drop();
-		drop->SetR_Animation(L"R_Smurai_Drop");
-		drop->SetL_Animation(L"L_Smurai_Drop");
+		drop->SetR_Animation(L"R_Samurai_Drop");
+		drop->SetL_Animation(L"L_Samurai_Drop");
 
 		Attack* attack = new Attack();
-		attack->SetR_AttackSequence(L"R_Smurai_AttackA");
-		attack->SetR_AttackSequence(L"R_Smurai_AttackB");
-		attack->SetR_AttackSequence(L"R_Smurai_AttackC");
+		attack->SetR_AttackSequence(L"R_Samurai_AttackA");
+		attack->SetR_AttackSequence(L"R_Samurai_AttackB");
+		attack->SetR_AttackSequence(L"R_Samurai_AttackC");
 
-		attack->SetL_AttackSequence(L"L_Smurai_AttackA");
-		attack->SetL_AttackSequence(L"L_Smurai_AttackB");
-		attack->SetL_AttackSequence(L"L_Smurai_AttackC");
+		attack->SetL_AttackSequence(L"L_Samurai_AttackA");
+		attack->SetL_AttackSequence(L"L_Samurai_AttackB");
+		attack->SetL_AttackSequence(L"L_Samurai_AttackC");
 
 		Switch* inswitch = new Switch();
-		inswitch->SetR_Animation(L"R_Smurai_Switch");
-		inswitch->SetL_Animation(L"L_Smurai_Switch");
+		inswitch->SetR_Animation(L"R_Samurai_Switch");
+		inswitch->SetL_Animation(L"L_Samurai_Switch");
 
 		SkilA* skilA = new SkilA();
-		skilA->SetR_Animation(L"R_Smurai_SkilA");
-		skilA->SetL_Animation(L"L_Smurai_SkilA");
+		skilA->SetR_Animation(L"R_Samurai_SkilA");
+		skilA->SetL_Animation(L"L_Samurai_SkilA");
 
 		SkilB* skilB = new SkilB();
-		skilB->SetR_Animation(L"R_Smurai_SkilB");
-		skilB->SetL_Animation(L"L_Smurai_SkilB");
+		skilB->SetR_Animation(L"R_Samurai_SkilB");
+		skilB->SetL_Animation(L"L_Samurai_SkilB");
 
 		mState->PushState(ePlayerState::IDLE, idle);
 		mState->PushState(ePlayerState::MOVE, move);
@@ -242,29 +242,29 @@ namespace sw
 
 		scale = Vector2(80.f, 80.f);
 		offset = Vector2(65.f, -25.f);
-		SetColliders(L"R_Smurai_AttackA", Box{ scale ,offset });
+		SetColliders(L"R_Samurai_AttackA", Box{ scale ,offset });
 
 		scale = Vector2(80.f, 80.f);
 		offset = Vector2(75.f, -25.f);
-		SetColliders(L"R_Smurai_AttackB", Box{ scale ,offset });
+		SetColliders(L"R_Samurai_AttackB", Box{ scale ,offset });
 
 		scale = Vector2(80.f, 80.f);
 		offset = Vector2(85.f, -25.f);
-		SetColliders(L"R_Smurai_AttackC", Box{ scale ,offset });
+		SetColliders(L"R_Samurai_AttackC", Box{ scale ,offset });
 
 		////////////////////////////////////////////////////////
 
 		scale = Vector2(80.f, 80.f);
 		offset = Vector2(-65.f, -25.f);
-		SetColliders(L"L_Smurai_AttackA", Box{ scale ,offset });
+		SetColliders(L"L_Samurai_AttackA", Box{ scale ,offset });
 
 		scale = Vector2(80.f, 80.f);
 		offset = Vector2(-75.f, -25.f);
-		SetColliders(L"L_Smurai_AttackB", Box{ scale ,offset });
+		SetColliders(L"L_Samurai_AttackB", Box{ scale ,offset });
 
 		scale = Vector2(80.f, 80.f);
 		offset = Vector2(-85.f, -25.f);
-		SetColliders(L"L_Smurai_AttackC", Box{ scale ,offset });
+		SetColliders(L"L_Samurai_AttackC", Box{ scale ,offset });
 	}
 
 	void Samurai::InitSkils()
@@ -303,15 +303,18 @@ namespace sw
 		SkilB->SetEvent(std::bind(&Samurai::SkilBProjecTile, this, std::placeholders::_1));
 		SkilB->SetTarget(this);
 		SkilB->SetReuse_Time(1.0f);
-		SkilB->SetEffectName(L"_Sword_SkilB_Eft");
+		SkilB->SetEffectName(L"_Samurai_SkilB_Eft");
 		SkilB->SetOffset(Vector2(200.f, 0.f));
 		SkilB->SetNotMove(true);
 		Collider* collider3 = SkilB->GetComponent<Collider>();
 		collider3->SetScale(Vector2(300.f, 70.f));
 		Animator* animator3 = SkilB->GetComponent<Animator>();
-		animator3->CreatAnimations(L"L_Sword_SkilB_Eft", L"..\\Resource\\Animation\\Effect\\L_SkiletonSwordPierceEffect");
-		animator3->CreatAnimations(L"R_Sword_SkilB_Eft"
-			, L"..\\Resource\\Animation\\Effect\\R_SkiletonSwordPierceEffect"
+		animator3->CreatAnimations(L"L_Samurai_SkilB_Eft"
+			, L"..\\Resource\\Animation\\Effect\\Samurai"
+			, Vector2(0.f, 0.f), 0.07);
+
+		animator3->CreatAnimations(L"R_Samurai_SkilB_Eft"
+			, L"..\\Resource\\Animation\\Effect\\Samurai"
 			, Vector2(0.f, 0.f), 0.07);
 		animator3->SetAlpha(255);
 	}

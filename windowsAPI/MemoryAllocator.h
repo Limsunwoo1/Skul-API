@@ -47,11 +47,11 @@ public:
 	}
 };
 
-extern IMemoryAllocator* GMemoryAllocator;
-extern IMemoryAllocator* GPrevMemoryAllocator;
+//extern IMemoryAllocator* GMemoryAllocator;
+//extern IMemoryAllocator* GPrevMemoryAllocator;
 
-void SetDefaultMemoryAllocator();
-void SetCustomMemoryAllocator();
+//void SetDefaultMemoryAllocator();
+//void SetCustomMemoryAllocator();
 void DestoryMemoryAllocator();
 
 void NotTraceAllocate(const std::function<void()>& InFunction);

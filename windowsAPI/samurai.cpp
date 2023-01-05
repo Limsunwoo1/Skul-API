@@ -292,7 +292,7 @@ namespace sw
 		Collider* collider1 = SwitchProjec->GetComponent<Collider>();
 		collider1->SetScale(Vector2(400.f, 70.f));
 		Animator* animator1 = SwitchProjec->GetComponent<Animator>();
-		animator1->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\SamuraiSwitchEft");
+		animator1->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\SamuraiSwitchEft",Vector2::Zero,0.05f);
 		animator1->SetAlpha(255);
 
 		// 스킬 A 세팅
@@ -323,7 +323,7 @@ namespace sw
 		Animator* animator3 = SkilB->GetComponent<Animator>();
 		animator3->CreatAnimations(L"L_Samurai_SkilB_Eft"
 			, L"..\\Resource\\Animation\\Effect\\Samurai"
-			, Vector2(0.f, 0.f), 0.1);
+			, Vector2(0.f, 0.f), 0.05f);
 
 		animator3->CreatAnimations(L"R_Samurai_SkilB_Eft"
 			, L"..\\Resource\\Animation\\Effect\\Samurai"

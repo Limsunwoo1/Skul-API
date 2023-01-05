@@ -279,7 +279,7 @@ namespace sw
 		Collider* collider1 = SwitchProjec->GetComponent<Collider>();
 		collider1->SetScale(Vector2(280.f, 70.f));
 		Animator* animator1 = SwitchProjec->GetComponent<Animator>();
-		animator1->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\Effect\\SkeletonSword-Switch");
+		animator1->CreatAnimations(SwitchProjec->GetEffectName(), L"..\\Resource\\Animation\\Effect\\SkeletonSword-Switch",Vector2::Zero, 0.03f);
 		animator1->SetAlpha(180);
 
 		// 스킬 A 세팅
@@ -293,8 +293,8 @@ namespace sw
 		Collider* collider2 = SkilA->GetComponent<Collider>();
 		collider2->SetScale(Vector2(200.f, 70.f));
 		Animator* animator2 = SkilA->GetComponent<Animator>();
-		animator2->CreatAnimations(L"L_Sword_SkilA_Eft", L"..\\Resource\\Animation\\Effect\\L_SkeletonSwordSlashEffect");
-		animator2->CreatAnimations(L"R_Sword_SkilA_Eft", L"..\\Resource\\Animation\\Effect\\R_SkeletonSwordSlashEffect");
+		animator2->CreatAnimations(L"L_Sword_SkilA_Eft", L"..\\Resource\\Animation\\Effect\\L_SkeletonSwordSlashEffect",Vector2::Zero, 0.03f);
+		animator2->CreatAnimations(L"R_Sword_SkilA_Eft", L"..\\Resource\\Animation\\Effect\\R_SkeletonSwordSlashEffect", Vector2::Zero, 0.03f);
 		animator2->SetAlpha(255);
 		//스킬 B 세팅
 		ObjectProjecTile* SkilB = mSkils[(int)eSkilType::SkilB];

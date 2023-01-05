@@ -5,6 +5,7 @@
 #include "StateHandle.h"
 #include "ObjectProjecTile.h"
 #include "samurai.h"
+#include "SwordSkul.h"
 namespace sw
 {
 	Switch::Switch()
@@ -34,7 +35,13 @@ namespace sw
 		{
 			projectile->SetDeath(false);
 			std::wstring name = projectile->GetEffectName();
-			if (name != L"")
+			SwordSkul* sword = dynamic_cast<SwordSkul*>(target);
+			if (sword)
+			{
+				if (name != L"")
+					projectile->GetComponent<Animator>()->Play(name,true);
+			}
+			else if (name != L"")
 				projectile->GetComponent<Animator>()->Play(name);
 		}
 

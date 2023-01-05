@@ -159,7 +159,7 @@ namespace sw
 
 		GateObject* gate = new GateObject();
 		gate->SetPos(2118.f, 470.f);
-		gate->SetNextScene(eSceneType::End);
+		gate->SetNextScene(eSceneType::Ch2Boss);
 		AddGameObject(gate, eColliderLayer::Gate);
 
 		Item* item = new Item();

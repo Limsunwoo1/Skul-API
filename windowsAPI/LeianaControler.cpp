@@ -8,6 +8,9 @@
 #include "Rigidbody.h"
 #include "StaticObject.h"
 #include "EventManager.h"
+#include "UIManager.h"
+#include "Panel.h"
+#include "HpBar.h"
 
 #include <iostream>
 #include <random>
@@ -44,6 +47,7 @@ namespace sw
 	{
 		mDelta += Time::GetInstance()->DeltaTime();
 		MyGenericAnimator.Update(Time::GetInstance()->DeltaTime());
+		LOG(STRING("%f hp", GetHp()))
 
 		if(mLeft)
 			SetHp(mLeft->GetHp());
@@ -83,6 +87,24 @@ namespace sw
 		mEnddingBack = new StaticObject(L"StaticObject19");
 		mEnddingBack->SetScale(6.0f, 6.0f);
 		mEnddingBack->GetComponent<Animator>()->SetOnRender(false);
+
+		// UI;
+		mHpPanel = new Panel(eUIType::Boss_Panel);
+		mHpPanel->ImageLoad(L"BossPanel", L"..\\Resource\\Ui\\Player_Subbar_Frame 복사.bmp");
+		mHpPanel->SetPos(Vector2(800.f, 100.f));
+		mHpPanel->SetSize(Vector2(900, 30.f));
+		UIManager::GetInstance()->SetUiInstance(eUIType::Boss_Panel, mHpPanel);
+
+		HpBar* mHpBar = new HpBar(eUIType::BossHp);
+		mHpBar->ImageLoad(L"bossHp", L"..\\Resource\\Ui\\boss_SubBar3.bmp");
+		mHpBar->SetPos(Vector2(500.f, 500.f));
+		mHpBar->SetSize(Vector2(850.f, 15.f));
+		mHpBar->SetTarget(mLeft);
+		mHpBar->SetTargetMaxHp(GetHp());
+		mHpBar->SetmaxSizeX(850.f);
+		UIManager::GetInstance()->SetUiInstance(eUIType::BossHp, mHpBar);
+
+		mHpPanel->SetChild(Vector2(-420.f, -8.f), mHpBar);
 	}
 	void LeianaControler::SetPlayer(MainPlayer* player)
 	{
@@ -321,24 +343,25 @@ namespace sw
 		param.StartValue = 0.f;
 		param.EndValue = 255.f;
 		param.DurationTime = 1.0f;
-		float value = 200.f;
 
-		param.DurationFunc = [this, value](float InCurValue)
+		param.DurationFunc = [this](float InCurValue)
 		{
 			mEnddingBack->GetComponent<Animator>()->SetAlpha(InCurValue);
-			if (InCurValue > value)
-			{
-				mLeft->GetComponent<Animator>()->SetOnRender(false);
-				mRight->GetComponent<Animator>()->SetOnRender(false);
-			}
 		};
 		param.CompleteFunc = [this](float InCurValue)
 		{
-			mLeft->SetPos(600.f,705.f);
-			mRight->SetPos(1800.f, 705.f);
+			mLeft->OffProjecTile();
+			mRight->OffProjecTile();
+
+			mLeft->GetComponent<Animator>()->SetOnRender(false);
+			mRight->GetComponent<Animator>()->SetOnRender(false);
 
 			mLeft->GetComponent<Animator>()->Play(L"LDead");
 			mRight->GetComponent<Animator>()->Play(L"RDead");
+
+			mLeft->SetPos(600.f,705.f);
+			mRight->SetPos(1800.f, 705.f);
+
 			//Dead 모션실행
 			OuttroOut();
 		};
@@ -380,7 +403,7 @@ namespace sw
 		param.AnimType = EAnimType::Linear;
 		param.StartValue = 255.f;
 		param.EndValue = 0.f;
-		param.DurationTime = 3.0f;
+		param.DurationTime = 5.0f;
 		param.DurationFunc = [this](float InCurValue)
 		{
 

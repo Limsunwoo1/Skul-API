@@ -10,6 +10,8 @@ namespace sw
 	class Scene;
 	class MainPlayer;
 	class StaticObject;
+	class Panel;
+	class HpBar;
 	class LeianaControler
 	{
 	public:
@@ -40,8 +42,8 @@ namespace sw
 		bool GetCombeMode() { return mCombeMode; }
 		void SetCombeMode(bool on) { mCombeMode = on; }
 
-		void SetHp(UINT hp) { mHp = hp; }
-		UINT GetHp() { return mHp; }
+		void SetHp(float hp) { mHp = hp; }
+		float GetHp() { return mHp; }
 
 		void SetPower(UINT power) { mPower = power; }
 		UINT GetPower() { return mPower; }
@@ -74,6 +76,9 @@ namespace sw
 		StaticObject* mMidKing;
 		KingObject* mKing;
 
+		Panel* mHpPanel;
+		HpBar* mHpBar;
+
 		eBossPatton mCurPatton;
 		eBossPatton mPrevePatton;
 		float mDelta;
@@ -87,7 +92,7 @@ namespace sw
 		float mPattonCount;
 		MainPlayer* mPlayer;
 
-		UINT mHp;
+		float mHp;
 		UINT mPower;
 
 		GenericAnimator MyGenericAnimator;

@@ -104,7 +104,8 @@ namespace sw
 		ObjectManager::GetInstance()->GetPlayer()->GetComponent<Rigidbody>()->SetGround(false);
 		// Ä«¸Þ¶ó
 		Camera::GetInstance()->SetTarget(nullptr);
-
+		Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeOut);
+		Camera::GetInstance()->SetAlphaTime(0.0f);
 		// ui
 		UIManager::GetInstance()->Pop(eUIType::HP_PANEL);
 		UIManager::GetInstance()->Pop(eUIType::HP);

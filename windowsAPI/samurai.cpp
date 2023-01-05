@@ -21,6 +21,8 @@
 #include "StaticObject.h"
 #include "EventManager.h"
 #include "Scene.h"
+#include "SceneManager.h"
+#include "MonsterBase.h"
 
 namespace sw
 {
@@ -119,6 +121,7 @@ namespace sw
 
 		GameObject::Render(hdc);
 
+		return;
 		if (mColliderBox.BoxScale != Vector2::Zero)
 		{
 
@@ -154,13 +157,13 @@ namespace sw
 		mAnimator->CreatAnimations(L"R_Samurai_Run", SAMURAI_R_PATH(L"Walk"), Vector2(0.f, 10.f), 0.1f);
 		mAnimator->CreatAnimations(L"L_Samurai_Run", SAMURAI_L_PATH(L"Walk"), Vector2(0.f, 10.f), 0.1f);
 										
-		mAnimator->CreatAnimations(L"R_Samurai_AttackA", SAMURAI_R_PATH(L"AttackA"), Vector2(0.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"R_Samurai_AttackA", SAMURAI_R_PATH(L"AttackA"), Vector2(0.f, 0.f), 0.07f);
 		mAnimator->CreatAnimations(L"R_Samurai_AttackB", SAMURAI_R_PATH(L"AttackB"), Vector2(-30.f, 0.f), 0.1f);
-		mAnimator->CreatAnimations(L"R_Samurai_AttackC", SAMURAI_R_PATH(L"AttackC"), Vector2(-30.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"R_Samurai_AttackC", SAMURAI_R_PATH(L"AttackC"), Vector2(-30.f, 0.f), 0.07f);
 										
-		mAnimator->CreatAnimations(L"L_Samurai_AttackA", SAMURAI_L_PATH(L"AttackA"), Vector2(0.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Samurai_AttackA", SAMURAI_L_PATH(L"AttackA"), Vector2(0.f, 0.f), 0.07f);
 		mAnimator->CreatAnimations(L"L_Samurai_AttackB", SAMURAI_L_PATH(L"AttackB"), Vector2(30.f, 0.f), 0.1f);
-		mAnimator->CreatAnimations(L"L_Samurai_AttackC", SAMURAI_L_PATH(L"AttackC"), Vector2(30.f, 0.f), 0.1f);
+		mAnimator->CreatAnimations(L"L_Samurai_AttackC", SAMURAI_L_PATH(L"AttackC"), Vector2(30.f, 0.f), 0.07f);
 										
 		mAnimator->CreatAnimations(L"R_Samurai_Jump", SAMURAI_R_PATH(L"Jump"), Vector2(0.f, 10.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Samurai_Jump", SAMURAI_L_PATH(L"Jump"), Vector2(0.f, 10.f), 0.15f);
@@ -468,7 +471,23 @@ namespace sw
 	}
 	void Samurai::SkillAStart()
 	{
-		sw::Ch1Sound.Stop(true);
+		SceneManager::GetInstance()->GetPlayScene()->SetBaldo(true);
+		vector<GameObject*>& objects =
+			SceneManager::GetInstance()->GetPlayScene()->GetGameObject(eColliderLayer::Monster);
+		for (GameObject* object : objects)
+		{
+			MonsterBase* monster = dynamic_cast<MonsterBase*>(object);
+			if (monster && !monster->GetSuperArmer())
+			{
+				monster->OffSound();
+			}
+		}
+
+		if (SceneManager::GetInstance()->GetPlayeSceneType() == eSceneType::Ch2Boss)
+			sw::BossSound.Stop(true);
+		else
+			sw::Ch1Sound.Stop(true);
+
 		sw::SamuraiSkulSkillAWind.Play(true);
 		bool dirc = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = GetComponent<Animator>();
@@ -585,7 +604,15 @@ namespace sw
 				MyGenericAnimator.Stop();
 
 				sw::SamuraiSkulSkillAWind.Stop(true);
-				sw::Ch1Sound.Play(true);
+
+				if (SceneManager::GetInstance()->GetPlayeSceneType() == eSceneType::Ch2Boss)
+				{
+					//sw::BossSound.Play(true);
+					sw::BossSound.SetPosition(20.f,true);
+				}
+				else
+					sw::Ch1Sound.Play(true);
+				SceneManager::GetInstance()->GetPlayScene()->SetBaldo(false);
 			}
 		};
 		MyGenericAnimator.Start(param);

@@ -515,5 +515,7 @@ namespace sw
 			delete object;
 		}
 		objects.clear();
+
+		sw::Ch1Sound.Stop(true);
 	}
 }

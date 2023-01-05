@@ -18,6 +18,7 @@ namespace sw
 	private:
 		bool mSwitch;
 		eSkulHead mSkul;
+		float mDelta;
 	};
 }
 

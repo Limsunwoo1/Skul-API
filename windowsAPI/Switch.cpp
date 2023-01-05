@@ -6,6 +6,8 @@
 #include "ObjectProjecTile.h"
 #include "samurai.h"
 #include "SwordSkul.h"
+#include "BasicSkul.h"
+#include "Time.h"
 namespace sw
 {
 	Switch::Switch()
@@ -63,6 +65,15 @@ namespace sw
 		if (samurai)
 			return;
 
+		if (mSkul == eSkulHead::Basic)
+		{
+			mDelta += Time::GetInstance()->DeltaTime();
+			if (mDelta > 0.2f)
+			{
+				mDelta -= 0.2;
+				sw::BasicSkulAttackA.Play(false);
+			}
+		}
 		GetTarget()->SwitchSkill();
 
 		if (animator->isComplete())
@@ -74,6 +85,7 @@ namespace sw
 
 	void Switch::End()
 	{
+		mDelta = 0.0f;
 		if (mSkul == eSkulHead::Sword)
 			sw::SwordSkulSwitch.Stop(true);
 
@@ -98,7 +110,7 @@ namespace sw
 		break;
 		case eSkulHead::Samurai:
 		{
-
+			sw::SamuraiSkulSwitch.Play(false);
 		}
 		break;
 		}

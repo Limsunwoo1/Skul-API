@@ -92,6 +92,8 @@ namespace sw
 		UIManager::GetInstance()->Push(eUIType::Skil_Panel);
 		UIManager::GetInstance()->Push(eUIType::Boss_Panel);
 		UIManager::GetInstance()->Push(eUIType::BossHp);
+
+		sw::BossSound.Play(true);
 	}
 	void Ch2BossScene::Exit()
 	{

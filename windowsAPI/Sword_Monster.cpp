@@ -22,6 +22,15 @@ namespace sw
 		mHpPanel->SetPos(Vector2(GetPos().x, GetPos().y - (colscale.y * 0.5f)));
 		mHpPanel->SetSize(Vector2(GetHp() * 5.f, 15.f));
 		mHpBar->SetSize(Vector2(GetHp() * 5.f, 8.f));
+
+		// Sound
+		mHitSound.LoadWavFile(L"..\\Resource\\Sound\\Monster\\058_FirstHero_P2_GroggyState_Activate_Voice_a_v1.wav");
+		mHitSound.SetVolume(5);
+		mHitSound.SetKey(L"SwordMonsterHit");
+
+		mAttackSound.LoadWavFile(L"..\\Resource\\Sound\\Monster\\Hit_Sword_Large.wav");
+		mAttackSound.SetVolume(5);
+		mAttackSound.SetKey(L"SwordMonsterAttack");
 	}
 	SwordMonster::~SwordMonster()
 	{

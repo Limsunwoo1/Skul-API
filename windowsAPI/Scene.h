@@ -29,8 +29,12 @@ namespace sw
 
 		void SetSceneChange(bool on) { mSceneChange = on; }
 		bool GetSceneChange() { return mSceneChange; }
+
+		void SetBaldo(bool on) { mBaldo = on; }
+		bool GetBaldo() { return mBaldo; }
 	protected:
 		std::vector<std::vector<GameObject*>> mObjects;
 		bool mSceneChange;
+		bool mBaldo;
 	};
 }

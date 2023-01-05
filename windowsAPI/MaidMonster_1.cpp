@@ -21,6 +21,15 @@ namespace sw
 		mHpPanel->SetPos(Vector2(GetPos().x, GetPos().y - (colscale.y * 0.5f)));
 		mHpPanel->SetSize(Vector2(GetHp() * 5.f, 15.f));
 		mHpBar->SetSize(Vector2(GetHp() * 5.f, 8.f));
+
+		// Sound
+		mHitSound.LoadWavFile(L"..\\Resource\\Sound\\Monster\\AdventurerHunter_Voice_Short.wav");
+		mHitSound.SetVolume(5);
+		mHitSound.SetKey(L"MaidMonsterHit");
+
+		mAttackSound.LoadWavFile(L"..\\Resource\\Sound\\Monster\\Yaksha_Attack2.wav");
+		mAttackSound.SetVolume(15);
+		mAttackSound.SetKey(L"MaidMonsterAttack");
 	}
 	MaidMonster_1::~MaidMonster_1()
 	{

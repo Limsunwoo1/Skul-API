@@ -108,6 +108,15 @@ namespace sw
 
 	void MonsterBase::Tick()
 	{
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+		{
+			if (!mArmer)
+			{
+				mAttackSound.Stop(true);
+				mHitSound.Stop(true);
+			}
+		}
+
 		if (GetHp() < 0)
 		{
 			mHpPanel->InActive();
@@ -194,6 +203,13 @@ namespace sw
 		mAttackCooltime = 0.0f;
 		if (mState[(int)eMonsterState::ATTACK] == false)
 		{
+			if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			{
+				if (!mArmer)
+					mAttackSound.Play(false);
+			}
+
+
 			if (mDirction)
 				mAnimator->Play(RName + L"Attack");
 			else
@@ -329,6 +345,12 @@ namespace sw
 		mDelta += Time::GetInstance()->DeltaTime();
 		if (mState[(int)eMonsterState::HIT] == false)
 		{
+			if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			{
+				if (!mArmer)
+					mHitSound.Play(false);
+			}
+
 			if (!mDirction)
 				mAnimator->Play(RName + L"Hit");
 			else
@@ -452,6 +474,15 @@ namespace sw
 		}
 		break;
 		}
+	}
+
+	void MonsterBase::OffSound()
+	{
+		if (mArmer)
+			return;
+
+		mAttackSound.Stop(true);
+		mHitSound.Stop(true);
 	}
 
 	void MonsterBase::CheckGround()

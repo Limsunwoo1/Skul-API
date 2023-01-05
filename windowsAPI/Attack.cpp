@@ -153,12 +153,12 @@ namespace sw
 			break;
 			case eSkulHead::Sword:
 			{
-
+				sw::SwordSkulAttackA.Play(false);
 			}
 			break;
 			case eSkulHead::Samurai:
 			{
-
+				sw::SamuraiSkulAttackA.Play(false);
 			}
 			break;
 			}
@@ -174,12 +174,12 @@ namespace sw
 			break;
 			case eSkulHead::Sword:
 			{
-
+				sw::SwordSkulAttackB.Play(false);
 			}
 			break;
 			case eSkulHead::Samurai:
 			{
-
+				sw::SamuraiSkulAttackB.Play(false);
 			}
 			break;
 			}
@@ -195,12 +195,12 @@ namespace sw
 			break;
 			case eSkulHead::Sword:
 			{
-
+				sw::SwordSkulAttackC.Play(false);
 			}
 			break;
 			case eSkulHead::Samurai:
 			{
-
+				sw::SamuraiSkulAttackC.Play(false);
 			}
 			break;
 			}

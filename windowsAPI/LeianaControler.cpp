@@ -327,6 +327,8 @@ namespace sw
 	}
 	void LeianaControler::OuttroIn()
 	{
+		sw::BossSound.Stop(true);
+
 		mEnddingBack->GetComponent<Animator>()->SetOnRender(true);
 		mEnddingBack->GetComponent<Animator>()->Play(L"StaticObject19");
 		mEnddingBack->SetPos(1200.f, 500.f);

@@ -126,6 +126,7 @@ namespace sw
 
 		GameObject::Render(hdc);
 
+		return;
 		if (mColliderBox.BoxScale != Vector2::Zero)
 		{
 			Vector2 pos = GetPos() + mColliderBox.BoxOffset;

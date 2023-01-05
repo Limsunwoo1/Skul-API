@@ -59,6 +59,8 @@ namespace sw
 
 		if (KEY_DOWN(eKeyCode::F))
 		{
+			sw::DropHead.Play(false);
+
 			eSkulHead hd = GetHeadType();
 			SkulHeadItem* item = new SkulHeadItem();
 			item->SetPos(GetPos());

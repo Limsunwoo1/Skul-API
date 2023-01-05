@@ -83,6 +83,17 @@ namespace sw
 		AddGameObject(bg4, eColliderLayer::BackGround);
 		AddGameObject(bg5, eColliderLayer::BackGround);
 		//////////////////////////////////////////////////////////
+		AxeMonster* axe1 = new AxeMonster();
+		axe1->SetPos(Vector2(2000.f, 625.f));
+		axe1->SetDirction(false);
+
+		AxeMonster* axe2 = new AxeMonster();
+		axe2->SetPos(Vector2(3850.f, 625.f));
+		axe2->SetDirction(false);
+
+		AddGameObject(axe1, eColliderLayer::Monster);
+		AddGameObject(axe2, eColliderLayer::Monster);
+
 		MaidMonster_1* monster1 = new MaidMonster_1();
 		monster1->SetPos(Vector2(1000.f, 760.f));
 		monster1->SetDirction(false);
@@ -181,6 +192,29 @@ namespace sw
 		AddGameObject(monster19, eColliderLayer::Monster);
 		AddGameObject(monster20, eColliderLayer::Monster);
 		AddGameObject(monster21, eColliderLayer::Monster);
+
+		SwordMonster* monster22 = new SwordMonster();
+		monster22->SetPos(Vector2(3580, 625.f));
+
+		SwordMonster* monster23 = new SwordMonster();
+		monster23->SetPos(Vector2(3700, 625.f));
+		monster23->SetDirction(false);
+
+		SwordMonster* monster24 = new SwordMonster();
+		monster24->SetPos(Vector2(3780.f, 625.f));
+		monster24->SetDirction(false);
+
+		MaidMonster_1* monster25 = new MaidMonster_1();
+		monster25->SetPos(Vector2(4000.f, 625.f));
+
+		MaidMonster_1* monster26 = new MaidMonster_1();
+		monster26->SetPos(Vector2(4080.f, 625.f));
+		monster26->SetDirction(false);
+
+		AddGameObject(monster23, eColliderLayer::Monster);
+		AddGameObject(monster24, eColliderLayer::Monster);
+		AddGameObject(monster25, eColliderLayer::Monster);
+		AddGameObject(monster26, eColliderLayer::Monster);
 		////////////////////////////////////////////////////////////
 		// ∏ÛΩ∫≈Õ
 		/*SwordMonster* monster1 = new SwordMonster();

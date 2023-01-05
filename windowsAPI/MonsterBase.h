@@ -3,6 +3,7 @@
 #include <random>
 #include "HpBar.h"
 #include "Panel.h"
+#include "Sound.h"
 
 namespace sw
 {
@@ -47,6 +48,8 @@ namespace sw
 
 		virtual void Branch();
 		virtual void ProejcTielDelte() {};
+
+		void OffSound();
 
 		void SetState(eMonsterState type) { mCurState = type; }
 		eMonsterState GetState() { return mCurState; }
@@ -119,5 +122,8 @@ namespace sw
 		std::mt19937 rgen;
 		std::uniform_int_distribution<int> rDelay;
 		std::uniform_int_distribution<int> rDistance;
+
+		Sound mHitSound;
+		Sound mAttackSound;
 	};
 }

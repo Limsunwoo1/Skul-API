@@ -54,6 +54,7 @@ namespace sw
 		bool mAProjecTileOn;
 		bool mSwitchProejcTileOn;
 		bool mSKillAHitSound;
+		bool mBaldo;
 	};
 }
 

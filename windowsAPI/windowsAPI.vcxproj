@@ -186,6 +186,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="BossMonster.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="KingObject.h" />
     <ClInclude Include="LeianaBoss.h" />
     <ClInclude Include="LeianaBossRight.h" />
     <ClInclude Include="LeianaControler.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="BossMonster.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="KingObject.cpp" />
     <ClCompile Include="LeianaBoss.cpp" />
     <ClCompile Include="LeianaBossRight.cpp" />
     <ClCompile Include="LeianaControler.cpp" />

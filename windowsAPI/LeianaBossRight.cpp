@@ -495,4 +495,8 @@ namespace sw
 			}
 		}
 	}
+	void LeianaBossRight::OffProjecTile()
+	{
+		mProjecTile->GetComponent<Animator>()->SetOnRender(false);
+	}
 }

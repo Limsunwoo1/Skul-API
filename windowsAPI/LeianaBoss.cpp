@@ -1173,6 +1173,14 @@ namespace sw
 			}
 		}
 	}
+	void LeianaBoss::OffProjecTile()
+	{
+		for (int i = 0; i < mProjecTiles.size(); ++i)
+		{
+			mProjecTiles[i]->GetComponent<Animator>()->SetOnRender(false);
+		}
+		mProjecTile->GetComponent<Animator>()->SetOnRender(false);
+	}
 	void LeianaBoss::Patton6_ProjecTileReady()
 	{
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile, false);

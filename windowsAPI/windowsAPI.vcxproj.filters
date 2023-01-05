@@ -243,6 +243,9 @@
     <Filter Include="Engine\GameObject\MainPlayer\Player\samurai">
       <UniqueIdentifier>{6cb32235-e4c3-4888-8449-e41e0fcb7a04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameObject\Monster\BossMonster\2ChKing">
+      <UniqueIdentifier>{339e4f52-3145-4494-9d58-36e3e2d322cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -512,6 +515,9 @@
     <ClInclude Include="samurai.h">
       <Filter>Engine\GameObject\MainPlayer\Player\samurai</Filter>
     </ClInclude>
+    <ClInclude Include="KingObject.h">
+      <Filter>Engine\GameObject\Monster\BossMonster\2ChKing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -750,6 +756,9 @@
     </ClCompile>
     <ClCompile Include="samurai.cpp">
       <Filter>Engine\GameObject\MainPlayer\Player\samurai</Filter>
+    </ClCompile>
+    <ClCompile Include="KingObject.cpp">
+      <Filter>Engine\GameObject\Monster\BossMonster\2ChKing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

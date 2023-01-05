@@ -1,6 +1,7 @@
 #include "EndScene.h"
 #include "PlayerBase.h"
 #include "BackGround.h"
+#include "Camera.h"
 
 namespace sw
 {
@@ -16,11 +17,27 @@ namespace sw
 
 	void EndScene::Initialize()
 	{
+		BackGround* back1 = new BackGround();
+		back1->SetImage(L"EndBack", L"FIi-mO5VUAAM1zL 복사.bmp");
+		back1->SetPos(800.f, 450.f);
+		back1->SetScale(1600.f, 900.f);
+		back1->SetAlpha(true);
+		back1->SetCamera(false);
 
+		BackGround* back2 = new BackGround();
+		back2->SetImage(L"EndBackLogo", L"EndLogo.bmp");
+		back2->SetPos(750.f, 400.f);
+		back2->SetScale(600.f, 400.f);
+		back2->SetAlpha(false);
+		back2->SetCamera(false);
+
+		AddGameObject(back1, eColliderLayer::BackGround);
+		AddGameObject(back2, eColliderLayer::BackGround);
 	}
 
 	void EndScene::Tick()
 	{
+		FadeInOut();
 		// 오브젝트 tick 호출한다
 		Scene::Tick();
 	}
@@ -28,15 +45,12 @@ namespace sw
 	void EndScene::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
-
-		wchar_t szFloat[50] = {};
-		swprintf_s(szFloat, 50, L"End Scene");
-		int strLen = wcsnlen_s(szFloat, 50);
-		TextOut(hdc, 10, 30, szFloat, strLen);
 	}
 
 	void EndScene::Enter()
 	{
+		Camera::GetInstance()->SetTarget(nullptr);
+		Camera::GetInstance()->SetLookPosition(Vector2(800.f, 450.f));
 	}
 	void EndScene::Exit()
 	{

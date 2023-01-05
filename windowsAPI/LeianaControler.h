@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "BossMonster.h"
 #include "GenericAnimator.h"
+#include "KingObject.h"
 namespace sw
 {
 	class LeianaBoss;
@@ -65,11 +66,14 @@ namespace sw
 
 		void OuttroIn();
 		void OuttroOut();
+		void ChangeBossScene();
 	private:
 		LeianaBoss* mLeft;
 		LeianaBossRight* mRight;
 		StaticObject* mEnddingBack;
 		StaticObject* mMidKing;
+		KingObject* mKing;
+
 		eBossPatton mCurPatton;
 		eBossPatton mPrevePatton;
 		float mDelta;

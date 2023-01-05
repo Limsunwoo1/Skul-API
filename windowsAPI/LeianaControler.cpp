@@ -7,6 +7,7 @@
 #include "Animator.h"
 #include "Rigidbody.h"
 #include "StaticObject.h"
+#include "EventManager.h"
 
 #include <iostream>
 #include <random>
@@ -53,6 +54,7 @@ namespace sw
 		{
 			OuttroIn();
 			mBossSceneEnd = true;
+			mKing->SetEndding(true);
 		}
 		if (mBossSceneEnd)
 			return;
@@ -74,8 +76,12 @@ namespace sw
 		SetHp(mLeft->GetHp());
 		mRight->SetHp(GetHp());
 
+		// 미들 킹 인잇
+		mKing = new KingObject;
+		mKing->SetPos(1200.f, 305.f);
+
 		mEnddingBack = new StaticObject(L"StaticObject19");
-		mEnddingBack->SetScale(5.0f, 5.0f);
+		mEnddingBack->SetScale(6.0f, 6.0f);
 		mEnddingBack->GetComponent<Animator>()->SetOnRender(false);
 	}
 	void LeianaControler::SetPlayer(MainPlayer* player)
@@ -295,6 +301,7 @@ namespace sw
 		scene->AddGameObject(mLeft, eColliderLayer::BossMonster);
 		scene->AddGameObject(mRight, eColliderLayer::BossMonster);
 
+		scene->AddGameObject(mKing, eColliderLayer::StaticObject);
 		scene->AddGameObject(mEnddingBack, eColliderLayer::StaticObject);
 	}
 	void LeianaControler::OuttroIn()
@@ -303,6 +310,8 @@ namespace sw
 		mEnddingBack->GetComponent<Animator>()->Play(L"StaticObject19");
 		mEnddingBack->SetPos(1200.f, 500.f);
 		mEnddingBack->SetScale(5.f, 5.f);
+
+	
 
 		if (MyGenericAnimator.IsRunning())
 			MyGenericAnimator.Stop();
@@ -356,6 +365,33 @@ namespace sw
 		{
 			mEnddingBack->GetComponent<Animator>()->SetOnRender(false);
 			// 미들보스애니메이션 씬넘기기
+			ChangeBossScene();
+		};
+		MyGenericAnimator.Start(param);
+	}
+	void LeianaControler::ChangeBossScene()
+	{
+		mKing->GetComponent<Animator>()->Play(L"KingSurprise");
+
+		if (MyGenericAnimator.IsRunning())
+			MyGenericAnimator.Stop();
+
+		AnimatorParam param;
+		param.AnimType = EAnimType::Linear;
+		param.StartValue = 255.f;
+		param.EndValue = 0.f;
+		param.DurationTime = 3.0f;
+		param.DurationFunc = [this](float InCurValue)
+		{
+
+		};
+		param.CompleteFunc = [this](float InCurValue)
+		{
+			EventInfo info;
+			info.Type = EventType::ChangeScene;
+			info.Parameter1 = new eSceneType(eSceneType::End);
+			EventManager::GetInstance()->EventPush(info);
+
 			MyGenericAnimator.Stop();
 		};
 		MyGenericAnimator.Start(param);

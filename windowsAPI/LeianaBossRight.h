@@ -69,6 +69,7 @@ namespace sw
 		bool GetHold() { return mHold; }
 		void SetHold(bool hold) { mHold = hold; }
 
+		void OffProjecTile();
 	private:
 		LeianaControler* mOwner;
 		ObjectProjecTile* mProjecTile;

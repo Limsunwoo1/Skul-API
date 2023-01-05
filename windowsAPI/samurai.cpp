@@ -94,8 +94,8 @@ namespace sw
 	void Samurai::Tick()
 	{
 		SetHp(mParentObject->GetHp());
-		if (GetHp() < 0)
-			SetDeath(true);
+		if (GetHp() <= 0)
+			SetHp(0);
 
 		if (mParentObject == nullptr)
 			return;
@@ -186,6 +186,12 @@ namespace sw
 		AddComponent(mAnimator);
 
 		mAnimator->Play(L"R_Samurai_IDLE", true);
+
+		mAnimator->GetStartEvent(L"R_Samurai_Dash") = std::bind(&PlayerBase::DashSmoke, this);
+		mAnimator->GetStartEvent(L"L_Samurai_Dash") = std::bind(&PlayerBase::DashSmoke, this);
+
+		mAnimator->GetStartEvent(L"R_Samurai_Jump") = std::bind(&PlayerBase::JumpSmoke, this);
+		mAnimator->GetStartEvent(L"L_Samurai_Jump") = std::bind(&PlayerBase::JumpSmoke, this);
 
 		//mAnimator->GetStartEvent(L"R_Sword_Dash") = std::bind(&PlayerBase::DashSmoke, this);
 		//mAnimator->GetStartEvent(L"L_Sword_Dash") = std::bind(&PlayerBase::DashSmoke, this);

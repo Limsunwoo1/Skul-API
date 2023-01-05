@@ -7,6 +7,8 @@
 #include "MainPlayer.h"
 #include "PlayerBase.h"
 #include "StateHandle.h"
+#include "SceneManager.h"
+#include "Scene.h"
 namespace sw
 {
 	ObjectProjecTile::ObjectProjecTile()
@@ -91,6 +93,9 @@ namespace sw
 		PlayerBase* player = dynamic_cast<PlayerBase*>(other->GetOwner());
 		if (player != nullptr)
 		{
+			if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+				return;
+
 			ePlayerState state = player->GetStateHandle()->GetStateType();
 			if (state != ePlayerState::SLIDING)
 			{
@@ -117,6 +122,12 @@ namespace sw
 		if (Event)
 		{
 			Event(other->GetOwner());
+		}
+		PlayerBase* player = dynamic_cast<PlayerBase*>(other->GetOwner());
+		if (player)
+		{
+			if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+				return;
 		}
 
 		int hp = other->GetOwner()->GetHp();

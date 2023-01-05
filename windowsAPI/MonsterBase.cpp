@@ -95,6 +95,8 @@ namespace sw
 		mHpBar->InActive();
 		mHpPanel->SetChild(Vector2(0.f, 0.f), mHpBar);
 		PushUi();
+
+		SetPower(4);
 	}
 
 	MonsterBase::~MonsterBase()
@@ -243,7 +245,10 @@ namespace sw
 			if (temp)
 			{
 				// Ãæµ¹
-				mTarget->SetHp(mTarget->GetHp() - GetPower());
+				float hp = mTarget->GetHp();
+				int powe = this->GetPower();
+				hp = hp - GetPower();
+				mTarget->SetHp(hp);
 			}
 		}
 
@@ -421,6 +426,8 @@ namespace sw
 							continue;
 						if (monster == this)
 							continue;
+						if (monster->GetTarget() != nullptr)
+							return;
 
 						monster->SetTarget(object);
 						monster->SetStraing(true);

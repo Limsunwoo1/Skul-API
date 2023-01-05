@@ -89,6 +89,7 @@ namespace sw
 		bool mModeChange;
 		bool mBossSceneEnd;
 
+		bool mEnddingSound;
 		float mPattonCount;
 		MainPlayer* mPlayer;
 

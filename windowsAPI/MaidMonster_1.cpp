@@ -8,7 +8,7 @@ namespace sw
 		: MonsterBase()
 	{
 		SetHp(12);
-		SetPower(1);
+		SetPower(3);
 		InitializeAnimation();
 		InitalizeCollider();
 		InitializeBox();

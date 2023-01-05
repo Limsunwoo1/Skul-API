@@ -8,6 +8,9 @@
 #include "MainPlayer.h"
 #include "PlayerBase.h"
 #include "StateHandle.h"
+#include "Time.h"
+#include "SceneManager.h"
+#include "Scene.h"
 namespace sw
 {
 	AxeMonster::AxeMonster()
@@ -25,6 +28,7 @@ namespace sw
 		mArmer = true;
 
 		mAttackCooltimeMax = 3.0f;
+		mAttackSound = 0.3f;
 
 		Vector2 colscale = GetComponent<Collider>()->GetScale();
 		mHpPanel->SetPos(Vector2(GetPos().x, GetPos().y - (colscale.y * 0.5f)));
@@ -59,6 +63,10 @@ namespace sw
 
 	void AxeMonster::Tick()
 	{
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			sw::AxeMonsterAttack1.Stop(true);
+
+		MyGenericAnimator.Update(Time::GetInstance()->DeltaTime());
 		MonsterBase::Tick();
 
 		for (int i = 0; i < mProjecTile.size(); ++i)
@@ -143,6 +151,7 @@ namespace sw
 		int a = 0;
 		float offset = 0.0f;
 
+		OnSkillSound();
 		for (int i = 0; i < mProjecTile.size(); i++)
 		{
 			if (mDirction)
@@ -164,6 +173,39 @@ namespace sw
 
 			EventManager::GetInstance()->EventPush(info);
 		}
+	}
+	void AxeMonster::OnSkillSound()
+	{
+		if (MyGenericAnimator.IsRunning())
+			MyGenericAnimator.Stop();
+
+		AnimatorParam param;
+		param.AnimType = EAnimType::Linear;
+		param.StartValue = 0.f;
+		param.EndValue = 1.f;
+		param.DurationTime = 1.2f;
+
+		param.DurationFunc = [this](float InCurValue)
+		{
+			if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			{
+				sw::AxeMonsterAttack1.Stop(true);
+				return;
+			}
+
+			mAttackSound += Time::GetInstance()->DeltaTime();
+			if (mAttackSound > 0.3f)
+			{
+				mAttackSound -= 0.3f;
+				if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::AxeMonsterAttack1.Play(false);
+			}
+		};
+		param.CompleteFunc = [this](float InCurValue)
+		{
+			mAttackSound = 0.3f;
+		};
+		MyGenericAnimator.Start(param);
 	}
 	void AxeMonster::SkilAttack(GameObject* other)
 	{

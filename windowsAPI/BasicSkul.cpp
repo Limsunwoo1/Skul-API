@@ -99,8 +99,8 @@ namespace sw
 	void BasicSkul::Tick()
 	{
 		SetHp(mParentObject->GetHp());
-		if (GetHp() < 0)
-			SetDeath(true);
+		if (GetHp() <= 0)
+			SetHp(0);
 
 		// 코드 개선 해야함
 		if (mParentObject == nullptr)

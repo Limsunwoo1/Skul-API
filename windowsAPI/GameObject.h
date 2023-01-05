@@ -87,7 +87,7 @@ namespace sw
 		ePlayerState GetState() {return mCurstate;}
 		void SetState(ePlayerState state) { mCurstate = state;}
 
-		void SetHp(UINT hp) { mHp = hp; }
+		void SetHp(float hp) { mHp = hp; }
 		float GetHp() { return (float)mHp; }
 
 		void SetPower(UINT power) { mPower = power; }

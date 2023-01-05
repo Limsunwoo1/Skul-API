@@ -11,6 +11,7 @@
 #include "LeianaBossRight.h"
 #include "CollisionManager.h"
 #include "EventManager.h"
+#include "SceneManager.h"
 namespace sw
 {
 	LeianaBoss::LeianaBoss()
@@ -33,6 +34,8 @@ namespace sw
 		, mSpeed(0)
 		, mPatton5_Num(0)
 		, mPatton5_TargetPos(0.f,0.f)
+		, mPatton6_ReadDelta(0.f)
+		, mPatton6_landingDelta(0.f)
 	{
 		SetHp(180.f);
 		SetDirPos(false);
@@ -54,7 +57,11 @@ namespace sw
 		if (mOwner)
 			mOwner->SetHp(GetHp());
 
-		mDelta += Time::GetInstance()->DeltaTime();
+		float delta = Time::GetInstance()->DeltaTime();
+		myGenericAnimator.Update(delta);
+
+		mDelta += delta;
+		mPatton5_Delta += delta;
 		GameObject::Tick();
 		
 		Vector2 pos = GetPos();
@@ -345,6 +352,9 @@ namespace sw
 		if (mPattonState != ePattonState::LANDING)
 			return;
 
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			sw::LeianaMeteorLanding.Stop(true);
+
 		mSpeed = 1000;
 		if (mDirPos)
 		{ 
@@ -353,6 +363,9 @@ namespace sw
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
 			{
+				if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::LeianaMeteorLanding.Play(false);
+
 				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
 
 				mProjecTile->SetDeath(false);
@@ -388,6 +401,9 @@ namespace sw
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
 			{
+				if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::LeianaMeteorLanding.Play(false);
+
 				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
 
 				mProjecTile->SetDeath(false);
@@ -485,6 +501,9 @@ namespace sw
 		if (mPattonState != ePattonState::LANDING)
 			return;
 
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			sw::LeianaMeteorLanding.Stop(true);
+
 		mSpeed = 1000;
 		if (mDirPos)
 		{
@@ -493,6 +512,9 @@ namespace sw
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
 			{
+				if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::LeianaMeteorLanding.Play(false);
+
 				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
 
 				int num = GetProJecTileNum();
@@ -520,6 +542,9 @@ namespace sw
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
 			{
+				if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::LeianaMeteorLanding.Play(false);
+
 				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
 
 				mProjecTile->SetDeath(false);
@@ -602,8 +627,14 @@ namespace sw
 		mDirVec.y = mScreenSpawnY - GetPos().y;
 		mDirVec.Normalize();
 
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			sw::LeianaMeteor2Landing.Stop(true);
+
 		if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorLanding")
 		{
+			if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+				sw::LeianaMeteor2Landing.Play(false);
+
 			GetComponent<Animator>()->Play(L"MeteorLanding");
 
 			mProjecTile->SetDeath(false);
@@ -665,12 +696,18 @@ namespace sw
 			if (mDirPos)
 			{
 				if (GetPos().x <= mPatton5_TargetPos.x)
+				{
 					mPattonState = ePattonState::LANDING;
+					mPatton5_Delta = 0.0f;
+				}
 			}
 			else
 			{
 				if (GetPos().x >= mPatton5_TargetPos.x)
+				{
 					mPattonState = ePattonState::LANDING;
+					mPatton5_Delta = 0.0f;
+				}
 			}
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_RushReady"
@@ -704,12 +741,25 @@ namespace sw
 		if (mPattonState != ePattonState::LANDING)
 			return;
 
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+				sw::LeianaMeteor2Landing.Stop(true);
+
 		if (!mRushEnd)
 		{
+			if (mPatton5_Num == 2)
+			{
+				if (mPatton5_Delta > 0.2f)
+				{
+					sw::LeianaRush.Play(false);
+					mPatton5_Delta -= 0.2;
+				}
+			}
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L" + mPatton5_Entry[mPatton5_Num]
 				&& GetComponent<Animator>()->GetCurAnimationName() != L"R" + mPatton5_Entry[mPatton5_Num])
 			{
 				Vector2 offset = Vector2::Zero;
+				if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::LeianaRush.Play(false);
 
 				if (mDirPos)
 				{
@@ -943,6 +993,9 @@ namespace sw
 		if (mPattonState != ePattonState::LANDING)
 			return;
 
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			sw::LeianaMeteorLanding.Stop(true);
+
 		mSpeed = 1000;
 		if (mDirPos)
 		{
@@ -951,6 +1004,8 @@ namespace sw
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"L_MeteorGroundLanding")
 			{
+				if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::LeianaMeteorLanding.Play(false);
 				GetComponent<Animator>()->Play(L"L_MeteorGroundLanding");
 
 				mProjecTile->SetDeath(false);
@@ -976,6 +1031,9 @@ namespace sw
 
 			if (GetComponent<Animator>()->GetCurAnimationName() != L"R_MeteorGroundLanding")
 			{
+				if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::LeianaMeteorLanding.Play(false);
+
 				GetComponent<Animator>()->Play(L"R_MeteorGroundLanding");
 
 				mProjecTile->SetDeath(false);
@@ -1050,6 +1108,8 @@ namespace sw
 	{
 		if (mPattonState != ePattonState::LANDING)
 			return;
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			sw::LeianaPierce.Stop(true);
 
 		if (GetComponent<Animator>()->GetCurAnimationName() == L"R_RisignePrerceAttack"
 			|| GetComponent<Animator>()->GetCurAnimationName() == L"L_RisignePrerceAtaack")
@@ -1075,6 +1135,9 @@ namespace sw
 				info.Parameter2 = mProjecTiles[9];
 
 				EventManager::GetInstance()->EventPush(info);
+
+				if(!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+					sw::LeianaPierce.Play(false);
 
 				CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile, false);
 				return;
@@ -1203,13 +1266,13 @@ namespace sw
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile, false);
 		int doubleCount = 0;
 		float offsetPos = 60.f;
-		float offsetDelta = 0.05f;
+		float offsetDelta = 0.1f;
 
 		for (int i = 0; i < mProjecTiles.size(); i++)
 		{
 			if (doubleCount >= 2)
 			{
-				offsetDelta += 0.05f;
+				offsetDelta += 0.1f;
 				offsetPos += 60.f;
 
 				doubleCount = 0;
@@ -1235,6 +1298,7 @@ namespace sw
 			++doubleCount;
 		}
 		mPatton6_ProjecTile_Ready = true;
+		Patton6_ReadySound();
 	}
 	void LeianaBoss::Patton6_ProjecTileLading()
 	{
@@ -1248,7 +1312,7 @@ namespace sw
 		}
 
 		int doubleCount = 0;
-		float offsetdelta = 0.05f;
+		float offsetdelta = 0.1f;
 		for (int i = 0; i < mProjecTiles.size(); ++i)
 		{
 			mProjecTiles[i]->SetDeath(false);
@@ -1256,13 +1320,14 @@ namespace sw
 
 			if (doubleCount >= 2)
 			{
-				offsetdelta += 0.05f;
+				offsetdelta += 0.1f;
 				doubleCount = 0;
 			}
 
 			mProjecTiles[i]->SetStartOffset(offsetdelta);
 			++doubleCount;
 		}
+		Patton6_LandingSound();
 		CollisionManager::GetInstance()->SetLayer(eColliderLayer::Player, eColliderLayer::BossMonster_ProjecTile);
 	}
 	void LeianaBoss::Patton6_ProjecTileEnd()
@@ -1288,5 +1353,81 @@ namespace sw
 
 		mPatton6_ProjecTile_End = true;
 		mPattonState = ePattonState::END;
+	}
+	void LeianaBoss::Patton6_ReadySound()
+	{
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+		{
+			sw::LeianasionpierceReady.Stop(true);
+			return;
+		}
+
+		if (myGenericAnimator.IsRunning())
+			myGenericAnimator.Stop();
+
+		AnimatorParam param;
+		param.AnimType = EAnimType::Linear;
+		param.StartValue = 0.f;
+		param.EndValue = 0.6f;
+		param.DurationTime = 0.6f;
+
+		param.DurationFunc = [this](float InCurValue)
+		{
+			if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			{
+				sw::LeianasionpierceReady.Stop(true);
+				return;
+			}
+
+			mPatton6_ReadDelta += Time::GetInstance()->DeltaTime();
+			if (mPatton6_ReadDelta > 0.2f)
+			{
+				mPatton6_ReadDelta -= 0.1f;
+				sw::LeianasionpierceReady.Play(false);
+			}
+		};
+		param.CompleteFunc = [this](float InCurValue)
+		{
+			mPatton6_ReadDelta = 0.f;
+		};
+		myGenericAnimator.Start(param);
+	}
+	void LeianaBoss::Patton6_LandingSound()
+	{
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+		{
+			sw::LeianasionpierceLanding.Stop(true);
+			return;
+		}
+
+		if (myGenericAnimator.IsRunning())
+			myGenericAnimator.Stop();
+
+		AnimatorParam param;
+		param.AnimType = EAnimType::Linear;
+		param.StartValue = 0.f;
+		param.EndValue = 0.6f;
+		param.DurationTime = 0.6f;
+
+		param.DurationFunc = [this](float InCurValue)
+		{
+			if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			{
+				sw::LeianasionpierceLanding.Stop(true);
+				return;
+			}
+
+			mPatton6_landingDelta += Time::GetInstance()->DeltaTime();
+			if (mPatton6_landingDelta > 0.2f)
+			{
+				mPatton6_landingDelta -= 0.1f;
+				sw::LeianasionpierceLanding.SetPosition(10.f,false);
+			}
+		};
+		param.CompleteFunc = [this](float InCurValue)
+		{
+			mPatton6_landingDelta = 0.f;
+		};
+		myGenericAnimator.Start(param);
 	}
 }

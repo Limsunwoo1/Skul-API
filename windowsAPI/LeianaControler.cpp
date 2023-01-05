@@ -33,6 +33,7 @@ namespace sw
 		, mCombeMode(true)
 		, mModeChange(false)
 		, mBossSceneEnd(false)
+		, mEnddingSound(false)
 		, mPattonCount(0.f)
 	{
 		SetPower(5);
@@ -224,7 +225,7 @@ namespace sw
 			{
 				mLeft->SetScreenOut(true);
 				SetCurPatton((eBossPatton)SoloPatton(gen1));
-				//SetCurPatton(eBossPatton::Patton8);
+				//SetCurPatton(eBossPatton::Patton6);
 				mLeft->SetCurPattonState(ePattonState::READY);
 
 				mPattonCount += 0.5f;
@@ -370,6 +371,7 @@ namespace sw
 	}
 	void LeianaControler::OuttroOut()
 	{
+		sw::LeianaDead.Play(false);
 		mLeft->GetComponent<Animator>()->SetOnRender(true);
 		mRight->GetComponent<Animator>()->SetOnRender(true);
 
@@ -402,12 +404,17 @@ namespace sw
 
 		AnimatorParam param;
 		param.AnimType = EAnimType::Linear;
-		param.StartValue = 255.f;
-		param.EndValue = 0.f;
+		param.StartValue = 0.f;
+		param.EndValue = 1.f;
 		param.DurationTime = 5.0f;
-		param.DurationFunc = [this](float InCurValue)
+		float value = 0.5f;
+		param.DurationFunc = [this, value](float InCurValue)
 		{
-
+			if (InCurValue > value && !mEnddingSound)
+			{
+				mEnddingSound = true;
+				sw::EndSound.Play(true);
+			}
 		};
 		param.CompleteFunc = [this](float InCurValue)
 		{

@@ -9,6 +9,7 @@ namespace sw
 	static Sound JumpSound;
 	static Sound DashSound;
 	static Sound DropHead;
+	static Sound EndSound;
 
 	static Sound BasicSkulAttackA;
 	static Sound BasicSkulAttackB;
@@ -29,10 +30,15 @@ namespace sw
 	static Sound SamuraiSkulSKillB;
 	static Sound SamuraiSkulSwitch;
 
-	static Sound Leiana;
-	//static Sound Leiana;
-	//static Sound Leiana;
-	//static Sound Leiana;
+	static Sound AxeMonsterAttack1;
+
+	static Sound LeianaMeteorLanding;
+	static Sound LeianaMeteor2Landing;
+	static Sound LeianaRush;
+	static Sound LeianasionpierceReady;
+	static Sound LeianasionpierceLanding;
+	static Sound LeianaPierce;
+	static Sound LeianaDead;
 
 	void SoundInit();
 }

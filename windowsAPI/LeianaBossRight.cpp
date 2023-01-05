@@ -9,6 +9,7 @@
 #include "MainPlayer.h"
 #include "LeianaControler.h"
 #include "EventManager.h"
+#include "SceneManager.h"
 
 namespace sw
 {
@@ -219,9 +220,13 @@ namespace sw
 		mSpeed = 800;
 		mDirVec.y = mScreenSpawnY - GetPos().y;
 		mDirVec.Normalize();
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			sw::LeianaMeteor2Landing.Stop(false);
 
 		if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorLanding")
 		{
+			if(!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+				sw::LeianaMeteor2Landing.Play(false);
 			GetComponent<Animator>()->Play(L"MeteorLanding");
 
 			mProjecTile->SetDeath(false);
@@ -411,9 +416,13 @@ namespace sw
 		mSpeed = 800;
 		mDirVec.y = mScreenSpawnY - GetPos().y;
 		mDirVec.Normalize();
+		if (SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+			sw::LeianaMeteor2Landing.Stop(true);
 
 		if (GetComponent<Animator>()->GetCurAnimationName() != L"MeteorLanding")
 		{
+			if (!SceneManager::GetInstance()->GetPlayScene()->GetBaldo())
+				sw::LeianaMeteor2Landing.Play(false);
 			GetComponent<Animator>()->Play(L"MeteorLanding");
 
 			mProjecTile->SetDeath(false);

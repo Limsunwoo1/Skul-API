@@ -79,8 +79,8 @@ namespace sw
 	void SwordSkul::Tick()
 	{
 		SetHp(mParentObject->GetHp());
-		if (GetHp() < 0)
-			SetDeath(true);
+		if (GetHp() <= 0)
+			SetHp(0);
 
 		if (mParentObject == nullptr)
 			return;

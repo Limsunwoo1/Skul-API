@@ -1,6 +1,6 @@
 #pragma once
 #include "BossMonster.h"
-
+#include "GenericAnimator.h"
 
 namespace sw
 {
@@ -51,6 +51,9 @@ namespace sw
 		void Patton6_ProjecTileReady();
 		void Patton6_ProjecTileLading();
 		void Patton6_ProjecTileEnd();
+		void Patton6_ReadySound();
+		void Patton6_LandingSound();
+
 		void ScreenOut();
 		void ScreenIn();
 		bool PattonEnd();
@@ -109,10 +112,15 @@ namespace sw
 		float mScreenOutY;
 
 		float mRisignPrerceDelay;
+		float mPatton5_Delta;
+		float mPatton6_ReadDelta;
+		float mPatton6_landingDelta;
 		Vector2 mDirVec;
 		Vector2 mPatton5_TargetPos;
 		UINT mSpeed;
 		UINT mPatton5_Num;
+
+		GenericAnimator myGenericAnimator;
 	};
 }
 

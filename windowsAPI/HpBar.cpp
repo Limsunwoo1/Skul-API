@@ -29,6 +29,7 @@ namespace sw
 		if (mTarget && !mMonsterHP)
 		{
 			float x = mTarget->GetHp() / mTargetMaxHp;
+			float a = mMaxSizeX * x;
 			SetSize(Vector2(mMaxSizeX * x, GetSize().y));
 			return;
 		}

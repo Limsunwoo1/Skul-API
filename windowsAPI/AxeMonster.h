@@ -1,6 +1,6 @@
 #pragma once
 #include "MonsterBase.h"
-
+#include "GenericAnimator.h"
 namespace sw
 {
 	class ObjectProjecTile;
@@ -20,8 +20,11 @@ namespace sw
 		virtual void ProejcTielDelte() override;
 
 		void OnSkilAttack();
+		void OnSkillSound();
 		void SkilAttack(GameObject* other);
 	private:
 		std::vector<ObjectProjecTile*> mProjecTile;
+		GenericAnimator MyGenericAnimator;
+		float mAttackSound;
 	};
 }

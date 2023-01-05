@@ -40,6 +40,13 @@ namespace sw
 
 	LeianaBoss::~LeianaBoss()
 	{
+		for (int i = 0; i < mProjecTiles.size(); ++i)
+		{
+			delete mProjecTiles[i];
+		}
+		delete mProjecTile;
+
+		GameObject::~GameObject();
 	}
 
 	void LeianaBoss::Tick()
@@ -1177,9 +1184,19 @@ namespace sw
 	{
 		for (int i = 0; i < mProjecTiles.size(); ++i)
 		{
+			EventInfo info;
+			info.Type = EventType::DeleteObject;
+			info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+			info.Parameter2 = mProjecTiles[i];
+			EventManager::GetInstance()->EventPush(info);
 			mProjecTiles[i]->GetComponent<Animator>()->SetOnRender(false);
 		}
 		mProjecTile->GetComponent<Animator>()->SetOnRender(false);
+		EventInfo info;
+		info.Type = EventType::DeleteObject;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+		info.Parameter2 = mProjecTile;
+		EventManager::GetInstance()->EventPush(info);
 	}
 	void LeianaBoss::Patton6_ProjecTileReady()
 	{

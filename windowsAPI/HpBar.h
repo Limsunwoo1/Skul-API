@@ -18,6 +18,8 @@ namespace sw
 
 		void SetTargetMaxHp(float hp) {mTargetMaxHp = hp;}
 		void SetmaxSizeX(int X) { mMaxSizeX = X; }
+
+		void SetMonsterHp(bool on) { mMonsterHP = on; }
 	private:
 		GameObject* mTarget;
 		bool mMonsterHP;

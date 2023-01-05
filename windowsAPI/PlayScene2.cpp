@@ -235,12 +235,12 @@ namespace sw
 
 		GateObject* gate = new GateObject();
 		gate->SetPos(4750.f, 600.f);
-		gate->SetNextScene(eSceneType::Ch2Boss);
-		gate->SetBossGate(true);
+		gate->SetNextScene(eSceneType::Play);
 		AddGameObject(gate, eColliderLayer::Gate);
 
 		Item* item = new Item();
 		item->SetPos(4350.f, 670.f);
+		item->SetHeadType(eSkulHead::Samurai);
 		AddGameObject(item, eColliderLayer::Gate);
 	}
 
@@ -250,15 +250,6 @@ namespace sw
 
 		// 오브젝트 tick 호출한다
 		Scene::Tick();
-
-		if (KEY_DOWN(eKeyCode::N))
-		{
-			EventInfo info;
-			info.Type = EventType::ChangeScene;
-			info.Parameter1 = new eSceneType(eSceneType::Ch2Boss);
-
-			EventManager::GetInstance()->EventPush(info);
-		}
 	}
 
 	void PlayScene2::Render(HDC hdc)

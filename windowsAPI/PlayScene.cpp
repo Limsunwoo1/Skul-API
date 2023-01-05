@@ -29,12 +29,7 @@ namespace sw
 {
 	PlayScene::PlayScene()
 	{
-		LOG_TODO("로그 예시 코드 확인했으면 지워도 무방");
-		LOG("일반 로그 테스트");
-		WARN_LOG("경고 로그 테스트");
-		ERROR_LOG("에러 로그 테스트");
-		ETC1_LOG("커스텀 로그 테스트");
-		LOG(STRING("문자열 포매팅 테스트 : %d !!!", 30));
+
 	}
 
 	PlayScene::~PlayScene()
@@ -416,13 +411,15 @@ namespace sw
 		//GateObject
 		GateObject* gate = new GateObject();
 		gate->SetPos(8200.f, 280.f);
-		gate->SetNextScene(eSceneType::Play2);
+		gate->SetNextScene(eSceneType::Ch2Boss);
+		gate->SetBossGate(true);
 		AddGameObject(gate, eColliderLayer::Gate);
 
-		Item* item = new Item();
+		// 아이템 타입으로 생성할 아이템 설정
+		/*Item* item = new Item();
 		item->SetPos(7800.f, 350.f);
 		item->SetHeadType(eSkulHead::Sword);
-		AddGameObject(item, eColliderLayer::Gate);
+		AddGameObject(item, eColliderLayer::Gate);*/
 	}
 
 	void PlayScene::Tick()
@@ -431,25 +428,15 @@ namespace sw
 
 		// 오브젝트 tick 호출한다
 		Scene::Tick();
-
-		if (KEY_DOWN(eKeyCode::N))
+		if (mObjects[(int)eColliderLayer::Monster].size() <= 0)
 		{
-			EventInfo info;
-			info.Type = EventType::ChangeScene;
-			info.Parameter1 = new eSceneType(eSceneType::Play2);
-
-			EventManager::GetInstance()->EventPush(info);
+			SetSceneChange(true);
 		}
 	}
 
 	void PlayScene::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
-
-		wchar_t szFloat[50] = {};
-		swprintf_s(szFloat, 50, L"Paly Scene");
-		int strLen = (int)wcsnlen_s(szFloat, 50);
-		TextOut(hdc, 10, 30, szFloat, strLen);
 	}
 
 	void PlayScene::Enter()

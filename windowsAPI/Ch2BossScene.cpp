@@ -105,7 +105,7 @@ namespace sw
 		// Ä«¸Þ¶ó
 		Camera::GetInstance()->SetTarget(nullptr);
 		Camera::GetInstance()->SetCameraEffect(eCameraEffect::FadeOut);
-		Camera::GetInstance()->SetAlphaTime(0.0f);
+		Camera::GetInstance()->SetAlphaTime(2.0f);
 		// ui
 		UIManager::GetInstance()->Pop(eUIType::HP_PANEL);
 		UIManager::GetInstance()->Pop(eUIType::HP);

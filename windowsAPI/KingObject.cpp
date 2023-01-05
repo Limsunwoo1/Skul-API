@@ -11,6 +11,7 @@ namespace sw
 
 	KingObject::~KingObject()
 	{
+		GameObject::~GameObject();
 	}
 
 	void KingObject::Tick()

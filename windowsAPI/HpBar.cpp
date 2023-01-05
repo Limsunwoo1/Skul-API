@@ -23,12 +23,14 @@ namespace sw
 			Vector2 size = GetSize();
 			size.x = mTarget->GetHp() * 5.f;
 			SetSize(size);
+			return;
 		}
 		
 		if (mTarget && !mMonsterHP)
 		{
 			float x = mTarget->GetHp() / mTargetMaxHp;
 			SetSize(Vector2(mMaxSizeX * x, GetSize().y));
+			return;
 		}
 	}
 

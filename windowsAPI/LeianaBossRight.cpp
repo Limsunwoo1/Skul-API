@@ -32,6 +32,7 @@ namespace sw
 
 	LeianaBossRight::~LeianaBossRight()
 	{
+		delete mProjecTile;
 		GameObject::~GameObject();
 	}
 	void LeianaBossRight::Tick()
@@ -497,6 +498,12 @@ namespace sw
 	}
 	void LeianaBossRight::OffProjecTile()
 	{
+		EventInfo info;
+		info.Type = EventType::DeleteObject;
+		info.Parameter1 = new eColliderLayer(eColliderLayer::BossMonster_ProjecTile);
+		info.Parameter2 = mProjecTile;
+		EventManager::GetInstance()->EventPush(info);
+
 		mProjecTile->GetComponent<Animator>()->SetOnRender(false);
 	}
 }

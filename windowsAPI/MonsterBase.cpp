@@ -89,6 +89,7 @@ namespace sw
 		mHpBar->ImageLoad(L"Hp", L"..\\Resource\\Ui\\Player_SubBar3 บนป็.bmp");
 		mHpBar->SetSize(Vector2(this->GetHp() * 3.f, 8.f));
 		mHpBar->SetTarget(this);
+		mHpBar->SetMonsterHp(true);
 
 		mHpPanel->InActive();
 		mHpBar->InActive();

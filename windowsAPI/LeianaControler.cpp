@@ -54,7 +54,7 @@ namespace sw
 		if (mRight)
 			mRight->SetHp(GetHp());
 
-		if (GetHp() <= 0)
+		if (GetHp() <= 0 && !mBossSceneEnd)
 		{
 			OuttroIn();
 			mBossSceneEnd = true;

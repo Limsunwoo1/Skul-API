@@ -159,12 +159,12 @@ namespace sw
 
 		GateObject* gate = new GateObject();
 		gate->SetPos(2118.f, 470.f);
-		gate->SetNextScene(eSceneType::Ch2Boss);
+		gate->SetNextScene(eSceneType::Play2);
 		AddGameObject(gate, eColliderLayer::Gate);
 
 		Item* item = new Item();
 		item->SetPos(1750.f, 540.f);
-		item->SetHeadType(eSkulHead::Samurai);
+		item->SetHeadType(eSkulHead::Sword);
 		AddGameObject(item, eColliderLayer::Gate);
 	}
 	void StartScene::Tick()

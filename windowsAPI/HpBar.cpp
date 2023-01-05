@@ -1,10 +1,12 @@
 #include "HpBar.h"
 #include "Image.h"
 #include "GameObject.h"
+#include "MonsterBase.h"
 namespace sw
 {
 	HpBar::HpBar(eUIType type)
 		: HUD(type)
+		, mMonsterHP(false)
 	{
 
 	}
@@ -16,11 +18,17 @@ namespace sw
 
 	void HpBar::OnTick()
 	{
-		if (mTarget)
+		if (mTarget && mMonsterHP)
 		{
 			Vector2 size = GetSize();
 			size.x = mTarget->GetHp() * 5.f;
 			SetSize(size);
+		}
+		
+		if (mTarget && !mMonsterHP)
+		{
+			float x = mTarget->GetHp() / mTargetMaxHp;
+			SetSize(Vector2(mMaxSizeX * x, GetSize().y));
 		}
 	}
 

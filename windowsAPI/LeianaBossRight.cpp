@@ -84,6 +84,8 @@ namespace sw
 		animator->CreatAnimations(L"R_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\RigthBoss\\R");
 		animator->CreatAnimations(L"L_Dash", LEIANABOSS_GOLD_PATH + L"Dash\\RigthBoss\\L");
 
+		animator->CreatAnimations(L"RDead", LEIANABOSS_GOLD_PATH + L"Dead\\R", Vector2(0.f, -50.f), 0.1f);
+
 		animator->Play(L"L_Idle");
 	}
 

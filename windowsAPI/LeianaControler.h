@@ -1,12 +1,14 @@
 #pragma once
 #include "Common.h"
 #include "BossMonster.h"
+#include "GenericAnimator.h"
 namespace sw
 {
 	class LeianaBoss;
 	class LeianaBossRight;
 	class Scene;
 	class MainPlayer;
+	class StaticObject;
 	class LeianaControler
 	{
 	public:
@@ -60,9 +62,14 @@ namespace sw
 
 		void ReSetDirPos();
 		void PushBoss(Scene* scene);
+
+		void OuttroIn();
+		void OuttroOut();
 	private:
 		LeianaBoss* mLeft;
 		LeianaBossRight* mRight;
+		StaticObject* mEnddingBack;
+		StaticObject* mMidKing;
 		eBossPatton mCurPatton;
 		eBossPatton mPrevePatton;
 		float mDelta;
@@ -71,12 +78,15 @@ namespace sw
 		bool mPatternProgress;
 		bool mCombeMode;
 		bool mModeChange;
+		bool mBossSceneEnd;
 
 		float mPattonCount;
 		MainPlayer* mPlayer;
 
 		UINT mHp;
 		UINT mPower;
+
+		GenericAnimator MyGenericAnimator;
 	};
 }
 

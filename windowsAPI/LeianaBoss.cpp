@@ -34,6 +34,7 @@ namespace sw
 		, mPatton5_Num(0)
 		, mPatton5_TargetPos(0.f,0.f)
 	{
+		SetHp(180.f);
 		SetDirPos(false);
 	}
 
@@ -43,6 +44,9 @@ namespace sw
 
 	void LeianaBoss::Tick()
 	{
+		if (mOwner)
+			mOwner->SetHp(GetHp());
+
 		mDelta += Time::GetInstance()->DeltaTime();
 		GameObject::Tick();
 		
@@ -123,6 +127,7 @@ namespace sw
 		animator->CreatAnimations(L"R_RisignePrerceAttack", LEIANABOSS_GOLD_PATH + L"DimensionPierce_Attack\\R", Vector2(0.f, 40.f), 0.2f);
 		animator->CreatAnimations(L"L_RisignePrerceAtaack", LEIANABOSS_GOLD_PATH + L"DimensionPierce_Attack\\L", Vector2(0.f, 40.f), 0.2f);
 
+		animator->CreatAnimations(L"LDead", LEIANABOSS_GOLD_PATH + L"Dead\\L", Vector2(0.f, -50.f), 0.1f);
 		animator->Play(L"R_Idle");
 	}
 

@@ -155,6 +155,8 @@ enum class eUIType
 	MP,
 	MonsterHp_Panel,
 	MonsterHp,
+	Boss_Panel,
+	BossHp,
 
 	SHOP,
 	INVENTORY,

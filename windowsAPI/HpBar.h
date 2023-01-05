@@ -15,8 +15,15 @@ namespace sw
 
 		void SetTarget(GameObject* target) { mTarget = target; }
 		GameObject* GetTarget() { return mTarget; }
+
+		void SetTargetMaxHp(float hp) {mTargetMaxHp = hp;}
+		void SetmaxSizeX(int X) { mMaxSizeX = X; }
 	private:
 		GameObject* mTarget;
+		bool mMonsterHP;
+
+		float mTargetMaxHp;
+		float mMaxSizeX;
 	};
 }
 

@@ -39,6 +39,9 @@ namespace sw
 		newUI->ImageLoad(L"Hp", L"..\\Resource\\Ui\\Player_SubBar3 복사.bmp");
 		newUI->SetPos(Vector2(500.f, 500.f));
 		newUI->SetSize(Vector2(350.f, 30.f));
+		newUI->SetTarget(ObjectManager::GetInstance()->GetPlayer());
+		newUI->SetTargetMaxHp(ObjectManager::GetInstance()->GetPlayer()->GetHp());
+		newUI->SetmaxSizeX(350);
 		mUIs.insert(std::make_pair(eUIType::HP, newUI));
 
 		HUD* charterpanel = new HUD(eUIType::Character_Panel);
@@ -74,21 +77,20 @@ namespace sw
 		PlayerHpPanel->SetChild(Vector2(-122.f, 32.f), newUI);
 		PlayerHpPanel->SetChild(Vector2(-195.f, 40.f), charterpanel);
 		PlayerHpPanel->SetChild(Vector2(40.f, -10.f), skilpanel);
-		/*newUI = new UiBase(eUIType::MP);
-		mUIs.insert(std::make_pair(eUIType::MP, newUI));
+		
+		Panel* boss = new Panel(eUIType::Boss_Panel);
+		boss->ImageLoad(L"BossPanel", L"..\\Resource\\Ui\\Player_Subbar_Frame 복사.bmp");
+		boss->SetPos(Vector2(800.f, 100.f));
+		boss->SetSize(Vector2(900, 30.f));
+		mUIs.insert(std::make_pair(eUIType::Boss_Panel, boss));
 
-		newUI = new UiBase(eUIType::SHOP);
-		mUIs.insert(std::make_pair(eUIType::SHOP, newUI));
+		HpBar* bosshp = new HpBar(eUIType::BossHp);
+		bosshp->ImageLoad(L"bossHp", L"..\\Resource\\Ui\\boss_SubBar3.bmp");
+		bosshp->SetPos(Vector2(500.f, 500.f));
+		bosshp->SetSize(Vector2(850.f, 15.f));
+		mUIs.insert(std::make_pair(eUIType::BossHp, bosshp));
 
-		newUI = new UiBase(eUIType::INVENTORY);
-		mUIs.insert(std::make_pair(eUIType::INVENTORY, newUI));
-
-		newUI = new UiBase(eUIType::OPTION);
-		mUIs.insert(std::make_pair(eUIType::OPTION, newUI));*/
-		/*Push(eUIType::HP_PANEL);
-		Push(eUIType::HP);
-		Push(eUIType::Character_Panel);
-		Push(eUIType::Skil_Panel);*/
+		boss->SetChild(Vector2(-420.f, -8.f), bosshp);
 	}
 
 	void UIManager::OnLoad(eUIType type)

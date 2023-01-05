@@ -90,6 +90,8 @@ namespace sw
 		UIManager::GetInstance()->Push(eUIType::Character_MainHead);
 		UIManager::GetInstance()->Push(eUIType::Character);
 		UIManager::GetInstance()->Push(eUIType::Skil_Panel);
+		UIManager::GetInstance()->Push(eUIType::Boss_Panel);
+		UIManager::GetInstance()->Push(eUIType::BossHp);
 	}
 	void Ch2BossScene::Exit()
 	{
@@ -110,5 +112,7 @@ namespace sw
 		UIManager::GetInstance()->Pop(eUIType::Character_MainHead);
 		UIManager::GetInstance()->Pop(eUIType::Character);
 		UIManager::GetInstance()->Pop(eUIType::Skil_Panel);
+		UIManager::GetInstance()->Pop(eUIType::Boss_Panel);
+		UIManager::GetInstance()->Pop(eUIType::BossHp);
 	}
 }

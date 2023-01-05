@@ -6,6 +6,7 @@
 #include "MainPlayer.h"
 #include "Animator.h"
 #include "Rigidbody.h"
+#include "StaticObject.h"
 
 #include <iostream>
 #include <random>
@@ -27,9 +28,9 @@ namespace sw
 		, mPatternProgress(false)
 		, mCombeMode(true)
 		, mModeChange(false)
+		, mBossSceneEnd(false)
 		, mPattonCount(0.f)
 	{
-		SetHp(90);
 		SetPower(5);
 
 		Initialize();
@@ -41,21 +42,41 @@ namespace sw
 	void LeianaControler::Tick()
 	{
 		mDelta += Time::GetInstance()->DeltaTime();
+		MyGenericAnimator.Update(Time::GetInstance()->DeltaTime());
+
+		if(mLeft)
+			SetHp(mLeft->GetHp());
+		if (mRight)
+			mRight->SetHp(GetHp());
+
+		if (GetHp() <= 0)
+		{
+			OuttroIn();
+			mBossSceneEnd = true;
+		}
+		if (mBossSceneEnd)
+			return;
+
 		Brunch();
 	}
 	void LeianaControler::Initialize()
 	{
 		mLeft = new LeianaBoss();
 		mLeft->SetOwer(this);
-		mLeft->SetHp(GetHp());
 		mLeft->SetPower(GetPower());
 		mLeft->Initialize();
 
 		mRight = new LeianaBossRight();
 		mRight->SetOwer(this);
-		mRight->SetHp(GetHp());
 		mRight->SetPower(GetPower());
 		mRight->Initialize();
+
+		SetHp(mLeft->GetHp());
+		mRight->SetHp(GetHp());
+
+		mEnddingBack = new StaticObject(L"StaticObject19");
+		mEnddingBack->SetScale(5.0f, 5.0f);
+		mEnddingBack->GetComponent<Animator>()->SetOnRender(false);
 	}
 	void LeianaControler::SetPlayer(MainPlayer* player)
 	{
@@ -273,5 +294,70 @@ namespace sw
 	{
 		scene->AddGameObject(mLeft, eColliderLayer::BossMonster);
 		scene->AddGameObject(mRight, eColliderLayer::BossMonster);
+
+		scene->AddGameObject(mEnddingBack, eColliderLayer::StaticObject);
+	}
+	void LeianaControler::OuttroIn()
+	{
+		mEnddingBack->GetComponent<Animator>()->SetOnRender(true);
+		mEnddingBack->GetComponent<Animator>()->Play(L"StaticObject19");
+		mEnddingBack->SetPos(1200.f, 500.f);
+		mEnddingBack->SetScale(5.f, 5.f);
+
+		if (MyGenericAnimator.IsRunning())
+			MyGenericAnimator.Stop();
+
+		AnimatorParam param;
+		param.AnimType = EAnimType::Linear;
+		param.StartValue = 0.f;
+		param.EndValue = 255.f;
+		param.DurationTime = 1.0f;
+		float value = 200.f;
+
+		param.DurationFunc = [this, value](float InCurValue)
+		{
+			mEnddingBack->GetComponent<Animator>()->SetAlpha(InCurValue);
+			if (InCurValue > value)
+			{
+				mLeft->GetComponent<Animator>()->SetOnRender(false);
+				mRight->GetComponent<Animator>()->SetOnRender(false);
+			}
+		};
+		param.CompleteFunc = [this](float InCurValue)
+		{
+			mLeft->SetPos(600.f,705.f);
+			mRight->SetPos(1800.f, 705.f);
+
+			mLeft->GetComponent<Animator>()->Play(L"LDead");
+			mRight->GetComponent<Animator>()->Play(L"RDead");
+			//Dead 모션실행
+			OuttroOut();
+		};
+		MyGenericAnimator.Start(param);
+	}
+	void LeianaControler::OuttroOut()
+	{
+		mLeft->GetComponent<Animator>()->SetOnRender(true);
+		mRight->GetComponent<Animator>()->SetOnRender(true);
+
+		if (MyGenericAnimator.IsRunning())
+			MyGenericAnimator.Stop();
+
+		AnimatorParam param;
+		param.AnimType = EAnimType::Linear;
+		param.StartValue = 255.f;
+		param.EndValue = 0.f;
+		param.DurationTime = 1.0f;
+		param.DurationFunc = [this](float InCurValue)
+		{
+			mEnddingBack->GetComponent<Animator>()->SetAlpha(InCurValue);
+		};
+		param.CompleteFunc = [this](float InCurValue)
+		{
+			mEnddingBack->GetComponent<Animator>()->SetOnRender(false);
+			// 미들보스애니메이션 씬넘기기
+			MyGenericAnimator.Stop();
+		};
+		MyGenericAnimator.Start(param);
 	}
 }

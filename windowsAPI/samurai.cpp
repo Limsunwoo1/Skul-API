@@ -551,6 +551,8 @@ namespace sw
 			if (InCurValue > value)
 			{
 				SkillASetProjecTile();
+				if (GetProjecTile(eSkilType::SkilA)->GetComponent<Animator>()->isComplete())
+					GetProjecTile(eSkilType::SkilA)->GetComponent<Animator>()->SetOnRender(false);
 			}
 		};
 		param.CompleteFunc = [this](float InCurValue)
@@ -597,6 +599,7 @@ namespace sw
 			}
 			projectile->SetOffset(offset);
 			projectile->GetComponent<Animator>()->Play(name);
+			projectile->GetComponent<Animator>()->SetOnRender(true);
 			mAProjecTileOn = true;
 		}
 	}

@@ -13,8 +13,10 @@ namespace sw
 		virtual void Run() override;
 		virtual void End() override;
 
+		void SetSkul(eSkulHead type) { mSkul = type; }
+		void SkillASound();
 	private:
-
+		eSkulHead mSkul;
 	};
 }
 

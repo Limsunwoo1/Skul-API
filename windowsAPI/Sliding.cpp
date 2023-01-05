@@ -35,8 +35,11 @@ namespace sw
 		mInputState = ePlayerState::END;
 		mDelta = 0.0f;
 
-		if(mSlidingCount <= 2)
+		if (mSlidingCount <= 2)
+		{
+			sw::DashSound.Play(false);
 			target->SetIsShadow(true);
+		}
 
 		SetStartAnimation();
 	}

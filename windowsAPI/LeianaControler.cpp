@@ -47,7 +47,6 @@ namespace sw
 	{
 		mDelta += Time::GetInstance()->DeltaTime();
 		MyGenericAnimator.Update(Time::GetInstance()->DeltaTime());
-		LOG(STRING("%f hp", GetHp()))
 
 		if(mLeft)
 			SetHp(mLeft->GetHp());

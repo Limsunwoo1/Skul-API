@@ -9,6 +9,7 @@
 namespace sw
 {
 	SkilB::SkilB()
+		: mSkul(eSkulHead::Basic)
 	{
 
 	}
@@ -21,7 +22,7 @@ namespace sw
 	void SkilB::Start(PlayerBase* target)
 	{
 		SetTarget(target);
-
+		SkillBSound();
 		PlayerBase* player = GetTarget();
 		bool dirc = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
@@ -81,5 +82,26 @@ namespace sw
 		PlayerBase* player = GetTarget();
 		if (player->GetProjecTile(eSkilType::SkilB) != nullptr)
 			player->GetProjecTile(eSkilType::SkilB)->SetDeath(true);
+	}
+	void SkilB::SkillBSound()
+	{
+		switch (mSkul)
+		{
+		case eSkulHead::Basic:
+		{
+			
+		}
+		break;
+		case eSkulHead::Sword:
+		{
+			sw::SwordSkulSKillB.Play(false);
+		}
+		break;
+		case eSkulHead::Samurai:
+		{
+			sw::SamuraiSkulSKillB.Play(false);
+		}
+		break;
+		}
 	}
 }

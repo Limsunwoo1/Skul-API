@@ -81,7 +81,10 @@ namespace sw
 		else if (!bToolMode)
 		{
 			if (mTarget != nullptr)
-				mLookPosition = mTarget->GetPos();
+			{
+				Vector2 pos = mTarget->GetPos();
+				mLookPosition = Vector2((int)pos.x,(int)pos.y);
+			}
 
 			if (mLookPosition.x + (mResolution.x * 0.5f) >= mCameraMaxPos.x)
 				mLookPosition.x = mCameraMaxPos.x - (mResolution.x * 0.5f);

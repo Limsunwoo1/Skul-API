@@ -219,6 +219,7 @@
     <ClInclude Include="SkulHeadItem.h" />
     <ClInclude Include="Sliding.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundDef.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="State.h" />
@@ -306,6 +307,7 @@
     <ClCompile Include="Sliding.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="BaseResource.cpp" />
+    <ClCompile Include="SoundDef.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="State.cpp" />

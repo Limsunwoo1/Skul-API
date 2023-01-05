@@ -27,6 +27,7 @@
 #include "Path.h"
 #include "Maths.h"
 #include "UtilLog.h"
+#include "SoundDef.h"
 
 struct Pixel
 {

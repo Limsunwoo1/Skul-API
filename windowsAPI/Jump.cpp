@@ -27,6 +27,7 @@ namespace sw
 		if (mJumpCount > 2)
 			return;
 
+		sw::JumpSound.Play(false);
 		SetStartAnimation();
 	}
 

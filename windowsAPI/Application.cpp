@@ -13,6 +13,8 @@
 #include "CrashHandler.h"
 #include "Loger.h"
 #include "ObjectManager.h"
+#include "SoundManager.h"
+#include "SoundDef.h"
 
 namespace sw
 {
@@ -43,6 +45,8 @@ namespace sw
 		//
 
 		Application::initialize(data);
+		SoundManager::Initialize();
+		sw::SoundInit();
 
 		Time::GetInstance()->Initialize();
 		Input::GetInstance()->Initialize();

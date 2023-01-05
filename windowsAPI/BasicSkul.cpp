@@ -160,11 +160,11 @@ namespace sw
 		mAnimator->CreatAnimations(L"R_Basic_Dash", BASICSKUL_R_PATH(L"Dash"), Vector2::Zero, 0.2f);
 		mAnimator->CreatAnimations(L"L_Basic_Dash", BASICSKUL_L_PATH(L"Dash"), Vector2::Zero, 0.2f);
 
-		mAnimator->CreatAnimations(L"R_Basic_AttackA", BASICSKUL_R_PATH(L"AttackA"), Vector2(-20.f, 9.f), 0.15f);
-		mAnimator->CreatAnimations(L"R_Basic_AttackB", BASICSKUL_R_PATH(L"AttackB"), Vector2(-20.f, 0.f), 0.15f);
+		mAnimator->CreatAnimations(L"R_Basic_AttackA", BASICSKUL_R_PATH(L"AttackA"), Vector2(-20.f, 9.f), 0.08f);
+		mAnimator->CreatAnimations(L"R_Basic_AttackB", BASICSKUL_R_PATH(L"AttackB"), Vector2(-20.f, 0.f), 0.08f);
 
-		mAnimator->CreatAnimations(L"L_Basic_AttackA", BASICSKUL_L_PATH(L"AttackA"), Vector2(20.f, 0.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Basic_AttackB", BASICSKUL_L_PATH(L"AttackB"), Vector2(20.f, 0.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Basic_AttackA", BASICSKUL_L_PATH(L"AttackA"), Vector2(20.f, 0.f), 0.08f);
+		mAnimator->CreatAnimations(L"L_Basic_AttackB", BASICSKUL_L_PATH(L"AttackB"), Vector2(20.f, 0.f), 0.08f);
 
 		mAnimator->CreatAnimations(L"R_Basic_Switch", BASICSKUL_R_PATH(L"Switch"), Vector2(0.f, 10.f), 0.1f);
 		mAnimator->CreatAnimations(L"L_Basic_Switch", BASICSKUL_L_PATH(L"Switch"), Vector2(0.f, 10.f), 0.1f);

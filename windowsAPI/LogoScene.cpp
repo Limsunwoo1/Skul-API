@@ -6,6 +6,7 @@
 #include "BackGround.h"
 #include "EventManager.h"
 #include "Camera.h"
+#include "Sound.h"
 
 namespace sw
 {
@@ -49,6 +50,11 @@ namespace sw
 		AddGameObject(Logo, eColliderLayer::BackGround);
 		AddGameObject(presseKey, eColliderLayer::BackGround);
 
+		//Title.LoadWavFile(L"..\\Resource\\Sound\\MainTitle\\MainTitle.wav");
+		//Title.SetVolume(20);
+		//Title.SetKey(L"LogoSound");
+		//Title.Play(true);
+		sw::MainTitleSound.Play(true);
 	}
 
 	void LogoScene::Tick()
@@ -82,6 +88,6 @@ namespace sw
 	}
 	void LogoScene::Exit()
 	{
-		
+		sw::MainTitleSound.Stop(true);
 	}
 }

@@ -87,7 +87,6 @@ namespace sw
 
 		mState->Tick();
 		GameObject::Tick();
-
 		if (mShadows[mSlidingDirction])
 			mShadows[mSlidingDirction]->Tick();
 	}
@@ -98,7 +97,6 @@ namespace sw
 
 		Vector2 pos = GetPos();
 		Vector2 scale = GetScale();
-		pos = Camera::GetInstance()->CalculatePos(pos);
 
 		if (mShadows[mSlidingDirction])
 			mShadows[mSlidingDirction]->Render(hdc);
@@ -202,6 +200,7 @@ namespace sw
 		drop->SetL_Animation(L"L_Sword_Drop");
 
 		Attack* attack = new Attack();
+		attack->SetSkul(eSkulHead::Sword);
 		attack->SetR_AttackSequence(L"R_Sword_AttackA");
 		attack->SetR_AttackSequence(L"R_Sword_AttackB");
 		attack->SetR_AttackSequence(L"R_Sword_AttackC");
@@ -211,14 +210,17 @@ namespace sw
 		attack->SetL_AttackSequence(L"L_Sword_AttackC");
 
 		Switch* inswitch = new Switch();
+		inswitch->SetSkul(eSkulHead::Sword);
 		inswitch->SetR_Animation(L"R_Sword_Switch");
 		inswitch->SetL_Animation(L"L_Sword_Switch");
 
 		SkilA* skilA = new SkilA();
+		skilA->SetSkul(eSkulHead::Sword);
 		skilA->SetR_Animation(L"R_Sword_SkilA");
 		skilA->SetL_Animation(L"L_Sword_SkilA");
 
 		SkilB* skilB = new SkilB();
+		skilB->SetSkul(eSkulHead::Sword);
 		skilB->SetR_Animation(L"R_Sword_SkilB");
 		skilB->SetL_Animation(L"L_Sword_SkilB");
 
@@ -289,9 +291,9 @@ namespace sw
 		SkilA->SetTarget(this);
 		SkilA->SetReuse_Time(0.1f);
 		SkilA->SetEffectName(L"_Sword_SkilA_Eft");
-		SkilA->SetOffset(Vector2(50.f, 0.f));
+		SkilA->SetOffset(Vector2(120.f, 0.f));
 		Collider* collider2 = SkilA->GetComponent<Collider>();
-		collider2->SetScale(Vector2(200.f, 70.f));
+		collider2->SetScale(Vector2(240.f, 70.f));
 		Animator* animator2 = SkilA->GetComponent<Animator>();
 		animator2->CreatAnimations(L"L_Sword_SkilA_Eft", L"..\\Resource\\Animation\\Effect\\L_SkeletonSwordSlashEffect",Vector2::Zero, 0.03f);
 		animator2->CreatAnimations(L"R_Sword_SkilA_Eft", L"..\\Resource\\Animation\\Effect\\R_SkeletonSwordSlashEffect", Vector2::Zero, 0.03f);

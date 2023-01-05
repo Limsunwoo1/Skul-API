@@ -30,6 +30,7 @@ namespace sw
 
 	void Collider::Render(HDC hdc)
 	{
+		return;
 		HBRUSH tr = Application::GetInstance().GetBrush(eBrushColor::Transparent);
 		Brush brush(hdc, tr);
 

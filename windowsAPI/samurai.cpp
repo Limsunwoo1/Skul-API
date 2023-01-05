@@ -30,6 +30,7 @@ namespace sw
 		SetPower(4);
 		mAProjecTileOn = false;
 		mSwitchProejcTileOn = false;
+		mSKillAHitSound = false;
 		mMaxAttackCount = 2;
 		SetPos({ 100.0f, 100.0f });
 		SetScale({ 5.f, 5.f });
@@ -170,8 +171,8 @@ namespace sw
 		mAnimator->CreatAnimations(L"R_Samurai_Dash", SAMURAI_R_PATH(L"Dash"), Vector2(0.f, 10.f), 0.15f);
 		mAnimator->CreatAnimations(L"L_Samurai_Dash", SAMURAI_L_PATH(L"Dash"), Vector2(0.f, 10.f), 0.15f);
 										
-		mAnimator->CreatAnimations(L"R_Samurai_Switch", SAMURAI_R_PATH(L"Switch"), Vector2(0.f, 30.f), 0.15f);
-		mAnimator->CreatAnimations(L"L_Samurai_Switch", SAMURAI_L_PATH(L"Switch"), Vector2(0.f, 30.f), 0.15f);
+		mAnimator->CreatAnimations(L"R_Samurai_Switch", SAMURAI_R_PATH(L"Switch"), Vector2(0.f, 10.f), 0.15f);
+		mAnimator->CreatAnimations(L"L_Samurai_Switch", SAMURAI_L_PATH(L"Switch"), Vector2(0.f, 10.f), 0.15f);
 										
 		mAnimator->CreatAnimations(L"R_Samurai_SkilA", SAMURAI_R_PATH(L"Skill2"), Vector2(0.f, 10.f), 0.07f);
 		mAnimator->CreatAnimations(L"L_Samurai_SkilA", SAMURAI_L_PATH(L"Skill2"), Vector2(0.f, 10.f), 0.07f);
@@ -215,6 +216,7 @@ namespace sw
 		drop->SetL_Animation(L"L_Samurai_Drop");
 
 		Attack* attack = new Attack();
+		attack->SetSkul(eSkulHead::Samurai);
 		attack->SetR_AttackSequence(L"R_Samurai_AttackA");
 		attack->SetR_AttackSequence(L"R_Samurai_AttackB");
 		attack->SetR_AttackSequence(L"R_Samurai_AttackC");
@@ -224,14 +226,17 @@ namespace sw
 		attack->SetL_AttackSequence(L"L_Samurai_AttackC");
 
 		Switch* inswitch = new Switch();
+		inswitch->SetSkul(eSkulHead::Samurai);
 		inswitch->SetR_Animation(L"R_Samurai_Switch");
 		inswitch->SetL_Animation(L"L_Samurai_Switch");
 
 		SkilA* skilA = new SkilA();
+		skilA->SetSkul(eSkulHead::Samurai);
 		skilA->SetR_Animation(L"R_Samurai_SkilA");
 		skilA->SetL_Animation(L"L_Samurai_SkilA");
 
 		SkilB* skilB = new SkilB();
+		skilB->SetSkul(eSkulHead::Samurai);
 		skilB->SetR_Animation(L"R_Samurai_SkilB");
 		skilB->SetL_Animation(L"L_Samurai_SkilB");
 
@@ -463,6 +468,8 @@ namespace sw
 	}
 	void Samurai::SkillAStart()
 	{
+		sw::Ch1Sound.Stop(true);
+		sw::SamuraiSkulSkillAWind.Play(true);
 		bool dirc = this->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = GetComponent<Animator>();
 		if (!dirc)
@@ -543,6 +550,7 @@ namespace sw
 		param.EndValue = 100.f;
 		param.DurationTime = 1.5f;
 		float value = 20.f;
+		bool sound = false;
 
 		param.DurationFunc = [this, value](float InCurValue)
 		{
@@ -552,7 +560,15 @@ namespace sw
 			{
 				SkillASetProjecTile();
 				if (GetProjecTile(eSkilType::SkilA)->GetComponent<Animator>()->isComplete())
+				{
 					GetProjecTile(eSkilType::SkilA)->GetComponent<Animator>()->SetOnRender(false);
+				}
+			}
+
+			if (InCurValue > 80.f && !mSKillAHitSound)
+			{
+				sw::SamuraiSkulSkillAHit.Play(false);
+				mSKillAHitSound = true;
 			}
 		};
 		param.CompleteFunc = [this](float InCurValue)
@@ -561,11 +577,15 @@ namespace sw
 			{
 				GetProjecTile(eSkilType::SkilA)->SetDeath(true);
 				mAProjecTileOn = false;
+				mSKillAHitSound = false;
 				mBaldoBackGround->GetComponent<Animator>()->SetOnRender(false);
 				mBaldoMoon->GetComponent<Animator>()->SetOnRender(false);
 
 				SetState(ePlayerState::IDLE);
 				MyGenericAnimator.Stop();
+
+				sw::SamuraiSkulSkillAWind.Stop(true);
+				sw::Ch1Sound.Play(true);
 			}
 		};
 		MyGenericAnimator.Start(param);
@@ -601,6 +621,7 @@ namespace sw
 			projectile->GetComponent<Animator>()->Play(name);
 			projectile->GetComponent<Animator>()->SetOnRender(true);
 			mAProjecTileOn = true;
+			sw::SamuraiSkulSkillA.Play(false);
 		}
 	}
 	void Samurai::SwitchStart()

@@ -208,6 +208,8 @@ namespace sw
 		UIManager::GetInstance()->Push(eUIType::Character_MainHead);
 		UIManager::GetInstance()->Push(eUIType::Character);
 		UIManager::GetInstance()->Push(eUIType::Skil_Panel);
+
+		sw::Ch1Sound.Play(true);
 	}
 
 	void StartScene::Exit()

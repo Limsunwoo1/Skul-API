@@ -10,6 +10,7 @@ namespace sw
 {
 	Switch::Switch()
 		: mSwitch(false)
+		, mSkul(eSkulHead::Basic)
 	{
 		
 	}
@@ -22,6 +23,7 @@ namespace sw
 	void Switch::Start(PlayerBase* target)
 	{
 		SetTarget(target);
+		SwitchSound();
 		Samurai* samurai = dynamic_cast<Samurai*>(target);
 		if (samurai)
 		{
@@ -72,9 +74,33 @@ namespace sw
 
 	void Switch::End()
 	{
+		if (mSkul == eSkulHead::Sword)
+			sw::SwordSkulSwitch.Stop(true);
+
 		PlayerBase* player = GetTarget();
 		if (player->GetProjecTile(eSkilType::Switch) != nullptr)
 			player->GetProjecTile(eSkilType::Switch)->SetDeath(true);
 		mSwitch = false;
+	}
+	void Switch::SwitchSound()
+	{
+		switch (mSkul)
+		{
+		case eSkulHead::Basic:
+		{
+			
+		}
+		break;
+		case eSkulHead::Sword:
+		{
+			sw::SwordSkulSwitch.Play(false);
+		}
+		break;
+		case eSkulHead::Samurai:
+		{
+
+		}
+		break;
+		}
 	}
 }

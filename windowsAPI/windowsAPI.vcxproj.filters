@@ -246,6 +246,9 @@
     <Filter Include="Engine\GameObject\Monster\BossMonster\2ChKing">
       <UniqueIdentifier>{339e4f52-3145-4494-9d58-36e3e2d322cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Commne\SoundDef">
+      <UniqueIdentifier>{c7e8f3a3-a42e-43e6-ae84-46c890beb49a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -518,6 +521,9 @@
     <ClInclude Include="KingObject.h">
       <Filter>Engine\GameObject\Monster\BossMonster\2ChKing</Filter>
     </ClInclude>
+    <ClInclude Include="SoundDef.h">
+      <Filter>Engine\Commne\SoundDef</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowsAPI.cpp">
@@ -759,6 +765,9 @@
     </ClCompile>
     <ClCompile Include="KingObject.cpp">
       <Filter>Engine\GameObject\Monster\BossMonster\2ChKing</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundDef.cpp">
+      <Filter>Engine\Commne\SoundDef</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

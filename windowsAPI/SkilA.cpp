@@ -8,6 +8,7 @@
 namespace sw
 {
 	SkilA::SkilA()
+		: mSkul(eSkulHead::Basic)
 	{
 
 	}
@@ -27,7 +28,7 @@ namespace sw
 			samurai->SkillAStart();
 			return;
 		}
-
+		SkillASound();
 		PlayerBase* player = GetTarget();
 		bool dirc = player->GetStateHandle()->GetState<Move>(ePlayerState::MOVE)->GetDirtion();
 		Animator* animator = player->GetComponent<Animator>();
@@ -85,5 +86,26 @@ namespace sw
 		PlayerBase* player = GetTarget();
 		if (player->GetProjecTile(eSkilType::SkilA) != nullptr)
 			player->GetProjecTile(eSkilType::SkilA)->SetDeath(true);
+	}
+	void SkilA::SkillASound()
+	{
+		switch (mSkul)
+		{
+		case eSkulHead::Basic:
+		{
+			
+		}
+		break;
+		case eSkulHead::Sword:
+		{
+			sw::SwordSkulSKillA.Play(false);
+		}
+		break;
+		case eSkulHead::Samurai:
+		{
+
+		}
+		break;
+		}
 	}
 }

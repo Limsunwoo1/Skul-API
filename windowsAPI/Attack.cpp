@@ -21,6 +21,7 @@ namespace sw
 		, mDelta(0.0f)
 		, mAttackCount(0)
 		, bInput(false)
+		, mSkul(eSkulHead::Basic)
 	{
 		/*mR_AttackSequence.push_back(L"R_AttackA");
 		mR_AttackSequence.push_back(L"R_AttackB");
@@ -139,6 +140,73 @@ namespace sw
 		}
 	}
 
+	void Attack::AttackSound()
+	{
+		if (mAttackCount == 0)
+		{
+			switch (mSkul)
+			{
+			case eSkulHead::Basic:
+			{
+				sw::BasicSkulAttackA.Play(false);
+			}
+			break;
+			case eSkulHead::Sword:
+			{
+
+			}
+			break;
+			case eSkulHead::Samurai:
+			{
+
+			}
+			break;
+			}
+		}
+		if (mAttackCount == 1)
+		{
+			switch (mSkul)
+			{
+			case eSkulHead::Basic:
+			{
+				sw::BasicSkulAttackB.Play(false);
+			}
+			break;
+			case eSkulHead::Sword:
+			{
+
+			}
+			break;
+			case eSkulHead::Samurai:
+			{
+
+			}
+			break;
+			}
+		}
+		if (mAttackCount == 2)
+		{
+			switch (mSkul)
+			{
+			case eSkulHead::Basic:
+			{
+
+			}
+			break;
+			case eSkulHead::Sword:
+			{
+
+			}
+			break;
+			case eSkulHead::Samurai:
+			{
+
+			}
+			break;
+			}
+		}
+	}
+
 	void Attack::SetStartAnimation()
 	{
 		// 방향설정
@@ -151,6 +219,7 @@ namespace sw
 		else if (state)
 			animator->Play(mR_AttackSequence[mAttackCount], false);
 
+		AttackSound();
 		mDelta = 0.0f;
 	}
 

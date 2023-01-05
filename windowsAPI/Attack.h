@@ -15,6 +15,7 @@ namespace sw
 		virtual void Run() override;
 		virtual void End() override;
 
+		void AttackSound();
 		void SetStartAnimation();
 		void SetAnimation();
 		void StartCollider();
@@ -25,11 +26,13 @@ namespace sw
 		void SetL_AttackSequence(std::wstring attack) { mL_AttackSequence.push_back(attack); }
 
 		Box GetCurBox() { return mColliderBox; }
+		void SetSkul(eSkulHead type) { mSkul = type; }
 	private:
 		std::vector<std::wstring> mR_AttackSequence;
 		std::vector<std::wstring> mL_AttackSequence;
 		std::vector<GameObject*> mTemp;
 		Box mColliderBox;
+		eSkulHead mSkul;
 
 		UINT mAttackCount;
 		float mDelta;

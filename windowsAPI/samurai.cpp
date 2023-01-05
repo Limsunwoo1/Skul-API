@@ -316,7 +316,7 @@ namespace sw
 		animator2->SetAlpha(255);
 		//스킬 B 세팅
 		ObjectProjecTile* SkilB = mSkils[(int)eSkilType::SkilB];
-		SkilB->SetScale(Vector2(5.0f, 2.0f));
+		SkilB->SetScale(Vector2(5.0f, 1.0f));
 		SkilB->SetEvent(std::bind(&Samurai::SkilBProjecTile, this, std::placeholders::_1));
 		SkilB->SetTarget(this);
 		SkilB->SetReuse_Time(1.0f);

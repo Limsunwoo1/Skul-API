@@ -213,8 +213,8 @@ namespace sw
 				mLeft->SetScreenIn(false);
 				mRight->SetScreenIn(false);
 
-				//SetCurPatton((eBossPatton)CombePatton(gen1));
-				SetCurPatton(eBossPatton::Patton3);
+				SetCurPatton((eBossPatton)CombePatton(gen1));
+				//SetCurPatton(eBossPatton::Patton3);
 				mLeft->SetCurPattonState(ePattonState::READY);
 				mRight->SetCurPattonState(ePattonState::READY);
 				mPattonCount += 1.0f;
@@ -223,8 +223,8 @@ namespace sw
 			if (!mCombeMode)
 			{
 				mLeft->SetScreenOut(true);
-				//SetCurPatton((eBossPatton)SoloPatton(gen1));
-				SetCurPatton(eBossPatton::Patton8);
+				SetCurPatton((eBossPatton)SoloPatton(gen1));
+				//SetCurPatton(eBossPatton::Patton8);
 				mLeft->SetCurPattonState(ePattonState::READY);
 
 				mPattonCount += 0.5f;

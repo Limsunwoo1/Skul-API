@@ -88,7 +88,7 @@ namespace sw
 		SamuraiSkulSkillAHit.SetKey(L"SamuraiSkulSkillAHit");
 
 		SamuraiSkulSkillAWind.LoadWavFile(L"..\\Resource\\Sound\\samurai\\Wind 2 - low volume.wav");
-		SamuraiSkulSkillAWind.SetVolume(20);
+		SamuraiSkulSkillAWind.SetVolume(35);
 		SamuraiSkulSkillAWind.SetKey(L"SamuraiSkulSkillAWind");
 
 		SamuraiSkulSKillB.LoadWavFile(L"..\\Resource\\Sound\\samurai\\skill\\Samurai_Parry.wav");
